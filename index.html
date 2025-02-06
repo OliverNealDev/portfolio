@@ -50,6 +50,7 @@
             list-style: none;
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
 
         nav a {
@@ -89,6 +90,36 @@
                 font-size: 1rem;
             }
 
+        /* ICON BUTTONS SECTION */
+        .icon-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem; /* spacing before timeline */
+        }
+
+            .icon-buttons a {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: background 0.2s;
+            }
+
+                .icon-buttons a:hover {
+                    background: #f0f0f0;
+                }
+
+            .icon-buttons img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
         /* TIMELINE SECTION */
         #timeline {
             margin: 3rem 0;
@@ -106,13 +137,13 @@
 
         .timeline-container {
             position: relative;
-            overflow-x: auto; /* allows horizontal scroll if needed on small screens */
+            overflow-x: auto;
             padding: 1rem;
             background: #fff;
             border-radius: 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             margin-top: 2rem;
-            width: 100%; /* can be fixed (e.g., 1000px) or 100% */
+            width: 100%;
         }
 
         .timeline-axis {
@@ -120,7 +151,7 @@
             height: 60px;
             border-bottom: 2px solid #ccc;
             margin-bottom: 2rem;
-            width: 1000px; /* total length for 2 years, for example */
+            width: 1000px;
             margin: 0 auto;
         }
 
@@ -141,7 +172,6 @@
             transform: translateX(-50%);
         }
 
-        /* Project lines container */
         .timeline-lines {
             position: relative;
             width: 1000px;
@@ -216,7 +246,7 @@
             background: #ff7c7c;
         }
 
-        /* SECTIONS & PROJECTS */
+        /* SECTIONS / PROJECTS */
         section {
             margin: 3rem 0;
         }
@@ -297,7 +327,7 @@
             border-radius: 5px;
             background: #000;
         }
-
+            /* We separate fade from normal to keep manual instant switch. */
             .slideshow-container figure {
                 position: absolute;
                 top: 0;
@@ -305,18 +335,15 @@
                 width: 100%;
                 margin: 0;
                 opacity: 0;
-                transition: opacity 1s ease-in-out;
             }
 
-                .slideshow-container figure.active {
-                    opacity: 1;
-                }
+        .fade-transition figure {
+            transition: opacity 1s ease-in-out;
+        }
 
-            .slideshow-container img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+        .slideshow-container figure.active {
+            opacity: 1;
+        }
 
         .slideshow-caption {
             position: absolute;
@@ -405,7 +432,7 @@
 
             .timeline-axis,
             .timeline-lines {
-                width: 800px; /* or smaller for mobile */
+                width: 800px;
             }
 
             .slideshow-container {
@@ -415,6 +442,11 @@
                 .slideshow-container img {
                     object-fit: cover;
                 }
+
+            .icon-buttons a {
+                width: 36px;
+                height: 36px;
+            }
         }
     </style>
 </head>
@@ -428,37 +460,51 @@
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#timeline">Timeline</a></li>
-                    <li><a href="#solo-projects">Solo Projects</a></li>
-                    <li><a href="#team-projects">Team Projects</a></li>
-                    <li><a href="#future-projects">In Development</a></li>
+                    <li><a href="#solo-projects">Solo</a></li>
+                    <li><a href="#team-projects">Team</a></li>
+                    <li><a href="#future-projects">In Dev</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main>
-        <!-- ABOUT -->
+        <!-- ABOUT SECTION -->
         <section id="about">
             <h1>Hello, I'm Oliver Neal!</h1>
             <p>
-                I'm a passionate <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev, multiplayer netcode,
-                and performance optimization. I love tackling challenging gameplay systems
+                From the UK, i'm a <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev, multiplayer netcode,
+                and performance optimization. I enjoy tackling challenging gameplay systems
                 and delivering polished player experiences.
             </p>
             <p>
-                Below is a concise timeline with project durations, followed by full details on each.
+                I am a Games Technologies student expected to graduate with a foundation degree in July of 2025, and a Bachelor of Science degree in July of 2026.
             </p>
         </section>
+
+        <!-- ICON BUTTONS (Under About, above Timeline) -->
+        <div class="icon-buttons">
+            <!-- Link to GitHub -->
+            <a href="https://github.com/EmbitGames" target="_blank">
+                <img src="images/github-icon.png" alt="GitHub" />
+            </a>
+            <!-- Link to itch.io -->
+            <a href="https://embitgames.itch.io" target="_blank">
+                <img src="images/itch-icon.png" alt="Itch.io" />
+            </a>
+            <!-- Link to LinkedIn -->
+            <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank">
+                <img src="images/linkedin-icon.png" alt="LinkedIn" />
+            </a>
+        </div>
 
         <!-- TIMELINE -->
         <section id="timeline">
             <h2>Development Timeline</h2>
             <div class="timeline-container">
-                <!-- Main axis for 24 months (Jan 2024 -> Jan 2026) -->
+                <!-- Axis for Jan 2024 -> Jan 2026 (24 months) -->
                 <div class="timeline-axis">
-                    <!-- 0% => Jan 2024, 50% => Jan 2025, 100% => Jan 2026 -->
                     <div class="year-tick" style="left:0%;"></div>
                     <div class="year-label" style="left:0%;">2024</div>
 
@@ -470,8 +516,8 @@
                 </div>
 
                 <div class="timeline-lines">
-                    <!-- Example bar calculations (each month ~4.17%) -->
-                    <!-- Pinnable: 2 months from Jan 2024 => 0% to ~8.34% -->
+                    <!-- Example bars with corrected months -->
+                    <!-- Pinnable: 2 months, ended Mar 2024 => left=0%, width=8.34% -->
                     <div class="project-line">
                         <div class="project-bar pinnable-bar"
                              style="
@@ -484,7 +530,7 @@
                         </div>
                     </div>
 
-                    <!-- Unicellular: 5 months starting Sep 2024 (8 mo from Jan) => left ~ 33.36%, width ~ 20.85% => end ~54.21% -->
+                    <!-- Unicellular: 5 months from Sep 2024 => left=~33.36%, width=~20.85% => end ~54.21% -->
                     <div class="project-line">
                         <div class="project-bar unicellular-bar"
                              style="
@@ -497,7 +543,7 @@
                         </div>
                     </div>
 
-                    <!-- XR Game: started Jan 2025 => left=50%, ongoing => ~25% width => ends ~75% -->
+                    <!-- XR Game: ongoing from Jan 2025 => left=50%, width=25% => end 75% -->
                     <div class="project-line">
                         <div class="project-bar xr-bar ongoing"
                              style="
@@ -510,7 +556,7 @@
                         </div>
                     </div>
 
-                    <!-- Hell's Champion: also started Jan 2025 => left=50%, width=30% => ends ~80% -->
+                    <!-- Hell's Champion: also from Jan 2025 => left=50%, width=30% => end ~80% -->
                     <div class="project-line">
                         <div class="project-bar hells-bar ongoing"
                              style="
@@ -523,7 +569,7 @@
                         </div>
                     </div>
 
-                    <!-- Tank Game: 1 month => start=50, width ~4.17 => ends ~54.17 -->
+                    <!-- Tank Game: 1 month, ended Jan 2025 => left=50%, width=4.17% => ~54.17% -->
                     <div class="project-line">
                         <div class="project-bar tank-bar"
                              style="
@@ -536,7 +582,7 @@
                         </div>
                     </div>
 
-                    <!-- Diep-inspired: same as Tank -->
+                    <!-- Diep-inspired: same approach -->
                     <div class="project-line">
                         <div class="project-bar diep-bar"
                              style="
@@ -556,7 +602,7 @@
         <section id="solo-projects">
             <h2>Solo Projects</h2>
             <div class="project-grid">
-                <!-- Unicellular Project Card -->
+                <!-- UNICELLULAR -->
                 <div class="project-card">
                     <h3>Unicellular</h3>
                     <p>
@@ -567,7 +613,7 @@
 
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank">View on GitHub</a>
-                        <a href="https://embitgames.itch.io/unicellular" target="_blank">Play Instantly on itch.io</a>
+                        <a href="https://embitgames.itch.io/unicellular" target="_blank">Play on itch.io</a>
                     </div>
 
                     <div class="slideshow-container" id="unicellularSlideshow">
@@ -588,7 +634,7 @@
                     </div>
                 </div>
 
-                <!-- Pinnable Project Card -->
+                <!-- PINNABLE -->
                 <div class="project-card">
                     <h3>Pinnable</h3>
                     <p>
@@ -598,7 +644,7 @@
 
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames" target="_blank">View on GitHub</a>
-                        <a href="https://embitgames.itch.io/pinnable" target="_blank">Play Instantly on itch.io</a>
+                        <a href="https://embitgames.itch.io/pinnable" target="_blank">Play on itch.io</a>
                     </div>
 
                     <div class="slideshow-container" id="pinnableSlideshow">
@@ -619,12 +665,12 @@
                     </div>
                 </div>
 
-                <!-- Tank Shooter -->
+                <!-- TANK SHOOTER -->
                 <div class="project-card">
                     <h3>3D Netcode – Tank Shooter</h3>
                     <p>
-                        A 3D tank game using Unity’s Netcode for GameObjects. Includes Unity Cloud services like authentication
-                        and relay to implement a robust server-client multiplayer experience.
+                        A 3D tank game using Unity’s Netcode for GameObjects. Includes Unity Cloud services including authentication
+                        and relay for a robust server-client multiplayer experience.
                     </p>
                     <p class="tech">Technologies: Unity, Netcode for GameObjects, Unity Cloud</p>
 
@@ -650,7 +696,7 @@
                     </div>
                 </div>
 
-                <!-- 2D Netcode – Co-op Shooter -->
+                <!-- CO-OP SHOOTER -->
                 <div class="project-card">
                     <h3>2D Netcode – Co-op Shooter</h3>
                     <p>
@@ -715,7 +761,7 @@
             </div>
         </section>
 
-        <!-- FUTURE / IN DEVELOPMENT -->
+        <!-- IN DEVELOPMENT -->
         <section id="future-projects">
             <h2>In Development</h2>
             <div class="project-grid">
@@ -780,7 +826,7 @@
                 If you'd like to connect or learn more about my work, I'd love to hear from you!
             </p>
             <ul>
-                <li><strong>Email:</strong> <a href="mailto:your.email@example.com">your.jn@example.com</a></li>
+                <li><strong>Email:</strong> <a href="mailto:your.email@example.com">your.email@example.com</a></li>
                 <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank">LinkedIn Profile</a></li>
                 <li><strong>GitHub:</strong> <a href="https://github.com/EmbitGames" target="_blank">github.com/EmbitGames</a></li>
                 <li><strong>Itch.io:</strong> <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a></li>
@@ -798,6 +844,7 @@
         var slideIndices = {};
         var timers = {};
 
+        // Show the figure at index n for a given slideshow container
         function showSlides(n, containerId) {
             var container = document.getElementById(containerId);
             if (!container) return;
@@ -814,6 +861,7 @@
             slides[n - 1].classList.add("active");
         }
 
+        // Move forward/backward. If manual => no fade, else fade
         function plusSlides(n, containerId, manual) {
             var container = document.getElementById(containerId);
             if (!container) return;
@@ -824,6 +872,13 @@
             if (newIndex > slides.length) { newIndex = 1; }
             if (newIndex < 1) { newIndex = slides.length; }
 
+            // If manual => remove fade
+            if (manual) {
+                container.classList.remove("fade-transition");
+            } else {
+                container.classList.add("fade-transition");
+            }
+
             showSlides(newIndex, containerId);
 
             if (manual) {
@@ -833,6 +888,9 @@
 
         function startTimer(containerId) {
             timers[containerId] = setInterval(function () {
+                // auto => fade
+                var container = document.getElementById(containerId);
+                if (container) container.classList.add("fade-transition");
                 plusSlides(1, containerId, false);
             }, 5000);
         }
@@ -851,6 +909,9 @@
 
             containerIDs.forEach(function (id) {
                 slideIndices[id] = 1;
+                // Start with no fade
+                var container = document.getElementById(id);
+                if (container) container.classList.remove("fade-transition");
                 showSlides(1, id);
                 startTimer(id);
             });
