@@ -41,10 +41,40 @@
             justify-content: space-between;
         }
 
+        /* Logo plus icon links side by side */
+        .logo-and-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .nav-logo {
             font-size: 1.5rem;
             font-weight: bold;
+            white-space: nowrap;
         }
+
+        .nav-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+            .nav-icons a {
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+            }
+
+            .nav-icons img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transition: opacity 0.2s ease;
+            }
+
+                .nav-icons img:hover {
+                    opacity: 0.7;
+                }
 
         nav ul {
             list-style: none;
@@ -72,52 +102,50 @@
             padding-top: 100px; /* offset for sticky header */
         }
 
-        /* ABOUT SECTION */
+        /* ABOUT SECTION (Horizontal panel) */
         #about {
-            text-align: center;
             padding: 2rem 0;
         }
 
-            #about h1 {
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .about-img {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+            .about-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .about-text {
+            flex: 1;
+            min-width: 250px;
+        }
+
+            .about-text h1 {
                 font-size: 2rem;
                 margin-bottom: 1rem;
             }
 
-            #about p {
+            .about-text p {
                 max-width: 700px;
-                margin: 0 auto 1rem;
+                margin-bottom: 1rem;
                 color: #555;
                 font-size: 1rem;
-            }
-
-        /* ICON BUTTONS SECTION */
-        .icon-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem; /* spacing before timeline */
-        }
-
-            .icon-buttons a {
-                display: inline-block;
-                width: 40px;
-                height: 40px;
-                background: #fff;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                overflow: hidden;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                transition: background 0.2s;
-            }
-
-                .icon-buttons a:hover {
-                    background: #f0f0f0;
-                }
-
-            .icon-buttons img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
+                line-height: 1.6;
             }
 
         /* TIMELINE SECTION */
@@ -221,7 +249,6 @@
                 border-radius: 2px;
             }
 
-        /* Example color overrides for bars */
         .pinnable-bar {
             background: #7c9aff;
         }
@@ -246,7 +273,7 @@
             background: #ff7c7c;
         }
 
-        /* SECTIONS / PROJECTS */
+        /* PROJECTS */
         section {
             margin: 3rem 0;
         }
@@ -327,7 +354,7 @@
             border-radius: 5px;
             background: #000;
         }
-            /* We separate fade from normal to keep manual instant switch. */
+
             .slideshow-container figure {
                 position: absolute;
                 top: 0;
@@ -343,6 +370,13 @@
 
         .slideshow-container figure.active {
             opacity: 1;
+        }
+
+        .slideshow-container figure img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer; /* indicates clickable for lightbox */
         }
 
         .slideshow-caption {
@@ -380,6 +414,74 @@
 
         .next {
             right: 5px;
+        }
+
+        /* LIGHTBOX / MODAL for enlarged images */
+        #lightboxOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
+            display: none; /* hidden by default */
+            z-index: 10000; /* above everything */
+            align-items: center;
+            justify-content: center;
+        }
+
+        #lightboxContent {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        #lightboxImg {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        #lightboxClose {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.4);
+            padding: 0 10px;
+            border-radius: 4px;
+        }
+
+        #lightboxPrev, #lightboxNext {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            background: rgba(0,0,0,0.4);
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+            #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
+                background: rgba(0,0,0,0.7);
+            }
+
+        #lightboxPrev {
+            left: -50px;
+        }
+
+        #lightboxNext {
+            right: -50px;
         }
 
         /* CONTACT */
@@ -439,13 +541,33 @@
                 height: 220px;
             }
 
-                .slideshow-container img {
+                .slideshow-container figure img {
                     object-fit: cover;
                 }
 
-            .icon-buttons a {
-                width: 36px;
-                height: 36px;
+            .about-container {
+                flex-direction: column;
+            }
+
+            .about-img {
+                margin-bottom: 1rem;
+            }
+
+            .nav-icons a {
+                width: 20px;
+                height: 20px;
+            }
+
+            #lightboxPrev, #lightboxNext {
+                font-size: 1.5rem;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            #lightboxClose {
+                top: -30px;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -455,7 +577,26 @@
     <!-- HEADER / NAV -->
     <header>
         <div class="nav-container">
-            <div class="nav-logo">Oliver Neal</div>
+            <!-- Logo + icons side by side -->
+            <div class="logo-and-icons">
+                <div class="nav-logo">Oliver Neal</div>
+                <div class="nav-icons">
+                    <!-- GitHub Icon Link -->
+                    <a href="https://github.com/EmbitGames" target="_blank">
+                        <img src="images/github-icon.png" alt="GitHub" />
+                    </a>
+                    <!-- Itch.io Icon Link -->
+                    <a href="https://embitgames.itch.io" target="_blank">
+                        <img src="images/itch-icon.png" alt="Itch.io" />
+                    </a>
+                    <!-- LinkedIn Icon Link -->
+                    <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank">
+                        <img src="images/linkedin-icon.png" alt="LinkedIn" />
+                    </a>
+                </div>
+            </div>
+
+            <!-- Nav Links on the right -->
             <nav>
                 <ul>
                     <li><a href="#about">About</a></li>
@@ -469,35 +610,28 @@
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main>
         <!-- ABOUT SECTION -->
         <section id="about">
-            <h1>Hello, I'm Oliver Neal!</h1>
-            <p>
-                From the UK, i'm a <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev, multiplayer netcode,
-                and performance optimization. I enjoy tackling challenging gameplay systems
-                and delivering polished player experiences.
-            </p>
-            <p>
-                I am a Games Technologies student expected to graduate with a foundation degree in July of 2025, and a Bachelor of Science degree in July of 2026.
-            </p>
+            <div class="about-container">
+                <div class="about-img">
+                    <img src="C:\Users\olive\source\repos\portfoliowebsite\oliver.jpg" alt="Oliver Neal Selfie" />
+                </div>
+                <div class="about-text">
+                    <h1>Hello, I'm Oliver Neal! (<i>and this website is unfinished!</i>)</h1>
+                    <p>
+                        From the UK, I'm a <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev,
+                        multiplayer netcode, and performance optimization. I enjoy tackling challenging gameplay systems
+                        and delivering polished player experiences.
+                    </p>
+                    <p>
+                        I am a Games Technologies student expected to graduate with a foundation degree in July of 2025,
+                        and a Bachelor of Science degree in July of 2026.
+                    </p>
+                </div>
+            </div>
         </section>
-
-        <!-- ICON BUTTONS (Under About, above Timeline) -->
-        <div class="icon-buttons">
-            <!-- Link to GitHub -->
-            <a href="https://github.com/EmbitGames" target="_blank">
-                <img src="images/github-icon.png" alt="GitHub" />
-            </a>
-            <!-- Link to itch.io -->
-            <a href="https://embitgames.itch.io" target="_blank">
-                <img src="images/itch-icon.png" alt="Itch.io" />
-            </a>
-            <!-- Link to LinkedIn -->
-            <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank">
-                <img src="images/linkedin-icon.png" alt="LinkedIn" />
-            </a>
-        </div>
 
         <!-- TIMELINE -->
         <section id="timeline">
@@ -507,90 +641,47 @@
                 <div class="timeline-axis">
                     <div class="year-tick" style="left:0%;"></div>
                     <div class="year-label" style="left:0%;">2024</div>
-
                     <div class="year-tick" style="left:50%;"></div>
                     <div class="year-label" style="left:50%;">2025</div>
-
                     <div class="year-tick" style="left:100%;"></div>
                     <div class="year-label" style="left:100%;">2026</div>
                 </div>
 
                 <div class="timeline-lines">
-                    <!-- Example bars with corrected months -->
-                    <!-- Pinnable: 2 months, ended Mar 2024 => left=0%, width=8.34% -->
+                    <!-- Example bars -->
                     <div class="project-line">
-                        <div class="project-bar pinnable-bar"
-                             style="
-                left:0%;
-                width:8.34%;
-              "></div>
-                        <div class="project-label"
-                             style="left:8.34%;">
+                        <div class="project-bar pinnable-bar" style="left:0%; width:8.34%;"></div>
+                        <div class="project-label" style="left:8.34%;">
                             Pinnable (2 months) ended Mar 2024
                         </div>
                     </div>
-
-                    <!-- Unicellular: 5 months from Sep 2024 => left=~33.36%, width=~20.85% => end ~54.21% -->
                     <div class="project-line">
-                        <div class="project-bar unicellular-bar"
-                             style="
-                left:33.36%;
-                width:20.85%;
-              "></div>
-                        <div class="project-label"
-                             style="left:54.21%;">
+                        <div class="project-bar unicellular-bar" style="left:33.36%; width:20.85%;"></div>
+                        <div class="project-label" style="left:54.21%;">
                             Unicellular (5 months) ended Feb 2025
                         </div>
                     </div>
-
-                    <!-- XR Game: ongoing from Jan 2025 => left=50%, width=25% => end 75% -->
                     <div class="project-line">
-                        <div class="project-bar xr-bar ongoing"
-                             style="
-                left:50%;
-                width:25%;
-              "></div>
-                        <div class="project-label"
-                             style="left:75%;">
+                        <div class="project-bar xr-bar ongoing" style="left:50%; width:25%;"></div>
+                        <div class="project-label" style="left:75%;">
                             XR Game (ongoing, started Jan 2025)
                         </div>
                     </div>
-
-                    <!-- Hell's Champion: also from Jan 2025 => left=50%, width=30% => end ~80% -->
                     <div class="project-line">
-                        <div class="project-bar hells-bar ongoing"
-                             style="
-                left:50%;
-                width:30%;
-              "></div>
-                        <div class="project-label"
-                             style="left:80%;">
+                        <div class="project-bar hells-bar ongoing" style="left:50%; width:30%;"></div>
+                        <div class="project-label" style="left:80%;">
                             Hell's Champion (ongoing, started Jan 2025)
                         </div>
                     </div>
-
-                    <!-- Tank Game: 1 month, ended Jan 2025 => left=50%, width=4.17% => ~54.17% -->
                     <div class="project-line">
-                        <div class="project-bar tank-bar"
-                             style="
-                left:50%;
-                width:4.17%;
-              "></div>
-                        <div class="project-label"
-                             style="left:54.17%;">
+                        <div class="project-bar tank-bar" style="left:50%; width:4.17%;"></div>
+                        <div class="project-label" style="left:54.17%;">
                             Tank Game (1 month) ended Jan 2025
                         </div>
                     </div>
-
-                    <!-- Diep-inspired: same approach -->
                     <div class="project-line">
-                        <div class="project-bar diep-bar"
-                             style="
-                left:50%;
-                width:4.17%;
-              "></div>
-                        <div class="project-label"
-                             style="left:54.17%;">
+                        <div class="project-bar diep-bar" style="left:50%; width:4.17%;"></div>
+                        <div class="project-label" style="left:54.17%;">
                             Diep-inspired (1 month) ended Jan 2025
                         </div>
                     </div>
@@ -602,128 +693,109 @@
         <section id="solo-projects">
             <h2>Solo Projects</h2>
             <div class="project-grid">
-                <!-- UNICELLULAR -->
+                <!-- Example: Unicellular with enlarge -->
                 <div class="project-card">
                     <h3>Unicellular</h3>
-                    <p>
-                        A simulation handling thousands of entities using finite state machines.
-                        Demonstrates optimization, AI, and performance management.
-                    </p>
-                    <p class="tech">Technologies: Unity 2D, Finite State Machines</p>
-
+                    <p>A simulation handling thousands of entities...</p>
+                    <p class="tech">Technologies: Unity 2D</p>
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank">View on GitHub</a>
                         <a href="https://embitgames.itch.io/unicellular" target="_blank">Play on itch.io</a>
                     </div>
-
                     <div class="slideshow-container" id="unicellularSlideshow">
                         <figure class="active">
-                            <img src="images/unicell1.png" alt="Unicellular Screenshot 1">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell1.png" alt="Unicellular 1" onclick="openLightbox('unicellularSlideshow',1)" />
                             <figcaption class="slideshow-caption">Simulation Start</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/unicell2.png" alt="Unicellular Screenshot 2">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell2.png" alt="Unicellular 2" onclick="openLightbox('unicellularSlideshow',2)" />
                             <figcaption class="slideshow-caption">Entity Interactions</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/unicell3.png" alt="Unicellular Screenshot 3">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell3.png" alt="Unicellular 3" onclick="openLightbox('unicellularSlideshow',3)" />
                             <figcaption class="slideshow-caption">Performance Metrics</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'unicellularSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'unicellularSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
 
-                <!-- PINNABLE -->
+                <!-- PINNABLE (with enlarge) -->
                 <div class="project-card">
                     <h3>Pinnable</h3>
-                    <p>
-                        A 2D platformer where players dodge falling marbles. My first passion project exploring level design and simple gameplay loops.
-                    </p>
+                    <p>A 2D platformer where players dodge...</p>
                     <p class="tech">Technologies: Unity 2D</p>
-
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames" target="_blank">View on GitHub</a>
                         <a href="https://embitgames.itch.io/pinnable" target="_blank">Play on itch.io</a>
                     </div>
-
                     <div class="slideshow-container" id="pinnableSlideshow">
                         <figure class="active">
-                            <img src="images/pinnable1.jpg" alt="Pinnable 1">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell1.png" alt="Pinnable 1" onclick="openLightbox('pinnableSlideshow',1)" />
                             <figcaption class="slideshow-caption">Gameplay</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/pinnable2.jpg" alt="Pinnable 2">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell2.png" alt="Pinnable 2" onclick="openLightbox('pinnableSlideshow',2)" />
                             <figcaption class="slideshow-caption">Main Menu</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/pinnable3.jpg" alt="Pinnable 3">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell3.png" alt="Pinnable 3" onclick="openLightbox('pinnableSlideshow',3)" />
                             <figcaption class="slideshow-caption">Options Menu</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'pinnableSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'pinnableSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
 
-                <!-- TANK SHOOTER -->
+                <!-- TANK SHOOTER (with enlarge) -->
                 <div class="project-card">
                     <h3>3D Netcode – Tank Shooter</h3>
-                    <p>
-                        A 3D tank game using Unity’s Netcode for GameObjects. Includes Unity Cloud services including authentication
-                        and relay for a robust server-client multiplayer experience.
-                    </p>
-                    <p class="tech">Technologies: Unity, Netcode for GameObjects, Unity Cloud</p>
-
+                    <p>A 3D tank game using Unity’s Netcode...</p>
+                    <p class="tech">Technologies: Unity</p>
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/NetcodeTankGame" target="_blank">View on GitHub</a>
                     </div>
-
                     <div class="slideshow-container" id="tankSlideshow">
                         <figure class="active">
-                            <img src="images/tank1.jpg" alt="Tank Shooter 1">
+                            <img src="images/tank1.jpg" alt="Tank Shooter 1" onclick="openLightbox('tankSlideshow',1)" />
                             <figcaption class="slideshow-caption">Gameplay</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/tank2.jpg" alt="Tank Shooter 2">
+                            <img src="images/tank2.jpg" alt="Tank Shooter 2" onclick="openLightbox('tankSlideshow',2)" />
                             <figcaption class="slideshow-caption">Registration Menu</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/tank3.jpg" alt="Tank Shooter 3">
+                            <img src="images/tank3.jpg" alt="Tank Shooter 3" onclick="openLightbox('tankSlideshow',3)" />
                             <figcaption class="slideshow-caption">Play Menu</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'tankSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'tankSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'tankSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'tankSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
 
-                <!-- CO-OP SHOOTER -->
+                <!-- 2D Netcode – Co-op Shooter (with enlarge) -->
                 <div class="project-card">
                     <h3>2D Netcode – Co-op Shooter</h3>
-                    <p>
-                        Inspired by <em>diep.io</em>, featuring a distributed authority topology for multiplayer.
-                        Emphasizes client-side prediction and conflict resolution.
-                    </p>
-                    <p class="tech">Technologies: Unity, Netcode for GameObjects</p>
-
+                    <p>Inspired by <em>diep.io</em>, featuring distributed authority...</p>
+                    <p class="tech">Technologies: Unity</p>
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/PixelBulletsOnline" target="_blank">View on GitHub</a>
                     </div>
-
                     <div class="slideshow-container" id="coopSlideshow">
                         <figure class="active">
-                            <img src="images/coop1.jpg" alt="Co-op Shooter 1">
+                            <img src="images/coop1.jpg" alt="Co-op Shooter 1" onclick="openLightbox('coopSlideshow',1)" />
                             <figcaption class="slideshow-caption">Lobby</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/coop2.jpg" alt="Co-op Shooter 2">
+                            <img src="images/coop2.jpg" alt="Co-op Shooter 2" onclick="openLightbox('coopSlideshow',2)" />
                             <figcaption class="slideshow-caption">In-game Action</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/coop3.jpg" alt="Co-op Shooter 3">
+                            <img src="images/coop3.jpg" alt="Co-op Shooter 3" onclick="openLightbox('coopSlideshow',3)" />
                             <figcaption class="slideshow-caption">Scoreboard</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'coopSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'coopSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'coopSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'coopSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
             </div>
@@ -735,27 +807,22 @@
             <div class="project-grid">
                 <div class="project-card">
                     <h3>Tides of the Moon</h3>
-                    <p>
-                        A week-long jam prototype with four collaborators. Not pursued further,
-                        but demonstrated rapid prototyping and team synergy.
-                    </p>
+                    <p>A week-long jam prototype with four collaborators...</p>
                     <p class="tech">Technologies: Unity</p>
-
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/TidesOfTheMoon" target="_blank">View on GitHub</a>
                     </div>
-
                     <div class="slideshow-container" id="tidesSlideshow">
                         <figure class="active">
-                            <img src="images/tides1.jpg" alt="Tides of the Moon 1">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell2.png" alt="Tides 1" onclick="openLightbox('tidesSlideshow',1)" />
                             <figcaption class="slideshow-caption">Prototype Gameplay</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/tides2.jpg" alt="Tides of the Moon 2">
+                            <img src="C:\Users\olive\source\repos\portfoliowebsite\unicell2.png" alt="Tides 2" onclick="openLightbox('tidesSlideshow',2)" />
                             <figcaption class="slideshow-caption">In-Game Scene</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'tidesSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'tidesSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'tidesSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'tidesSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
             </div>
@@ -765,6 +832,7 @@
         <section id="future-projects">
             <h2>In Development</h2>
             <div class="project-grid">
+                <!-- XR Game -->
                 <div class="project-card">
                     <h3>XR Game</h3>
                     <p>
@@ -772,48 +840,45 @@
                         and multiplayer elements in extended reality.
                     </p>
                     <p class="tech">Technologies: Unity XR, VR/AR Toolkits</p>
-
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/XRGamePrototype" target="_blank">View on GitHub</a>
                     </div>
-
                     <div class="slideshow-container" id="xrSlideshow">
                         <figure class="active">
-                            <img src="images/xr1.jpg" alt="XR 1">
+                            <img src="images/xr1.jpg" alt="XR 1" onclick="openLightbox('xrSlideshow',1)" />
                             <figcaption class="slideshow-caption">Prototype Start</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/xr2.jpg" alt="XR 2">
+                            <img src="images/xr2.jpg" alt="XR 2" onclick="openLightbox('xrSlideshow',2)" />
                             <figcaption class="slideshow-caption">Interaction Testing</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'xrSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'xrSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'xrSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'xrSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
 
+                <!-- Hell's Champion -->
                 <div class="project-card">
                     <h3>Hell's Champion</h3>
                     <p>
-                        A 3D shooter in early development, focusing on robust enemy AI, atmospheric design,
-                        and fluid shooting mechanics for a fast-paced experience.
+                        A 3D shooter in early development, focusing on robust enemy AI,
+                        atmospheric design, and fluid shooting mechanics for a fast-paced experience.
                     </p>
                     <p class="tech">Technologies: Unity 3D, C#, AI, Gameplay Systems</p>
-
                     <div class="project-links">
                         <a href="https://github.com/EmbitGames/HellsChampion" target="_blank">View on GitHub</a>
                     </div>
-
                     <div class="slideshow-container" id="hellSlideshow">
                         <figure class="active">
-                            <img src="images/hell1.jpg" alt="Hell's Champion 1">
+                            <img src="images/hell1.jpg" alt="Hell's Champion 1" onclick="openLightbox('hellSlideshow',1)" />
                             <figcaption class="slideshow-caption">Early Environment</figcaption>
                         </figure>
                         <figure>
-                            <img src="images/hell2.jpg" alt="Hell's Champion 2">
+                            <img src="images/hell2.jpg" alt="Hell's Champion 2" onclick="openLightbox('hellSlideshow',2)" />
                             <figcaption class="slideshow-caption">AI Enemy Concept</figcaption>
                         </figure>
-                        <div class="prev" onclick="plusSlides(-1, 'hellSlideshow', true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1, 'hellSlideshow', true)">&#10095;</div>
+                        <div class="prev" onclick="plusSlides(-1,'hellSlideshow',true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1,'hellSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
             </div>
@@ -822,9 +887,7 @@
         <!-- CONTACT -->
         <section id="contact">
             <h2>Contact</h2>
-            <p>
-                If you'd like to connect or learn more about my work, I'd love to hear from you!
-            </p>
+            <p>If you'd like to connect or learn more about my work, I'd love to hear from you!</p>
             <ul>
                 <li><strong>Email:</strong> <a href="mailto:your.email@example.com">your.email@example.com</a></li>
                 <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank">LinkedIn Profile</a></li>
@@ -834,17 +897,27 @@
         </section>
     </main>
 
+    <!-- LIGHTBOX OVERLAY FOR ENLARGED IMAGE -->
+    <div id="lightboxOverlay" onclick="closeLightbox()">
+        <div id="lightboxContent" onclick="event.stopPropagation()">
+            <span id="lightboxClose" onclick="closeLightbox()">&times;</span>
+            <img id="lightboxImg" src="" alt="Enlarged Slide" />
+            <span id="lightboxPrev" onclick="lightboxChange(-1)">&#10094;</span>
+            <span id="lightboxNext" onclick="lightboxChange(1)">&#10095;</span>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer>
         <p>&copy; 2025 Oliver Neal</p>
     </footer>
 
-    <!-- SLIDESHOW SCRIPT -->
+    <!-- SLIDESHOW + LIGHTBOX SCRIPT -->
     <script>
         var slideIndices = {};
         var timers = {};
 
-        // Show the figure at index n for a given slideshow container
+        // Show figure at index n within a given container
         function showSlides(n, containerId) {
             var container = document.getElementById(containerId);
             if (!container) return;
@@ -861,7 +934,7 @@
             slides[n - 1].classList.add("active");
         }
 
-        // Move forward/backward. If manual => no fade, else fade
+        // Next/Prev for slideshow
         function plusSlides(n, containerId, manual) {
             var container = document.getElementById(containerId);
             if (!container) return;
@@ -872,7 +945,7 @@
             if (newIndex > slides.length) { newIndex = 1; }
             if (newIndex < 1) { newIndex = slides.length; }
 
-            // If manual => remove fade
+            // No fade on manual click, fade on auto
             if (manual) {
                 container.classList.remove("fade-transition");
             } else {
@@ -888,7 +961,6 @@
 
         function startTimer(containerId) {
             timers[containerId] = setInterval(function () {
-                // auto => fade
                 var container = document.getElementById(containerId);
                 if (container) container.classList.add("fade-transition");
                 plusSlides(1, containerId, false);
@@ -900,22 +972,69 @@
             startTimer(containerId);
         }
 
+        // On DOM load, init all slideshows
         document.addEventListener("DOMContentLoaded", function () {
             var containerIDs = [
                 'unicellularSlideshow', 'pinnableSlideshow',
                 'tankSlideshow', 'coopSlideshow',
                 'tidesSlideshow', 'xrSlideshow', 'hellSlideshow'
             ];
-
             containerIDs.forEach(function (id) {
                 slideIndices[id] = 1;
-                // Start with no fade
                 var container = document.getElementById(id);
                 if (container) container.classList.remove("fade-transition");
                 showSlides(1, id);
                 startTimer(id);
             });
         });
+
+        /*************** LIGHTBOX SCRIPT ***************/
+        var currentSlideshowId = null;
+        var currentSlideIndex = 1;
+
+        // Open Lightbox with a given container & figure index
+        function openLightbox(containerId, figureIndex) {
+            currentSlideshowId = containerId;
+            currentSlideIndex = figureIndex;
+
+            // Sync the main slideshow to that figure
+            showSlides(figureIndex, containerId);
+
+            // Update the lightbox to that image
+            updateLightbox();
+            document.getElementById("lightboxOverlay").style.display = "flex";
+        }
+
+        // Close Lightbox
+        function closeLightbox() {
+            document.getElementById("lightboxOverlay").style.display = "none";
+        }
+
+        // Lightbox Next/Prev
+        function lightboxChange(n) {
+            var slides = document.getElementById(currentSlideshowId).getElementsByTagName("figure");
+            var newIndex = currentSlideIndex + n;
+            if (newIndex > slides.length) newIndex = 1;
+            if (newIndex < 1) newIndex = slides.length;
+            currentSlideIndex = newIndex;
+
+            // Also sync the main slideshow behind the scenes
+            showSlides(newIndex, currentSlideshowId);
+
+            updateLightbox();
+        }
+
+        // Update Lightbox to match the currentSlideIndex
+        function updateLightbox() {
+            var slides = document.getElementById(currentSlideshowId).getElementsByTagName("figure");
+            if (!slides.length) return;
+            if (currentSlideIndex > slides.length) currentSlideIndex = 1;
+            if (currentSlideIndex < 1) currentSlideIndex = slides.length;
+
+            var img = slides[currentSlideIndex - 1].getElementsByTagName("img")[0];
+            var src = img.getAttribute("src");
+            document.getElementById("lightboxImg").setAttribute("src", src);
+        }
     </script>
 </body>
 </html>
