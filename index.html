@@ -1,0 +1,860 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oliver Neal – Portfolio</title>
+    <style>
+        /* RESET / BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* STICKY NAVIGATION */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            color: #fff;
+            padding: 1rem 0;
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+            nav a:hover {
+                color: #ddd;
+            }
+
+        /* MAIN CONTENT WRAPPER */
+        main {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 100px; /* offset for sticky header */
+        }
+
+        /* ABOUT SECTION */
+        #about {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+            #about h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            #about p {
+                max-width: 700px;
+                margin: 0 auto 1rem;
+                color: #555;
+                font-size: 1rem;
+            }
+
+        /* TIMELINE SECTION */
+        #timeline {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+            #timeline h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                color: #222;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 0.5rem;
+                display: inline-block;
+            }
+
+        .timeline-container {
+            position: relative;
+            overflow-x: auto; /* allows horizontal scroll if needed on small screens */
+            padding: 1rem;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            width: 100%; /* can be fixed (e.g., 1000px) or 100% */
+        }
+
+        .timeline-axis {
+            position: relative;
+            height: 60px;
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 2rem;
+            width: 1000px; /* total length for 2 years, for example */
+            margin: 0 auto;
+        }
+
+        .year-tick {
+            position: absolute;
+            bottom: 0;
+            height: 15px;
+            width: 2px;
+            background: #333;
+        }
+
+        .year-label {
+            position: absolute;
+            bottom: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #333;
+            transform: translateX(-50%);
+        }
+
+        /* Project lines container */
+        .timeline-lines {
+            position: relative;
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-line {
+            position: relative;
+            height: 30px;
+            margin-bottom: 20px;
+        }
+
+        .project-bar {
+            position: absolute;
+            top: 5px;
+            height: 8px;
+            border-radius: 4px;
+            background: #3fa9f5;
+        }
+
+        .ongoing {
+            background: #f8b500;
+        }
+
+        .project-label {
+            position: absolute;
+            top: -25px;
+            font-size: 0.85rem;
+            background: #fff;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+            .project-label::before {
+                content: "";
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 6px;
+                height: 6px;
+                background: #fff;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                border-radius: 2px;
+            }
+
+        /* Example color overrides for bars */
+        .pinnable-bar {
+            background: #7c9aff;
+        }
+
+        .unicellular-bar {
+            background: #42c697;
+        }
+
+        .xr-bar {
+            background: #f8b500;
+        }
+
+        .hells-bar {
+            background: #f8b500;
+        }
+
+        .tank-bar {
+            background: #ff7c7c;
+        }
+
+        .diep-bar {
+            background: #ff7c7c;
+        }
+
+        /* SECTIONS & PROJECTS */
+        section {
+            margin: 3rem 0;
+        }
+
+            section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                color: #222;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 0.5rem;
+            }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 450px;
+        }
+
+            .project-card h3 {
+                margin-bottom: 0.5rem;
+                color: #222;
+                font-size: 1.2rem;
+            }
+
+            .project-card p {
+                font-size: 0.95rem;
+                color: #555;
+                margin-bottom: 1rem;
+            }
+
+        .tech {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .project-links {
+            margin-bottom: 1.5rem;
+        }
+
+            .project-links a {
+                display: inline-block;
+                margin-right: 8px;
+                margin-top: 5px;
+                padding: 0.4rem 0.8rem;
+                background: #222;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+                font-size: 0.85rem;
+                transition: background 0.2s ease;
+            }
+
+                .project-links a:hover {
+                    background: #444;
+                }
+
+        /* SLIDESHOW */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 200px;
+            margin-top: auto;
+            overflow: hidden;
+            border-radius: 5px;
+            background: #000;
+        }
+
+            .slideshow-container figure {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin: 0;
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+            }
+
+                .slideshow-container figure.active {
+                    opacity: 1;
+                }
+
+            .slideshow-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .slideshow-caption {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            width: 100%;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+            .prev:hover, .next:hover {
+                background: rgba(0,0,0,0.8);
+            }
+
+        .prev {
+            left: 5px;
+        }
+
+        .next {
+            right: 5px;
+        }
+
+        /* CONTACT */
+        #contact {
+            padding-bottom: 2rem;
+        }
+
+            #contact ul {
+                list-style: none;
+                margin-top: 1rem;
+            }
+
+            #contact li {
+                margin-bottom: 0.5rem;
+            }
+
+            #contact a {
+                color: #333;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                #contact a:hover {
+                    text-decoration: underline;
+                }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            background: #222;
+            color: #fff;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            body {
+                padding-top: 120px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .timeline-container {
+                width: 100%;
+            }
+
+            .timeline-axis,
+            .timeline-lines {
+                width: 800px; /* or smaller for mobile */
+            }
+
+            .slideshow-container {
+                height: 220px;
+            }
+
+                .slideshow-container img {
+                    object-fit: cover;
+                }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER / NAV -->
+    <header>
+        <div class="nav-container">
+            <div class="nav-logo">Oliver Neal</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#timeline">Timeline</a></li>
+                    <li><a href="#solo-projects">Solo Projects</a></li>
+                    <li><a href="#team-projects">Team Projects</a></li>
+                    <li><a href="#future-projects">In Development</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- ABOUT -->
+        <section id="about">
+            <h1>Hello, I'm Oliver Neal!</h1>
+            <p>
+                I'm a passionate <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev, multiplayer netcode,
+                and performance optimization. I love tackling challenging gameplay systems
+                and delivering polished player experiences.
+            </p>
+            <p>
+                Below is a concise timeline with project durations, followed by full details on each.
+            </p>
+        </section>
+
+        <!-- TIMELINE -->
+        <section id="timeline">
+            <h2>Development Timeline</h2>
+            <div class="timeline-container">
+                <!-- Main axis for 24 months (Jan 2024 -> Jan 2026) -->
+                <div class="timeline-axis">
+                    <!-- 0% => Jan 2024, 50% => Jan 2025, 100% => Jan 2026 -->
+                    <div class="year-tick" style="left:0%;"></div>
+                    <div class="year-label" style="left:0%;">2024</div>
+
+                    <div class="year-tick" style="left:50%;"></div>
+                    <div class="year-label" style="left:50%;">2025</div>
+
+                    <div class="year-tick" style="left:100%;"></div>
+                    <div class="year-label" style="left:100%;">2026</div>
+                </div>
+
+                <div class="timeline-lines">
+                    <!-- Example bar calculations (each month ~4.17%) -->
+                    <!-- Pinnable: 2 months from Jan 2024 => 0% to ~8.34% -->
+                    <div class="project-line">
+                        <div class="project-bar pinnable-bar"
+                             style="
+                left:0%;
+                width:8.34%;
+              "></div>
+                        <div class="project-label"
+                             style="left:8.34%;">
+                            Pinnable (2 months) ended Mar 2024
+                        </div>
+                    </div>
+
+                    <!-- Unicellular: 5 months starting Sep 2024 (8 mo from Jan) => left ~ 33.36%, width ~ 20.85% => end ~54.21% -->
+                    <div class="project-line">
+                        <div class="project-bar unicellular-bar"
+                             style="
+                left:33.36%;
+                width:20.85%;
+              "></div>
+                        <div class="project-label"
+                             style="left:54.21%;">
+                            Unicellular (5 months) ended Feb 2025
+                        </div>
+                    </div>
+
+                    <!-- XR Game: started Jan 2025 => left=50%, ongoing => ~25% width => ends ~75% -->
+                    <div class="project-line">
+                        <div class="project-bar xr-bar ongoing"
+                             style="
+                left:50%;
+                width:25%;
+              "></div>
+                        <div class="project-label"
+                             style="left:75%;">
+                            XR Game (ongoing, started Jan 2025)
+                        </div>
+                    </div>
+
+                    <!-- Hell's Champion: also started Jan 2025 => left=50%, width=30% => ends ~80% -->
+                    <div class="project-line">
+                        <div class="project-bar hells-bar ongoing"
+                             style="
+                left:50%;
+                width:30%;
+              "></div>
+                        <div class="project-label"
+                             style="left:80%;">
+                            Hell's Champion (ongoing, started Jan 2025)
+                        </div>
+                    </div>
+
+                    <!-- Tank Game: 1 month => start=50, width ~4.17 => ends ~54.17 -->
+                    <div class="project-line">
+                        <div class="project-bar tank-bar"
+                             style="
+                left:50%;
+                width:4.17%;
+              "></div>
+                        <div class="project-label"
+                             style="left:54.17%;">
+                            Tank Game (1 month) ended Jan 2025
+                        </div>
+                    </div>
+
+                    <!-- Diep-inspired: same as Tank -->
+                    <div class="project-line">
+                        <div class="project-bar diep-bar"
+                             style="
+                left:50%;
+                width:4.17%;
+              "></div>
+                        <div class="project-label"
+                             style="left:54.17%;">
+                            Diep-inspired (1 month) ended Jan 2025
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLO PROJECTS -->
+        <section id="solo-projects">
+            <h2>Solo Projects</h2>
+            <div class="project-grid">
+                <!-- Unicellular Project Card -->
+                <div class="project-card">
+                    <h3>Unicellular</h3>
+                    <p>
+                        A simulation handling thousands of entities using finite state machines.
+                        Demonstrates optimization, AI, and performance management.
+                    </p>
+                    <p class="tech">Technologies: Unity 2D, Finite State Machines</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank">View on GitHub</a>
+                        <a href="https://embitgames.itch.io/unicellular" target="_blank">Play Instantly on itch.io</a>
+                    </div>
+
+                    <div class="slideshow-container" id="unicellularSlideshow">
+                        <figure class="active">
+                            <img src="images/unicell1.png" alt="Unicellular Screenshot 1">
+                            <figcaption class="slideshow-caption">Simulation Start</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/unicell2.png" alt="Unicellular Screenshot 2">
+                            <figcaption class="slideshow-caption">Entity Interactions</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/unicell3.png" alt="Unicellular Screenshot 3">
+                            <figcaption class="slideshow-caption">Performance Metrics</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'unicellularSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'unicellularSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+
+                <!-- Pinnable Project Card -->
+                <div class="project-card">
+                    <h3>Pinnable</h3>
+                    <p>
+                        A 2D platformer where players dodge falling marbles. My first passion project exploring level design and simple gameplay loops.
+                    </p>
+                    <p class="tech">Technologies: Unity 2D</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames" target="_blank">View on GitHub</a>
+                        <a href="https://embitgames.itch.io/pinnable" target="_blank">Play Instantly on itch.io</a>
+                    </div>
+
+                    <div class="slideshow-container" id="pinnableSlideshow">
+                        <figure class="active">
+                            <img src="images/pinnable1.jpg" alt="Pinnable 1">
+                            <figcaption class="slideshow-caption">Gameplay</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/pinnable2.jpg" alt="Pinnable 2">
+                            <figcaption class="slideshow-caption">Main Menu</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/pinnable3.jpg" alt="Pinnable 3">
+                            <figcaption class="slideshow-caption">Options Menu</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'pinnableSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'pinnableSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+
+                <!-- Tank Shooter -->
+                <div class="project-card">
+                    <h3>3D Netcode – Tank Shooter</h3>
+                    <p>
+                        A 3D tank game using Unity’s Netcode for GameObjects. Includes Unity Cloud services like authentication
+                        and relay to implement a robust server-client multiplayer experience.
+                    </p>
+                    <p class="tech">Technologies: Unity, Netcode for GameObjects, Unity Cloud</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames/NetcodeTankGame" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="slideshow-container" id="tankSlideshow">
+                        <figure class="active">
+                            <img src="images/tank1.jpg" alt="Tank Shooter 1">
+                            <figcaption class="slideshow-caption">Gameplay</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/tank2.jpg" alt="Tank Shooter 2">
+                            <figcaption class="slideshow-caption">Registration Menu</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/tank3.jpg" alt="Tank Shooter 3">
+                            <figcaption class="slideshow-caption">Play Menu</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'tankSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'tankSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+
+                <!-- 2D Netcode – Co-op Shooter -->
+                <div class="project-card">
+                    <h3>2D Netcode – Co-op Shooter</h3>
+                    <p>
+                        Inspired by <em>diep.io</em>, featuring a distributed authority topology for multiplayer.
+                        Emphasizes client-side prediction and conflict resolution.
+                    </p>
+                    <p class="tech">Technologies: Unity, Netcode for GameObjects</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames/PixelBulletsOnline" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="slideshow-container" id="coopSlideshow">
+                        <figure class="active">
+                            <img src="images/coop1.jpg" alt="Co-op Shooter 1">
+                            <figcaption class="slideshow-caption">Lobby</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/coop2.jpg" alt="Co-op Shooter 2">
+                            <figcaption class="slideshow-caption">In-game Action</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/coop3.jpg" alt="Co-op Shooter 3">
+                            <figcaption class="slideshow-caption">Scoreboard</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'coopSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'coopSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEAM PROJECTS -->
+        <section id="team-projects">
+            <h2>Team Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Tides of the Moon</h3>
+                    <p>
+                        A week-long jam prototype with four collaborators. Not pursued further,
+                        but demonstrated rapid prototyping and team synergy.
+                    </p>
+                    <p class="tech">Technologies: Unity</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames/TidesOfTheMoon" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="slideshow-container" id="tidesSlideshow">
+                        <figure class="active">
+                            <img src="images/tides1.jpg" alt="Tides of the Moon 1">
+                            <figcaption class="slideshow-caption">Prototype Gameplay</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/tides2.jpg" alt="Tides of the Moon 2">
+                            <figcaption class="slideshow-caption">In-Game Scene</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'tidesSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'tidesSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FUTURE / IN DEVELOPMENT -->
+        <section id="future-projects">
+            <h2>In Development</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>XR Game</h3>
+                    <p>
+                        Experimental XR project exploring immersive VR/AR gameplay, interactions,
+                        and multiplayer elements in extended reality.
+                    </p>
+                    <p class="tech">Technologies: Unity XR, VR/AR Toolkits</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames/XRGamePrototype" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="slideshow-container" id="xrSlideshow">
+                        <figure class="active">
+                            <img src="images/xr1.jpg" alt="XR 1">
+                            <figcaption class="slideshow-caption">Prototype Start</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/xr2.jpg" alt="XR 2">
+                            <figcaption class="slideshow-caption">Interaction Testing</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'xrSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'xrSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Hell's Champion</h3>
+                    <p>
+                        A 3D shooter in early development, focusing on robust enemy AI, atmospheric design,
+                        and fluid shooting mechanics for a fast-paced experience.
+                    </p>
+                    <p class="tech">Technologies: Unity 3D, C#, AI, Gameplay Systems</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/EmbitGames/HellsChampion" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="slideshow-container" id="hellSlideshow">
+                        <figure class="active">
+                            <img src="images/hell1.jpg" alt="Hell's Champion 1">
+                            <figcaption class="slideshow-caption">Early Environment</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/hell2.jpg" alt="Hell's Champion 2">
+                            <figcaption class="slideshow-caption">AI Enemy Concept</figcaption>
+                        </figure>
+                        <div class="prev" onclick="plusSlides(-1, 'hellSlideshow', true)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1, 'hellSlideshow', true)">&#10095;</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>
+                If you'd like to connect or learn more about my work, I'd love to hear from you!
+            </p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank">LinkedIn Profile</a></li>
+                <li><strong>GitHub:</strong> <a href="https://github.com/EmbitGames" target="_blank">github.com/EmbitGames</a></li>
+                <li><strong>Itch.io:</strong> <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Oliver Neal</p>
+    </footer>
+
+    <!-- SLIDESHOW SCRIPT -->
+    <script>
+        var slideIndices = {};
+        var timers = {};
+
+        function showSlides(n, containerId) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            var slides = container.getElementsByTagName("figure");
+            if (!slides.length) return;
+
+            if (n > slides.length) { n = 1; }
+            if (n < 1) { n = slides.length; }
+
+            slideIndices[containerId] = n;
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slides[n - 1].classList.add("active");
+        }
+
+        function plusSlides(n, containerId, manual) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            var slides = container.getElementsByTagName("figure");
+            if (!slides.length) return;
+
+            var newIndex = slideIndices[containerId] + n;
+            if (newIndex > slides.length) { newIndex = 1; }
+            if (newIndex < 1) { newIndex = slides.length; }
+
+            showSlides(newIndex, containerId);
+
+            if (manual) {
+                resetTimer(containerId);
+            }
+        }
+
+        function startTimer(containerId) {
+            timers[containerId] = setInterval(function () {
+                plusSlides(1, containerId, false);
+            }, 5000);
+        }
+
+        function resetTimer(containerId) {
+            clearInterval(timers[containerId]);
+            startTimer(containerId);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var containerIDs = [
+                'unicellularSlideshow', 'pinnableSlideshow',
+                'tankSlideshow', 'coopSlideshow',
+                'tidesSlideshow', 'xrSlideshow', 'hellSlideshow'
+            ];
+
+            containerIDs.forEach(function (id) {
+                slideIndices[id] = 1;
+                showSlides(1, id);
+                startTimer(id);
+            });
+        });
+    </script>
+</body>
+</html>
