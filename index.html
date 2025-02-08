@@ -109,9 +109,14 @@
                  width: 24px;
                  height: 24px;
              }
-         /* Navigation GitHub Icon: In dark mode, do NOT invert */
-         body:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
-             filter: none;
+         /* Navigation GitHub Icon */
+         /* In dark mode, do NOT invert */
+         html:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
+             filter: none !important;
+         }
+         /* In light mode, invert the GitHub icon */
+         html.light-theme .nav-icons img[src*="github-icon.png"] {
+             filter: invert(1) !important;
          }
 
          .nav-icons img {
@@ -164,8 +169,8 @@
              -webkit-appearance: none;
              -moz-appearance: none;
              appearance: none;
-             width: 3.75em; /* was 6.25em */
-             height: 1.875em; /* was 3.125em */
+             width: 3.75em;
+             height: 1.875em;
              background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
              background-size: 205%;
              background-position: 0;
@@ -178,11 +183,11 @@
 
              .theme-checkbox::before {
                  content: "";
-                 width: 1.35em; /* was 2.25em */
-                 height: 1.35em; /* was 2.25em */
+                 width: 1.35em;
+                 height: 1.35em;
                  position: absolute;
-                 top: 0.263em; /* was 0.438em */
-                 left: 0.263em; /* was 0.438em */
+                 top: 0.263em;
+                 left: 0.263em;
                  background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
                  background-size: 205%;
                  background-position: 100%;
@@ -327,8 +332,8 @@
                  }
          /* --- BUTTON STYLE OVERRIDES FOR GITHUB & ITCH BUTTONS --- */
          /* In dark mode (when .light-theme is NOT present), force light buttons */
-         body:not(.light-theme) .project-links a.github,
-         body:not(.light-theme) .project-links a.itchio {
+         html:not(.light-theme) .project-links a.github,
+         html:not(.light-theme) .project-links a.itchio {
              background: #fff;
              color: #333;
          }
@@ -365,15 +370,15 @@
          /* --- ICON INVERSION RULES --- */
          /* For the GitHub button in project panels:
         In dark mode, invert the icon; in light mode, do not invert */
-         body:not(.light-theme) .project-links a.github::before {
+         html:not(.light-theme) .project-links a.github::before {
              filter: invert(1);
          }
 
          html.light-theme .project-links a.github::before {
              filter: none;
          }
-         /* (The Itch icon rules remain unchanged) */
-         body:not(.light-theme) .project-links a.itchio::before {
+         /* For the Itch icon, the rules remain unchanged */
+         html:not(.light-theme) .project-links a.itchio::before {
              filter: invert(1);
          }
 
