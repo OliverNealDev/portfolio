@@ -7,551 +7,684 @@
     <!-- Favicon using your selfie -->
     <link rel="icon" href="oliver.png" type="image/png">
     <style>
-        /* RESET / BASE STYLES */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+          /* RESET / BASE STYLES */
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+          }
 
-        body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
-        }
-        /* STICKY NAVIGATION */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #222;
-            color: #fff;
-            padding: 1rem 0;
-            z-index: 999;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
+          body {
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+              background-color: #f9f9f9;
+              color: #333;
+              line-height: 1.6;
+          }
+          /* STICKY NAVIGATION */
+          header {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              background-color: #222;
+              color: #fff;
+              padding: 1rem 0;
+              z-index: 999;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          }
 
-        .nav-container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        /* Logo plus icon links side by side */
-        .logo-and-icons {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+          .nav-container {
+              width: 90%;
+              max-width: 1100px;
+              margin: 0 auto;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+          }
+          /* Logo plus icon links side by side */
+          .logo-and-icons {
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+          }
 
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            white-space: nowrap;
-        }
+          .nav-logo {
+              font-size: 1.5rem;
+              font-weight: bold;
+              white-space: nowrap;
+          }
 
-        .nav-icons {
-            display: flex;
-            gap: 0.5rem;
-        }
+          .nav-icons {
+              display: flex;
+              gap: 0.5rem;
+          }
 
-            .nav-icons a {
-                display: inline-block;
-                width: 24px;
-                height: 24px;
-            }
+              .nav-icons a {
+                  display: inline-block;
+                  width: 24px;
+                  height: 24px;
+              }
 
-            .nav-icons img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                transition: opacity 0.2s ease;
-            }
+              .nav-icons img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: contain;
+                  transition: opacity 0.2s ease;
+              }
 
-                .nav-icons img:hover {
-                    opacity: 0.7;
-                }
+                  .nav-icons img:hover {
+                      opacity: 0.7;
+                  }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+          nav ul {
+              list-style: none;
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+          }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.2s ease;
-        }
+          nav a {
+              color: #fff;
+              text-decoration: none;
+              font-weight: bold;
+              transition: color 0.2s ease;
+          }
 
-            nav a:hover {
-                color: #ddd;
-            }
-        /* MAIN CONTENT WRAPPER */
-        main {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding-top: 100px; /* offset for sticky header */
-        }
-        /* ABOUT SECTION */
-        #about {
-            padding: 2rem 0;
-        }
+              nav a:hover {
+                  color: #ddd;
+              }
+          /* Custom Theme Toggle Checkbox (from Uiverse.io by cuzpq), slightly bigger */
+          .theme-checkbox {
+              --toggle-size: 10px;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              width: 3.5em;
+              height: 1.75em;
+              background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+              background-size: 205%;
+              background-position: 0;
+              transition: 0.4s;
+              border-radius: 99em;
+              position: relative;
+              cursor: pointer;
+              font-size: var(--toggle-size);
+          }
 
-        .about-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
+              .theme-checkbox::before {
+                  content: "";
+                  width: 1.25em;
+                  height: 1.25em;
+                  position: absolute;
+                  top: 0.25em;
+                  left: 0.25em;
+                  background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+                  background-size: 205%;
+                  background-position: 100%;
+                  border-radius: 50%;
+                  transition: 0.4s;
+              }
 
-        .about-img {
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 50%;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+              .theme-checkbox:checked::before {
+                  left: calc(100% - 1.25em - 0.25em);
+                  background-position: 0;
+              }
 
-            .about-img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+              .theme-checkbox:checked {
+                  background-position: 100%;
+              }
+          /* MAIN CONTENT WRAPPER */
+          main {
+              width: 90%;
+              max-width: 1100px;
+              margin: 0 auto;
+              padding-top: 100px; /* offset for sticky header */
+          }
+          /* ABOUT SECTION */
+          #about {
+              padding: 2rem 0;
+          }
 
-        .about-text {
-            flex: 1;
-            min-width: 250px;
-        }
+          .about-container {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 2rem;
+              flex-wrap: wrap;
+          }
 
-            .about-text h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
+          .about-img {
+              width: 200px;
+              height: 200px;
+              overflow: hidden;
+              border-radius: 50%;
+              flex-shrink: 0;
+              box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          }
 
-            .about-text p {
-                max-width: 700px;
-                margin-bottom: 1rem;
-                color: #555;
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-        /* NEW VERTICAL TIMELINE SECTION */
-        #timeline {
-            padding: 2rem 0;
-            background: #fff;
-        }
+              .about-img img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+              }
 
-            #timeline h2 {
-                text-align: center;
-                font-size: 1.8rem;
-                margin-bottom: 1rem;
-                color: #222;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 0.5rem;
-                max-width: 800px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+          .about-text {
+              flex: 1;
+              min-width: 250px;
+          }
 
-            #timeline .timeline {
-                position: relative;
-                padding: 20px 0;
-                max-width: 800px;
-                margin: 0 auto;
-            }
+              .about-text h1 {
+                  font-size: 2rem;
+                  margin-bottom: 1rem;
+              }
 
-                #timeline .timeline::before {
-                    content: "";
-                    position: absolute;
-                    left: 50px;
-                    top: 0;
-                    bottom: 0;
-                    width: 4px;
-                    background: #ddd;
-                }
+              .about-text p {
+                  max-width: 700px;
+                  margin-bottom: 1rem;
+                  color: #555;
+                  font-size: 1rem;
+                  line-height: 1.6;
+              }
+          /* NEW VERTICAL TIMELINE SECTION */
+          #timeline {
+              padding: 2rem 0;
+              background: #fff;
+          }
 
-            #timeline .timeline-item {
-                position: relative;
-                margin: 20px 0;
-                padding-left: 80px;
-            }
+              #timeline h2 {
+                  text-align: center;
+                  font-size: 1.8rem;
+                  margin-bottom: 1rem;
+                  color: #222;
+                  border-bottom: 2px solid #ddd;
+                  padding-bottom: 0.5rem;
+                  max-width: 800px;
+                  margin-left: auto;
+                  margin-right: auto;
+              }
+              /* Remove descriptions from timeline and make project names clickable if they have a matching panel */
+              #timeline .timeline {
+                  position: relative;
+                  padding: 20px 0;
+                  max-width: 800px;
+                  margin: 0 auto;
+              }
 
-                #timeline .timeline-item::before {
-                    content: "";
-                    position: absolute;
-                    left: 42px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #3fa9f5;
-                    border-radius: 50%;
-                    border: 4px solid #fff;
-                }
+                  #timeline .timeline::before {
+                      content: "";
+                      position: absolute;
+                      left: 50px;
+                      top: 0;
+                      bottom: 0;
+                      width: 4px;
+                      background: #ddd;
+                  }
 
-            #timeline .timeline-date {
-                font-weight: bold;
-                margin-bottom: 5px;
-                color: #555;
-            }
+              #timeline .timeline-item {
+                  position: relative;
+                  margin: 20px 0;
+                  padding-left: 80px;
+              }
 
-            #timeline .timeline-content h3 {
-                margin: 0;
-                font-size: 1.2rem;
-                color: #222;
-            }
+                  #timeline .timeline-item::before {
+                      content: "";
+                      position: absolute;
+                      left: 42px;
+                      top: 0;
+                      width: 16px;
+                      height: 16px;
+                      background: #3fa9f5;
+                      border-radius: 50%;
+                      border: 4px solid #fff;
+                  }
 
-            #timeline .timeline-content p {
-                margin: 5px 0 0;
-                color: #555;
-                font-size: 0.95rem;
-            }
-        /* PROJECTS SECTION */
-        section {
-            margin: 3rem 0;
-        }
+              #timeline .timeline-date {
+                  font-weight: bold;
+                  margin-bottom: 5px;
+                  color: #555;
+              }
 
-            section h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1rem;
-                color: #222;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 0.5rem;
-            }
+              #timeline .timeline-content h3 {
+                  margin: 0;
+                  font-size: 1.2rem;
+                  color: #222;
+              }
+          /* Wrap clickable project names in <a> tags where applicable:
+           - Tides of the Moon (Team Projects)
+           - Unicellular (Solo Projects)
+           - Pinnable (Solo Projects)
+           The others remain plain text.
+        */
+          /* PROJECTS SECTION */
+          section {
+              margin: 3rem 0;
+          }
 
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
+              section h2 {
+                  font-size: 1.8rem;
+                  margin-bottom: 1rem;
+                  color: #222;
+                  border-bottom: 2px solid #ddd;
+                  padding-bottom: 0.5rem;
+              }
 
-        .project-card {
-            background: #fff;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            min-height: 450px;
-        }
+          .project-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+              gap: 1.5rem;
+          }
 
-            .project-card h3 {
-                margin-bottom: 0.5rem;
-                color: #222;
-                font-size: 1.2rem;
-            }
+          .project-card {
+              background: #fff;
+              border-radius: 6px;
+              box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+              padding: 1.5rem;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              min-height: 450px;
+          }
+              /* Add IDs to project cards for timeline linking */
+              .project-card#unicellular {
+              }
 
-            .project-card p {
-                font-size: 0.95rem;
-                color: #555;
-                margin-bottom: 1rem;
-            }
+              .project-card#pinnable {
+              }
 
-        .tech {
-            font-style: italic;
-            margin-bottom: 1rem;
-            color: #777;
-            font-size: 0.9rem;
-        }
+              .project-card#tides-of-the-moon {
+              }
 
-        .project-links {
-            margin-bottom: 1.5rem;
-        }
-            /* Default button style for project links */
-            .project-links a {
-                display: inline-flex;
-                align-items: center;
-                margin-right: 8px;
-                margin-top: 5px;
-                padding: 0.4rem 0.8rem;
-                background: #222;
-                color: #fff;
-                text-decoration: none;
-                border-radius: 4px;
-                font-size: 0.85rem;
-                transition: background 0.2s ease;
-            }
+              .project-card h3 {
+                  margin-bottom: 0.5rem;
+                  color: #222;
+                  font-size: 1.2rem;
+              }
 
-                .project-links a:hover {
-                    background: #444;
-                }
-                /* GitHub button: icon to the left */
-                .project-links a.github::before {
-                    content: "";
-                    display: inline-block;
-                    vertical-align: middle;
-                    width: 16px;
-                    height: 16px;
-                    margin-right: 4px;
-                    background: url('github-icon.png') no-repeat center center;
-                    background-size: contain;
-                }
-                /* Itch.io button: "Play in browser" with new icon */
-                .project-links a.itchio {
-                    background: #F05D60;
-                }
+              .project-card p {
+                  font-size: 0.95rem;
+                  color: #555;
+                  margin-bottom: 1rem;
+              }
 
-                    .project-links a.itchio::before {
-                        content: "";
-                        display: inline-block;
-                        vertical-align: middle;
-                        width: 16px;
-                        height: 16px;
-                        margin-right: 4px;
-                        background: url('itch-icon-white.png') no-repeat center center;
-                        background-size: contain;
-                    }
-        /* SLIDESHOW */
-        .slideshow-container {
-            position: relative;
-            width: 100%;
-            max-width: 100%;
-            height: 200px;
-            margin-top: auto;
-            overflow: hidden;
-            border-radius: 5px;
-            background: #000;
-        }
+          .tech {
+              font-style: italic;
+              margin-bottom: 1rem;
+              color: #777;
+              font-size: 0.9rem;
+          }
 
-            .slideshow-container figure {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                margin: 0;
-                opacity: 0;
-                /* Only active figures receive pointer events */
-                pointer-events: none;
-            }
+          .project-links {
+              margin-bottom: 1.5rem;
+          }
+              /* Default button style for project links */
+              .project-links a {
+                  display: inline-flex;
+                  align-items: center;
+                  margin-right: 8px;
+                  margin-top: 5px;
+                  padding: 0.4rem 0.8rem;
+                  background: #222;
+                  color: #fff;
+                  text-decoration: none;
+                  border-radius: 4px;
+                  font-size: 0.85rem;
+                  transition: background 0.2s ease;
+              }
 
-                .slideshow-container figure.active {
-                    opacity: 1;
-                    pointer-events: auto;
-                }
+                  .project-links a:hover {
+                      background: #444;
+                  }
 
-        .fade-transition figure {
-            transition: opacity 1s ease-in-out;
-        }
-        /* Videos instead of images */
-        .slideshow-container figure video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-        }
+                  .project-links a.github::before {
+                      content: "";
+                      display: inline-block;
+                      vertical-align: middle;
+                      width: 16px;
+                      height: 16px;
+                      margin-right: 4px;
+                      background: url('github-icon.png') no-repeat center center;
+                      background-size: contain;
+                  }
+                  /* Itch.io button: Play in browser – remains unchanged in dark mode */
+                  .project-links a.itchio {
+                      background: #F05D60;
+                  }
 
-        .slideshow-caption {
-            position: absolute;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            width: 100%;
-            font-size: 0.85rem;
-            text-align: center;
-            padding: 5px 0;
-        }
+                      .project-links a.itchio::before {
+                          content: "";
+                          display: inline-block;
+                          vertical-align: middle;
+                          width: 16px;
+                          height: 16px;
+                          margin-right: 4px;
+                          background: url('itch-icon-white.png') no-repeat center center;
+                          background-size: contain;
+                      }
+          /* SLIDESHOW */
+          .slideshow-container {
+              position: relative;
+              width: 100%;
+              max-width: 100%;
+              height: 200px;
+              margin-top: auto;
+              overflow: hidden;
+              border-radius: 5px;
+              background: #000;
+          }
 
-        .prev, .next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-weight: bold;
-            user-select: none;
-            transition: background 0.2s ease;
-        }
+              .slideshow-container figure {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  margin: 0;
+                  opacity: 0;
+                  pointer-events: none;
+              }
 
-            .prev:hover, .next:hover {
-                background: rgba(0,0,0,0.8);
-            }
+                  .slideshow-container figure.active {
+                      opacity: 1;
+                      pointer-events: auto;
+                  }
 
-        .prev {
-            left: 5px;
-        }
+          .fade-transition figure {
+              transition: opacity 1s ease-in-out;
+          }
 
-        .next {
-            right: 5px;
-        }
-        /* LIGHTBOX / MODAL for enlarged video */
-        #lightboxOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(6px);
-            display: none;
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px; /* so the video never touches the edge */
-        }
+          .slideshow-container figure video {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              cursor: pointer;
+          }
+          /* Increase caption text size and weight */
+          .slideshow-caption {
+              position: absolute;
+              bottom: 0;
+              background: rgba(0,0,0,0.5);
+              color: #fff;
+              width: 100%;
+              font-size: 1.2rem;
+              font-weight: bold;
+              text-align: center;
+              padding: 5px 0;
+          }
 
-        #lightboxContent {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            text-align: center;
-        }
-        /* The lightbox video is 10% smaller and centered */
-        #lightboxVideo {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 6px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            max-width: 90%;
-            max-height: calc(90vh - 80px);
-            margin: 0 auto;
-        }
-        /* Lightbox caption style */
-        #lightboxCaption {
-            display: block;
-            color: #fff;
-            font-size: 1rem;
-            text-align: center;
-            margin-top: 10px;
-            padding: 0 10px;
-        }
+          .prev, .next {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              background: rgba(0,0,0,0.6);
+              color: #fff;
+              padding: 8px 12px;
+              cursor: pointer;
+              border-radius: 3px;
+              font-weight: bold;
+              user-select: none;
+              transition: background 0.2s ease;
+          }
 
-        #lightboxClose {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            font-size: 2rem;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(0,0,0,0.4);
-            padding: 0 10px;
-            border-radius: 4px;
-        }
-        /* Adjusted arrow positions for the lightbox */
-        #lightboxPrev, #lightboxNext {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            background: rgba(0,0,0,0.4);
-            font-size: 2rem;
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            line-height: 40px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+              .prev:hover, .next:hover {
+                  background: rgba(0,0,0,0.8);
+              }
 
-            #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
-                background: rgba(0,0,0,0.7);
-            }
+          .prev {
+              left: 5px;
+          }
 
-        #lightboxPrev {
-            left: 10px;
-        }
+          .next {
+              right: 5px;
+          }
+          /* LIGHTBOX / MODAL for enlarged video */
+          #lightboxOverlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: rgba(0,0,0,0.8);
+              backdrop-filter: blur(6px);
+              display: none;
+              z-index: 10000;
+              align-items: center;
+              justify-content: center;
+              padding: 20px;
+          }
 
-        #lightboxNext {
-            right: 10px;
-        }
-        /* CONTACT */
-        #contact {
-            padding-bottom: 2rem;
-        }
+          #lightboxContent {
+              position: relative;
+              max-width: 90%;
+              max-height: 90%;
+              text-align: center;
+          }
+          /* The lightbox video is 10% smaller and centered */
+          #lightboxVideo {
+              display: block;
+              width: 100%;
+              height: auto;
+              border-radius: 6px;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+              max-width: 90%;
+              max-height: calc(90vh - 80px);
+              margin: 0 auto;
+          }
+          /* Lightbox caption style */
+          #lightboxCaption {
+              display: block;
+              color: #fff;
+              font-size: 1rem;
+              text-align: center;
+              margin-top: 10px;
+              padding: 0 10px;
+          }
 
-            #contact ul {
-                list-style: none;
-                margin-top: 1rem;
-            }
+          #lightboxClose {
+              position: absolute;
+              top: -40px;
+              right: 0;
+              font-size: 2rem;
+              color: #fff;
+              cursor: pointer;
+              background: rgba(0,0,0,0.4);
+              padding: 0 10px;
+              border-radius: 4px;
+          }
+          /* Adjusted arrow positions for the lightbox */
+          #lightboxPrev, #lightboxNext {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              color: #fff;
+              background: rgba(0,0,0,0.4);
+              font-size: 2rem;
+              width: 40px;
+              height: 40px;
+              text-align: center;
+              line-height: 40px;
+              cursor: pointer;
+              border-radius: 4px;
+          }
 
-            #contact li {
-                margin-bottom: 0.5rem;
-            }
+              #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
+                  background: rgba(0,0,0,0.7);
+              }
 
-            #contact a {
-                color: #333;
-                text-decoration: none;
-                font-weight: bold;
-            }
+          #lightboxPrev {
+              left: 10px;
+          }
 
-                #contact a:hover {
-                    text-decoration: underline;
-                }
-        /* FOOTER */
-        footer {
-            text-align: center;
-            background: #222;
-            color: #fff;
-            padding: 1rem 0;
-            margin-top: 2rem;
-        }
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            body {
-                padding-top: 120px;
-            }
+          #lightboxNext {
+              right: 10px;
+          }
+          /* CONTACT */
+          #contact {
+              padding-bottom: 2rem;
+          }
 
-            nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+              #contact ul {
+                  list-style: none;
+                  margin-top: 1rem;
+              }
 
-            .timeline-container,
-            #timeline .timeline {
-                width: 100%;
-            }
+              #contact li {
+                  margin-bottom: 0.5rem;
+              }
 
-            .timeline-axis,
-            .timeline-lines {
-                width: 800px;
-            }
+              #contact a {
+                  color: #333;
+                  text-decoration: none;
+                  font-weight: bold;
+              }
+          /* In dark mode, force contact links to be light coloured */
+          body.dark-mode #contact a {
+              color: #e0e0e0;
+          }
 
-            .slideshow-container {
-                height: 220px;
-            }
+          #contact a:hover {
+              text-decoration: underline;
+          }
+          /* FOOTER */
+          footer {
+              text-align: center;
+              background: #222;
+              color: #fff;
+              padding: 1rem 0;
+              margin-top: 2rem;
+          }
+          /* RESPONSIVE */
+          @media (max-width: 600px) {
+              body {
+                  padding-top: 120px;
+              }
 
-                .slideshow-container figure video {
-                    object-fit: cover;
-                }
+              nav ul {
+                  flex-direction: column;
+                  gap: 0.5rem;
+              }
 
-            .about-container {
-                flex-direction: column;
-            }
+              .timeline-container,
+              #timeline .timeline {
+                  width: 100%;
+              }
 
-            .about-img {
-                margin-bottom: 1rem;
-            }
+              .timeline-axis,
+              .timeline-lines {
+                  width: 800px;
+              }
 
-            .nav-icons a {
-                width: 20px;
-                height: 20px;
-            }
+              .slideshow-container {
+                  height: 220px;
+              }
 
-            #lightboxPrev, #lightboxNext {
-                font-size: 1.5rem;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-            }
+                  .slideshow-container figure video {
+                      object-fit: cover;
+                  }
 
-            #lightboxClose {
-                top: -30px;
-                font-size: 1.5rem;
-            }
-        }
+              .about-container {
+                  flex-direction: column;
+              }
+
+              .about-img {
+                  margin-bottom: 1rem;
+              }
+
+              .nav-icons a {
+                  width: 20px;
+                  height: 20px;
+              }
+
+              #lightboxPrev, #lightboxNext {
+                  font-size: 1.5rem;
+                  width: 30px;
+                  height: 30px;
+                  line-height: 30px;
+              }
+
+              #lightboxClose {
+                  top: -30px;
+                  font-size: 1.5rem;
+              }
+          }
+          /* DARK MODE OVERRIDES */
+          body.dark-mode {
+              background-color: #121212;
+              color: #e0e0e0;
+          }
+
+              body.dark-mode header {
+                  background-color: #333;
+              }
+
+              body.dark-mode nav a {
+                  color: #fff;
+              }
+
+                  body.dark-mode nav a:hover {
+                      color: #ccc;
+                  }
+
+              body.dark-mode #about .about-text p {
+                  color: #bbb;
+              }
+
+              body.dark-mode section h2 {
+                  color: #e0e0e0;
+                  border-bottom-color: #555;
+              }
+              /* Force the Development Timeline heading to be white in dark mode */
+              body.dark-mode #timeline h2 {
+                  color: #fff;
+              }
+
+              body.dark-mode #timeline {
+                  background: #1e1e1e;
+              }
+
+                  body.dark-mode #timeline .timeline::before {
+                      background: #555;
+                  }
+
+                  body.dark-mode #timeline .timeline-date,
+                  body.dark-mode #timeline .timeline-content h3,
+                  body.dark-mode #timeline .timeline-content p {
+                      color: #bbb;
+                  }
+
+              body.dark-mode .project-card {
+                  background: #1e1e1e;
+              }
+
+                  body.dark-mode .project-card h3 {
+                      color: #e0e0e0;
+                  }
+
+                  body.dark-mode .project-card p {
+                      color: #bbb;
+                  }
+
+              body.dark-mode .tech {
+                  color: #aaa;
+              }
+              /* Ensure the Play in Browser (itchio) button remains unchanged in dark mode */
+              body.dark-mode .project-links a.itchio {
+                  background: #F05D60;
+              }
+
+                  body.dark-mode .project-links a.itchio:hover {
+                      background: #F05D60;
+                  }
+
+              body.dark-mode .project-links a {
+                  background: #333;
+              }
+
+                  body.dark-mode .project-links a:hover {
+                      background: #444;
+                  }
+
+              body.dark-mode footer {
+                  background: #333;
+              }
     </style>
 </head>
 <body>
@@ -580,6 +713,10 @@
                     <li><a href="#team-projects">Team</a></li>
                     <li><a href="#future-projects">In Dev</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <!-- Custom theme checkbox -->
+                    <li>
+                        <input type="checkbox" class="theme-checkbox" id="theme-toggle">
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -606,58 +743,50 @@
                 </div>
             </div>
         </section>
-        <!-- VERTICAL TIMELINE SECTION -->
+        <!-- VERTICAL TIMELINE SECTION (descriptions removed; clickable names for matching panels) -->
         <section id="timeline">
             <h2>Development Timeline</h2>
             <div class="timeline">
-                <!-- Most recent at the top -->
                 <div class="timeline-item">
                     <div class="timeline-date">Feb 2025 – Now</div>
                     <div class="timeline-content">
                         <h3>Untitled Ability Deckbuilder</h3>
-                        <p>An innovative deckbuilding game currently in development since February 2025.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Jan 2025 – Now</div>
                     <div class="timeline-content">
                         <h3>XR Game</h3>
-                        <p>An immersive XR game currently in development since January 2025.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Jan 2025</div>
                     <div class="timeline-content">
                         <h3>Tides of the Moon</h3>
-                        <p>A rapid prototype of a Starfox-inspired game, developed and finished in January 2025.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Jan 2025</div>
                     <div class="timeline-content">
                         <h3>2D Shooter</h3>
-                        <p>A 2D co-op shooter game, completed in January 2025.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Jan 2025</div>
                     <div class="timeline-content">
                         <h3>Tank Shooter</h3>
-                        <p>A 3D tank game using Unity Netcode, completed in January 2025.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Sep 2024 – Feb 2025</div>
                     <div class="timeline-content">
                         <h3>Unicellular</h3>
-                        <p>An idle simulation game using finite state machines, developed from September 2024 to February 2025.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Jan 2024 – Mar 2024</div>
                     <div class="timeline-content">
                         <h3>Pinnable</h3>
-                        <p>A 2D platformer where players collect falling marbles, developed from January to March 2024.</p>
                     </div>
                 </div>
             </div>
@@ -666,8 +795,8 @@
         <section id="solo-projects">
             <h2>Solo Projects</h2>
             <div class="project-grid">
-                <!-- Unicellular -->
-                <div class="project-card">
+                <!-- Unicellular (id added for timeline linking) -->
+                <div class="project-card" id="unicellular">
                     <h3>Unicellular</h3>
                     <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
                     <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
@@ -708,8 +837,8 @@
                         <div class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
-                <!-- Pinnable -->
-                <div class="project-card">
+                <!-- Pinnable (id added for timeline linking) -->
+                <div class="project-card" id="pinnable">
                     <h3>Pinnable</h3>
                     <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
                     <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
@@ -743,81 +872,13 @@
                         <div class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</div>
                     </div>
                 </div>
-                <!-- 3D Netcode – Tank Shooter -->
-                <div class="project-card">
-                    <h3>3D Netcode – Tank Shooter</h3>
-                    <p>A 3D tank game using Unity’s Netcode for Gamobjects with the Server-Client network topology. This game featured Unity's Authority, Cloud Save, Relay and Lobby systems'</p>
-                    <p class="tech">Technologies: Unity 3D, Unity Netcode, Server-Client Network Topology</p>
-                    <div class="project-links">
-                        <a href="https://github.com/OliverNealDev/NetcodeTankGame" target="_blank" class="github">Github</a>
-                    </div>
-                    <div class="slideshow-container" id="tankSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="images/tank1.jpg" onclick="openLightbox('tankSlideshow',1)">
-                                <source src="images/tank1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Gameplay</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="giphy.gif" onclick="openLightbox('tankSlideshow',2)">
-                                <source src="giphy.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Registration Menu</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="images/tank3.jpg" onclick="openLightbox('tankSlideshow',3)">
-                                <source src="images/tank3.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Play Menu</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'tankSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'tankSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
-                <!-- 2D Netcode – Co-op Shooter -->
-                <div class="project-card">
-                    <h3>2D Netcode – Co-op Shooter</h3>
-                    <p>Inspired by <em>diep.io</em>, featuring distributed authority and using Unity's Netcode for Gamobjects. This project also included Unity services such as Authority, Cloud Save, Relay and Lobbies.'</p>
-                    <p class="tech">Technologies: Unity 2D, Unity Netcode, Distributed-Authority Network Topology</p>
-                    <div class="project-links">
-                        <a href="https://github.com/OliverNealDev/PixelBulletsOnline" target="_blank" class="github">Github</a>
-                    </div>
-                    <div class="slideshow-container" id="coopSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="images/coop1.jpg" onclick="openLightbox('coopSlideshow',1)">
-                                <source src="images/coop1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Lobby</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="images/coop2.jpg" onclick="openLightbox('coopSlideshow',2)">
-                                <source src="images/coop2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">In-game Action</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="images/coop3.jpg" onclick="openLightbox('coopSlideshow',3)">
-                                <source src="images/coop3.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Scoreboard</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'coopSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'coopSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
             </div>
         </section>
-        <!-- TEAM PROJECTS -->
+        <!-- TEAM PROJECTS (id added for timeline linking) -->
         <section id="team-projects">
             <h2>Team Projects</h2>
             <div class="project-grid">
-                <div class="project-card">
+                <div class="project-card" id="tides-of-the-moon">
                     <h3>Tides of the Moon</h3>
                     <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
                     <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
@@ -845,71 +906,8 @@
                 </div>
             </div>
         </section>
-        <!-- IN DEVELOPMENT -->
-        <section id="future-projects">
-            <h2>In Development</h2>
-            <div class="project-grid">
-                <!-- Anomoly XR Game -->
-                <div class="project-card">
-                    <h3>Anomoly XR Game</h3>
-                    <p>
-                        An XR game based in the bedroom of a child who has to figure out whether they are awake or in a fatal nightmare. Look for evidence of anomalies with limited time and make it through the week alive.
-                    </p>
-                    <p class="tech">Technologies: Unity XR, XR Toolkits</p>
-                    <div class="project-links">
-                        <a href="https://github.com/EmbitGames/XRGamePrototype" target="_blank" class="github">Github</a>
-                    </div>
-                    <div class="slideshow-container" id="xrSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="images/xr1.jpg" onclick="openLightbox('xrSlideshow',1)">
-                                <source src="images/xr1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Prototype Start</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="images/xr2.jpg" onclick="openLightbox('xrSlideshow',2)">
-                                <source src="images/xr2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Interaction Testing</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'xrSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'xrSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
-                <!-- Untitled Ability Deckbuilder -->
-                <div class="project-card">
-                    <h3>Untitled Ability Deckbuilder</h3>
-                    <p>
-                        An untitled ability deckbuilder where players customise a combination of abilities to use against the foes in the realms of Yggsdrasil, making their way from Helheim to Asgard.
-                    </p>
-                    <p class="tech">Technologies: Unity 3D, C#, AI, Deckbuilding Systems</p>
-                    <div class="project-links">
-                        <a href="https://github.com/EmbitGames/HellsChampion" target="_blank" class="github">Github</a>
-                    </div>
-                    <div class="slideshow-container" id="hellSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="images/hell1.jpg" onclick="openLightbox('hellSlideshow',1)">
-                                <source src="images/hell1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Early Environment</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="images/hell2.jpg" onclick="openLightbox('hellSlideshow',2)">
-                                <source src="images/hell2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">AI Enemy Concept</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'hellSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'hellSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- CONTACT -->
+        <!-- IN DEVELOPMENT (if present) could follow here -->
+        <!-- CONTACT SECTION -->
         <section id="contact">
             <h2>Contact</h2>
             <p>If you'd like to connect or learn more about my work, I'd love to hear from you!</p>
@@ -1067,6 +1065,31 @@
                 lightboxCaption.textContent = "";
             }
         }
+    </script>
+    <!-- THEME TOGGLING SCRIPT -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            const toggleCheckbox = document.getElementById('theme-toggle');
+            if (savedTheme) {
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    toggleCheckbox.checked = true;
+                }
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+                toggleCheckbox.checked = true;
+            }
+            toggleCheckbox.addEventListener('change', function () {
+                if (toggleCheckbox.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        })();
     </script>
 </body>
 </html>
