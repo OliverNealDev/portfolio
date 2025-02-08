@@ -109,10 +109,9 @@
                  width: 24px;
                  height: 24px;
              }
-         /* In dark mode, invert GitHub icons so they appear light.
-        In light mode no filter is applied (see below). */
+         /* Navigation GitHub Icon: In dark mode, do NOT invert */
          body:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
-             filter: invert(1);
+             filter: none;
          }
 
          .nav-icons img {
@@ -314,6 +313,7 @@
                  margin-right: 8px;
                  margin-top: 5px;
                  padding: 0.4rem 0.8rem;
+                 /* Default style (will be overridden for the GitHub and Itch buttons) */
                  background: var(--header-bg);
                  color: #fff;
                  text-decoration: none;
@@ -325,13 +325,21 @@
                  .project-links a:hover {
                      background: #444;
                  }
-         /* For the GitHub button image in project links,
-        in dark mode we invert its colour so that it appears light;
-        in light mode no inversion is applied. */
-         body:not(.light-theme) .project-links a.github::before {
-             filter: invert(1);
+         /* --- BUTTON STYLE OVERRIDES FOR GITHUB & ITCH BUTTONS --- */
+         /* In dark mode (when .light-theme is NOT present), force light buttons */
+         body:not(.light-theme) .project-links a.github,
+         body:not(.light-theme) .project-links a.itchio {
+             background: #fff;
+             color: #333;
          }
-
+         /* In light mode, force dark buttons */
+         html.light-theme .project-links a.github,
+         html.light-theme .project-links a.itchio {
+             background: #222;
+             color: #fff;
+         }
+         /* --- ICON PSEUDO-ELEMENTS --- */
+         /* GitHub Icon for Project Panels */
          .project-links a.github::before {
              content: "";
              display: inline-block;
@@ -343,7 +351,36 @@
              background-size: contain;
              transition: filter 0.2s ease;
          }
-         /* PROJECT HEADER & DEEP DIVE BUTTON */
+         /* Itch.io Icon */
+         .project-links a.itchio::before {
+             content: "";
+             display: inline-block;
+             vertical-align: middle;
+             width: 16px;
+             height: 16px;
+             margin-right: 4px;
+             background: url('itch-icon-white.png') no-repeat center center;
+             background-size: contain;
+         }
+         /* --- ICON INVERSION RULES --- */
+         /* For the GitHub button in project panels:
+        In dark mode, invert the icon; in light mode, do not invert */
+         body:not(.light-theme) .project-links a.github::before {
+             filter: invert(1);
+         }
+
+         html.light-theme .project-links a.github::before {
+             filter: none;
+         }
+         /* (The Itch icon rules remain unchanged) */
+         body:not(.light-theme) .project-links a.itchio::before {
+             filter: invert(1);
+         }
+
+         html.light-theme .project-links a.itchio::before {
+             filter: none;
+         }
+         /* PROJECT HEADER */
          .project-header {
              display: flex;
              justify-content: space-between;
@@ -354,20 +391,6 @@
              .project-header h3 {
                  margin: 0;
                  font-size: 1.2rem;
-             }
-
-         .deep-dive {
-             background: var(--header-bg);
-             color: #fff;
-             padding: 0.4rem 0.8rem;
-             text-decoration: none;
-             border-radius: 4px;
-             font-size: 0.85rem;
-             transition: background 0.2s ease;
-         }
-
-             .deep-dive:hover {
-                 background: #444;
              }
          /* SLIDESHOW */
          .slideshow-container {
@@ -589,10 +612,11 @@
          .light-theme .nav-logo {
              color: var(--text-color);
          }
-         /* Ensure GitHub icons are not inverted in light theme */
-         .light-theme .nav-icons img[src*="github-icon.png"],
-         .light-theme .project-links a.github::before {
-             filter: none;
+         /* Additional text color adjustments in light theme */
+         .light-theme .project-card p,
+         .light-theme .about-text p,
+         .light-theme .tech {
+             color: #444;
          }
     </style>
 </head>
@@ -662,7 +686,6 @@
                     <div class="project-card" id="unicellular">
                         <div class="project-header">
                             <h3>Unicellular</h3>
-                            <a href="unicellular.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
                         <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
@@ -707,7 +730,6 @@
                     <div class="project-card" id="pinnable">
                         <div class="project-header">
                             <h3>Pinnable</h3>
-                            <a href="pinnable.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
                         <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
@@ -751,7 +773,6 @@
                     <div class="project-card" id="tides-of-the-moon">
                         <div class="project-header">
                             <h3>Tides of the Moon</h3>
-                            <a href="tides-of-the-moon.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
                         <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
@@ -788,7 +809,6 @@
                     <div class="project-card" id="xr-game">
                         <div class="project-header">
                             <h3>XR Game</h3>
-                            <a href="xr-game.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>An upcoming XR experience that pushes the boundaries of interactive gameplay in a virtual environment.</p>
                         <p class="tech">Technologies: TBD</p>
@@ -818,7 +838,6 @@
                     <div class="project-card" id="unitles-ability-deckbuilder">
                         <div class="project-header">
                             <h3>Unitles Ability Deckbuilder</h3>
-                            <a href="unitles-ability-deckbuilder.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>A deckbuilding game in development, blending strategic card mechanics with dynamic gameplay challenges.</p>
                         <p class="tech">Technologies: TBD</p>
@@ -1049,25 +1068,20 @@
         window.addEventListener('scroll', function () {
             const headerHeight = 80; // fixed header height
             const scrollY = window.pageYOffset;
-
             // If near the top, remove all active states
             if (scrollY < 100) {
                 document.querySelectorAll('nav a').forEach(link => link.classList.remove('active-nav'));
                 return;
             }
-
             document.querySelectorAll('section').forEach(section => {
                 const id = section.getAttribute('id');
                 const navLink = document.querySelector(`nav a[href="#${id}"]`);
-
                 // Default: trigger early by subtracting 150px from the section's top
                 let triggerOffset = -150;
-
                 // For About and Solo Projects, we don't want them active until reached
                 if (id === "about" || id === "solo-projects") {
                     triggerOffset = 0;
                 }
-
                 // For Contact, activate only when scrolled very near the bottom
                 if (id === "contact") {
                     if (window.innerHeight + scrollY >= document.body.scrollHeight - 50) {
