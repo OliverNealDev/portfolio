@@ -300,15 +300,17 @@
                 line-height: 1.6;
             }
 
-        /* PROJECTS SECTION */
+        /* SECTION TITLES - Extra top margin added */
         section h2 {
             font-size: 1.8rem;
+            margin-top: 2rem;
             margin-bottom: 1rem;
             color: #e0e0e0;
             border-bottom: 2px solid #333;
             padding-bottom: 0.5rem;
         }
 
+        /* PROJECTS SECTION */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -626,6 +628,39 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* NEW STYLES FOR PROJECT HEADER & TEAM MEMBERS */
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+            .project-header h3 {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .team-members {
+            display: flex;
+            gap: 5px;
+        }
+
+        .team-member {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -635,7 +670,7 @@
         Your browser does not support the video tag.
     </video>
 
-    <!-- Scroll Progress Bar -->
+    <!-- Scroll Progrsess Bar -->
     <div id="progressBar"></div>
 
     <!-- Header / Navigation (no theme toggle) -->
@@ -710,7 +745,10 @@
                 <div class="project-grid">
                     <!-- Unicellular -->
                     <div class="project-card" id="unicellular">
-                        <h3>Unicellular</h3>
+                        <div class="project-header">
+                            <h3>Unicellular</h3>
+                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                        </div>
                         <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
                         <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
                         <div class="project-links">
@@ -752,7 +790,10 @@
                     </div>
                     <!-- Pinnable -->
                     <div class="project-card" id="pinnable">
-                        <h3>Pinnable</h3>
+                        <div class="project-header">
+                            <h3>Pinnable</h3>
+                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                        </div>
                         <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
                         <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
                         <div class="project-links">
@@ -793,7 +834,17 @@
                 <h2>Team Projects</h2>
                 <div class="project-grid">
                     <div class="project-card" id="tides-of-the-moon">
-                        <h3>Tides of the Moon</h3>
+                        <div class="project-header">
+                            <h3>Tides of the Moon</h3>
+                            <div class="team-members">
+                                <img src="oliver.png" alt="Oliver Neal" class="team-member">
+                                <!-- Replace the following placeholders with your team members' images -->
+                                <img src="team1.png" alt="Team Member 1" class="team-member">
+                                <img src="team2.png" alt="Team Member 2" class="team-member">
+                                <img src="team3.png" alt="Team Member 3" class="team-member">
+                                <img src="team4.png" alt="Team Member 4" class="team-member">
+                            </div>
+                        </div>
                         <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
                         <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
                         <div class="project-links">
@@ -827,7 +878,10 @@
                 <div class="project-grid">
                     <!-- XR Game with slideshow -->
                     <div class="project-card" id="xr-game">
-                        <h3>XR Game</h3>
+                        <div class="project-header">
+                            <h3>XR Game</h3>
+                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                        </div>
                         <p>An upcoming XR experience that pushes the boundaries of interactive gameplay in a virtual environment.</p>
                         <p class="tech">Technologies: TBD</p>
                         <div class="project-links">
@@ -854,7 +908,10 @@
                     </div>
                     <!-- Unitles Ability Deckbuilder with slideshow -->
                     <div class="project-card" id="unitles-ability-deckbuilder">
-                        <h3>Unitles Ability Deckbuilder</h3>
+                        <div class="project-header">
+                            <h3>Unitles Ability Deckbuilder</h3>
+                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                        </div>
                         <p>A deckbuilding game in development, blending strategic card mechanics with dynamic gameplay challenges.</p>
                         <p class="tech">Technologies: TBD</p>
                         <div class="project-links">
@@ -1095,9 +1152,6 @@
         // --- Auto-Scroll to About Section after 2 seconds ---
         window.addEventListener('load', function () {
             setTimeout(function () {
-                // Option 1: Use the smoothScrollTo function if you want a custom duration
-                // smoothScrollTo(document.getElementById('about'), 800);
-                // Option 2: Use scrollIntoView for native smooth scrolling
                 document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
             }, 2000);
         });
