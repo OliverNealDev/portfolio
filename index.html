@@ -7,19 +7,169 @@
     <!-- Favicon using your selfie -->
     <link rel="icon" href="oliver.png" type="image/png">
     <style>
-        /* RESET / BASE STYLES */
+        /* RESET */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
+        html {
+            scroll-behavior: smooth;
         }
+
+        /* DARK MODE: fixed dark theme with basic system fonts */
+        body {
+            font-family: sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: sans-serif;
+        }
+
+        /* Ensure that when scrolling via anchor links the top is not cut off */
+        section {
+            scroll-margin-top: 120px;
+        }
+
+        /* FULL-SCREEN BACKGROUND VIDEO (for the hero only) */
+        #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -100;
+            filter: blur(5px) brightness(0.7);
+            pointer-events: none;
+        }
+
+        /* SOLID BACKGROUND CONTAINER (wraps main content and footer) */
+        #solidContent {
+            width: 100%;
+            background-color: #121212;
+            padding-top: 50px;
+        }
+
+        /* SCROLL PROGRESS BAR with gradient from strong blue to hot pink */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00aaff, #ff69b4);
+            width: 0;
+            z-index: 1000;
+            transition: width 0.25s ease-out;
+        }
+
+        /* CINEMATIC REVEAL ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+            .reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        /* HERO SECTION */
+        #hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+            #hero video {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                transform: translate(-50%, -50%);
+                z-index: -1;
+                filter: brightness(0.7);
+                animation: zoomIn 20s ease-out infinite;
+            }
+
+        @keyframes zoomIn {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        #hero .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ffffff;
+            padding: 0 20px;
+            transform: translate(0, 0);
+        }
+
+            /* Updated hero text */
+            #hero .hero-overlay h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                animation: fadeInDown 1.5s ease-out;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            }
+
+            #hero .hero-overlay p {
+                font-size: 1.5rem;
+                animation: fadeInUp 1.5s ease-out;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* STICKY NAVIGATION */
         header {
             position: fixed;
@@ -30,7 +180,7 @@
             color: #fff;
             padding: 1rem 0;
             z-index: 999;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .nav-container {
@@ -41,7 +191,7 @@
             align-items: center;
             justify-content: space-between;
         }
-        /* Logo plus icon links side by side */
+
         .logo-and-icons {
             display: flex;
             align-items: center;
@@ -87,59 +237,23 @@
             color: #fff;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
         }
 
             nav a:hover {
                 color: #ddd;
-            }
-        /* Custom Theme Toggle Checkbox (from Uiverse.io by cuzpq), slightly bigger */
-        .theme-checkbox {
-            --toggle-size: 10px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            width: 3.5em;
-            height: 1.75em;
-            background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
-            background-size: 205%;
-            background-position: 0;
-            transition: 0.4s;
-            border-radius: 99em;
-            position: relative;
-            cursor: pointer;
-            font-size: var(--toggle-size);
-        }
-
-            .theme-checkbox::before {
-                content: "";
-                width: 1.25em;
-                height: 1.25em;
-                position: absolute;
-                top: 0.25em;
-                left: 0.25em;
-                background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
-                background-size: 205%;
-                background-position: 100%;
-                border-radius: 50%;
-                transition: 0.4s;
+                text-shadow: 0 0 15px rgba(255,255,255,0.3);
             }
 
-            .theme-checkbox:checked::before {
-                left: calc(100% - 1.25em - 0.25em);
-                background-position: 0;
-            }
-
-            .theme-checkbox:checked {
-                background-position: 100%;
-            }
-        /* MAIN CONTENT WRAPPER */
+        /* MAIN CONTENT (inside #solidContent) */
         main {
             width: 90%;
             max-width: 1100px;
             margin: 0 auto;
             padding-top: 100px; /* offset for sticky header */
         }
+
         /* ABOUT SECTION */
         #about {
             padding: 2rem 0;
@@ -181,92 +295,19 @@
             .about-text p {
                 max-width: 700px;
                 margin-bottom: 1rem;
-                color: #555;
+                color: #ccc;
                 font-size: 1rem;
                 line-height: 1.6;
             }
-        /* NEW VERTICAL TIMELINE SECTION */
-        #timeline {
-            padding: 2rem 0;
-            background: #fff;
-        }
 
-            #timeline h2 {
-                text-align: center;
-                font-size: 1.8rem;
-                margin-bottom: 1rem;
-                color: #222;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 0.5rem;
-                max-width: 800px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            /* Remove descriptions from timeline and make project names clickable if they have a matching panel */
-            #timeline .timeline {
-                position: relative;
-                padding: 20px 0;
-                max-width: 800px;
-                margin: 0 auto;
-            }
-
-                #timeline .timeline::before {
-                    content: "";
-                    position: absolute;
-                    left: 50px;
-                    top: 0;
-                    bottom: 0;
-                    width: 4px;
-                    background: #ddd;
-                }
-
-            #timeline .timeline-item {
-                position: relative;
-                margin: 20px 0;
-                padding-left: 80px;
-            }
-
-                #timeline .timeline-item::before {
-                    content: "";
-                    position: absolute;
-                    left: 42px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #3fa9f5;
-                    border-radius: 50%;
-                    border: 4px solid #fff;
-                }
-
-            #timeline .timeline-date {
-                font-weight: bold;
-                margin-bottom: 5px;
-                color: #555;
-            }
-
-            #timeline .timeline-content h3 {
-                margin: 0;
-                font-size: 1.2rem;
-                color: #222;
-            }
-        /* Wrap clickable project names in <a> tags where applicable:
-           - Tides of the Moon (Team Projects)
-           - Unicellular (Solo Projects)
-           - Pinnable (Solo Projects)
-           The others remain plain text.
-        */
         /* PROJECTS SECTION */
-        section {
-            margin: 3rem 0;
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
         }
-
-            section h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1rem;
-                color: #222;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 0.5rem;
-            }
 
         .project-grid {
             display: grid;
@@ -275,48 +316,45 @@
         }
 
         .project-card {
-            background: #fff;
+            background: #1e1e1e;
             border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             min-height: 450px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-            /* Add IDs to project cards for timeline linking */
-            .project-card#unicellular {
-            }
 
-            .project-card#pinnable {
-            }
-
-            .project-card#tides-of-the-moon {
+            .project-card:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.7);
             }
 
             .project-card h3 {
                 margin-bottom: 0.5rem;
-                color: #222;
+                color: #e0e0e0;
                 font-size: 1.2rem;
             }
 
             .project-card p {
                 font-size: 0.95rem;
-                color: #555;
+                color: #ccc;
                 margin-bottom: 1rem;
             }
 
         .tech {
             font-style: italic;
             margin-bottom: 1rem;
-            color: #777;
+            color: #999;
             font-size: 0.9rem;
         }
 
         .project-links {
             margin-bottom: 1.5rem;
         }
-            /* Default button style for project links */
+
             .project-links a {
                 display: inline-flex;
                 align-items: center;
@@ -345,7 +383,7 @@
                     background: url('github-icon.png') no-repeat center center;
                     background-size: contain;
                 }
-                /* Itch.io button: Play in browser – remains unchanged in dark mode */
+                /* Itch.io buttons now use #F05D60 */
                 .project-links a.itchio {
                     background: #F05D60;
                 }
@@ -360,6 +398,7 @@
                         background: url('itch-icon-white.png') no-repeat center center;
                         background-size: contain;
                     }
+
         /* SLIDESHOW */
         .slideshow-container {
             position: relative;
@@ -397,7 +436,7 @@
             object-fit: cover;
             cursor: pointer;
         }
-        /* Increase caption text size and weight */
+
         .slideshow-caption {
             position: absolute;
             bottom: 0;
@@ -435,7 +474,8 @@
         .next {
             right: 5px;
         }
-        /* LIGHTBOX / MODAL for enlarged video */
+
+        /* LIGHTBOX */
         #lightboxOverlay {
             position: fixed;
             top: 0;
@@ -457,7 +497,7 @@
             max-height: 90%;
             text-align: center;
         }
-        /* The lightbox video is 10% smaller and centered */
+
         #lightboxVideo {
             display: block;
             width: 100%;
@@ -468,7 +508,7 @@
             max-height: calc(90vh - 80px);
             margin: 0 auto;
         }
-        /* Lightbox caption style */
+
         #lightboxCaption {
             display: block;
             color: #fff;
@@ -489,7 +529,7 @@
             padding: 0 10px;
             border-radius: 4px;
         }
-        /* Adjusted arrow positions for the lightbox */
+
         #lightboxPrev, #lightboxNext {
             position: absolute;
             top: 50%;
@@ -516,6 +556,7 @@
         #lightboxNext {
             right: 10px;
         }
+
         /* CONTACT */
         #contact {
             padding-bottom: 2rem;
@@ -531,18 +572,15 @@
             }
 
             #contact a {
-                color: #333;
+                color: #e0e0e0;
                 text-decoration: none;
                 font-weight: bold;
             }
-        /* In dark mode, force contact links to be light coloured */
-        body.dark-mode #contact a {
-            color: #e0e0e0;
-        }
 
-        #contact a:hover {
-            text-decoration: underline;
-        }
+                #contact a:hover {
+                    text-decoration: underline;
+                }
+
         /* FOOTER */
         footer {
             text-align: center;
@@ -551,6 +589,7 @@
             padding: 1rem 0;
             margin-top: 2rem;
         }
+
         /* RESPONSIVE */
         @media (max-width: 600px) {
             body {
@@ -561,24 +600,6 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
-
-            .timeline-container,
-            #timeline .timeline {
-                width: 100%;
-            }
-
-            .timeline-axis,
-            .timeline-lines {
-                width: 800px;
-            }
-
-            .slideshow-container {
-                height: 220px;
-            }
-
-                .slideshow-container figure video {
-                    object-fit: cover;
-                }
 
             .about-container {
                 flex-direction: column;
@@ -605,90 +626,19 @@
                 font-size: 1.5rem;
             }
         }
-        /* DARK MODE OVERRIDES */
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-            body.dark-mode header {
-                background-color: #333;
-            }
-
-            body.dark-mode nav a {
-                color: #fff;
-            }
-
-                body.dark-mode nav a:hover {
-                    color: #ccc;
-                }
-
-            body.dark-mode #about .about-text p {
-                color: #bbb;
-            }
-
-            body.dark-mode section h2 {
-                color: #e0e0e0;
-                border-bottom-color: #555;
-            }
-            /* Force the Development Timeline heading to be white in dark mode */
-            body.dark-mode #timeline h2 {
-                color: #fff;
-            }
-
-            body.dark-mode #timeline {
-                background: #1e1e1e;
-            }
-
-                body.dark-mode #timeline .timeline::before {
-                    background: #555;
-                }
-
-                body.dark-mode #timeline .timeline-date,
-                body.dark-mode #timeline .timeline-content h3,
-                body.dark-mode #timeline .timeline-content p {
-                    color: #bbb;
-                }
-
-            body.dark-mode .project-card {
-                background: #1e1e1e;
-            }
-
-                body.dark-mode .project-card h3 {
-                    color: #e0e0e0;
-                }
-
-                body.dark-mode .project-card p {
-                    color: #bbb;
-                }
-
-            body.dark-mode .tech {
-                color: #aaa;
-            }
-            /* Ensure the Play in Browser (itchio) button remains unchanged in dark mode */
-            body.dark-mode .project-links a.itchio {
-                background: #F05D60;
-            }
-
-                body.dark-mode .project-links a.itchio:hover {
-                    background: #F05D60;
-                }
-
-            body.dark-mode .project-links a {
-                background: #333;
-            }
-
-                body.dark-mode .project-links a:hover {
-                    background: #444;
-                }
-
-            body.dark-mode footer {
-                background: #333;
-            }
     </style>
 </head>
 <body>
-    <!-- HEADER / NAV -->
+    <!-- Fixed Full-Screen Background Video (Hero Only) -->
+    <video autoplay loop muted playsinline id="bgVideo">
+        <source src="unicellularmovie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Header / Navigation (no theme toggle) -->
     <header>
         <div class="nav-container">
             <div class="logo-and-icons">
@@ -708,238 +658,275 @@
             <nav>
                 <ul>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#timeline">Timeline</a></li>
+                    <!-- Timeline link removed as its section is removed -->
                     <li><a href="#solo-projects">Solo</a></li>
                     <li><a href="#team-projects">Team</a></li>
                     <li><a href="#future-projects">In Dev</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <!-- Custom theme checkbox -->
-                    <li>
-                        <input type="checkbox" class="theme-checkbox" id="theme-toggle">
-                    </li>
                 </ul>
             </nav>
         </div>
     </header>
-    <!-- MAIN CONTENT -->
-    <main>
-        <!-- ABOUT SECTION -->
-        <section id="about">
-            <div class="about-container">
-                <div class="about-img">
-                    <img src="oliver.png" alt="Oliver Neal Selfie" />
-                </div>
-                <div class="about-text">
-                    <h1>Hello, I'm Oliver Neal! (<i>and this website is unfinished!</i>)</h1>
-                    <p>
-                        From the UK, I'm a <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev,
-                        multiplayer netcode, and performance optimization. I enjoy tackling challenging gameplay systems
-                        and delivering polished player experiences.
-                    </p>
-                    <p>
-                        I am a Games Technologies student expected to graduate with a foundation degree in July of 2025,
-                        and a Bachelor of Science degree in July of 2026.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <!-- VERTICAL TIMELINE SECTION (descriptions removed; clickable names for matching panels) -->
-        <section id="timeline">
-            <h2>Development Timeline</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">Feb 2025 – Now</div>
-                    <div class="timeline-content">
-                        <h3>Untitled Ability Deckbuilder</h3>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Jan 2025 – Now</div>
-                    <div class="timeline-content">
-                        <h3>XR Game</h3>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Jan 2025</div>
-                    <div class="timeline-content">
-                        <h3>Tides of the Moon</h3>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Jan 2025</div>
-                    <div class="timeline-content">
-                        <h3>2D Shooter</h3>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Jan 2025</div>
-                    <div class="timeline-content">
-                        <h3>Tank Shooter</h3>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Sep 2024 – Feb 2025</div>
-                    <div class="timeline-content">
-                        <h3>Unicellular</h3>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Jan 2024 – Mar 2024</div>
-                    <div class="timeline-content">
-                        <h3>Pinnable</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- SOLO PROJECTS -->
-        <section id="solo-projects">
-            <h2>Solo Projects</h2>
-            <div class="project-grid">
-                <!-- Unicellular (id added for timeline linking) -->
-                <div class="project-card" id="unicellular">
-                    <h3>Unicellular</h3>
-                    <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
-                    <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
-                    <div class="project-links">
-                        <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github">Github</a>
-                        <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio">Play in browser</a>
-                    </div>
-                    <div class="slideshow-container" id="unicellularSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow',1)">
-                                <source src="Project Media/Unicellular/UnicellInteraction.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Simulation Start</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow',2)">
-                                <source src="Project Media/Unicellular/BuyingUnicells.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Entity Interactions</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',3)">
-                                <source src="Project Media/Unicellular/1000Entities.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Performance Metrics</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',4)">
-                                <source src="Project Media/Unicellular/10kEntities.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Performance Metrics 2</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
-                <!-- Pinnable (id added for timeline linking) -->
-                <div class="project-card" id="pinnable">
-                    <h3>Pinnable</h3>
-                    <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
-                    <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
-                    <div class="project-links">
-                        <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github">Github</a>
-                        <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio">Play in browser</a>
-                    </div>
-                    <div class="slideshow-container" id="pinnableSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="unicell1.png" onclick="openLightbox('pinnableSlideshow',1)">
-                                <source src="pinnable1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Gameplay</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="unicell2.png" onclick="openLightbox('pinnableSlideshow',2)">
-                                <source src="pinnable2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Main Menu</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="unicell3.png" onclick="openLightbox('pinnableSlideshow',3)">
-                                <source src="pinnable3.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Options Menu</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- TEAM PROJECTS (id added for timeline linking) -->
-        <section id="team-projects">
-            <h2>Team Projects</h2>
-            <div class="project-grid">
-                <div class="project-card" id="tides-of-the-moon">
-                    <h3>Tides of the Moon</h3>
-                    <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
-                    <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
-                    <div class="project-links">
-                        <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github">Github</a>
-                    </div>
-                    <div class="slideshow-container" id="tidesSlideshow">
-                        <figure class="active">
-                            <video muted playsinline loop poster="C:/Users/olive/source/repos/portfoliowebsite/unicell2.png" onclick="openLightbox('tidesSlideshow',1)">
-                                <source src="C:/Users/olive/source/repos/portfoliowebsite/unicell2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">Prototype Gameplay</figcaption>
-                        </figure>
-                        <figure>
-                            <video muted playsinline loop poster="C:/Users/olive/source/repos/portfoliowebsite/unicell2.png" onclick="openLightbox('tidesSlideshow',2)">
-                                <source src="C:/Users/olive/source/repos/portfoliowebsite/unicell2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <figcaption class="slideshow-caption">In-Game Scene</figcaption>
-                        </figure>
-                        <div class="prev" onclick="plusSlides(-1,'tidesSlideshow',true)">&#10094;</div>
-                        <div class="next" onclick="plusSlides(1,'tidesSlideshow',true)">&#10095;</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- IN DEVELOPMENT (if present) could follow here -->
-        <!-- CONTACT SECTION -->
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>If you'd like to connect or learn more about my work, I'd love to hear from you!</p>
-            <ul>
-                <li><strong>Email:</strong> <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></li>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">LinkedIn Profile</a></li>
-                <li><strong>GitHub:</strong> <a href="https://github.com/OliverNealDev" target="_blank">github.com/OliverNealDev</a></li>
-                <li><strong>Itch.io:</strong> <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a></li>
-            </ul>
-        </section>
-    </main>
-    <!-- LIGHTBOX OVERLAY FOR ENLARGED VIDEO -->
-    <div id="lightboxOverlay" onclick="closeLightbox()">
-        <div id="lightboxContent" onclick="event.stopPropagation()">
-            <span id="lightboxClose" onclick="closeLightbox()">&times;</span>
-            <video id="lightboxVideo" autoplay controls muted playsinline style="max-width: 90%; max-height: calc(90vh - 80px);">
-                <source src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div id="lightboxCaption"></div>
-            <span id="lightboxPrev" onclick="lightboxChange(-1)">&#10094;</span>
-            <span id="lightboxNext" onclick="lightboxChange(1)">&#10095;</span>
+
+    <!-- Hero Section with Updated Text -->
+    <section id="hero">
+        <video autoplay muted loop playsinline poster="hero.jpg">
+            <source src="hero.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay">
+            <h1>Oliver Neal</h1>
+            <p>Games Programmer</p>
         </div>
+    </section>
+
+    <!-- Solid Background Content (covers everything below the hero) -->
+    <div id="solidContent">
+        <main>
+            <!-- About Section -->
+            <section id="about" class="reveal">
+                <div class="about-container">
+                    <div class="about-img">
+                        <img src="oliver.png" alt="Oliver Neal Selfie" />
+                    </div>
+                    <div class="about-text">
+                        <h1>Hello, I'm Oliver Neal! (<i>and this website is unfinished!</i>)</h1>
+                        <p>
+                            From the UK, I'm a <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev,
+                            multiplayer netcode, and performance optimization. I enjoy tackling challenging gameplay systems
+                            and delivering polished player experiences.
+                        </p>
+                        <p>
+                            I am a Games Technologies student expected to graduate with a foundation degree in July of 2025,
+                            and a Bachelor of Science degree in July of 2026.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Solo Projects Section -->
+            <section id="solo-projects" class="reveal">
+                <h2>Solo Projects</h2>
+                <div class="project-grid">
+                    <!-- Unicellular -->
+                    <div class="project-card" id="unicellular">
+                        <h3>Unicellular</h3>
+                        <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
+                        <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
+                        <div class="project-links">
+                            <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github">Github</a>
+                            <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio">Play in browser</a>
+                        </div>
+                        <div class="slideshow-container" id="unicellularSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow',1)">
+                                    <source src="Project Media/Unicellular/UnicellInteraction.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Simulation Start</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow',2)">
+                                    <source src="Project Media/Unicellular/BuyingUnicells.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Entity Interactions</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',3)">
+                                    <source src="Project Media/Unicellular/1000Entities.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Performance Metrics</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',4)">
+                                    <source src="Project Media/Unicellular/10kEntities.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Performance Metrics 2</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                    <!-- Pinnable -->
+                    <div class="project-card" id="pinnable">
+                        <h3>Pinnable</h3>
+                        <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
+                        <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
+                        <div class="project-links">
+                            <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github">Github</a>
+                            <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio">Play in browser</a>
+                        </div>
+                        <div class="slideshow-container" id="pinnableSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="unicell1.png" onclick="openLightbox('pinnableSlideshow',1)">
+                                    <source src="pinnable1.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Gameplay</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="unicell2.png" onclick="openLightbox('pinnableSlideshow',2)">
+                                    <source src="pinnable2.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Main Menu</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="unicell3.png" onclick="openLightbox('pinnableSlideshow',3)">
+                                    <source src="pinnable3.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Options Menu</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Projects Section -->
+            <section id="team-projects" class="reveal">
+                <h2>Team Projects</h2>
+                <div class="project-grid">
+                    <div class="project-card" id="tides-of-the-moon">
+                        <h3>Tides of the Moon</h3>
+                        <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
+                        <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
+                        <div class="project-links">
+                            <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github">Github</a>
+                        </div>
+                        <div class="slideshow-container" id="tidesSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="C:/Users/olive/source/repos/portfoliowebsite/unicell2.png" onclick="openLightbox('tidesSlideshow',1)">
+                                    <source src="C:/Users/olive/source/repos/portfoliowebsite/unicell2.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Prototype Gameplay</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="C:/Users/olive/source/repos/portfoliowebsite/unicell2.png" onclick="openLightbox('tidesSlideshow',2)">
+                                    <source src="C:/Users/olive/source/repos/portfoliowebsite/unicell2.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">In-Game Scene</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'tidesSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'tidesSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- In Development Projects Section -->
+            <section id="future-projects" class="reveal">
+                <h2>In Development Projects</h2>
+                <div class="project-grid">
+                    <!-- XR Game with slideshow -->
+                    <div class="project-card" id="xr-game">
+                        <h3>XR Game</h3>
+                        <p>An upcoming XR experience that pushes the boundaries of interactive gameplay in a virtual environment.</p>
+                        <p class="tech">Technologies: TBD</p>
+                        <div class="project-links">
+                            <!-- Future project links can be added here -->
+                        </div>
+                        <div class="slideshow-container" id="xrGameSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="Project Media/XRGame/slide1.png" onclick="openLightbox('xrGameSlideshow',1)">
+                                    <source src="Project Media/XRGame/slide1.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">XR Game Preview 1</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media/XRGame/slide2.png" onclick="openLightbox('xrGameSlideshow',2)">
+                                    <source src="Project Media/XRGame/slide2.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">XR Game Preview 2</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'xrGameSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'xrGameSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                    <!-- Unitles Ability Deckbuilder with slideshow -->
+                    <div class="project-card" id="unitles-ability-deckbuilder">
+                        <h3>Unitles Ability Deckbuilder</h3>
+                        <p>A deckbuilding game in development, blending strategic card mechanics with dynamic gameplay challenges.</p>
+                        <p class="tech">Technologies: TBD</p>
+                        <div class="project-links">
+                            <!-- Future project links can be added here -->
+                        </div>
+                        <div class="slideshow-container" id="unitlesSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="Project Media/Unitles/slide1.png" onclick="openLightbox('unitlesSlideshow',1)">
+                                    <source src="Project Media/Unitles/slide1.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Deckbuilder Preview 1</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media/Unitles/slide2.png" onclick="openLightbox('unitlesSlideshow',2)">
+                                    <source src="Project Media/Unitles/slide2.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Deckbuilder Preview 2</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'unitlesSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'unitlesSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="reveal">
+                <h2>Contact</h2>
+                <p>If you'd like to connect or learn more about my work, I'd love to hear from you!</p>
+                <ul>
+                    <li><strong>Email:</strong> <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></li>
+                    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">LinkedIn Profile</a></li>
+                    <li><strong>GitHub:</strong> <a href="https://github.com/OliverNealDev" target="_blank">github.com/OliverNealDev</a></li>
+                    <li><strong>Itch.io:</strong> <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a></li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 Oliver Neal</p>
+        </footer>
     </div>
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2025 Oliver Neal</p>
-    </footer>
+
     <script>
+        // --- Custom Smooth Scroll Function ---
+        function smoothScrollTo(element, duration) {
+            const target = element.getBoundingClientRect().top + window.pageYOffset;
+            const start = window.pageYOffset;
+            const distance = target - start;
+            let startTime = null;
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const run = easeInOutQuad(timeElapsed, start, distance, duration);
+                window.scrollTo(0, run);
+                if (timeElapsed < duration) requestAnimationFrame(animation);
+            }
+            function easeInOutQuad(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+            requestAnimationFrame(animation);
+        }
+
+        // --- Slideshow Script ---
         var slideIndices = {};
         var timers = {};
-        // Show figure at index n within a given container
         function showSlides(n, containerId) {
             var container = document.getElementById(containerId);
             if (!container) return;
@@ -953,7 +940,6 @@
             }
             slides[n - 1].classList.add("active");
         }
-        // Next/Prev for slideshow
         function plusSlides(n, containerId, manual) {
             var container = document.getElementById(containerId);
             if (!container) return;
@@ -983,12 +969,13 @@
             clearInterval(timers[containerId]);
             startTimer(containerId);
         }
-        // On DOM load, init all slideshows and add hover listeners for videos
         document.addEventListener("DOMContentLoaded", function () {
             var containerIDs = [
-                'unicellularSlideshow', 'pinnableSlideshow',
-                'tankSlideshow', 'coopSlideshow',
-                'tidesSlideshow', 'xrSlideshow', 'hellSlideshow'
+                'unicellularSlideshow',
+                'pinnableSlideshow',
+                'tidesSlideshow',
+                'xrGameSlideshow',
+                'unitlesSlideshow'
             ];
             containerIDs.forEach(function (id) {
                 slideIndices[id] = 1;
@@ -997,7 +984,6 @@
                 showSlides(1, id);
                 startTimer(id);
             });
-            // Add hover event listeners for all videos in slideshow containers
             document.querySelectorAll('.slideshow-container video').forEach(function (video) {
                 video.addEventListener('mouseenter', function () {
                     video.play();
@@ -1017,7 +1003,8 @@
                 });
             });
         });
-        /*************** LIGHTBOX SCRIPT ***************/
+
+        // --- Lightbox Script ---
         var currentSlideshowId = null;
         var currentSlideIndex = 1;
         function openLightbox(containerId, figureIndex) {
@@ -1065,31 +1052,55 @@
                 lightboxCaption.textContent = "";
             }
         }
-    </script>
-    <!-- THEME TOGGLING SCRIPT -->
-    <script>
-        (function () {
-            const savedTheme = localStorage.getItem('theme');
-            const toggleCheckbox = document.getElementById('theme-toggle');
-            if (savedTheme) {
-                if (savedTheme === 'dark') {
-                    document.body.classList.add('dark-mode');
-                    toggleCheckbox.checked = true;
-                }
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.add('dark-mode');
-                toggleCheckbox.checked = true;
+
+        // --- Scroll Reveal Script ---
+        document.addEventListener("DOMContentLoaded", function () {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+
+        // --- Cinematic Parallax & Scroll Progress ---
+        let mouseX = 0, mouseY = 0;
+        function updateHeroOverlay() {
+            const heroOverlay = document.querySelector('.hero-overlay');
+            if (heroOverlay) {
+                const scrollPos = window.pageYOffset;
+                const offsetX = mouseX * 0.02;
+                const offsetY = mouseY * 0.02 + scrollPos * 0.3;
+                heroOverlay.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
             }
-            toggleCheckbox.addEventListener('change', function () {
-                if (toggleCheckbox.checked) {
-                    document.body.classList.add('dark-mode');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-        })();
+        }
+        document.addEventListener('mousemove', function (e) {
+            mouseX = e.clientX - window.innerWidth / 2;
+            mouseY = e.clientY - window.innerHeight / 2;
+            updateHeroOverlay();
+        });
+        window.addEventListener('scroll', function () {
+            updateHeroOverlay();
+            // Update scroll progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        });
+
+        // --- Auto-Scroll to About Section after 2 seconds ---
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                // Option 1: Use the smoothScrollTo function if you want a custom duration
+                // smoothScrollTo(document.getElementById('about'), 800);
+                // Option 2: Use scrollIntoView for native smooth scrolling
+                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        });
     </script>
 </body>
 </html>
