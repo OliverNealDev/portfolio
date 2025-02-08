@@ -9,620 +9,637 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-         /* Default (Dark) Theme Variables */
-         :root {
-             --bg-color: #121212;
-             --text-color: #e0e0e0;
-             --accent-color: #00aaff;
-             --secondary-color: #ff69b4;
-             --header-bg: #222;
-             --border-color: #444;
-             --font-family: 'Roboto', sans-serif;
-             --light-bg: #1e1e1e;
-         }
-         /* Light Theme Overrides */
-         .light-theme {
-             --bg-color: #ffffff;
-             --text-color: #333333; /* Dark grey for text in light mode */
-             --header-bg: #f5f5f5;
-             --border-color: #ddd;
-             --light-bg: #fefefe;
-         }
-         /* RESET */
-         * {
-             margin: 0;
-             padding: 0;
-             box-sizing: border-box;
-         }
+        /* Default (Dark) Theme Variables */
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #00aaff;
+            --secondary-color: #ff69b4;
+            --header-bg: #222;
+            --border-color: #444;
+            --font-family: 'Roboto', sans-serif;
+            --light-bg: #1e1e1e;
+        }
+        /* Light Theme Overrides */
+        .light-theme {
+            --bg-color: #ffffff;
+            --text-color: #333333; /* Dark grey for text in light mode */
+            --header-bg: #f5f5f5;
+            --border-color: #ddd;
+            --light-bg: #fefefe;
+        }
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-         html {
-             scroll-behavior: smooth;
-         }
-         /* Base Body Styles */
-         body {
-             font-family: var(--font-family);
-             background-color: var(--bg-color);
-             color: var(--text-color);
-             line-height: 1.6;
-             overflow-x: hidden;
-         }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Base Body Styles */
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-         h1, h2, h3 {
-             font-family: var(--font-family);
-         }
-         /* Each section has a scroll margin to offset the fixed header */
-         section {
-             scroll-margin-top: 80px;
-         }
-         /* Main content container */
-         #solidContent {
-             width: 100%;
-             background-color: var(--bg-color);
-             padding-top: 0;
-             opacity: 1;
-         }
-         /* STICKY NAVIGATION */
-         header {
-             position: fixed;
-             top: 0;
-             left: 0;
-             width: 100%;
-             background-color: var(--header-bg);
-             color: #fff;
-             padding: 1rem 0;
-             z-index: 999;
-             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-         }
+        h1, h2, h3 {
+            font-family: var(--font-family);
+        }
+        /* Each section has a scroll margin to offset the fixed header */
+        section {
+            scroll-margin-top: 80px;
+        }
+        /* Main content container */
+        #solidContent {
+            width: 100%;
+            background-color: var(--bg-color);
+            padding-top: 0;
+            opacity: 1;
+        }
+        /* STICKY NAVIGATION */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            color: #fff;
+            padding: 1rem 0;
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
 
-         .nav-container {
-             width: 90%;
-             max-width: 1100px;
-             margin: 0 auto;
-             display: flex;
-             align-items: center;
-             justify-content: space-between;
-         }
+        .nav-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-         .logo-and-icons {
-             display: flex;
-             align-items: center;
-             gap: 1rem;
-         }
+        .logo-and-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-         .nav-logo {
-             font-size: 1.5rem;
-             font-weight: bold;
-             white-space: nowrap;
-         }
-         /* In light theme, override nav logo colour to dark grey */
-         .light-theme .nav-logo {
-             color: var(--text-color);
-         }
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        /* In light theme, override nav logo colour to dark grey */
+        .light-theme .nav-logo {
+            color: var(--text-color);
+        }
 
-         .nav-icons {
-             display: flex;
-             gap: 0.5rem;
-         }
+        .nav-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
 
-             .nav-icons a {
-                 display: inline-block;
-                 width: 24px;
-                 height: 24px;
-             }
-         /* Navigation GitHub Icon */
-         /* In dark mode, do NOT invert */
-         html:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
-             filter: none !important;
-         }
-         /* In light mode, invert the GitHub icon */
-         html.light-theme .nav-icons img[src*="github-icon.png"] {
-             filter: invert(1) !important;
-         }
+            .nav-icons a {
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+            }
+        /* Navigation GitHub Icon */
+        html:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
+            filter: none !important;
+        }
 
-         .nav-icons img {
-             width: 100%;
-             height: 100%;
-             object-fit: contain;
-             transition: opacity 0.2s ease;
-         }
+        .light-theme .nav-icons img[src*="github-icon.png"] {
+            filter: invert(1) !important;
+        }
 
-             .nav-icons img:hover {
-                 opacity: 0.7;
-             }
+        .nav-icons img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.2s ease;
+        }
 
-         nav ul {
-             list-style: none;
-             display: flex;
-             gap: 1rem;
-             align-items: center;
-         }
-         /* Default nav link style */
-         nav a {
-             color: #fff;
-             text-decoration: none;
-             font-weight: bold;
-             transition: color 0.2s ease;
-         }
-             /* Active nav links: blue-to-pink gradient remains unchanged */
-             nav a.active-nav {
-                 background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
-                 -webkit-background-clip: text;
-                 -webkit-text-fill-color: transparent;
-             }
-             /* Always apply gradient to the "About" link */
-             nav a[href="#about"] {
-                 background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
-                 -webkit-background-clip: text;
-                 -webkit-text-fill-color: transparent;
-             }
-         /* In light theme, override nav links to use dark grey text */
-         .light-theme nav a {
-             color: var(--text-color);
-         }
-         /* Theme Toggle (placed at the top right) */
-         .theme-toggle {
-             margin-left: 1rem;
-         }
-         /* Reduce the size of the theme toggle by ~40% */
-         .theme-checkbox {
-             --toggle-size: 10px;
-             -webkit-appearance: none;
-             -moz-appearance: none;
-             appearance: none;
-             width: 3.75em;
-             height: 1.875em;
-             background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
-             background-size: 205%;
-             background-position: 0;
-             transition: 0.4s;
-             border-radius: 99em;
-             position: relative;
-             cursor: pointer;
-             font-size: var(--toggle-size);
-         }
+            .nav-icons img:hover {
+                opacity: 0.7;
+            }
 
-             .theme-checkbox::before {
-                 content: "";
-                 width: 1.35em;
-                 height: 1.35em;
-                 position: absolute;
-                 top: 0.263em;
-                 left: 0.263em;
-                 background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
-                 background-size: 205%;
-                 background-position: 100%;
-                 border-radius: 50%;
-                 transition: 0.4s;
-             }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        /* Default nav link style */
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
 
-             .theme-checkbox:checked::before {
-                 left: calc(100% - 1.35em - 0.263em);
-                 background-position: 0;
-             }
+            nav a.active-nav {
+                background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
 
-             .theme-checkbox:checked {
-                 background-position: 100%;
-             }
-         /* MAIN CONTENT – add top padding so content is not hidden by header */
-         main {
-             width: 90%;
-             max-width: 1100px;
-             margin: 0 auto;
-             padding-top: 80px;
-         }
-         /* ABOUT SECTION */
-         #about {
-             padding: 2rem 0;
-             margin-top: 0;
-         }
+            nav a[href="#about"] {
+                background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
 
-         .about-container {
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             gap: 2rem;
-             flex-wrap: wrap;
-         }
+        .light-theme nav a {
+            color: var(--text-color);
+        }
+        /* Theme Toggle (placed at the top right) */
+        .theme-toggle {
+            margin-left: 1rem;
+        }
 
-         .about-img {
-             width: 200px;
-             height: 200px;
-             overflow: hidden;
-             border-radius: 50%;
-             flex-shrink: 0;
-             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-         }
+        .theme-checkbox {
+            --toggle-size: 10px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 3.75em;
+            height: 1.875em;
+            background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+            background-size: 205%;
+            background-position: 0;
+            transition: 0.4s;
+            border-radius: 99em;
+            position: relative;
+            cursor: pointer;
+            font-size: var(--toggle-size);
+        }
 
-             .about-img img {
-                 width: 100%;
-                 height: 100%;
-                 object-fit: cover;
-             }
+            .theme-checkbox::before {
+                content: "";
+                width: 1.35em;
+                height: 1.35em;
+                position: absolute;
+                top: 0.263em;
+                left: 0.263em;
+                background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+                background-size: 205%;
+                background-position: 100%;
+                border-radius: 50%;
+                transition: 0.4s;
+            }
 
-         .about-text {
-             flex: 1;
-             min-width: 250px;
-         }
+            .theme-checkbox:checked::before {
+                left: calc(100% - 1.35em - 0.263em);
+                background-position: 0;
+            }
 
-             .about-text h1 {
-                 font-size: 2rem;
-                 margin-bottom: 1rem;
-             }
+            .theme-checkbox:checked {
+                background-position: 100%;
+            }
+        /* MAIN CONTENT – add top padding so content is not hidden by header */
+        main {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 80px;
+        }
+        /* ABOUT SECTION */
+        #about {
+            padding: 2rem 0;
+            margin-top: 0;
+        }
 
-             .about-text p {
-                 max-width: 700px;
-                 margin-bottom: 1rem;
-                 color: #ccc;
-                 font-size: 1rem;
-                 line-height: 1.6;
-             }
-         /* SECTION TITLES */
-         section h2 {
-             font-size: 1.8rem;
-             margin-top: 2rem;
-             margin-bottom: 1rem;
-             color: var(--text-color);
-             border-bottom: 2px solid var(--border-color);
-             padding-bottom: 0.5rem;
-         }
-         /* PROJECTS SECTION */
-         .project-grid {
-             display: grid;
-             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-             gap: 1.5rem;
-         }
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
 
-         .project-card {
-             background: var(--light-bg);
-             border-radius: 6px;
-             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-             padding: 1.5rem;
-             display: flex;
-             flex-direction: column;
-             justify-content: flex-start;
-             min-height: 450px;
-             transition: transform 0.3s ease, box-shadow 0.3s ease;
-         }
+        .about-img {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-             .project-card:hover {
-                 transform: translateY(-5px) scale(1.02);
-                 box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-             }
+            .about-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
 
-             .project-card h3 {
-                 margin-bottom: 0.5rem;
-                 color: var(--text-color);
-                 font-size: 1.2rem;
-             }
+        .about-text {
+            flex: 1;
+            min-width: 250px;
+        }
 
-             .project-card p {
-                 font-size: 0.95rem;
-                 color: #ccc;
-                 margin-bottom: 1rem;
-             }
+            .about-text h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
 
-         .tech {
-             font-style: italic;
-             margin-bottom: 1rem;
-             color: #999;
-             font-size: 0.9rem;
-         }
+            .about-text p {
+                max-width: 700px;
+                margin-bottom: 1rem;
+                color: #ccc;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        /* SECTION TITLES */
+        section h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        /* PROJECTS SECTION */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
 
-         .project-links {
-             margin-bottom: 1.5rem;
-         }
+        .project-card {
+            background: var(--light-bg);
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 450px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-             .project-links a {
-                 display: inline-flex;
-                 align-items: center;
-                 margin-right: 8px;
-                 margin-top: 5px;
-                 padding: 0.4rem 0.8rem;
-                 /* Default style (will be overridden for the GitHub and Itch buttons) */
-                 background: var(--header-bg);
-                 color: #fff;
-                 text-decoration: none;
-                 border-radius: 4px;
-                 font-size: 0.85rem;
-                 transition: background 0.2s ease;
-             }
+            .project-card:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+            }
 
-                 .project-links a:hover {
-                     background: #444;
-                 }
-         /* --- BUTTON STYLE OVERRIDES FOR GITHUB & ITCH BUTTONS --- */
-         /* In dark mode (when .light-theme is NOT present), force light buttons */
-         html:not(.light-theme) .project-links a.github,
-         html:not(.light-theme) .project-links a.itchio {
-             background: #fff;
-             color: #333;
-         }
-         /* In light mode, force dark buttons */
-         html.light-theme .project-links a.github,
-         html.light-theme .project-links a.itchio {
-             background: #222;
-             color: #fff;
-         }
-         /* --- ICON PSEUDO-ELEMENTS --- */
-         /* GitHub Icon for Project Panels */
-         .project-links a.github::before {
-             content: "";
-             display: inline-block;
-             vertical-align: middle;
-             width: 16px;
-             height: 16px;
-             margin-right: 4px;
-             background: url('github-icon.png') no-repeat center center;
-             background-size: contain;
-             transition: filter 0.2s ease;
-         }
-         /* Itch.io Icon */
-         .project-links a.itchio::before {
-             content: "";
-             display: inline-block;
-             vertical-align: middle;
-             width: 16px;
-             height: 16px;
-             margin-right: 4px;
-             background: url('itch-icon-white.png') no-repeat center center;
-             background-size: contain;
-         }
-         /* --- ICON INVERSION RULES --- */
-         /* For the GitHub button in project panels:
-        In dark mode, invert the icon; in light mode, do not invert */
-         html:not(.light-theme) .project-links a.github::before {
-             filter: invert(1);
-         }
+            .project-card h3 {
+                margin-bottom: 0.5rem;
+                color: var(--text-color);
+                font-size: 1.2rem;
+            }
 
-         html.light-theme .project-links a.github::before {
-             filter: none;
-         }
-         /* For the Itch icon, the rules remain unchanged */
-         html:not(.light-theme) .project-links a.itchio::before {
-             filter: invert(1);
-         }
+            .project-card p {
+                font-size: 0.95rem;
+                color: #ccc;
+                margin-bottom: 1rem;
+            }
 
-         html.light-theme .project-links a.itchio::before {
-             filter: none;
-         }
-         /* PROJECT HEADER */
-         .project-header {
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-             margin-bottom: 0.5rem;
-         }
+        .tech {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
 
-             .project-header h3 {
-                 margin: 0;
-                 font-size: 1.2rem;
-             }
-         /* SLIDESHOW */
-         .slideshow-container {
-             position: relative;
-             width: 100%;
-             max-width: 100%;
-             height: 200px;
-             margin-top: auto;
-             overflow: hidden;
-             border-radius: 5px;
-             background: #000;
-         }
+        .project-links {
+            margin-bottom: 1.5rem;
+        }
 
-             .slideshow-container figure {
-                 position: absolute;
-                 top: 0;
-                 left: 0;
-                 width: 100%;
-                 margin: 0;
-                 opacity: 0;
-                 pointer-events: none;
-             }
+            .project-links a {
+                display: inline-flex;
+                align-items: center;
+                margin-right: 8px;
+                margin-top: 5px;
+                padding: 0.4rem 0.8rem;
+                background: var(--header-bg);
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+                font-size: 0.85rem;
+                transition: background 0.2s ease;
+            }
 
-                 .slideshow-container figure.active {
-                     opacity: 1;
-                     pointer-events: auto;
-                 }
+                .project-links a:hover {
+                    background: #444;
+                }
+        /* BUTTON STYLE OVERRIDES FOR GITHUB & ITCH BUTTONS */
+        html:not(.light-theme) .project-links a.github,
+        html:not(.light-theme) .project-links a.itchio {
+            background: #fff;
+            color: #333;
+        }
 
-         .fade-transition figure {
-             transition: opacity 1s ease-in-out;
-         }
+        html.light-theme .project-links a.github,
+        html.light-theme .project-links a.itchio {
+            background: #222;
+            color: #fff;
+        }
+        /* ICON PSEUDO-ELEMENTS */
+        .project-links a.github::before {
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            background: url('github-icon.png') no-repeat center center;
+            background-size: contain;
+            transition: filter 0.2s ease;
+        }
 
-         .slideshow-container figure video {
-             width: 100%;
-             height: 100%;
-             object-fit: cover;
-             cursor: pointer;
-         }
+        .project-links a.itchio::before {
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            background: url('itch-icon-white.png') no-repeat center center;
+            background-size: contain;
+        }
+        /* ICON INVERSION RULES for Project Panels */
+        html:not(.light-theme) .project-links a.github::before {
+            filter: invert(1);
+        }
 
-         .slideshow-caption {
-             position: absolute;
-             bottom: 0;
-             background: rgba(0,0,0,0.5);
-             color: #fff;
-             width: 100%;
-             font-size: 1.2rem;
-             font-weight: bold;
-             text-align: center;
-             padding: 5px 0;
-         }
+        html.light-theme .project-links a.github::before {
+            filter: none;
+        }
 
-         .prev, .next {
-             position: absolute;
-             top: 50%;
-             transform: translateY(-50%);
-             background: rgba(0,0,0,0.6);
-             color: #fff;
-             padding: 8px 12px;
-             cursor: pointer;
-             border-radius: 3px;
-             font-weight: bold;
-             user-select: none;
-             transition: background 0.2s ease;
-         }
+        html:not(.light-theme) .project-links a.itchio::before {
+            filter: invert(1);
+        }
 
-             .prev:hover, .next:hover {
-                 background: rgba(0,0,0,0.8);
-             }
+        html.light-theme .project-links a.itchio::before {
+            filter: none;
+        }
+        /* PROJECT HEADER */
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
 
-         .prev {
-             left: 5px;
-         }
+            .project-header h3 {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+        /* SLIDESHOW */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 200px;
+            margin-top: auto;
+            overflow: hidden;
+            border-radius: 5px;
+            background: #000;
+        }
 
-         .next {
-             right: 5px;
-         }
-         /* LIGHTBOX OVERLAY (Modal for Enlarged Video) */
-         #lightboxOverlay {
-             position: fixed;
-             top: 0;
-             left: 0;
-             width: 100%;
-             height: 100%;
-             background: rgba(0,0,0,0.8);
-             display: none;
-             z-index: 10000;
-             align-items: center;
-             justify-content: center;
-             padding: 20px;
-         }
+            .slideshow-container figure {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin: 0;
+                opacity: 0;
+                pointer-events: none;
+            }
 
-         #lightboxContent {
-             position: relative;
-             width: 80%;
-             max-width: 800px;
-             background: #000;
-             padding: 10px;
-             border-radius: 8px;
-             text-align: center;
-         }
+                .slideshow-container figure.active {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
 
-         #lightboxVideo {
-             width: 100%;
-             height: auto;
-             border-radius: 6px;
-             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-         }
+        .fade-transition figure {
+            transition: opacity 1s ease-in-out;
+        }
 
-         #lightboxCaption {
-             color: #fff;
-             margin-top: 10px;
-             font-size: 1rem;
-         }
+        .slideshow-container figure video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
 
-         #lightboxClose {
-             position: absolute;
-             top: -30px;
-             right: 0;
-             font-size: 2rem;
-             color: #fff;
-             cursor: pointer;
-         }
+        .slideshow-caption {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px 0;
+        }
 
-         #lightboxPrev, #lightboxNext {
-             position: absolute;
-             top: 50%;
-             transform: translateY(-50%);
-             color: #fff;
-             background: rgba(0,0,0,0.4);
-             font-size: 2rem;
-             width: 40px;
-             height: 40px;
-             text-align: center;
-             line-height: 40px;
-             cursor: pointer;
-             border-radius: 4px;
-         }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
 
-             #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
-                 background: rgba(0,0,0,0.7);
-             }
+            .prev:hover, .next:hover {
+                background: rgba(0,0,0,0.8);
+            }
 
-         #lightboxPrev {
-             left: 10px;
-         }
+        .prev {
+            left: 5px;
+        }
 
-         #lightboxNext {
-             right: 10px;
-         }
-         /* CONTACT */
-         #contact {
-             padding-bottom: 2rem;
-         }
+        .next {
+            right: 5px;
+        }
+        /* LIGHTBOX OVERLAY (Modal for Enlarged Video) */
+        #lightboxOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-             #contact ul {
-                 list-style: none;
-                 margin-top: 1rem;
-             }
+        #lightboxContent {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            background: #000;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
 
-             #contact li {
-                 margin-bottom: 0.5rem;
-             }
+        #lightboxVideo {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
-             #contact a {
-                 color: var(--text-color);
-                 text-decoration: none;
-                 font-weight: bold;
-             }
+        #lightboxCaption {
+            color: #fff;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
 
-                 #contact a:hover {
-                     text-decoration: underline;
-                 }
-         /* FOOTER */
-         footer {
-             text-align: center;
-             background: var(--header-bg);
-             color: #fff;
-             padding: 1rem 0;
-             margin-top: 2rem;
-         }
-         /* RESPONSIVE */
-         @media (max-width: 600px) {
-             body {
-                 padding-top: 120px;
-             }
+        #lightboxClose {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+        }
 
-             nav ul {
-                 flex-direction: column;
-                 gap: 0.5rem;
-             }
+        #lightboxPrev, #lightboxNext {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            background: rgba(0,0,0,0.4);
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-             .about-container {
-                 flex-direction: column;
-             }
+            #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
+                background: rgba(0,0,0,0.7);
+            }
 
-             .about-img {
-                 margin-bottom: 1rem;
-             }
+        #lightboxPrev {
+            left: 10px;
+        }
 
-             .nav-icons a {
-                 width: 20px;
-                 height: 20px;
-             }
+        #lightboxNext {
+            right: 10px;
+        }
+        /* CONTACT SECTION */
+        #contact {
+            padding-bottom: 2rem;
+        }
+        /* Refined Contact List Styling */
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
 
-             #lightboxPrev, #lightboxNext {
-                 font-size: 1.5rem;
-                 width: 30px;
-                 height: 30px;
-                 line-height: 30px;
-             }
+            .contact-list li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0.75rem;
+            }
 
-             #lightboxClose {
-                 top: -30px;
-                 font-size: 1.5rem;
-             }
-         }
-         /* Additional Light Theme Overrides */
-         .light-theme nav a,
-         .light-theme .nav-logo {
-             color: var(--text-color);
-         }
-         /* Additional text color adjustments in light theme */
-         .light-theme .project-card p,
-         .light-theme .about-text p,
-         .light-theme .tech {
-             color: #444;
-         }
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        /* Invert the GitHub icon for contacts in light mode */
+        html:not(.light-theme) .contact-icon[src*="github-icon.png"] {
+            filter: none;
+        }
+
+        html.light-theme .contact-icon[src*="github-icon.png"] {
+            filter: invert(1);
+        }
+
+        #contact a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            #contact a:hover {
+                text-decoration: underline;
+            }
+        /* FOOTER */
+        footer {
+            text-align: center;
+            background: var(--header-bg);
+            color: #fff;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .light-theme footer {
+            color: var(--text-color);
+        }
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            body {
+                padding-top: 120px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .about-container {
+                flex-direction: column;
+            }
+
+            .about-img {
+                margin-bottom: 1rem;
+            }
+
+            .nav-icons a {
+                width: 20px;
+                height: 20px;
+            }
+
+            #lightboxPrev, #lightboxNext {
+                font-size: 1.5rem;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            #lightboxClose {
+                top: -30px;
+                font-size: 1.5rem;
+            }
+        }
+
+        .light-theme nav a,
+        .light-theme .nav-logo {
+            color: var(--text-color);
+        }
+
+        .light-theme .project-card p,
+        .light-theme .about-text p,
+        .light-theme .tech {
+            color: #444;
+        }
     </style>
 </head>
 <body>
@@ -839,10 +856,10 @@
                             <div class="next" onclick="plusSlides(1,'xrGameSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
-                    <!-- Unitles Ability Deckbuilder -->
+                    <!-- Ability Deckbuilder -->
                     <div class="project-card" id="unitles-ability-deckbuilder">
                         <div class="project-header">
-                            <h3>Unitles Ability Deckbuilder</h3>
+                            <h3>Ability Deckbuilder</h3>
                         </div>
                         <p>A deckbuilding game in development, blending strategic card mechanics with dynamic gameplay challenges.</p>
                         <p class="tech">Technologies: TBD</p>
@@ -871,22 +888,34 @@
                 </div>
             </section>
 
-            <!-- Contact Section -->
+            <!-- Contact Section (Improved) -->
             <section id="contact" class="reveal">
                 <h2>Contact</h2>
                 <p>If you'd like to connect or learn more about my work, I'd love to hear from you!</p>
-                <ul>
-                    <li><strong>Email:</strong> <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></li>
-                    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">LinkedIn Profile</a></li>
-                    <li><strong>GitHub:</strong> <a href="https://github.com/OliverNealDev" target="_blank">github.com/OliverNealDev</a></li>
-                    <li><strong>Itch.io:</strong> <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a></li>
+                <ul class="contact-list">
+                    <li>
+                        <img src="email-icon.png" alt="Email Icon" class="contact-icon" />
+                        <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a>
+                    </li>
+                    <li>
+                        <img src="linkedin-icon.png" alt="LinkedIn Icon" class="contact-icon" />
+                        <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">Oliver Neal</a>
+                    </li>
+                    <li>
+                        <img src="github-icon.png" alt="GitHub Icon" class="contact-icon" />
+                        <a href="https://github.com/OliverNealDev" target="_blank">github.com/OliverNealDev</a>
+                    </li>
+                    <li>
+                        <img src="itch-icon.png" alt="Itch.io Icon" class="contact-icon" />
+                        <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a>
+                    </li>
                 </ul>
             </section>
         </main>
 
-        <!-- Footer -->
+        <!-- FOOTER -->
         <footer>
-            <p>&copy; 2025 Oliver Neal</p>
+            <p>&copy; 2025 Oliver Neal. All rights reserved.</p>
         </footer>
     </div>
 
@@ -1073,7 +1102,6 @@
         window.addEventListener('scroll', function () {
             const headerHeight = 80; // fixed header height
             const scrollY = window.pageYOffset;
-            // If near the top, remove all active states
             if (scrollY < 100) {
                 document.querySelectorAll('nav a').forEach(link => link.classList.remove('active-nav'));
                 return;
@@ -1081,13 +1109,10 @@
             document.querySelectorAll('section').forEach(section => {
                 const id = section.getAttribute('id');
                 const navLink = document.querySelector(`nav a[href="#${id}"]`);
-                // Default: trigger early by subtracting 150px from the section's top
                 let triggerOffset = -150;
-                // For About and Solo Projects, we don't want them active until reached
                 if (id === "about" || id === "solo-projects") {
                     triggerOffset = 0;
                 }
-                // For Contact, activate only when scrolled very near the bottom
                 if (id === "contact") {
                     if (window.innerHeight + scrollY >= document.body.scrollHeight - 50) {
                         navLink.classList.add('active-nav');
