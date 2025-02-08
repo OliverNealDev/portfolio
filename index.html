@@ -287,25 +287,31 @@
                 transform: translateY(-5px) scale(1.02);
                 box-shadow: 0 4px 15px rgba(0,0,0,0.7);
             }
-            /* Project title without transition */
-            .project-card h3 {
-                margin-bottom: 0.5rem;
-                color: var(--text-color);
+        /* Project header now contains both title and date */
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+            .project-header h3 {
+                margin: 0;
                 font-size: 1.2rem;
-                transition: none;
             }
-            /* On hover over the entire project panel, apply the gradient to the title */
-            .project-card:hover h3 {
-                background: linear-gradient(90deg, #FFA500, #FF4500);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
+            /* When inside the header, remove extra margin from the date */
+            .project-header .project-date {
+                margin-bottom: 0;
+                font-size: 0.9rem;
+                font-style: italic;
+                color: #ccc;
             }
 
-            .project-card p {
-                font-size: 0.95rem;
-                color: #ccc;
-                margin-bottom: 1rem;
-            }
+        .project-card p {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
 
         .tech {
             font-style: italic;
@@ -386,18 +392,12 @@
         html.light-theme .project-links a.itchio::before {
             filter: none;
         }
-        /* PROJECT HEADER */
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
+        /* Bring back gradient on title when hovering over the card */
+        .project-card:hover h3 {
+            background: linear-gradient(90deg, #FFA500, #FF4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-            .project-header h3 {
-                margin: 0;
-                font-size: 1.2rem;
-            }
         /* SLIDESHOW */
         .slideshow-container {
             position: relative;
@@ -711,10 +711,11 @@
             <section id="solo-projects" class="reveal">
                 <h2>Solo Projects</h2>
                 <div class="project-grid">
-                    <!-- Unicellular (kept unchanged) -->
+                    <!-- Unicellular -->
                     <div class="project-card" id="unicellular">
                         <div class="project-header">
                             <h3>Unicellular</h3>
+                            <span class="project-date">Feb 2025</span>
                         </div>
                         <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
                         <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
@@ -755,10 +756,11 @@
                             <div class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
-                    <!-- Pinnable (video and poster updated) -->
+                    <!-- Pinnable -->
                     <div class="project-card" id="pinnable">
                         <div class="project-header">
                             <h3>Pinnable</h3>
+                            <span class="project-date">March 2024</span>
                         </div>
                         <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
                         <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
@@ -792,10 +794,11 @@
                             <div class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
-                    <!-- 3D Netcode Tank Game (new project in Solo, video/poster updated) -->
+                    <!-- 3D Netcode Tank Game -->
                     <div class="project-card" id="3d-netcode-tank-game">
                         <div class="project-header">
                             <h3>3D Netcode Tank Game</h3>
+                            <span class="project-date">Jan 2025</span>
                         </div>
                         <p>A 3D multiplayer tank combat game built on a server–client networking topology. Players engage in responsive battles while using Unity Authentication, Relay, Cloud Save, and Lobbies for secure matchmaking and persistent progress.</p>
                         <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
@@ -828,10 +831,11 @@
                             <div class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
-                    <!-- 2D Netcode Shooter (new project in Solo, video/poster updated) -->
+                    <!-- 2D Netcode Shooter -->
                     <div class="project-card" id="2d-netcode-shooter">
                         <div class="project-header">
                             <h3>2D Netcode Shooter</h3>
+                            <span class="project-date">Jan 2025</span>
                         </div>
                         <p>A fast-paced 2D multiplayer shooter built using a distributed authority networking model. This project delivers casual online matches with smooth gameplay while utilizing Unity Authentication, Relay, Cloud Save, and Lobbies for efficient online management and persistent data.</p>
                         <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
@@ -874,6 +878,7 @@
                     <div class="project-card" id="tides-of-the-moon">
                         <div class="project-header">
                             <h3>Tides of the Moon</h3>
+                            <span class="project-date">Jan 2025</span>
                         </div>
                         <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
                         <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
