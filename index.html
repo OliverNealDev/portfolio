@@ -6,674 +6,598 @@
     <title>Oliver Neal – Portfolio</title>
     <!-- Favicon using your selfie -->
     <link rel="icon" href="oliver.png" type="image/png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* RESET */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* DARK MODE: fixed dark theme with basic system fonts */
-        body {
-            font-family: sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3 {
-            font-family: sans-serif;
-        }
-
-        /* Ensure that when scrolling via anchor links the top is not cut off */
-        section {
-            scroll-margin-top: 120px;
-        }
-
-        /* FULL-SCREEN BACKGROUND VIDEO (for the hero only) */
-        #bgVideo {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -100;
-            filter: blur(5px) brightness(0.7);
-            pointer-events: none;
-        }
-
-        /* SOLID BACKGROUND CONTAINER (wraps main content and footer) */
-        #solidContent {
-            width: 100%;
-            background-color: #121212;
-            padding-top: 50px;
-        }
-
-        /* SCROLL PROGRESS BAR with gradient from strong blue to hot pink */
-        #progressBar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #00aaff, #ff69b4);
-            width: 0;
-            z-index: 1000;
-            transition: width 0.25s ease-out;
-        }
-
-        /* CINEMATIC REVEAL ANIMATIONS */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-            .reveal.active {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        /* HERO SECTION */
-        #hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-        }
-
-            #hero video {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                min-width: 100%;
-                min-height: 100%;
-                width: auto;
-                height: auto;
-                transform: translate(-50%, -50%);
-                z-index: -1;
-                filter: brightness(0.7);
-                animation: zoomIn 20s ease-out infinite;
-            }
-
-        @keyframes zoomIn {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            50% {
-                transform: translate(-50%, -50%) scale(1.05);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        #hero .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #ffffff;
-            padding: 0 20px;
-            transform: translate(0, 0);
-        }
-
-            /* Updated hero text */
-            #hero .hero-overlay h1 {
-                font-size: 3rem;
-                margin-bottom: 1rem;
-                animation: fadeInDown 1.5s ease-out;
-                text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            }
-
-            #hero .hero-overlay p {
-                font-size: 1.5rem;
-                animation: fadeInUp 1.5s ease-out;
-                text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-            }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* STICKY NAVIGATION */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #222;
-            color: #fff;
-            padding: 1rem 0;
-            z-index: 999;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .nav-container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo-and-icons {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-            .nav-icons a {
-                display: inline-block;
-                width: 24px;
-                height: 24px;
-            }
-
-            .nav-icons img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                transition: opacity 0.2s ease;
-            }
-
-                .nav-icons img:hover {
-                    opacity: 0.7;
-                }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
-            text-shadow: 0 0 10px rgba(255,255,255,0.1);
-        }
-
-            nav a:hover {
-                color: #ddd;
-                text-shadow: 0 0 15px rgba(255,255,255,0.3);
-            }
-
-        /* MAIN CONTENT (inside #solidContent) */
-        main {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding-top: 100px; /* offset for sticky header */
-        }
-
-        /* ABOUT SECTION */
-        #about {
-            padding: 2rem 0;
-        }
-
-        .about-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .about-img {
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 50%;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-            .about-img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-        .about-text {
-            flex: 1;
-            min-width: 250px;
-        }
-
-            .about-text h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
-
-            .about-text p {
-                max-width: 700px;
-                margin-bottom: 1rem;
-                color: #ccc;
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
-        /* SECTION TITLES - Extra top margin added */
-        section h2 {
-            font-size: 1.8rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #e0e0e0;
-            border-bottom: 2px solid #333;
-            padding-bottom: 0.5rem;
-        }
-
-        /* PROJECTS SECTION */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: #1e1e1e;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            min-height: 450px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-            .project-card:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-            }
-
-            .project-card h3 {
-                margin-bottom: 0.5rem;
-                color: #e0e0e0;
-                font-size: 1.2rem;
-            }
-
-            .project-card p {
-                font-size: 0.95rem;
-                color: #ccc;
-                margin-bottom: 1rem;
-            }
-
-        .tech {
-            font-style: italic;
-            margin-bottom: 1rem;
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .project-links {
-            margin-bottom: 1.5rem;
-        }
-
-            .project-links a {
-                display: inline-flex;
-                align-items: center;
-                margin-right: 8px;
-                margin-top: 5px;
-                padding: 0.4rem 0.8rem;
-                background: #222;
-                color: #fff;
-                text-decoration: none;
-                border-radius: 4px;
-                font-size: 0.85rem;
-                transition: background 0.2s ease;
-            }
-
-                .project-links a:hover {
-                    background: #444;
-                }
-
-                .project-links a.github::before {
-                    content: "";
-                    display: inline-block;
-                    vertical-align: middle;
-                    width: 16px;
-                    height: 16px;
-                    margin-right: 4px;
-                    background: url('github-icon.png') no-repeat center center;
-                    background-size: contain;
-                }
-                /* Itch.io buttons now use #F05D60 */
-                .project-links a.itchio {
-                    background: #F05D60;
-                }
-
-                    .project-links a.itchio::before {
-                        content: "";
-                        display: inline-block;
-                        vertical-align: middle;
-                        width: 16px;
-                        height: 16px;
-                        margin-right: 4px;
-                        background: url('itch-icon-white.png') no-repeat center center;
-                        background-size: contain;
-                    }
-
-        /* SLIDESHOW */
-        .slideshow-container {
-            position: relative;
-            width: 100%;
-            max-width: 100%;
-            height: 200px;
-            margin-top: auto;
-            overflow: hidden;
-            border-radius: 5px;
-            background: #000;
-        }
-
-            .slideshow-container figure {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                margin: 0;
-                opacity: 0;
-                pointer-events: none;
-            }
-
-                .slideshow-container figure.active {
-                    opacity: 1;
-                    pointer-events: auto;
-                }
-
-        .fade-transition figure {
-            transition: opacity 1s ease-in-out;
-        }
-
-        .slideshow-container figure video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        .slideshow-caption {
-            position: absolute;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            width: 100%;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 5px 0;
-        }
-
-        .prev, .next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-weight: bold;
-            user-select: none;
-            transition: background 0.2s ease;
-        }
-
-            .prev:hover, .next:hover {
-                background: rgba(0,0,0,0.8);
-            }
-
-        .prev {
-            left: 5px;
-        }
-
-        .next {
-            right: 5px;
-        }
-
-        /* LIGHTBOX */
-        #lightboxOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(6px);
-            display: none;
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        #lightboxContent {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            text-align: center;
-        }
-
-        #lightboxVideo {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 6px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            max-width: 90%;
-            max-height: calc(90vh - 80px);
-            margin: 0 auto;
-        }
-
-        #lightboxCaption {
-            display: block;
-            color: #fff;
-            font-size: 1rem;
-            text-align: center;
-            margin-top: 10px;
-            padding: 0 10px;
-        }
-
-        #lightboxClose {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            font-size: 2rem;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(0,0,0,0.4);
-            padding: 0 10px;
-            border-radius: 4px;
-        }
-
-        #lightboxPrev, #lightboxNext {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            background: rgba(0,0,0,0.4);
-            font-size: 2rem;
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            line-height: 40px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-            #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
-                background: rgba(0,0,0,0.7);
-            }
-
-        #lightboxPrev {
-            left: 10px;
-        }
-
-        #lightboxNext {
-            right: 10px;
-        }
-
-        /* CONTACT */
-        #contact {
-            padding-bottom: 2rem;
-        }
-
-            #contact ul {
-                list-style: none;
-                margin-top: 1rem;
-            }
-
-            #contact li {
-                margin-bottom: 0.5rem;
-            }
-
-            #contact a {
-                color: #e0e0e0;
-                text-decoration: none;
-                font-weight: bold;
-            }
-
-                #contact a:hover {
-                    text-decoration: underline;
-                }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            background: #222;
-            color: #fff;
-            padding: 1rem 0;
-            margin-top: 2rem;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            body {
-                padding-top: 120px;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .about-container {
-                flex-direction: column;
-            }
-
-            .about-img {
-                margin-bottom: 1rem;
-            }
-
-            .nav-icons a {
-                width: 20px;
-                height: 20px;
-            }
-
-            #lightboxPrev, #lightboxNext {
-                font-size: 1.5rem;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-            }
-
-            #lightboxClose {
-                top: -30px;
-                font-size: 1.5rem;
-            }
-        }
-
-        /* NEW STYLES FOR PROJECT HEADER & TEAM MEMBERS */
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-            .project-header h3 {
-                margin: 0;
-                font-size: 1.2rem;
-            }
-
-        .project-icon {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-
-        .team-members {
-            display: flex;
-            gap: 5px;
-        }
-
-        .team-member {
-            width: 30px;
-            height: 30px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+         /* Default (Dark) Theme Variables */
+         :root {
+             --bg-color: #121212;
+             --text-color: #e0e0e0;
+             --accent-color: #00aaff;
+             --secondary-color: #ff69b4;
+             --header-bg: #222;
+             --border-color: #444;
+             --font-family: 'Roboto', sans-serif;
+             --light-bg: #1e1e1e;
+         }
+         /* Light Theme Overrides */
+         .light-theme {
+             --bg-color: #ffffff;
+             --text-color: #333333; /* Dark grey for text in light mode */
+             --header-bg: #f5f5f5;
+             --border-color: #ddd;
+             --light-bg: #fefefe;
+         }
+         /* RESET */
+         * {
+             margin: 0;
+             padding: 0;
+             box-sizing: border-box;
+         }
+
+         html {
+             scroll-behavior: smooth;
+         }
+         /* Base Body Styles */
+         body {
+             font-family: var(--font-family);
+             background-color: var(--bg-color);
+             color: var(--text-color);
+             line-height: 1.6;
+             overflow-x: hidden;
+         }
+
+         h1, h2, h3 {
+             font-family: var(--font-family);
+         }
+         /* Each section has a scroll margin to offset the fixed header */
+         section {
+             scroll-margin-top: 80px;
+         }
+         /* Main content container */
+         #solidContent {
+             width: 100%;
+             background-color: var(--bg-color);
+             padding-top: 0;
+             opacity: 1;
+         }
+         /* STICKY NAVIGATION */
+         header {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             background-color: var(--header-bg);
+             color: #fff;
+             padding: 1rem 0;
+             z-index: 999;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+         }
+
+         .nav-container {
+             width: 90%;
+             max-width: 1100px;
+             margin: 0 auto;
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+         }
+
+         .logo-and-icons {
+             display: flex;
+             align-items: center;
+             gap: 1rem;
+         }
+
+         .nav-logo {
+             font-size: 1.5rem;
+             font-weight: bold;
+             white-space: nowrap;
+         }
+         /* In light theme, override nav logo colour to dark grey */
+         .light-theme .nav-logo {
+             color: var(--text-color);
+         }
+
+         .nav-icons {
+             display: flex;
+             gap: 0.5rem;
+         }
+
+             .nav-icons a {
+                 display: inline-block;
+                 width: 24px;
+                 height: 24px;
+             }
+         /* In dark mode, invert GitHub icons so they appear light.
+        In light mode no filter is applied (see below). */
+         body:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
+             filter: invert(1);
+         }
+
+         .nav-icons img {
+             width: 100%;
+             height: 100%;
+             object-fit: contain;
+             transition: opacity 0.2s ease;
+         }
+
+             .nav-icons img:hover {
+                 opacity: 0.7;
+             }
+
+         nav ul {
+             list-style: none;
+             display: flex;
+             gap: 1rem;
+             align-items: center;
+         }
+         /* Default nav link style */
+         nav a {
+             color: #fff;
+             text-decoration: none;
+             font-weight: bold;
+             transition: color 0.2s ease;
+         }
+             /* Active nav links: blue-to-pink gradient remains unchanged */
+             nav a.active-nav {
+                 background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+                 -webkit-background-clip: text;
+                 -webkit-text-fill-color: transparent;
+             }
+             /* Always apply gradient to the "About" link */
+             nav a[href="#about"] {
+                 background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+                 -webkit-background-clip: text;
+                 -webkit-text-fill-color: transparent;
+             }
+         /* In light theme, override nav links to use dark grey text */
+         .light-theme nav a {
+             color: var(--text-color);
+         }
+         /* Theme Toggle (placed at the top right) */
+         .theme-toggle {
+             margin-left: 1rem;
+         }
+         /* Reduce the size of the theme toggle by ~40% */
+         .theme-checkbox {
+             --toggle-size: 10px;
+             -webkit-appearance: none;
+             -moz-appearance: none;
+             appearance: none;
+             width: 3.75em; /* was 6.25em */
+             height: 1.875em; /* was 3.125em */
+             background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+             background-size: 205%;
+             background-position: 0;
+             transition: 0.4s;
+             border-radius: 99em;
+             position: relative;
+             cursor: pointer;
+             font-size: var(--toggle-size);
+         }
+
+             .theme-checkbox::before {
+                 content: "";
+                 width: 1.35em; /* was 2.25em */
+                 height: 1.35em; /* was 2.25em */
+                 position: absolute;
+                 top: 0.263em; /* was 0.438em */
+                 left: 0.263em; /* was 0.438em */
+                 background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+                 background-size: 205%;
+                 background-position: 100%;
+                 border-radius: 50%;
+                 transition: 0.4s;
+             }
+
+             .theme-checkbox:checked::before {
+                 left: calc(100% - 1.35em - 0.263em);
+                 background-position: 0;
+             }
+
+             .theme-checkbox:checked {
+                 background-position: 100%;
+             }
+         /* MAIN CONTENT – add top padding so content is not hidden by header */
+         main {
+             width: 90%;
+             max-width: 1100px;
+             margin: 0 auto;
+             padding-top: 80px;
+         }
+         /* ABOUT SECTION */
+         #about {
+             padding: 2rem 0;
+             margin-top: 0;
+         }
+
+         .about-container {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             gap: 2rem;
+             flex-wrap: wrap;
+         }
+
+         .about-img {
+             width: 200px;
+             height: 200px;
+             overflow: hidden;
+             border-radius: 50%;
+             flex-shrink: 0;
+             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+         }
+
+             .about-img img {
+                 width: 100%;
+                 height: 100%;
+                 object-fit: cover;
+             }
+
+         .about-text {
+             flex: 1;
+             min-width: 250px;
+         }
+
+             .about-text h1 {
+                 font-size: 2rem;
+                 margin-bottom: 1rem;
+             }
+
+             .about-text p {
+                 max-width: 700px;
+                 margin-bottom: 1rem;
+                 color: #ccc;
+                 font-size: 1rem;
+                 line-height: 1.6;
+             }
+         /* SECTION TITLES */
+         section h2 {
+             font-size: 1.8rem;
+             margin-top: 2rem;
+             margin-bottom: 1rem;
+             color: var(--text-color);
+             border-bottom: 2px solid var(--border-color);
+             padding-bottom: 0.5rem;
+         }
+         /* PROJECTS SECTION */
+         .project-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+             gap: 1.5rem;
+         }
+
+         .project-card {
+             background: var(--light-bg);
+             border-radius: 6px;
+             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+             padding: 1.5rem;
+             display: flex;
+             flex-direction: column;
+             justify-content: flex-start;
+             min-height: 450px;
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+         }
+
+             .project-card:hover {
+                 transform: translateY(-5px) scale(1.02);
+                 box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+             }
+
+             .project-card h3 {
+                 margin-bottom: 0.5rem;
+                 color: var(--text-color);
+                 font-size: 1.2rem;
+             }
+
+             .project-card p {
+                 font-size: 0.95rem;
+                 color: #ccc;
+                 margin-bottom: 1rem;
+             }
+
+         .tech {
+             font-style: italic;
+             margin-bottom: 1rem;
+             color: #999;
+             font-size: 0.9rem;
+         }
+
+         .project-links {
+             margin-bottom: 1.5rem;
+         }
+
+             .project-links a {
+                 display: inline-flex;
+                 align-items: center;
+                 margin-right: 8px;
+                 margin-top: 5px;
+                 padding: 0.4rem 0.8rem;
+                 background: var(--header-bg);
+                 color: #fff;
+                 text-decoration: none;
+                 border-radius: 4px;
+                 font-size: 0.85rem;
+                 transition: background 0.2s ease;
+             }
+
+                 .project-links a:hover {
+                     background: #444;
+                 }
+         /* For the GitHub button image in project links,
+        in dark mode we invert its colour so that it appears light;
+        in light mode no inversion is applied. */
+         body:not(.light-theme) .project-links a.github::before {
+             filter: invert(1);
+         }
+
+         .project-links a.github::before {
+             content: "";
+             display: inline-block;
+             vertical-align: middle;
+             width: 16px;
+             height: 16px;
+             margin-right: 4px;
+             background: url('github-icon.png') no-repeat center center;
+             background-size: contain;
+             transition: filter 0.2s ease;
+         }
+         /* PROJECT HEADER & DEEP DIVE BUTTON */
+         .project-header {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             margin-bottom: 0.5rem;
+         }
+
+             .project-header h3 {
+                 margin: 0;
+                 font-size: 1.2rem;
+             }
+
+         .deep-dive {
+             background: var(--header-bg);
+             color: #fff;
+             padding: 0.4rem 0.8rem;
+             text-decoration: none;
+             border-radius: 4px;
+             font-size: 0.85rem;
+             transition: background 0.2s ease;
+         }
+
+             .deep-dive:hover {
+                 background: #444;
+             }
+         /* SLIDESHOW */
+         .slideshow-container {
+             position: relative;
+             width: 100%;
+             max-width: 100%;
+             height: 200px;
+             margin-top: auto;
+             overflow: hidden;
+             border-radius: 5px;
+             background: #000;
+         }
+
+             .slideshow-container figure {
+                 position: absolute;
+                 top: 0;
+                 left: 0;
+                 width: 100%;
+                 margin: 0;
+                 opacity: 0;
+                 pointer-events: none;
+             }
+
+                 .slideshow-container figure.active {
+                     opacity: 1;
+                     pointer-events: auto;
+                 }
+
+         .fade-transition figure {
+             transition: opacity 1s ease-in-out;
+         }
+
+         .slideshow-container figure video {
+             width: 100%;
+             height: 100%;
+             object-fit: cover;
+             cursor: pointer;
+         }
+
+         .slideshow-caption {
+             position: absolute;
+             bottom: 0;
+             background: rgba(0,0,0,0.5);
+             color: #fff;
+             width: 100%;
+             font-size: 1.2rem;
+             font-weight: bold;
+             text-align: center;
+             padding: 5px 0;
+         }
+
+         .prev, .next {
+             position: absolute;
+             top: 50%;
+             transform: translateY(-50%);
+             background: rgba(0,0,0,0.6);
+             color: #fff;
+             padding: 8px 12px;
+             cursor: pointer;
+             border-radius: 3px;
+             font-weight: bold;
+             user-select: none;
+             transition: background 0.2s ease;
+         }
+
+             .prev:hover, .next:hover {
+                 background: rgba(0,0,0,0.8);
+             }
+
+         .prev {
+             left: 5px;
+         }
+
+         .next {
+             right: 5px;
+         }
+         /* LIGHTBOX OVERLAY (Modal for Enlarged Video) */
+         #lightboxOverlay {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background: rgba(0,0,0,0.8);
+             display: none;
+             z-index: 10000;
+             align-items: center;
+             justify-content: center;
+             padding: 20px;
+         }
+
+         #lightboxContent {
+             position: relative;
+             width: 80%;
+             max-width: 800px;
+             background: #000;
+             padding: 10px;
+             border-radius: 8px;
+             text-align: center;
+         }
+
+         #lightboxVideo {
+             width: 100%;
+             height: auto;
+             border-radius: 6px;
+             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+         }
+
+         #lightboxCaption {
+             color: #fff;
+             margin-top: 10px;
+             font-size: 1rem;
+         }
+
+         #lightboxClose {
+             position: absolute;
+             top: -30px;
+             right: 0;
+             font-size: 2rem;
+             color: #fff;
+             cursor: pointer;
+         }
+
+         #lightboxPrev, #lightboxNext {
+             position: absolute;
+             top: 50%;
+             transform: translateY(-50%);
+             color: #fff;
+             background: rgba(0,0,0,0.4);
+             font-size: 2rem;
+             width: 40px;
+             height: 40px;
+             text-align: center;
+             line-height: 40px;
+             cursor: pointer;
+             border-radius: 4px;
+         }
+
+             #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
+                 background: rgba(0,0,0,0.7);
+             }
+
+         #lightboxPrev {
+             left: 10px;
+         }
+
+         #lightboxNext {
+             right: 10px;
+         }
+         /* CONTACT */
+         #contact {
+             padding-bottom: 2rem;
+         }
+
+             #contact ul {
+                 list-style: none;
+                 margin-top: 1rem;
+             }
+
+             #contact li {
+                 margin-bottom: 0.5rem;
+             }
+
+             #contact a {
+                 color: var(--text-color);
+                 text-decoration: none;
+                 font-weight: bold;
+             }
+
+                 #contact a:hover {
+                     text-decoration: underline;
+                 }
+         /* FOOTER */
+         footer {
+             text-align: center;
+             background: var(--header-bg);
+             color: #fff;
+             padding: 1rem 0;
+             margin-top: 2rem;
+         }
+         /* RESPONSIVE */
+         @media (max-width: 600px) {
+             body {
+                 padding-top: 120px;
+             }
+
+             nav ul {
+                 flex-direction: column;
+                 gap: 0.5rem;
+             }
+
+             .about-container {
+                 flex-direction: column;
+             }
+
+             .about-img {
+                 margin-bottom: 1rem;
+             }
+
+             .nav-icons a {
+                 width: 20px;
+                 height: 20px;
+             }
+
+             #lightboxPrev, #lightboxNext {
+                 font-size: 1.5rem;
+                 width: 30px;
+                 height: 30px;
+                 line-height: 30px;
+             }
+
+             #lightboxClose {
+                 top: -30px;
+                 font-size: 1.5rem;
+             }
+         }
+         /* Additional Light Theme Overrides */
+         .light-theme nav a,
+         .light-theme .nav-logo {
+             color: var(--text-color);
+         }
+         /* Ensure GitHub icons are not inverted in light theme */
+         .light-theme .nav-icons img[src*="github-icon.png"],
+         .light-theme .project-links a.github::before {
+             filter: none;
+         }
     </style>
 </head>
 <body>
-    <!-- Fixed Full-Screen Background Video (Hero Only) -->
-    <video autoplay loop muted playsinline id="bgVideo">
-        <source src="unicellularmovie.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <!-- Scroll Progrsess Bar -->
-    <div id="progressBar"></div>
-
-    <!-- Header / Navigation (no theme toggle) -->
+    <!-- Header / Navigation -->
     <header>
         <div class="nav-container">
             <div class="logo-and-icons">
@@ -693,29 +617,20 @@
             <nav>
                 <ul>
                     <li><a href="#about">About</a></li>
-                    <!-- Timeline link removed as its section is removed -->
                     <li><a href="#solo-projects">Solo</a></li>
                     <li><a href="#team-projects">Team</a></li>
                     <li><a href="#future-projects">In Dev</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+            <!-- Theme Toggle placed at the far right -->
+            <div class="theme-toggle">
+                <input type="checkbox" class="theme-checkbox" id="themeToggle" title="Toggle Theme">
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section with Updated Text -->
-    <section id="hero">
-        <video autoplay muted loop playsinline poster="hero.jpg">
-            <source src="hero.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay">
-            <h1>Oliver Neal</h1>
-            <p>Games Programmer</p>
-        </div>
-    </section>
-
-    <!-- Solid Background Content (covers everything below the hero) -->
+    <!-- Solid Background Content: Begins Immediately at About -->
     <div id="solidContent">
         <main>
             <!-- About Section -->
@@ -747,7 +662,7 @@
                     <div class="project-card" id="unicellular">
                         <div class="project-header">
                             <h3>Unicellular</h3>
-                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                            <a href="unicellular.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
                         <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
@@ -792,7 +707,7 @@
                     <div class="project-card" id="pinnable">
                         <div class="project-header">
                             <h3>Pinnable</h3>
-                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                            <a href="pinnable.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
                         <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
@@ -836,14 +751,7 @@
                     <div class="project-card" id="tides-of-the-moon">
                         <div class="project-header">
                             <h3>Tides of the Moon</h3>
-                            <div class="team-members">
-                                <img src="oliver.png" alt="Oliver Neal" class="team-member">
-                                <!-- Replace the following placeholders with your team members' images -->
-                                <img src="team1.png" alt="Team Member 1" class="team-member">
-                                <img src="team2.png" alt="Team Member 2" class="team-member">
-                                <img src="team3.png" alt="Team Member 3" class="team-member">
-                                <img src="team4.png" alt="Team Member 4" class="team-member">
-                            </div>
+                            <a href="tides-of-the-moon.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
                         <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
@@ -876,11 +784,11 @@
             <section id="future-projects" class="reveal">
                 <h2>In Development Projects</h2>
                 <div class="project-grid">
-                    <!-- XR Game with slideshow -->
+                    <!-- XR Game -->
                     <div class="project-card" id="xr-game">
                         <div class="project-header">
                             <h3>XR Game</h3>
-                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                            <a href="xr-game.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>An upcoming XR experience that pushes the boundaries of interactive gameplay in a virtual environment.</p>
                         <p class="tech">Technologies: TBD</p>
@@ -906,11 +814,11 @@
                             <div class="next" onclick="plusSlides(1,'xrGameSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
-                    <!-- Unitles Ability Deckbuilder with slideshow -->
+                    <!-- Unitles Ability Deckbuilder -->
                     <div class="project-card" id="unitles-ability-deckbuilder">
                         <div class="project-header">
                             <h3>Unitles Ability Deckbuilder</h3>
-                            <img src="oliver.png" alt="Oliver Neal" class="project-icon">
+                            <a href="unitles-ability-deckbuilder.html" class="deep-dive">Deep Dive</a>
                         </div>
                         <p>A deckbuilding game in development, blending strategic card mechanics with dynamic gameplay challenges.</p>
                         <p class="tech">Technologies: TBD</p>
@@ -956,6 +864,20 @@
         <footer>
             <p>&copy; 2025 Oliver Neal</p>
         </footer>
+    </div>
+
+    <!-- Lightbox Overlay (Modal for Enlarged Video) -->
+    <div id="lightboxOverlay">
+        <div id="lightboxContent">
+            <span id="lightboxClose" onclick="closeLightbox()">×</span>
+            <video id="lightboxVideo" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div id="lightboxCaption"></div>
+            <div id="lightboxPrev" onclick="lightboxChange(-1)">&#10094;</div>
+            <div id="lightboxNext" onclick="lightboxChange(1)">&#10095;</div>
+        </div>
     </div>
 
     <script>
@@ -1124,37 +1046,71 @@
             reveals.forEach(reveal => observer.observe(reveal));
         });
 
-        // --- Cinematic Parallax & Scroll Progress ---
-        let mouseX = 0, mouseY = 0;
-        function updateHeroOverlay() {
-            const heroOverlay = document.querySelector('.hero-overlay');
-            if (heroOverlay) {
-                const scrollPos = window.pageYOffset;
-                const offsetX = mouseX * 0.02;
-                const offsetY = mouseY * 0.02 + scrollPos * 0.3;
-                heroOverlay.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-            }
-        }
-        document.addEventListener('mousemove', function (e) {
-            mouseX = e.clientX - window.innerWidth / 2;
-            mouseY = e.clientY - window.innerHeight / 2;
-            updateHeroOverlay();
-        });
         window.addEventListener('scroll', function () {
-            updateHeroOverlay();
-            // Update scroll progress bar
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("progressBar").style.width = scrolled + "%";
+            const headerHeight = 80; // fixed header height
+            const scrollY = window.pageYOffset;
+
+            // If near the top, remove all active states
+            if (scrollY < 100) {
+                document.querySelectorAll('nav a').forEach(link => link.classList.remove('active-nav'));
+                return;
+            }
+
+            document.querySelectorAll('section').forEach(section => {
+                const id = section.getAttribute('id');
+                const navLink = document.querySelector(`nav a[href="#${id}"]`);
+
+                // Default: trigger early by subtracting 150px from the section's top
+                let triggerOffset = -150;
+
+                // For About and Solo Projects, we don't want them active until reached
+                if (id === "about" || id === "solo-projects") {
+                    triggerOffset = 0;
+                }
+
+                // For Contact, activate only when scrolled very near the bottom
+                if (id === "contact") {
+                    if (window.innerHeight + scrollY >= document.body.scrollHeight - 50) {
+                        navLink.classList.add('active-nav');
+                    } else {
+                        navLink.classList.remove('active-nav');
+                    }
+                } else {
+                    if (scrollY + headerHeight >= section.offsetTop + triggerOffset) {
+                        navLink.classList.add('active-nav');
+                    } else {
+                        navLink.classList.remove('active-nav');
+                    }
+                }
+            });
         });
 
-        // --- Auto-Scroll to About Section after 2 seconds ---
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-            }, 2000);
-        });
+        // --- Theme Toggle Script ---
+        (function () {
+            const toggle = document.getElementById('themeToggle');
+            const userTheme = localStorage.getItem('theme');
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (userTheme) {
+                if (userTheme === 'light') {
+                    document.documentElement.classList.add('light-theme');
+                    toggle.checked = true;
+                }
+            } else {
+                if (prefersLight) {
+                    document.documentElement.classList.add('light-theme');
+                    toggle.checked = true;
+                }
+            }
+            toggle.addEventListener('change', function () {
+                if (this.checked) {
+                    document.documentElement.classList.add('light-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.remove('light-theme');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        })();
     </script>
 </body>
 </html>

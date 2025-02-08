@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicellular: Deep Dive</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #00aaff;
+            --header-bg: #222;
+            --border-color: #444;
+            --section-border: #333;
+            --font-family: 'Roboto', sans-serif;
+        }
+
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            a:hover {
+                text-decoration: underline;
+                color: var(--accent-color);
+            }
+
+        /* Sticky Header with Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--header-bg);
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+            header .nav-container {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                header .nav-container .logo a {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    color: #fff;
+                }
+
+            header nav a {
+                margin: 0 0.75rem;
+                font-size: 1rem;
+                color: #fff;
+            }
+
+                header nav a:hover {
+                    color: var(--accent-color);
+                }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            margin-bottom: 2rem;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .video-container {
+            background: #1e1e1e;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .video-container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+            }
+
+            .video-container video {
+                width: 100%;
+                border-radius: 4px;
+            }
+
+            .video-container .caption {
+                margin-top: 0.5rem;
+                font-size: 0.9rem;
+                color: #ccc;
+            }
+
+        /* List Styling */
+        ul {
+            margin-left: 2rem;
+            list-style-type: disc;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--header-bg);
+            text-align: center;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+            footer p {
+                font-size: 0.9rem;
+            }
+
+            footer a {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header with Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">← Home</a>
+            </div>
+            <nav>
+                <a href="#overview">Overview</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#insights">Insights</a>
+                <a href="#gdd">GDD &amp; Concepts</a>
+                <a href="#challenges">Challenges</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <!-- Overview Section -->
+        <section id="overview" class="section">
+            <h1>Unicellular: Deep Dive</h1>
+            <div class="content-block">
+                <p>
+                    <strong>Unicellular</strong> is an idle entity simulation game designed to push the boundaries of real-time entity management. In this game, players acquire and manage thousands of uniquely behaving entities—Unicells—that interact in complex ways by eating, fighting, and evolving to generate in-game currency.
+                </p>
+                <p>
+                    This deep dive offers a behind-the-scenes look at the development process, sharing key lessons, design documents, and technical insights that shaped the project.
+                </p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section">
+            <h2>Gallery</h2>
+            <div class="gallery-grid">
+                <div class="video-container">
+                    <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png">
+                        <source src="Project Media/Unicellular/UnicellInteraction.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="caption">Simulation Start</div>
+                </div>
+                <div class="video-container">
+                    <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png">
+                        <source src="Project Media/Unicellular/BuyingUnicells.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="caption">Entity Interactions</div>
+                </div>
+                <div class="video-container">
+                    <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png">
+                        <source src="Project Media/Unicellular/1000Entities.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="caption">Performance Metrics</div>
+                </div>
+                <div class="video-container">
+                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png">
+                        <source src="Project Media/Unicellular/10kEntities.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="caption">Stress Test: 10K Entities</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Development Insights Section -->
+        <section id="insights" class="section">
+            <h2>Development Insights</h2>
+            <div class="content-block">
+                <p>
+                    Throughout the development of <strong>Unicellular</strong>, I encountered a wide range of technical and creative challenges that pushed me to evolve as a developer. Some key insights include:
+                </p>
+                <ul>
+                    <li><strong>Entity Management:</strong> Designing an engine that efficiently handles thousands of entities using optimized finite state machines.</li>
+                    <li><strong>Performance Optimization:</strong> Implementing smart memory management and algorithmic improvements to sustain smooth gameplay under heavy load.</li>
+                    <li><strong>Dynamic Interactions:</strong> Engineering emergent behaviors that make each simulation run unique and engaging.</li>
+                    <li><strong>Iterative Prototyping:</strong> Continuously refining gameplay mechanics through rapid testing and user feedback.</li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <p>
+                    These lessons have not only improved the game’s performance but also enriched my understanding of scalable game architecture and simulation complexity.
+                </p>
+            </div>
+        </section>
+
+        <!-- GDD & High Concepts Section -->
+        <section id="gdd" class="section">
+            <h2>GDD &amp; High Concepts</h2>
+            <div class="content-block">
+                <p>
+                    The foundation of <strong>Unicellular</strong> was laid out in a detailed Game Design Document (GDD) that captured the vision and high-level design elements of the project. Key components included:
+                </p>
+                <ul>
+                    <li><strong>Core Gameplay Loop:</strong> A cyclical process where players acquire Unicells, stimulate dynamic interactions, and drive evolution to maximize resource generation.</li>
+                    <li><strong>Scalability:</strong> Ensuring the simulation engine could support thousands of entities without performance degradation.</li>
+                    <li><strong>Emergent Behavior:</strong> Creating systems where unpredictable outcomes enhance replayability and player engagement.</li>
+                    <li><strong>User Progression:</strong> Balancing incremental challenges and rewards to sustain long-term interest.</li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <p>
+                    This structured approach helped keep the development process focused, ensuring that every new feature aligned with the overall vision.
+                </p>
+            </div>
+        </section>
+
+        <!-- Challenges & Future Directions Section -->
+        <section id="challenges" class="section">
+            <h2>Challenges &amp; Future Directions</h2>
+            <div class="content-block">
+                <p>
+                    No ambitious project comes without its challenges. For <strong>Unicellular</strong>, the most notable hurdles were:
+                </p>
+                <ul>
+                    <li><strong>Optimization Bottlenecks:</strong> Identifying and mitigating performance issues during heavy simulations.</li>
+                    <li><strong>Balancing Complexity:</strong> Striking the right balance between deep simulation mechanics and accessibility for players.</li>
+                    <li><strong>Scalability Concerns:</strong> Future-proofing the engine to handle even larger simulations and more intricate interactions.</li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <p>
+                    Moving forward, I plan to explore advanced optimization techniques, integrate richer gameplay elements, and refine the simulation mechanics based on player feedback.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer with a Return Home Link -->
+    <footer>
+        <p>&copy; 2025 Oliver Neal | <a href="index.html">Return to Home</a></p>
+    </footer>
+</body>
+</html>
