@@ -144,7 +144,6 @@
                 color: #fff;
                 text-decoration: none;
                 font-weight: bold;
-                /* Transition removed so they change instantly on theme toggle */
                 transition: none;
             }
                 /* Active navigation links and the About link use an orange-to-orange-red gradient */
@@ -694,7 +693,7 @@
                         <img src="oliver.png" alt="Oliver Neal Selfie" />
                     </div>
                     <div class="about-text">
-                        <h1>Hello, I'm Oliver Neal! (<i>and this website is unfinished!</i>)</h1>
+                        <h1>Hello, I'm Oliver Neal!</h1>
                         <p>
                             From the UK, I'm a <strong>games programmer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev,
                             multiplayer netcode, and performance optimization. I enjoy tackling challenging gameplay systems
@@ -712,7 +711,7 @@
             <section id="solo-projects" class="reveal">
                 <h2>Solo Projects</h2>
                 <div class="project-grid">
-                    <!-- Unicellular -->
+                    <!-- Unicellular (kept unchanged) -->
                     <div class="project-card" id="unicellular">
                         <div class="project-header">
                             <h3>Unicellular</h3>
@@ -756,7 +755,7 @@
                             <div class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
-                    <!-- Pinnable -->
+                    <!-- Pinnable (video and poster updated) -->
                     <div class="project-card" id="pinnable">
                         <div class="project-header">
                             <h3>Pinnable</h3>
@@ -769,28 +768,100 @@
                         </div>
                         <div class="slideshow-container" id="pinnableSlideshow">
                             <figure class="active">
-                                <video muted playsinline loop poster="unicell1.png" onclick="openLightbox('pinnableSlideshow',1)">
-                                    <source src="pinnable1.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('pinnableSlideshow',1)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">Gameplay</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 1</figcaption>
                             </figure>
                             <figure>
-                                <video muted playsinline loop poster="unicell2.png" onclick="openLightbox('pinnableSlideshow',2)">
-                                    <source src="pinnable2.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('pinnableSlideshow',2)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">Main Menu</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 2</figcaption>
                             </figure>
                             <figure>
-                                <video muted playsinline loop poster="unicell3.png" onclick="openLightbox('pinnableSlideshow',3)">
-                                    <source src="pinnable3.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('pinnableSlideshow',3)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">Options Menu</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 3</figcaption>
                             </figure>
                             <div class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</div>
                             <div class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                    <!-- 3D Netcode Tank Game (new project in Solo, video/poster updated) -->
+                    <div class="project-card" id="3d-netcode-tank-game">
+                        <div class="project-header">
+                            <h3>3D Netcode Tank Game</h3>
+                        </div>
+                        <p>A 3D multiplayer tank combat game built on a server–client networking topology. Players engage in strategic battles with realistic physics and dynamic combat. This project uses Unity Authentication, Relay, Cloud Save, and Lobbies for secure matchmaking and persistent progress.</p>
+                        <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
+                        <div class="project-links">
+                            <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github">Github</a>
+                        </div>
+                        <div class="slideshow-container" id="tankGameSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',1)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 1</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',2)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 2</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',3)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 3</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</div>
+                        </div>
+                    </div>
+                    <!-- 2D Netcode Shooter (new project in Solo, video/poster updated) -->
+                    <div class="project-card" id="2d-netcode-shooter">
+                        <div class="project-header">
+                            <h3>2D Netcode Shooter</h3>
+                        </div>
+                        <p>A fast-paced 2D multiplayer shooter built using a distributed authority networking model. This project delivers competitive online matches with smooth gameplay while utilizing Unity Authentication, Relay, Cloud Save, and Lobbies for efficient online management and persistent data.</p>
+                        <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
+                        <div class="project-links">
+                            <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github">Github</a>
+                        </div>
+                        <div class="slideshow-container" id="shooterSlideshow">
+                            <figure class="active">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('shooterSlideshow',1)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 1</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('shooterSlideshow',2)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 2</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('shooterSlideshow',3)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 3</figcaption>
+                            </figure>
+                            <div class="prev" onclick="plusSlides(-1,'shooterSlideshow',true)">&#10094;</div>
+                            <div class="next" onclick="plusSlides(1,'shooterSlideshow',true)">&#10095;</div>
                         </div>
                     </div>
                 </div>
@@ -811,18 +882,25 @@
                         </div>
                         <div class="slideshow-container" id="tidesSlideshow">
                             <figure class="active">
-                                <video muted playsinline loop poster="C:/Users/olive/source/repos/portfoliowebsite/unicell2.png" onclick="openLightbox('tidesSlideshow',1)">
-                                    <source src="C:/Users/olive/source/repos/portfoliowebsite/unicell2.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',1)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">Prototype Gameplay</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 1</figcaption>
                             </figure>
                             <figure>
-                                <video muted playsinline loop poster="C:/Users/olive/source/repos/portfoliowebsite/unicell2.png" onclick="openLightbox('tidesSlideshow',2)">
-                                    <source src="C:/Users/olive/source/repos/portfoliowebsite/unicell2.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',2)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">In-Game Scene</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 2</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',3)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 3</figcaption>
                             </figure>
                             <div class="prev" onclick="plusSlides(-1,'tidesSlideshow',true)">&#10094;</div>
                             <div class="next" onclick="plusSlides(1,'tidesSlideshow',true)">&#10095;</div>
@@ -847,18 +925,25 @@
                         </div>
                         <div class="slideshow-container" id="xrGameSlideshow">
                             <figure class="active">
-                                <video muted playsinline loop poster="Project Media/XRGame/slide1.png" onclick="openLightbox('xrGameSlideshow',1)">
-                                    <source src="Project Media/XRGame/slide1.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',1)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">XR Game Preview 1</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 1</figcaption>
                             </figure>
                             <figure>
-                                <video muted playsinline loop poster="Project Media/XRGame/slide2.png" onclick="openLightbox('xrGameSlideshow',2)">
-                                    <source src="Project Media/XRGame/slide2.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',2)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">XR Game Preview 2</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 2</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',3)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 3</figcaption>
                             </figure>
                             <div class="prev" onclick="plusSlides(-1,'xrGameSlideshow',true)">&#10094;</div>
                             <div class="next" onclick="plusSlides(1,'xrGameSlideshow',true)">&#10095;</div>
@@ -876,18 +961,25 @@
                         </div>
                         <div class="slideshow-container" id="unitlesSlideshow">
                             <figure class="active">
-                                <video muted playsinline loop poster="Project Media/Unitles/slide1.png" onclick="openLightbox('unitlesSlideshow',1)">
-                                    <source src="Project Media/Unitles/slide1.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',1)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">Deckbuilder Preview 1</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 1</figcaption>
                             </figure>
                             <figure>
-                                <video muted playsinline loop poster="Project Media/Unitles/slide2.png" onclick="openLightbox('unitlesSlideshow',2)">
-                                    <source src="Project Media/Unitles/slide2.mp4" type="video/mp4">
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',2)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <figcaption class="slideshow-caption">Deckbuilder Preview 2</figcaption>
+                                <figcaption class="slideshow-caption">Placeholder 2</figcaption>
+                            </figure>
+                            <figure>
+                                <video muted playsinline loop poster="Project Media\Unicellular\10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',3)">
+                                    <source src="unicellularmovie.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <figcaption class="slideshow-caption">Placeholder 3</figcaption>
                             </figure>
                             <div class="prev" onclick="plusSlides(-1,'unitlesSlideshow',true)">&#10094;</div>
                             <div class="next" onclick="plusSlides(1,'unitlesSlideshow',true)">&#10095;</div>
@@ -1015,7 +1107,9 @@
                 'pinnableSlideshow',
                 'tidesSlideshow',
                 'xrGameSlideshow',
-                'unitlesSlideshow'
+                'unitlesSlideshow',
+                'tankGameSlideshow',
+                'shooterSlideshow'
             ];
             containerIDs.forEach(function (id) {
                 slideIndices[id] = 1;
