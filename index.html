@@ -350,6 +350,24 @@
             background: #222;
             color: #fff;
         }
+        /* Added styles for project links icons */
+        .project-links a img {
+            width: 20px; /* Adjust as needed */
+            height: auto;
+            margin-right: 5px; /* Space between icon and text */
+            vertical-align: middle;
+            transition: filter 0.3s ease;
+        }
+        /* Invert icons in dark mode (when .light-theme is NOT applied) */
+        html:not(.light-theme) .project-links a.github img,
+        html:not(.light-theme) .project-links a.itchio img {
+            filter: invert(1);
+        }
+        /* No inversion in light mode */
+        html.light-theme .project-links a.github img,
+        html.light-theme .project-links a.itchio img {
+            filter: none;
+        }
         /* (Removed pseudo-element rules for project-panel buttons) */
         .project-card:hover h3 {
             background: linear-gradient(90deg, #FFA500, #FF4500);
@@ -669,8 +687,14 @@
                         <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project handles thousands of entities with FSMs and interactions.</p>
                         <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
                         <div class="project-links">
-                            <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github">Github</a>
-                            <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio">Play in browser</a>
+                            <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github">
+                                <img src="github-icon.png" alt="GitHub Icon" />
+                                Github
+                            </a>
+                            <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio">
+                                <img src="itch-icon-white.png" alt="Itch.io Icon" />
+                                Play in browser
+                            </a>
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unicellularSlideshow">
@@ -714,8 +738,14 @@
                         <p>A 2D platformer where players collect falling marbles bouncing off moving pins, inspired by <em>Peggle</em>.</p>
                         <p class="tech">Technologies: Unity 2D, Difficulty Scaling Systems</p>
                         <div class="project-links">
-                            <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github">Github</a>
-                            <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio">Play in browser</a>
+                            <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github">
+                                <img src="github-icon.png" alt="GitHub Icon" />
+                                Github
+                            </a>
+                            <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio">
+                                <img src="itch-icon-white.png" alt="Itch.io Icon" />
+                                Play in browser
+                            </a>
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="pinnableSlideshow">
@@ -759,7 +789,10 @@
                         <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
                         <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                         <div class="project-links">
-                            <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github">Github</a>
+                            <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github">
+                                <img src="github-icon.png" alt="GitHub Icon" />
+                                Github
+                            </a>
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="tankGameSlideshow">
@@ -797,7 +830,10 @@
                         <p>A fast-paced shooter using distributed authority networking with Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
                         <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                         <div class="project-links">
-                            <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github">Github</a>
+                            <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github">
+                                <img src="github-icon.png" alt="GitHub Icon" />
+                                Github
+                            </a>
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="shooterSlideshow">
@@ -834,7 +870,10 @@
                         <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms.</p>
                         <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
                         <div class="project-links">
-                            <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github">Github</a>
+                            <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github">
+                                <img src="github-icon.png" alt="GitHub Icon" />
+                                Github
+                            </a>
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="tidesSlideshow">
@@ -872,7 +911,10 @@
                         <p>A game inspired by Lethal Company focused on level design and tile creation.</p>
                         <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
                         <div class="project-links">
-                            <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio">Itch.io</a>
+                            <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio">
+                                <img src="itch-icon-white.png" alt="Itch.io Icon" />
+                                Itch.io
+                            </a>
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="candySlideshow">
