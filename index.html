@@ -57,7 +57,6 @@
             width: 100%;
             background-color: var(--bg-color);
         }
-
         /* Header & Navigation */
         header {
             position: fixed;
@@ -199,7 +198,6 @@
             .theme-checkbox:checked {
                 background-position: 100%;
             }
-
         /* Main Content */
         main {
             width: 90%;
@@ -261,7 +259,6 @@
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
         }
-
         /* Project Cards */
         .project-grid {
             display: grid;
@@ -353,49 +350,12 @@
             background: #222;
             color: #fff;
         }
-
-        .project-links a.github::before,
-        .project-links a.itchio::before {
-            content: "";
-            display: inline-block;
-            vertical-align: middle;
-            width: 16px;
-            height: 16px;
-            margin-right: 4px;
-            background-size: contain;
-            transition: filter 0.2s ease;
-        }
-
-        .project-links a.github::before {
-            background: url('github-icon.png') no-repeat center center;
-        }
-
-        .project-links a.itchio::before {
-            background: url('itch-icon-white.png') no-repeat center center;
-        }
-
-        html:not(.light-theme) .project-links a.github::before {
-            filter: invert(1);
-        }
-
-        html.light-theme .project-links a.github::before {
-            filter: none;
-        }
-
-        html:not(.light-theme) .project-links a.itchio::before {
-            filter: invert(1);
-        }
-
-        html.light-theme .project-links a.itchio::before {
-            filter: none;
-        }
-
+        /* (Removed pseudo-element rules for project-panel buttons) */
         .project-card:hover h3 {
             background: linear-gradient(90deg, #FFA500, #FF4500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         /* Slideshow */
         .slideshow-wrapper {
             margin-top: auto;
@@ -468,7 +428,6 @@
                 .slideshow-info span.next:hover {
                     background: rgba(0,0,0,0.8);
                 }
-
         /* Lightbox */
         #lightboxOverlay {
             position: fixed;
@@ -544,7 +503,6 @@
         #lightboxNext {
             right: 10px;
         }
-
         /* Contact */
         #contact {
             padding-bottom: 2rem;
@@ -585,7 +543,6 @@
             #contact a:hover {
                 text-decoration: underline;
             }
-
         /* Footer */
         footer {
             text-align: center;
@@ -600,7 +557,6 @@
         .light-theme footer {
             color: var(--text-color);
         }
-
         /* Responsive */
         @media (max-width: 600px) {
             body {
@@ -808,20 +764,20 @@
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="tankGameSlideshow">
                                 <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',1)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
+                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tankGameSlideshow',1)">
+                                        <source src="placeholder.mp4" type="video/mp4">
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
                                 </figure>
                                 <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',2)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
+                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tankGameSlideshow',2)">
+                                        <source src="placeholder.mp4" type="video/mp4">
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
                                 </figure>
                                 <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',3)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
+                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tankGameSlideshow',3)">
+                                        <source src="placeholder.mp4" type="video/mp4">
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
                                 </figure>
@@ -883,20 +839,20 @@
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="tidesSlideshow">
                                 <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',1)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
+                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tidesSlideshow',1)">
+                                        <source src="placeholder.mp4" type="video/mp4">
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
                                 </figure>
                                 <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',2)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
+                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tidesSlideshow',2)">
+                                        <source src="placeholder.mp4" type="video/mp4">
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
                                 </figure>
                                 <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',3)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
+                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tidesSlideshow',3)">
+                                        <source src="placeholder.mp4" type="video/mp4">
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
                                 </figure>
@@ -984,33 +940,7 @@
                         <div class="project-links">
                             <!-- Future links -->
                         </div>
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="xrGameSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',1)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',2)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',3)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'xrGameSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'xrGameSlideshow',true)">&#10095;</span>
-                            </div>
-                        </div>
+                        <!-- Slideshow removed for in-development project -->
                     </div>
                     <div class="project-card" id="unitles-ability-deckbuilder">
                         <div class="project-header">
@@ -1021,33 +951,7 @@
                         <div class="project-links">
                             <!-- Future links -->
                         </div>
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="unitlesSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',1)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',2)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',3)">
-                                        <source src="unicellularmovie.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'unitlesSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'unitlesSlideshow',true)">&#10095;</span>
-                            </div>
-                        </div>
+                        <!-- Slideshow removed for in-development project -->
                     </div>
                 </div>
             </section>
