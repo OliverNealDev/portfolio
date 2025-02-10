@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Oliver Neal – Portfolio</title>
-    <!-- Favicon using your selfie -->
     <link rel="icon" href="oliver.png" type="image/png">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Default (Dark) Theme Variables */
+        /* Dark Theme */
         :root {
             --bg-color: #121212;
             --text-color: #e0e0e0;
@@ -20,10 +18,10 @@
             --font-family: 'Roboto', sans-serif;
             --light-bg: #1e1e1e;
         }
-        /* Light Theme Overrides */
+        /* Light Theme */
         .light-theme {
             --bg-color: #ffffff;
-            --text-color: #333333; /* Dark grey for text in light mode */
+            --text-color: #333333;
             --header-bg: #f5f5f5;
             --border-color: #ddd;
             --light-bg: #fefefe;
@@ -38,7 +36,7 @@
         html {
             scroll-behavior: smooth;
         }
-        /* Base Body Styles */
+
         body {
             font-family: var(--font-family);
             background-color: var(--bg-color);
@@ -50,18 +48,17 @@
         h1, h2, h3 {
             font-family: var(--font-family);
         }
-        /* Each section has a scroll margin to offset the fixed header */
+
         section {
             scroll-margin-top: 80px;
         }
-        /* Main content container */
+
         #solidContent {
             width: 100%;
             background-color: var(--bg-color);
-            padding-top: 0;
-            opacity: 1;
         }
-        /* STICKY NAVIGATION */
+
+        /* Header & Navigation */
         header {
             position: fixed;
             top: 0;
@@ -93,7 +90,7 @@
             font-weight: bold;
             white-space: nowrap;
         }
-        /* In light theme, override nav logo colour to dark grey */
+
         .light-theme .nav-logo {
             color: var(--text-color);
         }
@@ -108,7 +105,7 @@
                 width: 24px;
                 height: 24px;
             }
-        /* Navigation GitHub Icon */
+
         html:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
             filter: none !important;
         }
@@ -127,7 +124,7 @@
             .nav-icons img:hover {
                 opacity: 0.7;
             }
-        /* Push the nav to the right, just to the left of the theme toggle */
+
         nav {
             margin-left: auto;
             margin-right: 1rem;
@@ -139,14 +136,14 @@
                 gap: 1rem;
                 align-items: center;
             }
-            /* Nav link style without transitions for color/background changes */
+
             nav a {
                 color: #fff;
                 text-decoration: none;
                 font-weight: bold;
                 transition: none;
             }
-                /* Active navigation links and the About link use an orange-to-orange-red gradient */
+
                 nav a.active-nav,
                 nav a[href="#about"] {
                     background: linear-gradient(90deg, #FFA500, #FF4500);
@@ -157,7 +154,7 @@
         .light-theme nav a {
             color: var(--text-color);
         }
-        /* Theme Toggle (placed at the far right) */
+
         .theme-toggle {
             margin-left: 1rem;
             margin-top: 8px;
@@ -202,17 +199,17 @@
             .theme-checkbox:checked {
                 background-position: 100%;
             }
-        /* MAIN CONTENT – add top padding so content is not hidden by header */
+
+        /* Main Content */
         main {
             width: 90%;
             max-width: 1100px;
             margin: 0 auto;
             padding-top: 80px;
         }
-        /* ABOUT SECTION */
+
         #about {
             padding: 2rem 0;
-            margin-top: 0;
         }
 
         .about-container {
@@ -255,7 +252,7 @@
                 font-size: 1rem;
                 line-height: 1.6;
             }
-        /* SECTION TITLES */
+
         section h2 {
             font-size: 1.8rem;
             margin-top: 2rem;
@@ -264,7 +261,8 @@
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
         }
-        /* PROJECTS SECTION */
+
+        /* Project Cards */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -287,7 +285,7 @@
                 transform: translateY(-5px) scale(1.02);
                 box-shadow: 0 4px 15px rgba(0,0,0,0.7);
             }
-        /* Project header now contains both title and date */
+
         .project-header {
             display: flex;
             justify-content: space-between;
@@ -296,17 +294,15 @@
         }
 
             .project-header h3 {
-                margin: 0;
                 font-size: 1.2rem;
             }
 
             .project-header .project-date {
-                margin-bottom: 0;
                 font-size: 0.9rem;
                 font-style: italic;
                 color: #ccc;
             }
-        /* Override for light mode: make release month/year text darker for better contrast */
+
         .light-theme .project-header .project-date {
             color: #666;
         }
@@ -345,7 +341,7 @@
                 .project-links a:hover {
                     background: #444;
                 }
-        /* BUTTON STYLE OVERRIDES FOR GITHUB & ITCH BUTTONS */
+
         html:not(.light-theme) .project-links a.github,
         html:not(.light-theme) .project-links a.itchio {
             background: #fff;
@@ -357,19 +353,8 @@
             background: #222;
             color: #fff;
         }
-        /* ICON PSEUDO-ELEMENTS */
-        .project-links a.github::before {
-            content: "";
-            display: inline-block;
-            vertical-align: middle;
-            width: 16px;
-            height: 16px;
-            margin-right: 4px;
-            background: url('github-icon.png') no-repeat center center;
-            background-size: contain;
-            transition: filter 0.2s ease;
-        }
 
+        .project-links a.github::before,
         .project-links a.itchio::before {
             content: "";
             display: inline-block;
@@ -377,8 +362,16 @@
             width: 16px;
             height: 16px;
             margin-right: 4px;
-            background: url('itch-icon-white.png') no-repeat center center;
             background-size: contain;
+            transition: filter 0.2s ease;
+        }
+
+        .project-links a.github::before {
+            background: url('github-icon.png') no-repeat center center;
+        }
+
+        .project-links a.itchio::before {
+            background: url('itch-icon-white.png') no-repeat center center;
         }
 
         html:not(.light-theme) .project-links a.github::before {
@@ -402,9 +395,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* SLIDESHOW WRAPPER & Layout */
+
+        /* Slideshow */
         .slideshow-wrapper {
-            margin-top: auto; /* forces the slideshow to remain at the bottom of the panel */
+            margin-top: auto;
         }
 
         .slideshow-container {
@@ -440,8 +434,7 @@
                     cursor: pointer;
                     background: #000;
                 }
-        /* External info block below the slideshow:
-        Using a grid to center the caption with arrow controls on each side, all in front of a dark grey panel. */
+
         .slideshow-info {
             display: grid;
             grid-template-columns: auto 1fr auto;
@@ -461,7 +454,7 @@
 
             .slideshow-info span.prev,
             .slideshow-info span.next {
-                background: rgba(0, 0, 0, 0.6);
+                background: rgba(0,0,0,0.6);
                 color: #fff;
                 padding: 5px 8px;
                 cursor: pointer;
@@ -473,9 +466,10 @@
 
                 .slideshow-info span.prev:hover,
                 .slideshow-info span.next:hover {
-                    background: rgba(0, 0, 0, 0.8);
+                    background: rgba(0,0,0,0.8);
                 }
-        /* LIGHTBOX OVERLAY (Modal for Enlarged Video) */
+
+        /* Lightbox */
         #lightboxOverlay {
             position: fixed;
             top: 0;
@@ -537,7 +531,9 @@
             border-radius: 4px;
         }
 
-            #lightboxPrev:hover, #lightboxNext:hover, #lightboxClose:hover {
+            #lightboxPrev:hover,
+            #lightboxNext:hover,
+            #lightboxClose:hover {
                 background: rgba(0,0,0,0.7);
             }
 
@@ -548,7 +544,8 @@
         #lightboxNext {
             right: 10px;
         }
-        /* CONTACT SECTION */
+
+        /* Contact */
         #contact {
             padding-bottom: 2rem;
         }
@@ -588,7 +585,8 @@
             #contact a:hover {
                 text-decoration: underline;
             }
-        /* FOOTER */
+
+        /* Footer */
         footer {
             text-align: center;
             background: var(--header-bg);
@@ -602,7 +600,8 @@
         .light-theme footer {
             color: var(--text-color);
         }
-        /* RESPONSIVE */
+
+        /* Responsive */
         @media (max-width: 600px) {
             body {
                 padding-top: 120px;
@@ -652,7 +651,6 @@
     </style>
 </head>
 <body>
-    <!-- Header / Navigation -->
     <header>
         <div class="nav-container">
             <div class="logo-and-icons">
@@ -678,17 +676,13 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <!-- Theme Toggle placed at the far right -->
             <div class="theme-toggle">
                 <input type="checkbox" class="theme-checkbox" id="themeToggle" title="Toggle Theme">
             </div>
         </div>
     </header>
-
-    <!-- Solid Background Content: Begins Immediately at About -->
     <div id="solidContent">
         <main>
-            <!-- About Section -->
             <section id="about" class="reveal">
                 <div class="about-container">
                     <div class="about-img">
@@ -708,51 +702,43 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Solo Projects Section -->
             <section id="solo-projects" class="reveal">
                 <h2>Solo Projects</h2>
                 <div class="project-grid">
-                    <!-- Unicellular -->
                     <div class="project-card" id="unicellular">
                         <div class="project-header">
                             <h3>Unicellular</h3>
                             <span class="project-date">Feb 2025</span>
                         </div>
-                        <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project is capable of handling thousands of entities with finite state machines and interactions.</p>
+                        <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project handles thousands of entities with FSMs and interactions.</p>
                         <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
                         <div class="project-links">
                             <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github">Github</a>
                             <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio">Play in browser</a>
                         </div>
-                        <!-- Slideshow Wrapper -->
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unicellularSlideshow">
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow',1)">
                                         <source src="Project Media/Unicellular/UnicellInteraction.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Unicell Interactions</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow',2)">
                                         <source src="Project Media/Unicellular/BuyingUnicells.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Purchasing Unicells</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',3)">
                                         <source src="Project Media/Unicellular/1000Entities.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">1000 Unicells @ 144+ fps</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',4)">
                                         <source src="Project Media/Unicellular/10kEntities.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">6000 Unicells @ ~100 fps</figcaption>
                                 </figure>
@@ -764,14 +750,13 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Pinnable -->
                     <div class="project-card" id="pinnable">
                         <div class="project-header">
                             <h3>Pinnable</h3>
                             <span class="project-date">March 2024</span>
                         </div>
-                        <p>My first official Unity project, a 2D platformer where players collect falling marbles that are bouncing from moving pins. Inspired by <em>Peggle</em>, the player needs to avoid molten hazards and survive to achieve a highscore.</p>
-                        <p class="tech">Technologies: Unity 2D, Difficulty scaling systems</p>
+                        <p>A 2D platformer where players collect falling marbles bouncing off moving pins, inspired by <em>Peggle</em>.</p>
+                        <p class="tech">Technologies: Unity 2D, Difficulty Scaling Systems</p>
                         <div class="project-links">
                             <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github">Github</a>
                             <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio">Play in browser</a>
@@ -781,28 +766,24 @@
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Pinnable/GameplayPoster.png" onclick="openLightbox('pinnableSlideshow',1)">
                                         <source src="Project Media/Pinnable/Gameplay.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Pinnable/DyingPoster.png" onclick="openLightbox('pinnableSlideshow',2)">
                                         <source src="Project Media/Pinnable/Dying.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Defeat UX</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Pinnable/HowToPlayPoster.png" onclick="openLightbox('pinnableSlideshow',3)">
                                         <source src="Project Media/Pinnable/HowToPlay.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">How To Play Menu</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Pinnable/OptionsPoster.png" onclick="openLightbox('pinnableSlideshow',4)">
                                         <source src="Project Media/Pinnable/Options.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Options Menu</figcaption>
                                 </figure>
@@ -814,13 +795,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 3D Netcode Tank Game -->
                     <div class="project-card" id="3d-netcode-tank-game">
                         <div class="project-header">
                             <h3>3D Netcode Tank Game</h3>
                             <span class="project-date">Jan 2025</span>
                         </div>
-                        <p>A 3D multiplayer tank combat game built on a server–client networking topology. Players engage in responsive battles while using Unity Authentication, Relay, Cloud Save, and Lobbies for secure matchmaking and persistent progress.</p>
+                        <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
                         <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                         <div class="project-links">
                             <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github">Github</a>
@@ -830,21 +810,18 @@
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',1)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',2)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tankGameSlideshow',3)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
                                 </figure>
@@ -856,13 +833,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 2D Netcode Shooter -->
                     <div class="project-card" id="2d-netcode-shooter">
                         <div class="project-header">
                             <h3>2D Netcode Shooter</h3>
                             <span class="project-date">Jan 2025</span>
                         </div>
-                        <p>A fast-paced 2D multiplayer shooter built using a distributed authority networking model. This project delivers casual online matches with smooth gameplay while utilizing Unity Authentication, Relay, Cloud Save, and Lobbies for efficient online management and persistent data.</p>
+                        <p>A fast-paced shooter using distributed authority networking with Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
                         <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                         <div class="project-links">
                             <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github">Github</a>
@@ -872,14 +848,12 @@
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/2D_Netcode/GameplayPoster.png" onclick="openLightbox('shooterSlideshow',1)">
                                         <source src="Project Media/2D_Netcode/Gameplay.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Online Gameplay</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/2D_Netcode/LobbyRelayPoster.png" onclick="openLightbox('shooterSlideshow',2)">
                                         <source src="Project Media/2D_Netcode/LobbyRelay.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Unity Relay + Lobby Systems</figcaption>
                                 </figure>
@@ -893,8 +867,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Team Projects Section -->
             <section id="team-projects" class="reveal">
                 <h2>Team Projects</h2>
                 <div class="project-grid">
@@ -903,7 +875,7 @@
                             <h3>Tides of the Moon</h3>
                             <span class="project-date">Jan 2025</span>
                         </div>
-                        <p>A week-long rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms and was a valuable learning experience for prototyping and team collaboration.</p>
+                        <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms.</p>
                         <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
                         <div class="project-links">
                             <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github">Github</a>
@@ -913,21 +885,18 @@
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',1)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',2)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('tidesSlideshow',3)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
                                 </figure>
@@ -944,7 +913,7 @@
                             <h3>Candy Corporate</h3>
                             <span class="project-date">April 2024</span>
                         </div>
-                        <p>A Lethal Company inspired game with the aim being to run in, collect candy and return it to the puppet stationed outside. My contribution was primarily level design, with the addition of tile creation and overall game design.</p>
+                        <p>A game inspired by Lethal Company focused on level design and tile creation.</p>
                         <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
                         <div class="project-links">
                             <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio">Itch.io</a>
@@ -954,49 +923,42 @@
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/BasementPoster.png" onclick="openLightbox('candySlideshow',1)">
                                         <source src="Project Media/Candy Corporate/Basement.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Map Exploration</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/FrontOfMapPoster.png" onclick="openLightbox('candySlideshow',2)">
                                         <source src="Project Media/Candy Corporate/FrontOfMap.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Entrance</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/BuyingLeavingPoster.png" onclick="openLightbox('candySlideshow',3)">
                                         <source src="Project Media/Candy Corporate/BuyingLeaving.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Cashing Out</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/MenuPoster.png" onclick="openLightbox('candySlideshow',4)">
                                         <source src="Project Media/Candy Corporate/Menu.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/ObjectivesPoster.png" onclick="openLightbox('candySlideshow',5)">
                                         <source src="Project Media/Candy Corporate/Objectives.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Objectives</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/CodexPoster.png" onclick="openLightbox('candySlideshow',6)">
                                         <source src="Project Media/Candy Corporate/Codex.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Codex</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Candy Corporate/CreditsPoster.png" onclick="openLightbox('candySlideshow',7)">
                                         <source src="Project Media/Candy Corporate/Credits.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Credits</figcaption>
                                 </figure>
@@ -1010,41 +972,35 @@
                     </div>
                 </div>
             </section>
-
-            <!-- In Development Projects Section -->
             <section id="future-projects" class="reveal">
                 <h2>In Development Projects</h2>
                 <div class="project-grid">
-                    <!-- XR Game -->
                     <div class="project-card" id="xr-game">
                         <div class="project-header">
                             <h3>XR Game</h3>
                         </div>
-                        <p>An upcoming XR experience that pushes the boundaries of interactive gameplay in a virtual environment.</p>
+                        <p>An upcoming XR experience pushing the boundaries of interactive gameplay.</p>
                         <p class="tech">Technologies: TBD</p>
                         <div class="project-links">
-                            <!-- Future project links can be added here -->
+                            <!-- Future links -->
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="xrGameSlideshow">
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',1)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',2)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('xrGameSlideshow',3)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
                                 </figure>
@@ -1056,36 +1012,32 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Ability Deckbuilder -->
                     <div class="project-card" id="unitles-ability-deckbuilder">
                         <div class="project-header">
                             <h3>Ability Deckbuilder</h3>
                         </div>
-                        <p>A deckbuilding game in development, blending strategic card mechanics with dynamic gameplay challenges.</p>
+                        <p>A deckbuilding game blending strategic card mechanics with dynamic gameplay.</p>
                         <p class="tech">Technologies: TBD</p>
                         <div class="project-links">
-                            <!-- Future project links can be added here -->
+                            <!-- Future links -->
                         </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unitlesSlideshow">
                                 <figure class="active">
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',1)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',2)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
                                 </figure>
                                 <figure>
                                     <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unitlesSlideshow',3)">
                                         <source src="unicellularmovie.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
                                     </video>
                                     <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
                                 </figure>
@@ -1099,11 +1051,9 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Contact Section (Improved with Icons) -->
             <section id="contact" class="reveal">
                 <h2>Contact</h2>
-                <p>If you'd like to connect or learn more about my work, I'd love to hear from you!</p>
+                <p>If you'd like to connect or learn more about my work, get in touch.</p>
                 <ul class="contact-list">
                     <li>
                         <img src="email-icon.png" alt="Email Icon" class="contact-icon" />
@@ -1124,29 +1074,23 @@
                 </ul>
             </section>
         </main>
-
-        <!-- FOOTER -->
         <footer>
             <p>&copy; 2025 Oliver Neal. All rights reserved.</p>
         </footer>
     </div>
-
-    <!-- Lightbox Overlay (Modal for Enlarged Video) -->
     <div id="lightboxOverlay">
         <div id="lightboxContent">
             <span id="lightboxClose" onclick="closeLightbox()">×</span>
             <video id="lightboxVideo" controls>
                 <source src="" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
             <div id="lightboxCaption"></div>
             <div id="lightboxPrev" onclick="lightboxChange(-1)">&#10094;</div>
             <div id="lightboxNext" onclick="lightboxChange(1)">&#10095;</div>
         </div>
     </div>
-
     <script>
-        // --- Custom Smooth Scroll Function ---
+        // Smooth scroll
         function smoothScrollTo(element, duration) {
             const target = element.getBoundingClientRect().top + window.pageYOffset;
             const start = window.pageYOffset;
@@ -1167,62 +1111,40 @@
             }
             requestAnimationFrame(animation);
         }
-
-        // --- Slideshow Script ---
-        var slideIndices = {};
-        var timers = {};
-
+        // Slideshow management
+        var slideIndices = {}, timers = {};
         function showSlides(n, containerId) {
             var container = document.getElementById(containerId);
             if (!container) return;
             var slides = container.getElementsByTagName("figure");
             if (!slides.length) return;
-            if (n > slides.length) { n = 1; }
-            if (n < 1) { n = slides.length; }
+            if (n > slides.length) n = 1;
+            if (n < 1) n = slides.length;
             slideIndices[containerId] = n;
-            for (var i = 0; i < slides.length; i++) {
-                slides[i].classList.remove("active");
-            }
+            for (var i = 0; i < slides.length; i++) slides[i].classList.remove("active");
             slides[n - 1].classList.add("active");
-
-            // Update external caption from the active figure's hidden figcaption text.
-            var wrapper = container.parentElement; // assumes .slideshow-container is inside .slideshow-wrapper
+            var wrapper = container.parentElement;
             var infoCaption = wrapper.querySelector(".slideshow-info .slideshow-caption");
-            if (infoCaption) {
-                var activeCaption = slides[n - 1].querySelector("figcaption").textContent;
-                infoCaption.textContent = activeCaption;
-            }
+            if (infoCaption) infoCaption.textContent = slides[n - 1].querySelector("figcaption").textContent;
         }
-
-        // -- CHANGE STARTS HERE --
         function plusSlides(n, containerId, manual) {
             var container = document.getElementById(containerId);
             if (!container) return;
             var slides = container.getElementsByTagName("figure");
             if (!slides.length) return;
             var newIndex = slideIndices[containerId] + n;
-            if (newIndex > slides.length) { newIndex = 1; }
-            if (newIndex < 1) { newIndex = slides.length; }
-
+            if (newIndex > slides.length) newIndex = 1;
+            if (newIndex < 1) newIndex = slides.length;
             if (manual) {
                 container.classList.remove("fade-transition");
-                // Remove any inline transition from the currently active figure
                 var activeFigure = container.querySelector("figure.active");
-                if (activeFigure) {
-                    activeFigure.style.transition = "none";
-                }
+                if (activeFigure) activeFigure.style.transition = "none";
             } else {
                 container.classList.add("fade-transition");
             }
-
             showSlides(newIndex, containerId);
-
-            if (manual) {
-                resetTimer(containerId);
-            }
+            if (manual) resetTimer(containerId);
         }
-        // -- CHANGE ENDS HERE --
-
         function startTimer(containerId) {
             timers[containerId] = setInterval(function () {
                 var container = document.getElementById(containerId);
@@ -1264,18 +1186,14 @@
                 video.addEventListener('mouseleave', function () {
                     video.pause();
                     video.currentTime = 0;
-                    video.load();  // Reloads the video so the poster is displayed again.
+                    video.load();
                     let container = video.closest('.slideshow-container');
-                    if (container) {
-                        resetTimer(container.id);
-                    }
+                    if (container) resetTimer(container.id);
                 });
             });
         });
-
-        // --- Lightbox Script ---
-        var currentSlideshowId = null;
-        var currentSlideIndex = 1;
+        // Lightbox controls
+        var currentSlideshowId = null, currentSlideIndex = 1;
         function openLightbox(containerId, figureIndex) {
             currentSlideshowId = containerId;
             currentSlideIndex = figureIndex;
@@ -1315,14 +1233,9 @@
             lightboxVideo.play();
             var captionEl = slides[currentSlideIndex - 1].querySelector("figcaption");
             var lightboxCaption = document.getElementById("lightboxCaption");
-            if (captionEl && lightboxCaption) {
-                lightboxCaption.textContent = captionEl.textContent;
-            } else if (lightboxCaption) {
-                lightboxCaption.textContent = "";
-            }
+            lightboxCaption.textContent = captionEl ? captionEl.textContent : "";
         }
-
-        // --- Scroll Reveal Script ---
+        // Scroll reveal
         document.addEventListener("DOMContentLoaded", function () {
             const reveals = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver(entries => {
@@ -1335,9 +1248,9 @@
             }, { threshold: 0.2 });
             reveals.forEach(reveal => observer.observe(reveal));
         });
-
+        // Navigation active state on scroll
         window.addEventListener('scroll', function () {
-            const headerHeight = 80; // fixed header height
+            const headerHeight = 80;
             const scrollY = window.pageYOffset;
             if (scrollY < 100) {
                 document.querySelectorAll('nav a').forEach(link => link.classList.remove('active-nav'));
@@ -1346,27 +1259,21 @@
             document.querySelectorAll('section').forEach(section => {
                 const id = section.getAttribute('id');
                 const navLink = document.querySelector(`nav a[href="#${id}"]`);
-                let triggerOffset = -150;
-                if (id === "about" || id === "solo-projects") {
-                    triggerOffset = 0;
-                }
+                let triggerOffset = (id === "about" || id === "solo-projects") ? 0 : -150;
                 if (id === "contact") {
-                    if (window.innerHeight + scrollY >= document.body.scrollHeight - 50) {
+                    if (window.innerHeight + scrollY >= document.body.scrollHeight - 50)
                         navLink.classList.add('active-nav');
-                    } else {
+                    else
                         navLink.classList.remove('active-nav');
-                    }
                 } else {
-                    if (scrollY + headerHeight >= section.offsetTop + triggerOffset) {
+                    if (scrollY + headerHeight >= section.offsetTop + triggerOffset)
                         navLink.classList.add('active-nav');
-                    } else {
+                    else
                         navLink.classList.remove('active-nav');
-                    }
                 }
             });
         });
-
-        // --- Theme Toggle Script ---
+        // Theme toggle
         (function () {
             const toggle = document.getElementById('themeToggle');
             const userTheme = localStorage.getItem('theme');
