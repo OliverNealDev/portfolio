@@ -402,21 +402,25 @@
                 margin: 0;
                 opacity: 0;
                 pointer-events: none;
+                transition: none;
+            }
+            /* Only add fade when container has the "fade-transition" class */
+            .slideshow-container.fade-transition figure {
                 transition: opacity 1s ease-in-out;
             }
 
-                .slideshow-container figure.active {
-                    opacity: 1;
-                    pointer-events: auto;
-                }
+            .slideshow-container figure.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
 
-                .slideshow-container figure video {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
-                    cursor: pointer;
-                    background: #000;
-                }
+            .slideshow-container figure video {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                cursor: pointer;
+                background: #000;
+            }
 
         .slideshow-info {
             display: grid;
