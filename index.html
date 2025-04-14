@@ -1248,29 +1248,29 @@
             });
 
              // Remove active class from all links first
-            navLinks.forEach((link) => {
-                link.classList.remove('active-nav');
-            });
+             navLinks.forEach((link) => {
+                 link.classList.remove('active-nav');
+             });
 
-            // MODIFIED: Prioritize Contact link if at the bottom of the page
-            if (bottomOfPageReached && contactLink) {
-                 contactLink.classList.add('active-nav');
-            } else {
-                // Apply active class based on determined section
-                let activeLinkFound = false;
-                if (currentSectionId) {
-                    const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
-                    if (activeLink) {
-                        activeLink.classList.add('active-nav');
-                        activeLinkFound = true;
-                    }
-                }
+             // MODIFIED: Prioritize Contact link if at the bottom of the page
+             if (bottomOfPageReached && contactLink) {
+                  contactLink.classList.add('active-nav');
+             } else {
+                 // Apply active class based on determined section
+                 let activeLinkFound = false;
+                 if (currentSectionId) {
+                     const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
+                     if (activeLink) {
+                         activeLink.classList.add('active-nav');
+                         activeLinkFound = true;
+                     }
+                 }
 
-                // Fallback to 'about' if no section is active (e.g., at the very top) or if the found section has no link
-                if (!activeLinkFound) {
-                    document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
-                }
-            }
+                 // Fallback to 'about' if no section is active (e.g., at the very top) or if the found section has no link
+                 if (!activeLinkFound) {
+                     document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
+                 }
+             }
         }
 
 
@@ -1307,10 +1307,10 @@
                 // Play video on hover (only when slide is active)
                 container.querySelectorAll('video').forEach(video => {
                     video.addEventListener('mouseenter', () => {
-                         // Only play if the parent figure is active
-                         if (video.closest('figure')?.classList.contains('active')) {
-                            video.play().catch(e => {/* Autoplay likely prevented */});
-                         }
+                           // Only play if the parent figure is active
+                           if (video.closest('figure')?.classList.contains('active')) {
+                             video.play().catch(e => {/* Autoplay likely prevented */});
+                           }
                     });
                     video.addEventListener('mouseleave', () => {
                         video.pause();
@@ -1559,7 +1559,7 @@
                 }
                 // Optional: Remove 'visible' if element scrolls back up out of view
                 // else if (elementTop > windowHeight) {
-                //     el.classList.remove('visible');
+                //      el.classList.remove('visible');
                 // }
             });
         }
