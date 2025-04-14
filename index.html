@@ -16,20 +16,39 @@
         :root {
             --bg-color: #121212;
             --text-color: #e0e0e0;
-            --accent-color: #00aaff;
+            --accent-color: #FFA500; /* Start of gradient color, used for simpler accents */
             --secondary-color: #ff69b4;
             --header-bg: #222;
             --border-color: #444;
             --font-family: 'Roboto', sans-serif;
-            --light-bg: #1e1e1e;
+            --light-bg: #1e1e1e; /* Used for card background */
+            --card-bg: #1e1e1e; /* Explicit card background */
+            --button-bg: #333;
+            --button-hover-bg: #555;
+            --button-text-color: #fff;
+            --button-accent-text-color: #ffffff;
+            --main-gradient: linear-gradient(90deg, #FFA500, #FF4500); /* Define gradient as variable */
+            --icon-color: #e0e0e0; /* Icon color for SVGs */
+            --shadow-color: rgba(0, 0, 0, 0.5); /* Shadow color for dark */
+            --text-secondary-color: #aaa; /* Added for captions etc */
         }
         /* Light Theme */
         .light-theme {
             --bg-color: #ffffff;
             --text-color: #333333;
+            --accent-color: #FFA500; /* Keep consistent */
             --header-bg: #f5f5f5;
             --border-color: #ddd;
-            --light-bg: #fefefe;
+            --light-bg: #fefefe; /* Used for card background */
+            --card-bg: #ffffff; /* Explicit card background */
+            --button-bg: #eee;
+            --button-hover-bg: #ddd;
+            --button-text-color: #333;
+            --button-accent-text-color: #ffffff;
+            --main-gradient: linear-gradient(90deg, #FFA500, #FF4500); /* Same gradient */
+            --icon-color: #333333; /* Icon color for SVGs */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Shadow color for light */
+            --text-secondary-color: #555; /* Added for captions etc */
         }
         /* RESET */
         * {
@@ -48,20 +67,25 @@
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1, h2, h3 {
             font-family: var(--font-family);
+            color: var(--text-color);
         }
 
         section {
-            scroll-margin-top: 80px;
+            scroll-margin-top: 80px; /* Adjust based on header height */
+            padding: 2rem 0;
         }
 
         #solidContent {
             width: 100%;
             background-color: var(--bg-color);
+            transition: background-color 0.3s ease;
         }
+
         /* Header & Navigation */
         header {
             position: fixed;
@@ -69,10 +93,11 @@
             left: 0;
             width: 100%;
             background-color: var(--header-bg);
-            color: #fff;
-            padding: 1rem 0;
+            color: var(--text-color);
+            padding: 0.75rem 0;
             z-index: 999;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px var(--shadow-color); /* Use variable */
+            transition: background-color 0.3s ease;
         }
 
         .nav-container {
@@ -81,87 +106,111 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
         }
 
         .logo-and-icons {
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex-shrink: 0;
         }
 
         .nav-logo {
             font-size: 1.5rem;
             font-weight: bold;
             white-space: nowrap;
-        }
-
-        .light-theme .nav-logo {
             color: var(--text-color);
         }
 
         .nav-icons {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem; /* Slightly increased gap */
+            align-items: center; /* Vertically align icons */
         }
 
             .nav-icons a {
-                display: inline-block;
-                width: 24px;
-                height: 24px;
+                display: block; /* Changed to block */
+                width: 24px; /* Explicit size */
+                height: 24px; /* Explicit size */
+                line-height: 24px; /* Helps vertical alignment */
             }
 
-        html:not(.light-theme) .nav-icons img[src*="github-icon.png"] {
-            filter: none !important;
-        }
-
-        .light-theme .nav-icons img[src*="github-icon.png"] {
-            filter: invert(1) !important;
-        }
-
-        .nav-icons img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: opacity 0.2s ease;
-        }
-
-            .nav-icons img:hover {
-                opacity: 0.7;
+            /* === MODIFIED Navigation Icons === */
+            .nav-icons img {
+                display: block; /* Prevent extra space below img */
+                width: 24px; /* FIXED: Explicit size */
+                height: 24px; /* FIXED: Explicit size */
+                object-fit: contain; /* Ensure aspect ratio is maintained */
+                transition: opacity 0.2s ease, filter 0.3s ease; /* Added filter transition */
             }
+            /* ================================ */
+
+                .nav-icons img:hover {
+                    opacity: 0.7;
+                }
+
+        /* START: Icon Inversion Rules */
+        /* Invert GitHub icons in LIGHT mode */
+        .light-theme .nav-icons a[href*="github.com/OliverNealDev"] img,
+        .light-theme #contact .contact-icon[src="github-icon.png"] {
+            filter: invert(1);
+        }
+        /* Invert NEW (Simple Icons) Unreal Engine icon in DARK mode (by default) */
+        /* Base icon is white, so invert in dark theme */
+        #skills .skill-icon[src*="simpleicons.org/unrealengine"] {
+            filter: invert(1);
+        }
+        /* Reset NEW (Simple Icons) Unreal Engine icon filter in LIGHT mode */
+        .light-theme #skills .skill-icon[src*="simpleicons.org/unrealengine"] {
+            filter: none; /* Show the white icon as is */
+        }
+        /* END: Icon Inversion Rules */
+
 
         nav {
             margin-left: auto;
             margin-right: 1rem;
+            flex-grow: 1;
+            text-align: right;
         }
 
             nav ul {
                 list-style: none;
-                display: flex;
-                gap: 1rem;
+                display: inline-flex;
+                gap: 1.2rem;
                 align-items: center;
+                justify-content: flex-end;
+                flex-wrap: nowrap;
+                padding: 0;
+                margin: 0;
             }
 
             nav a {
-                color: #fff;
+                color: var(--text-color);
                 text-decoration: none;
                 font-weight: bold;
-                transition: none;
+                transition: none; /* Remove transition for instant gradient */
+                padding: 0.2rem 0; /* Keep vertical padding */
+                white-space: nowrap;
             }
 
-                nav a.active-nav,
-                nav a[href="#about"] {
-                    background: linear-gradient(90deg, #FFA500, #FF4500);
+                nav a.active-nav, nav a:hover {
+                    background: var(--main-gradient);
                     -webkit-background-clip: text;
+                    background-clip: text;
                     -webkit-text-fill-color: transparent;
+                    /* Ensure the gradient is visible even if text color changes */
+                    color: transparent;
                 }
 
-        .light-theme nav a {
-            color: var(--text-color);
-        }
-
         .theme-toggle {
-            margin-left: 1rem;
-            margin-top: 8px;
+            margin-left: 0; /* Adjusted from original */
+            position: relative;
+            top: 0; /* Adjusted from original */
+            flex-shrink: 0;
+            margin-top: 0; /* Ensure no extra top margin */
         }
 
         .theme-checkbox {
@@ -169,8 +218,8 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            width: 3.75em;
-            height: 1.875em;
+            width: 3.75em; /* 37.5px */
+            height: 1.875em; /* 18.75px */
             background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
             background-size: 205%;
             background-position: 0;
@@ -179,48 +228,71 @@
             position: relative;
             cursor: pointer;
             font-size: var(--toggle-size);
+            border: 1px solid var(--border-color); /* Add subtle border */
         }
 
             .theme-checkbox::before {
                 content: "";
-                width: 1.35em;
-                height: 1.35em;
+                width: 1.35em; /* 13.5px */
+                height: 1.35em; /* 13.5px */
                 position: absolute;
-                top: 0.263em;
+                top: 0.263em; /* (18.75 - 13.5) / 2 */
                 left: 0.263em;
                 background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
                 background-size: 205%;
-                background-position: 100%;
+                background-position: 100%; /* Start with dark circle */
                 border-radius: 50%;
                 transition: 0.4s;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Add subtle shadow */
             }
 
             .theme-checkbox:checked::before {
-                left: calc(100% - 1.35em - 0.263em);
-                background-position: 0;
+                left: calc(100% - 1.35em - 0.263em); /* Move to the right */
+                background-position: 0; /* Show light circle */
             }
 
             .theme-checkbox:checked {
-                background-position: 100%;
+                background-position: 100%; /* Show light background */
             }
+
+        /* Icon Theming */
+        .contact-icon {
+            transition: opacity 0.2s ease, filter 0.3s ease; /* Added filter transition */
+            width: 24px; /* FIXED: Explicit size */
+            height: 24px; /* FIXED: Explicit size */
+            object-fit: contain;
+            vertical-align: middle; /* Align nicely with text */
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+        .skill-icon {
+            transition: filter 0.3s ease; /* Added filter transition */
+            width: 20px; /* Keep skill icons slightly smaller */
+            height: 20px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
         /* Main Content */
         main {
             width: 90%;
             max-width: 1100px;
             margin: 0 auto;
-            padding-top: 80px;
+            padding-top: 80px; /* Ensure content starts below fixed header */
         }
 
         #about {
-            padding: 2rem 0;
+           /* No specific styles needed */
         }
 
         .about-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* Center items when wrapping */
             gap: 2rem;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
         .about-img {
@@ -229,64 +301,233 @@
             overflow: hidden;
             border-radius: 50%;
             flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px var(--shadow-color); /* Slightly enhance shadow */
         }
 
             .about-img img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                display: block; /* Remove potential bottom space */
             }
 
         .about-text {
             flex: 1;
-            min-width: 250px;
+            min-width: 250px; /* Ensure text has minimum width */
+            max-width: 850px; /* Limit text width for readability */
+            text-align: center; /* Default to center */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center button */
+            margin: 0 auto; /* Center container if it wraps */
         }
 
-            .about-text h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
+        /* Align text left on larger screens */
+        @media (min-width: 601px) {
+            .about-text {
+                align-items: flex-start; /* Align text/button left */
+                text-align: left;
+                margin: 0; /* Reset margin */
+            }
+        }
+
+        .about-text h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 75ch; /* Limit line length for readability */
+        }
+
+        .download-button {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.8rem;
+            background: var(--main-gradient);
+            color: var(--button-accent-text-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            border: none;
+            transition: filter 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px var(--shadow-color); /* Use variable */
+        }
+
+            .download-button:hover {
+                filter: brightness(1.15);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px var(--shadow-color); /* Use variable */
             }
 
-            .about-text p {
-                max-width: 700px;
-                margin-bottom: 1rem;
-                color: #ccc;
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
+        /* Section Titles */
         section h2 {
             font-size: 1.8rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            margin-top: 3rem; /* Space above sections */
+            margin-bottom: 1.5rem;
             color: var(--text-color);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
+            text-align: left; /* Align section titles left */
         }
-        /* Project Cards */
+
+        /* Skills Section */
+        #skills {
+            /* No specific styles needed */
+        }
+
+            #skills h2 {
+                text-align: left;
+                border-bottom: none; /* Remove double border */
+                margin-bottom: 2rem; /* Increase space after title */
+            }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 0; /* Remove extra top margin */
+        }
+
+        .skill-category {
+            /* No specific styles needed */
+        }
+
+            .skill-category h3 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+                color: var(--text-color);
+                padding-bottom: 0.8rem;
+                display: inline-block; /* Allows underline to fit content */
+                position: relative;
+            }
+
+                /* Gradient underline for skill category titles */
+                .skill-category h3::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 3px;
+                    background: var(--main-gradient);
+                }
+
+            .skill-category ul {
+                list-style: none;
+                padding-left: 0; /* Remove default padding */
+                margin-top: 1rem; /* Space between title and list */
+            }
+
+            .skill-category li {
+                margin-bottom: 0.8rem;
+                display: flex;
+                align-items: center;
+                color: var(--text-color);
+                opacity: 0.9;
+                font-size: 0.95rem;
+            }
+
+        /* Education Section */
+        #education {
+            background-color: var(--card-bg); /* Updated */
+            border-radius: 6px;
+            margin-top: 3rem; /* Consistent section spacing */
+            padding: 2rem;
+            box-shadow: 0 2px 4px var(--shadow-color); /* Use variable */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            #education h2 {
+                margin-top: 0; /* Remove extra top margin inside card */
+                text-align: left;
+                border: none; /* Remove double border */
+                padding-bottom: 0;
+                margin-bottom: 1.5rem; /* Space after title */
+            }
+
+        .education-entry {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 35px; /* Space for icon */
+        }
+
+            .education-entry:last-child {
+                margin-bottom: 0; /* Remove margin from last entry */
+            }
+
+        .uni-icon {
+            position: absolute;
+            left: 0;
+            top: 5px; /* Adjust vertical alignment */
+            width: 24px;
+            height: 24px;
+        }
+
+            .uni-icon svg {
+                width: 100%;
+                height: 100%;
+                fill: var(--icon-color); /* University icon uses fill correctly */
+                transition: fill 0.3s ease;
+            }
+
+        .education-entry h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-color);
+        }
+
+        .education-entry p {
+            margin-bottom: 0.25rem;
+            color: var(--text-color);
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .education-entry .dates {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--secondary-color); /* Use accent color for dates */
+            opacity: 0.8;
+        }
+
+        /* --- Project Cards (Restructured) --- */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+            gap: 1.5rem; /* Keep gap consistent */
         }
 
         .project-card {
-            background: var(--light-bg);
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            padding: 1.5rem;
+            background: var(--card-bg); /* Use variable */
+            border-radius: 8px; /* Slightly more rounded */
+            border: 1px solid var(--border-color); /* Add subtle border */
+            box-shadow: 0 2px 8px var(--shadow-color); /* Use variable */
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 450px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+            overflow: hidden; /* Contain child elements */
         }
 
             .project-card:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+                transform: translateY(-5px);
+                box-shadow: 0 6px 15px var(--shadow-color); /* Enhanced hover shadow */
+                border-color: var(--accent-color); /* Highlight border */
             }
+
+        /* Container for text content */
+        .project-content {
+            padding: 1.5rem; /* Add padding here */
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow content to push links down */
+        }
 
         .project-header {
             display: flex;
@@ -297,100 +538,89 @@
 
             .project-header h3 {
                 font-size: 1.2rem;
+                color: var(--text-color);
+                transition: color 0.3s ease;
+                margin-bottom: 0; /* Remove default h3 margin */
             }
 
             .project-header .project-date {
                 font-size: 0.9rem;
                 font-style: italic;
-                color: #ccc;
+                color: var(--text-secondary-color); /* Use secondary text */
+                opacity: 0.9; /* Slightly less opacity */
             }
 
-        .light-theme .project-header .project-date {
-            color: #666;
-        }
-
-        .project-card p {
+        /* Select only direct p children for description */
+        .project-content > p:not(.tech) {
             font-size: 0.95rem;
-            color: #ccc;
+            color: var(--text-color); /* Keep consistent */
+            opacity: 0.9;
             margin-bottom: 1rem;
+            flex-grow: 1; /* Push elements below down */
         }
 
-        .tech {
+        .project-content .tech { /* Target tech specifically */
             font-style: italic;
             margin-bottom: 1rem;
-            color: #999;
+            color: var(--text-secondary-color); /* Use secondary text */
+            opacity: 0.8; /* Less emphasis */
             font-size: 0.9rem;
+            margin-top: auto; /* Push tech & links down if description short */
         }
 
         .project-links {
-            margin-bottom: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 0.5rem; /* Add some space above links */
         }
 
             .project-links a {
-                display: inline-flex;
+                display: inline-flex; /* Align icon and text */
                 align-items: center;
                 margin-right: 8px;
-                margin-top: 5px;
+                margin-top: 5px; /* Space between wrapped buttons */
                 padding: 0.4rem 0.8rem;
-                background: var(--header-bg);
-                color: #fff;
+                background: var(--button-bg);
+                color: var(--button-text-color);
                 text-decoration: none;
                 border-radius: 4px;
                 font-size: 0.85rem;
-                transition: background 0.2s ease;
+                transition: background 0.2s ease, filter 0.3s ease, border-color 0.2s ease;
+                border: 1px solid transparent;
             }
 
                 .project-links a:hover {
-                    background: #444;
+                    background: var(--button-hover-bg);
+                    border-color: var(--accent-color);
                 }
 
-        html:not(.light-theme) .project-links a.github,
-        html:not(.light-theme) .project-links a.itchio {
-            background: #fff;
-            color: #333;
-        }
+                .project-links a img {
+                    width: 16px;
+                    height: 16px; /* Ensure consistent size */
+                    object-fit: contain;
+                    margin-right: 6px;
+                    vertical-align: middle; /* Should be handled by flex */
+                    /* Add inversion for light theme if needed */
+                    filter: var(--project-link-icon-filter, none);
+                }
+                /* Invert github icon in light theme for project links */
+                .light-theme .project-links a.github img {
+                   --project-link-icon-filter: invert(1);
+                }
 
-        html.light-theme .project-links a.github,
-        html.light-theme .project-links a.itchio {
-            background: #222;
-            color: #fff;
-        }
-        /* Added styles for project links icons */
-        .project-links a img {
-            width: 20px; /* Adjust as needed */
-            height: auto;
-            margin-right: 5px; /* Space between icon and text */
-            vertical-align: middle;
-            transition: filter 0.3s ease;
-        }
-        /* Invert icons in dark mode (when .light-theme is NOT applied) */
-        html:not(.light-theme) .project-links a.github img,
-        html:not(.light-theme) .project-links a.itchio img {
-            filter: invert(1);
-        }
-        /* No inversion in light mode */
-        html.light-theme .project-links a.github img,
-        html.light-theme .project-links a.itchio img {
-            filter: none;
-        }
-        /* (Removed pseudo-element rules for project-panel buttons) */
-        .project-card:hover h3 {
-            background: linear-gradient(90deg, #FFA500, #FF4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        /* Slideshow */
+
+        /* Slideshow (Restructured) */
         .slideshow-wrapper {
-            margin-top: auto;
+            flex-shrink: 0;
+            order: -1; /* Move slideshow to the top visually */
+            width: 100%; /* Ensure full width */
         }
 
         .slideshow-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16 / 9; /* Maintain aspect ratio */
             overflow: hidden;
-            border-radius: 5px;
-            background: #000;
+            background: #000; /* Keep black background for media */
         }
 
             .slideshow-container figure {
@@ -402,11 +632,12 @@
                 margin: 0;
                 opacity: 0;
                 pointer-events: none;
-                transition: none;
+                transition: none; /* Default: no transition */
             }
-            /* Only add fade when container has the "fade-transition" class */
+
+            /* Add transition class when needed */
             .slideshow-container.fade-transition figure {
-                transition: opacity 1s ease-in-out;
+                transition: opacity 0.6s ease-in-out;
             }
 
             .slideshow-container figure.active {
@@ -414,47 +645,53 @@
                 pointer-events: auto;
             }
 
-            .slideshow-container figure video {
+            .slideshow-container figure video, .slideshow-container figure img {
                 width: 100%;
                 height: 100%;
-                object-fit: contain;
-                cursor: pointer;
-                background: #000;
+                object-fit: cover; /* Use cover for edge-to-edge */
+                cursor: pointer; /* Indicate clickable for lightbox */
+                background: #000; /* Fallback background */
+                display: block; /* Remove potential bottom space */
             }
 
         .slideshow-info {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
+            display: flex; /* Changed to flex */
+            justify-content: space-between; /* Space out controls */
             align-items: center;
-            background-color: #333;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-top: 5px;
+            background-color: var(--header-bg); /* Use header bg for consistency */
+            padding: 0.4rem 0.75rem; /* Adjusted padding */
+            border-top: 1px solid var(--border-color); /* Add separator */
         }
 
             .slideshow-info .slideshow-caption {
                 text-align: center;
-                font-size: 1.2rem;
-                font-weight: bold;
-                color: #fff;
+                font-size: 0.85rem; /* Slightly smaller */
+                font-weight: normal;
+                color: var(--text-secondary-color); /* Use secondary text color */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex-grow: 1; /* Take available space */
+                margin: 0 0.5rem; /* Add horizontal margin */
             }
 
-            .slideshow-info span.prev,
-            .slideshow-info span.next {
-                background: rgba(0,0,0,0.6);
-                color: #fff;
-                padding: 5px 8px;
+            .slideshow-info span.prev, .slideshow-info span.next {
+                background: var(--button-bg); /* Use button background */
+                color: var(--text-color); /* Use text color */
+                padding: 0.25rem 0.6rem; /* Smaller padding */
                 cursor: pointer;
-                border-radius: 3px;
+                border-radius: 4px; /* Consistent radius */
                 font-weight: bold;
                 user-select: none;
-                transition: background 0.2s ease;
+                transition: background 0.2s ease, color 0.2s ease;
+                line-height: 1; /* Ensure text fits */
             }
 
-                .slideshow-info span.prev:hover,
-                .slideshow-info span.next:hover {
-                    background: rgba(0,0,0,0.8);
+                .slideshow-info span.prev:hover, .slideshow-info span.next:hover {
+                    background: var(--accent-color); /* Use accent on hover */
+                    color: var(--button-accent-text-color);
                 }
+
         /* Lightbox */
         #lightboxOverlay {
             position: fixed;
@@ -462,174 +699,220 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            z-index: 10000;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.85);
+            display: none; /* Hidden by default */
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px; /* Padding around content */
         }
 
         #lightboxContent {
             position: relative;
-            width: 80%;
-            max-width: 800px;
-            background: #000;
-            padding: 10px;
+            background: var(--bg-color); /* Use theme background */
+            padding: 20px;
+            padding-bottom: 50px; /* Space for caption */
             border-radius: 8px;
-            text-align: center;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        #lightboxVideo {
+        #lightboxMediaContainer {
             width: 100%;
-            height: auto;
-            border-radius: 6px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            max-width: calc(90vw - 40px); /* Adjust for padding */
+            max-height: calc(90vh - 90px); /* Adjust for padding and caption */
+            display: flex; /* Center media */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Prevent media overflow */
+            margin-bottom: 15px; /* Space before caption */
+        }
+
+        #lightboxVideo, #lightboxImage {
+            display: none; /* Hide both initially */
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Ensure media fits */
+            border-radius: 4px; /* Slight rounding */
         }
 
         #lightboxCaption {
-            color: #fff;
-            margin-top: 10px;
-            font-size: 1rem;
+            position: absolute;
+            bottom: 15px; /* Position at bottom */
+            left: 20px;
+            right: 20px;
+            text-align: center;
+            color: var(--text-secondary-color);
+            font-size: 0.9rem;
         }
 
         #lightboxClose {
             position: absolute;
-            top: -30px;
-            right: 0;
-            font-size: 2rem;
-            color: #fff;
+            top: -10px; /* Position slightly outside */
+            right: -10px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50%;
             cursor: pointer;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            transition: background 0.2s ease;
+            z-index: 1001; /* Above content */
         }
+        #lightboxClose:hover { background: var(--button-hover-bg); color: var(--text-color); }
 
         #lightboxPrev, #lightboxNext {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            color: #fff;
-            background: rgba(0,0,0,0.4);
-            font-size: 2rem;
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            line-height: 40px;
-            cursor: pointer;
+            background: rgba(50, 50, 50, 0.6);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
             border-radius: 4px;
+            cursor: pointer;
+            padding: 10px;
+            user-select: none;
+            transition: background 0.2s ease;
+            z-index: 1001; /* Above content */
         }
+        #lightboxPrev { left: -40px; } /* Position outside */
+        #lightboxNext { right: -40px; } /* Position outside */
+        #lightboxPrev:hover, #lightboxNext:hover { background: var(--accent-color); }
 
-            #lightboxPrev:hover,
-            #lightboxNext:hover,
-            #lightboxClose:hover {
-                background: rgba(0,0,0,0.7);
-            }
 
-        #lightboxPrev {
-            left: 10px;
-        }
-
-        #lightboxNext {
-            right: 10px;
-        }
-        /* Contact */
+        /* Contact Section */
         #contact {
-            padding-bottom: 2rem;
+            text-align: center;
+        }
+        #contact h2 {
+            text-align: center; /* Center contact title */
+            border-bottom: none; /* Remove border */
+            margin-bottom: 2rem; /* Space below title */
         }
 
         .contact-list {
             list-style: none;
             padding: 0;
-            margin: 1rem 0;
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items */
+            gap: 1rem; /* Space between items */
         }
 
-            .contact-list li {
-                display: flex;
-                align-items: center;
-                margin-bottom: 0.75rem;
-            }
-
-        .contact-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
+        .contact-list li {
+            display: flex;
+            align-items: center;
         }
 
-        html:not(.light-theme) .contact-icon[src*="github-icon.png"] {
-            filter: none;
-        }
-
-        html.light-theme .contact-icon[src*="github-icon.png"] {
-            filter: invert(1);
-        }
-
-        #contact a {
+        .contact-list a {
             color: var(--text-color);
             text-decoration: none;
-            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        .contact-list a:hover {
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent; /* Fallback */
         }
 
-            #contact a:hover {
-                text-decoration: underline;
-            }
+
         /* Footer */
         footer {
             text-align: center;
-            background: var(--header-bg);
-            color: #fff;
-            padding: 1rem;
-            margin-top: 2rem;
-            font-size: 0.9rem;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
             border-top: 1px solid var(--border-color);
+            color: var(--text-secondary-color);
+            font-size: 0.9rem;
         }
 
-        .light-theme footer {
-            color: var(--text-color);
+        /* Reveal on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform; /* Optimize animation */
         }
-        /* Responsive */
-        @media (max-width: 600px) {
-            body {
-                padding-top: 120px;
+
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
             }
 
-            nav ul {
-                flex-direction: column;
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Adjust project card grid for single column */
+            .project-grid {
+                grid-template-columns: 1fr; /* Single column */
+            }
+            .nav-container {
+                flex-direction: column; /* Stack nav items */
+                align-items: flex-start; /* Align items left */
                 gap: 0.5rem;
             }
-
+            nav {
+                margin-left: 0;
+                margin-right: 0;
+                text-align: left;
+                width: 100%; /* Full width nav */
+            }
+            nav ul {
+                justify-content: flex-start; /* Align links left */
+                gap: 0.8rem; /* Reduce gap */
+                flex-wrap: wrap; /* Allow nav links to wrap */
+            }
+            .theme-toggle {
+                position: absolute; /* Position toggle top right */
+                top: 0.75rem;
+                right: 5%; /* Align with container padding */
+            }
+            main {
+                padding-top: 120px; /* Increase padding for taller header */
+            }
+            section {
+                scroll-margin-top: 120px; /* Adjust scroll margin */
+            }
             .about-container {
-                flex-direction: column;
+                flex-direction: column; /* Stack image and text */
+                text-align: center;
             }
-
-            .about-img {
-                margin-bottom: 1rem;
+            .about-text {
+                align-items: center; /* Center text/button */
+                text-align: center;
             }
-
-            .nav-icons a {
-                width: 20px;
-                height: 20px;
-            }
-
-            #lightboxPrev, #lightboxNext {
-                font-size: 1.5rem;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-            }
-
-            #lightboxClose {
-                top: -30px;
-                font-size: 1.5rem;
-            }
+            #lightboxPrev { left: 5px; } /* Bring controls inside on mobile */
+            #lightboxNext { right: 5px; }
         }
 
-        .light-theme nav a,
-        .light-theme .nav-logo {
-            color: var(--text-color);
-        }
-
-        .light-theme .project-card p,
-        .light-theme .about-text p,
-        .light-theme .tech {
-            color: #444;
+        @media (max-width: 600px) {
+            .skills-container {
+                grid-template-columns: 1fr; /* Single column skills */
+            }
+            .about-text h1 { font-size: 1.8rem; }
+            section h2 { font-size: 1.6rem; }
+            .project-grid {
+                grid-template-columns: 1fr; /* Ensure single column */
+                gap: 1rem; /* Reduce gap */
+            }
+            .project-content { padding: 1rem; } /* Reduce card padding */
+            .project-links a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+            footer { font-size: 0.8rem; }
+            #lightboxContent { padding: 10px; padding-bottom: 40px; }
+            #lightboxMediaContainer { max-width: calc(90vw - 20px); max-height: calc(90vh - 70px); }
+            #lightboxCaption { bottom: 10px; left: 10px; right: 10px; }
         }
     </style>
 </head>
@@ -639,23 +922,19 @@
             <div class="logo-and-icons">
                 <div class="nav-logo">Oliver Neal</div>
                 <div class="nav-icons">
-                    <a href="https://github.com/OliverNealDev" target="_blank">
-                        <img src="github-icon.png" alt="GitHub" />
-                    </a>
-                    <a href="https://embitgames.itch.io" target="_blank">
-                        <img src="itch-icon.png" alt="Itch.io" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">
-                        <img src="linkedin-icon.png" alt="LinkedIn" />
-                    </a>
+                    <a href="https://github.com/OliverNealDev" target="_blank" title="GitHub"> <img src="github-icon.png" alt="GitHub" onerror="this.style.display='none'"/> </a>
+                    <a href="https://embitgames.itch.io" target="_blank" title="Itch.io"> <img src="itch-icon.png" alt="Itch.io" onerror="this.style.display='none'"/> </a>
+                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" title="LinkedIn"> <img src="linkedin-icon.png" alt="LinkedIn" onerror="this.style.display='none'"/> </a>
                 </div>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#about" class="active-nav">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
                     <li><a href="#solo-projects">Solo</a></li>
                     <li><a href="#team-projects">Team</a></li>
                     <li><a href="#future-projects">In Dev</a></li>
+                    <li><a href="#education">Education</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -664,837 +943,640 @@
             </div>
         </div>
     </header>
+
     <div id="solidContent">
         <main>
             <section id="about" class="reveal">
                 <div class="about-container">
                     <div class="about-img">
-                        <img src="oliver.png" alt="Oliver Neal Selfie" />
+                        <img src="oliver.png" alt="Oliver Neal Selfie" onerror="this.src='https://placehold.co/200x200/cccccc/333333?text=ON'; this.onerror=null;"/>
                     </div>
                     <div class="about-text">
                         <h1>Hello, I'm Oliver Neal!</h1>
                         <p>
-                            From the UK, I'm a <strong>Games Developer</strong> specializing in Unity (C#) with experience in 2D &amp; 3D dev,
-                            multiplayer netcode, and performance optimization. I enjoy tackling challenging gameplay systems
-                            and delivering polished player experiences.
+                            From the UK, I'm a passionate <strong>Games Developer</strong> specializing in Unity (C#). My experience spans 2D &amp; 3D development, multiplayer netcode (Unity Netcode for GameObjects), and performance optimization. I thrive on tackling complex gameplay systems and delivering polished, engaging player experiences. I'm particularly interested in simulation games and robust multiplayer interactions.
                         </p>
-                        <p>
-                            I am a Games Technologies student expected to graduate with a foundation degree in July of 2025.
-                        </p>
+                        <a href="Oliver_Neal_Resume.pdf" download="Oliver_Neal_Resume.pdf" class="download-button">
+                            Download My Resume (PDF)
+                        </a>
                     </div>
                 </div>
             </section>
+
+            <section id="skills" class="reveal">
+                <h2>My Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Languages & Engines</h3>
+                        <ul>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C Sharp Icon" class="skill-icon">C#</li>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity Icon" class="skill-icon">Unity Engine</li>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python Icon" class="skill-icon">Python</li>
+                            <li><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt="Unreal Engine Icon" class="skill-icon">Unreal Engine 5 (Basic)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools & Software</h3>
+                        <ul>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git Icon" class="skill-icon">Git / Version Control</li>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code Icon" class="skill-icon">Visual Studio / VS Code</li>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rider/rider-original.svg" alt="Rider Icon" class="skill-icon">Jetbrains Rider</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.5 14.06a5.49 5.49 0 0 0-7.87 1.17A5.5 5.5 0 1 0 5.5 9.5a5.49 5.49 0 0 0 4.44 5.44 5.5 5.5 0 0 0 8.56-.88Zm-13 1.44a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm4.44-6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm8.56 6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Z" /></svg></span>Unity Version Control (Plastic SCM)</li>
+                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/trello/trello-original.svg" alt="Trello Icon" class="skill-icon">Trello / Project Management</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Concepts & Techniques</h3>
+                        <ul>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11s-1.3 2.5-3 2.5-3-2.5-3-2.5S11.3 6 13 6s3 5 3 5zm-3 8.5a8.5 8.5 0 1 1 5.3-15.3A8.5 8.5 0 0 1 13 19.5zm0-15a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM13 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" /></svg></span>Multiplayer (Netcode for GameObjects)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm4-9h-3V8a1 1 0 0 0-2 0v3H8a1 1 0 0 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 0 0 0-2z" /></svg></span>Performance Optimization</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15 21h-2v-2h2zm4-2h-2v-2h2zm-4-4h-2v-2h2zM7 5h2v2H7zm12 0h-2v2h2zm-4 4h-2v2h2zm-4 0H9v2h2zm-4 0H5v2h2zm0 4H5v2h2zm0 4H5v2h2zm4 4H9v-2h2zm8-16h-2V3h2zm-4 0h-2V3h2zm-4 0H9V3h2zM7 3v2H5V3zm12 10h-2v-2h2zm0 4h-2v-2h2z" /></svg></span>Finite State Machines (FSMs)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7H7a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2a4 4 0 0 0-4-4zm-1 6H8v-2h8zM7 9h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" /></svg></span>Object-Oriented Programming (OOP)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-9 18H4V4h7zm9 0h-7V4h7z" /></svg></span>UI Implementation (UGUI)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2zm-8 8a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm0-6a2 2 0 1 0 2 2 2 2 0 0 0-2-2zM6 14h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2z" /></svg></span>Debugging & Profiling</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04A8.5 8.5 0 0 0 12 4a8.5 8.5 0 0 0-7.37 4.03 6 6 0 0 0-1.13 11.97h17a5 5 0 0 0 .5-9.96zM12 18a3 3 0 1 1 3-3 3 3 0 0 1-3 3z" /></svg></span>Unity Authentication & Services</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
             <section id="solo-projects" class="reveal">
                 <h2>Solo Projects</h2>
                 <div class="project-grid">
                     <div class="project-card" id="unicellular">
-                        <div class="project-header">
-                            <h3>Unicellular</h3>
-                            <span class="project-date">Feb 2025</span>
-                        </div>
-                        <p>Unicellular is an idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project handles thousands of entities with FSMs and interactions.</p>
-                        <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
-                        <div class="project-links">
-                            <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github">
-                                <img src="github-icon.png" alt="GitHub Icon" />
-                                Github
-                            </a>
-                            <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio">
-                                <img src="itch-icon-white.png" alt="Itch.io Icon" />
-                                Play in browser
-                            </a>
-                        </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unicellularSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow',1)">
-                                        <source src="Project Media/Unicellular/UnicellInteraction.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Unicell Interactions</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow',2)">
-                                        <source src="Project Media/Unicellular/BuyingUnicells.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Purchasing Unicells</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',3)">
-                                        <source src="Project Media/Unicellular/1000Entities.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">1000 Unicells @ 144+ fps</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow',4)">
-                                        <source src="Project Media/Unicellular/10kEntities.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">6000 Unicells @ ~100 fps</figcaption>
-                                </figure>
+                                <figure class="active"> <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow', 0)"> <source src="Project Media/Unicellular/UnicellInteraction.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Unicell Interactions</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow', 1)"> <source src="Project Media/Unicellular/BuyingUnicells.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Purchasing Unicells</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow', 2)"> <source src="Project Media/Unicellular/1000Entities.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">1000 Unicells @ 144+ fps</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow', 3)"> <source src="Project Media/Unicellular/10kEntities.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">6000 Unicells @ ~100 fps</figcaption> </figure>
                             </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</span>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Unicell Interactions</div> <span class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Unicellular</h3> <span class="project-date">Feb 2025</span> </div>
+                            <p>Idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project handles thousands of entities with FSMs and interactions.</p>
+                            <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
+                            <div class="project-links">
+                                <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
+                                <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Play in browser </a>
                             </div>
                         </div>
                     </div>
                     <div class="project-card" id="pinnable">
-                        <div class="project-header">
-                            <h3>Pinnable</h3>
-                            <span class="project-date">March 2024</span>
-                        </div>
-                        <p>A 2D platformer where players collect falling marbles bouncing off moving pins, inspired by <em>Peggle</em>.</p>
-                        <p class="tech">Technologies: Unity 2D, Difficulty Scaling Systems</p>
-                        <div class="project-links">
-                            <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github">
-                                <img src="github-icon.png" alt="GitHub Icon" />
-                                Github
-                            </a>
-                            <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio">
-                                <img src="itch-icon-white.png" alt="Itch.io Icon" />
-                                Play in browser
-                            </a>
-                        </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="pinnableSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Pinnable/GameplayPoster.png" onclick="openLightbox('pinnableSlideshow',1)">
-                                        <source src="Project Media/Pinnable/Gameplay.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Pinnable/DyingPoster.png" onclick="openLightbox('pinnableSlideshow',2)">
-                                        <source src="Project Media/Pinnable/Dying.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Defeat UX</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Pinnable/HowToPlayPoster.png" onclick="openLightbox('pinnableSlideshow',3)">
-                                        <source src="Project Media/Pinnable/HowToPlay.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">How To Play Menu</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Pinnable/OptionsPoster.png" onclick="openLightbox('pinnableSlideshow',4)">
-                                        <source src="Project Media/Pinnable/Options.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Options Menu</figcaption>
-                                </figure>
+                                <figure class="active"> <video muted playsinline loop poster="Project Media/Pinnable/GameplayPoster.png" onclick="openLightbox('pinnableSlideshow', 0)"> <source src="Project Media/Pinnable/Gameplay.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Pinnable/DyingPoster.png" onclick="openLightbox('pinnableSlideshow', 1)"> <source src="Project Media/Pinnable/Dying.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Defeat UX</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Pinnable/HowToPlayPoster.png" onclick="openLightbox('pinnableSlideshow', 2)"> <source src="Project Media/Pinnable/HowToPlay.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">How To Play Menu</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Pinnable/OptionsPoster.png" onclick="openLightbox('pinnableSlideshow', 3)"> <source src="Project Media/Pinnable/Options.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Options Menu</figcaption> </figure>
                             </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</span>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Gameplay</div> <span class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Pinnable</h3> <span class="project-date">March 2024</span> </div>
+                            <p>A 2D platformer where players collect falling marbles bouncing off moving pins, inspired by <em>Peggle</em>.</p>
+                            <p class="tech">Technologies: Unity 2D, Difficulty Scaling Systems</p>
+                            <div class="project-links">
+                                <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
+                                <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Play in browser </a>
                             </div>
                         </div>
                     </div>
                     <div class="project-card" id="3d-netcode-tank-game">
-                        <div class="project-header">
-                            <h3>3D Netcode Tank Game</h3>
-                            <span class="project-date">Jan 2025</span>
-                        </div>
-                        <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
-                        <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
-                        <div class="project-links">
-                            <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github">
-                                <img src="github-icon.png" alt="GitHub Icon" />
-                                Github
-                            </a>
-                        </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="tankGameSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.png" onclick="openLightbox('tankGameSlideshow',1)">
-                                        <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.png" onclick="openLightbox('tankGameSlideshow',2)">
-                                        <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.png" onclick="openLightbox('tankGameSlideshow',3)">
-                                        <source src="Project Media/3DNetcodeTankGame/Login.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption>
-                                </figure>
+                                <figure class="active"> <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.png" onclick="openLightbox('tankGameSlideshow', 0)"> <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.png" onclick="openLightbox('tankGameSlideshow', 1)"> <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.png" onclick="openLightbox('tankGameSlideshow', 2)"> <source src="Project Media/3DNetcodeTankGame/Login.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption> </figure>
                             </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</span>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Multiplayer Functionality</div> <span class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>3D Netcode Tank Game</h3> <span class="project-date">Jan 2025</span> </div>
+                            <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
+                            <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
+                            <div class="project-links">
+                                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                             </div>
                         </div>
                     </div>
                     <div class="project-card" id="2d-netcode-shooter">
-                        <div class="project-header">
-                            <h3>2D Netcode Shooter</h3>
-                            <span class="project-date">Jan 2025</span>
-                        </div>
-                        <p>A fast-paced shooter using distributed authority networking with Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
-                        <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
-                        <div class="project-links">
-                            <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github">
-                                <img src="github-icon.png" alt="GitHub Icon" />
-                                Github
-                            </a>
-                        </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="shooterSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/2D_Netcode/GameplayPoster.png" onclick="openLightbox('shooterSlideshow',1)">
-                                        <source src="Project Media/2D_Netcode/Gameplay.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Online Gameplay</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/2D_Netcode/LobbyRelayPoster.png" onclick="openLightbox('shooterSlideshow',2)">
-                                        <source src="Project Media/2D_Netcode/LobbyRelay.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Unity Relay + Lobby Systems</figcaption>
-                                </figure>
+                                <figure class="active"> <video muted playsinline loop poster="Project Media/2DNetcodeShooter/MultiplayerGameplayPoster.png" onclick="openLightbox('shooterSlideshow', 0)"> <source src="Project Media/2DNetcodeShooter/MultiplayerGameplay.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/2DNetcodeShooter/LobbyPoster.png" onclick="openLightbox('shooterSlideshow', 1)"> <source src="Project Media/2DNetcodeShooter/Lobby.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Lobby System</figcaption> </figure>
                             </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'shooterSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'shooterSlideshow',true)">&#10095;</span>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'shooterSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Gameplay</div> <span class="next" onclick="plusSlides(1,'shooterSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>2D Netcode Shooter</h3> <span class="project-date">Jan 2025</span> </div>
+                            <p>A fast-paced shooter using distributed authority networking with Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
+                            <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
+                            <div class="project-links">
+                                <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
             <section id="team-projects" class="reveal">
                 <h2>Team Projects</h2>
                 <div class="project-grid">
-                    <div class="project-card" id="tides-of-the-moon">
-                        <div class="project-header">
-                            <h3>Tides of the Moon</h3>
-                            <span class="project-date">Jan 2025</span>
-                        </div>
-                        <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms.</p>
-                        <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
-                        <div class="project-links">
-                            <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github">
-                                <img src="github-icon.png" alt="GitHub Icon" />
-                                Github
-                            </a>
-                        </div>
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="tidesSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tidesSlideshow',1)">
-                                        <source src="placeholder.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tidesSlideshow',2)">
-                                        <source src="placeholder.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="placeholderposter.png" onclick="openLightbox('tidesSlideshow',3)">
-                                        <source src="placeholder.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'tidesSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'tidesSlideshow',true)">&#10095;</span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="project-card" id="candy-corporate">
-                        <div class="project-header">
-                            <h3>Candy Corporate</h3>
-                            <span class="project-date">April 2024</span>
-                        </div>
-                        <p>A game inspired by Lethal Company focused on level design and tile creation.</p>
-                        <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
-                        <div class="project-links">
-                            <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio">
-                                <img src="itch-icon-white.png" alt="Itch.io Icon" />
-                                Itch.io
-                            </a>
-                        </div>
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="candySlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/BasementPoster.png" onclick="openLightbox('candySlideshow',1)">
-                                        <source src="Project Media/Candy Corporate/Basement.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Map Exploration</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/FrontOfMapPoster.png" onclick="openLightbox('candySlideshow',2)">
-                                        <source src="Project Media/Candy Corporate/FrontOfMap.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Entrance</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/BuyingLeavingPoster.png" onclick="openLightbox('candySlideshow',3)">
-                                        <source src="Project Media/Candy Corporate/BuyingLeaving.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Cashing Out</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/MenuPoster.png" onclick="openLightbox('candySlideshow',4)">
-                                        <source src="Project Media/Candy Corporate/Menu.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/ObjectivesPoster.png" onclick="openLightbox('candySlideshow',5)">
-                                        <source src="Project Media/Candy Corporate/Objectives.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Objectives</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/CodexPoster.png" onclick="openLightbox('candySlideshow',6)">
-                                        <source src="Project Media/Candy Corporate/Codex.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Codex</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/CreditsPoster.png" onclick="openLightbox('candySlideshow',7)">
-                                        <source src="Project Media/Candy Corporate/Credits.mp4" type="video/mp4">
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Credits</figcaption>
-                                </figure>
+                                <figure class="active"> <video muted playsinline loop poster="Project Media/Candy Corporate/BasementPoster.png" onclick="openLightbox('candySlideshow',0)"> <source src="Project Media/Candy Corporate/Basement.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Map Exploration</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/FrontOfMapPoster.png" onclick="openLightbox('candySlideshow',1)"> <source src="Project Media/Candy Corporate/FrontOfMap.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Entrance</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/BuyingLeavingPoster.png" onclick="openLightbox('candySlideshow',2)"> <source src="Project Media/Candy Corporate/BuyingLeaving.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Cashing Out</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/MenuPoster.png" onclick="openLightbox('candySlideshow',3)"> <source src="Project Media/Candy Corporate/Menu.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/ObjectivesPoster.png" onclick="openLightbox('candySlideshow',4)"> <source src="Project Media/Candy Corporate/Objectives.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Objectives</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/CodexPoster.png" onclick="openLightbox('candySlideshow',5)"> <source src="Project Media/Candy Corporate/Codex.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Codex</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/CreditsPoster.png" onclick="openLightbox('candySlideshow',6)"> <source src="Project Media/Candy Corporate/Credits.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Credits</figcaption> </figure>
                             </div>
-                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'candySlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption"></div>
-                                <span class="next" onclick="plusSlides(1,'candySlideshow',true)">&#10095;</span>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'candySlideshow',true)">&#10094;</span> <div class="slideshow-caption">Map Exploration</div> <span class="next" onclick="plusSlides(1,'candySlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Candy Corporate</h3> <span class="project-date">April 2024</span> </div>
+                            <p>A game inspired by Lethal Company focused on level design and tile creation.</p>
+                            <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
+                            <div class="project-links">
+                                <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Itch.io </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card" id="tides-of-the-moon">
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="tidesSlideshow">
+                                <figure class="active"> <img src="https://placehold.co/1600x900/222222/555555?text=Placeholder+1" alt="Placeholder 1" onclick="openLightbox('tidesSlideshow',0)"> <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption> </figure>
+                                <figure> <img src="https://placehold.co/1600x900/222222/555555?text=Placeholder+2" alt="Placeholder 2" onclick="openLightbox('tidesSlideshow',1)"> <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption> </figure>
+                                <figure> <img src="https://placehold.co/1600x900/222222/555555?text=Placeholder+3" alt="Placeholder 3" onclick="openLightbox('tidesSlideshow',2)"> <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption> </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tidesSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Placeholder 1</div> <span class="next" onclick="plusSlides(1,'tidesSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Tides of the Moon</h3> <span class="project-date">Jan 2025</span> </div>
+                            <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms.</p>
+                            <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
+                            <div class="project-links">
+                                <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
             <section id="future-projects" class="reveal">
-                <h2>In Development Projects</h2>
+                <h2>In Development</h2>
                 <div class="project-grid">
-                    <div class="project-card" id="xr-game">
-                        <div class="project-header">
-                            <h3>XR Game</h3>
+                    <div class="project-card" id="vr-multiplayer-fps"> <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="vrFpsSlideshow">
+                                <figure class="active"> <video muted playsinline loop poster="Project Media/VRMultiplayerFPS/Weapon HandlingPoster.png" onclick="openLightbox('vrFpsSlideshow', 0)"> <source src="Project Media/VRMultiplayerFPS/Weapon Handling.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">VR Weapon Handling</figcaption> </figure>
+                                <figure> <video muted playsinline loop poster="Project Media/VRMultiplayerFPS/MultiplayerVRPoster.png" onclick="openLightbox('vrFpsSlideshow', 1)"> <source src="Project Media/VRMultiplayerFPS/MultiplayerVR.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer VR Sync</figcaption> </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'vrFpsSlideshow',true)">&#10094;</span> <div class="slideshow-caption">VR Weapon Handling</div> <span class="next" onclick="plusSlides(1,'vrFpsSlideshow',true)">&#10095;</span> </div>
                         </div>
-                        <p>An upcoming XR experience designed for highly interactive gameplay.</p>
-                        <p class="tech">Technologies: TBD</p>
-                        <div class="project-links">
-                            <!-- Future links -->
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3>Untitled VR Game</h3>
+                                <span class="project-date">Summer 2024</span>
+                            </div>
+                            <p>Currently developing a VR FPS focusing on realistic weapon handling and physics interactions, built with Unity's XR Interaction Toolkit and Netcode for GameObjects.</p>
+                            <p class="tech">Technologies: Unity 3D, VR (XR Interaction Toolkit), Netcode for GameObjects</p>
+                            <div class="project-links">
+                                </div>
                         </div>
-                        <!-- Slideshow removed for in-development project -->
-                    </div>
-                    <div class="project-card" id="unitles-ability-deckbuilder">
-                        <div class="project-header">
-                            <h3>Ability Deckbuilder</h3>
-                        </div>
-                        <p>A deckbuilding game blending strategic card mechanics with dynamic gameplay.</p>
-                        <p class="tech">Technologies: TBD</p>
-                        <div class="project-links">
-                            <!-- Future links -->
-                        </div>
-                        <!-- Slideshow removed for in-development project -->
                     </div>
                 </div>
             </section>
+
+            <section id="education" class="reveal">
+                <h2>Education</h2>
+                <div class="education-entry">
+                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
+                    <h3>BSc (Hons) Computer Games Programming (Top-Up)</h3>
+                    <p>Teesside University, Middlesbrough</p>
+                    <p class="dates">Expected Completion: Summer 2026</p>
+                    <p>One-year top-up program to achieve a full Bachelor of Science degree, building upon foundational knowledge with advanced concepts in games programming.</p>
+                </div>
+                <div class="education-entry">
+                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
+                    <h3>FdSc Games Technologies</h3>
+                    <p>Newcastle College University Centre, Newcastle upon Tyne</p>
+                    <p class="dates">Completed: July 2025 (Expected)</p>
+                    <p>Foundation Degree covering core principles of game development, including programming with C# in Unity, game design fundamentals, 2D/3D asset pipelines, and collaborative project work.</p>
+                </div>
+            </section>
+
             <section id="contact" class="reveal">
-                <h2>Contact</h2>
-                <p>If you'd like to connect or learn more about my work, get in touch.</p>
+                <h2>Contact Me</h2>
                 <ul class="contact-list">
-                    <li>
-                        <img src="email-icon.png" alt="Email Icon" class="contact-icon" />
-                        <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a>
-                    </li>
-                    <li>
-                        <img src="linkedin-icon.png" alt="LinkedIn Icon" class="contact-icon" />
-                        <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">Oliver Neal</a>
-                    </li>
-                    <li>
-                        <img src="github-icon.png" alt="GitHub Icon" class="contact-icon" />
-                        <a href="https://github.com/OliverNealDev" target="_blank">github.com/OliverNealDev</a>
-                    </li>
-                    <li>
-                        <img src="itch-icon.png" alt="Itch.io Icon" class="contact-icon" />
-                        <a href="https://embitgames.itch.io" target="_blank">embitgames.itch.io</a>
-                    </li>
+                    <li> <img src="email-icon.png" alt="Email Icon" class="contact-icon" onerror="this.style.display='none'"/> <a href="mailto:oliver@oliverneal.dev">oliver@oliverneal.dev</a> </li>
+                    <li> <img src="linkedin-icon.png" alt="LinkedIn Icon" class="contact-icon" onerror="this.style.display='none'"/> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">LinkedIn Profile</a> </li>
+                    <li> <img src="github-icon.png" alt="GitHub Icon" class="contact-icon" onerror="this.style.display='none'"/> <a href="https://github.com/OliverNealDev" target="_blank">GitHub Profile</a> </li>
+                    <li> <img src="itch-icon.png" alt="Itch.io Icon" class="contact-icon" onerror="this.style.display='none'"/> <a href="https://embitgames.itch.io" target="_blank">Itch.io Profile</a> </li>
                 </ul>
             </section>
         </main>
-        <footer>
-            <p>&copy; 2025 Oliver Neal. All rights reserved.</p>
-        </footer>
     </div>
-    <div id="lightboxOverlay">
-        <div id="lightboxContent">
-            <span id="lightboxClose" onclick="closeLightbox()">×</span>
-            <video id="lightboxVideo" controls>
-                <source src="" type="video/mp4">
-            </video>
+
+    <footer>
+        &copy; 2025 Oliver Neal. All rights reserved.
+    </footer>
+
+    <div id="lightboxOverlay" onclick="closeLightboxOutside(event)">
+        <div id="lightboxContent" onclick="event.stopPropagation()">
+            <span id="lightboxClose" onclick="closeLightbox()">&times;</span>
+            <span id="lightboxPrev" onclick="changeLightboxSlide(-1)">&#10094;</span>
+            <span id="lightboxNext" onclick="changeLightboxSlide(1)">&#10095;</span>
+            <div id="lightboxMediaContainer">
+                <video id="lightboxVideo" controls controlsList="nodownload" muted loop playsinline></video>
+                <img id="lightboxImage" alt="Lightbox Image" style="display: none;">
+            </div>
             <div id="lightboxCaption"></div>
-            <div id="lightboxPrev" onclick="lightboxChange(-1)">&#10094;</div>
-            <div id="lightboxNext" onclick="lightboxChange(1)">&#10095;</div>
         </div>
     </div>
+
     <script>
-        // Smooth scroll
-        function smoothScrollTo(element, duration) {
-            const target = element.getBoundingClientRect().top + window.pageYOffset;
-            const start = window.pageYOffset;
-            const distance = target - start;
-            let startTime = null;
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const run = easeInOutQuad(timeElapsed, start, distance, duration);
-                window.scrollTo(0, run);
-                if (timeElapsed < duration) requestAnimationFrame(animation);
-            }
-            function easeInOutQuad(t, b, c, d) {
-                t /= d / 2;
-                if (t < 1) return c / 2 * t * t + b;
-                t--;
-                return -c / 2 * (t * (t - 2) - 1) + b;
-            }
-            requestAnimationFrame(animation);
-        }
-        // Slideshow management
-        var slideIndices = {}, timers = {};
-        function showSlides(n, containerId) {
-            var container = document.getElementById(containerId);
-            if (!container) return;
-            var slides = container.getElementsByTagName("figure");
-            if (!slides.length) return;
-            if (n > slides.length) n = 1;
-            if (n < 1) n = slides.length;
-            slideIndices[containerId] = n;
-            for (var i = 0; i < slides.length; i++) slides[i].classList.remove("active");
-            slides[n - 1].classList.add("active");
-            var wrapper = container.parentElement;
-            var infoCaption = wrapper.querySelector(".slideshow-info .slideshow-caption");
-            if (infoCaption) infoCaption.textContent = slides[n - 1].querySelector("figcaption").textContent;
-        }
-        function plusSlides(n, containerId, manual) {
-            var container = document.getElementById(containerId);
-            if (!container) return;
-            var slides = container.getElementsByTagName("figure");
-            if (!slides.length) return;
-            var newIndex = slideIndices[containerId] + n;
-            if (newIndex > slides.length) newIndex = 1;
-            if (newIndex < 1) newIndex = slides.length;
-            if (manual) {
-                container.classList.remove("fade-transition");
-                var activeFigure = container.querySelector("figure.active");
-                if (activeFigure) activeFigure.style.transition = "none";
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body; // Keep reference if needed elsewhere
+        const html = document.documentElement; // Target root element for theme class
+
+        // Function to apply the theme class and update toggle state
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                html.classList.add('light-theme');
+                themeToggle.checked = true;
             } else {
-                container.classList.add("fade-transition");
+                html.classList.remove('light-theme');
+                themeToggle.checked = false;
             }
-            showSlides(newIndex, containerId);
-            if (manual) resetTimer(containerId);
         }
-        function startTimer(containerId) {
-            timers[containerId] = setInterval(function () {
-                var container = document.getElementById(containerId);
-                if (container) container.classList.add("fade-transition");
-                plusSlides(1, containerId, false);
-            }, 10000);
-        }
-        function resetTimer(containerId) {
-            clearInterval(timers[containerId]);
-            startTimer(containerId);
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-            var containerIDs = [
-                'unicellularSlideshow',
-                'pinnableSlideshow',
-                'tidesSlideshow',
-                'candySlideshow',
-                'xrGameSlideshow',
-                'unitlesSlideshow',
-                'tankGameSlideshow',
-                'shooterSlideshow'
-            ];
-            containerIDs.forEach(function (id) {
-                slideIndices[id] = 1;
-                var container = document.getElementById(id);
-                if (container) container.classList.remove("fade-transition");
-                showSlides(1, id);
-                startTimer(id);
+
+        // Check local storage first, then system preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+        applyTheme(initialTheme);
+
+        // Add event listener for theme toggle changes
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme); // Save preference
+        });
+
+        // --- Active Navigation Link Highlighting ---
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('main section'); // Select sections within main
+        const headerHeight = document.querySelector('header')?.offsetHeight || 80; // Get header height or fallback
+        const contactLink = document.querySelector('nav a[href="#contact"]'); // Cache contact link selector
+
+        function changeActiveLink() {
+            let currentSectionId = '';
+            const scrollPosition = window.scrollY;
+            const scrollPositionWithOffset = scrollPosition + headerHeight + 20; // Offset for activation point
+            const bottomOfPageReached = (window.innerHeight + scrollPosition >= document.documentElement.scrollHeight - 50); // Check if near bottom (within 50px)
+
+            // Determine current section based on scroll position
+            sections.forEach(section => {
+                if (scrollPositionWithOffset >= section.offsetTop) {
+                    currentSectionId = section.id;
+                }
             });
-            document.querySelectorAll('.slideshow-container video').forEach(function (video) {
-                video.addEventListener('mouseenter', function () {
-                    video.play();
-                    let container = video.closest('.slideshow-container');
-                    if (container && timers[container.id]) {
-                        clearInterval(timers[container.id]);
-                        timers[container.id] = null;
+
+             // Remove active class from all links first
+            navLinks.forEach((link) => {
+                link.classList.remove('active-nav');
+            });
+
+            // MODIFIED: Prioritize Contact link if at the bottom of the page
+            if (bottomOfPageReached && contactLink) {
+                 contactLink.classList.add('active-nav');
+            } else {
+                // Apply active class based on determined section
+                let activeLinkFound = false;
+                if (currentSectionId) {
+                    const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active-nav');
+                        activeLinkFound = true;
                     }
+                }
+
+                // Fallback to 'about' if no section is active (e.g., at the very top) or if the found section has no link
+                if (!activeLinkFound) {
+                    document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
+                }
+            }
+        }
+
+
+        // --- Slideshow Logic ---
+        let slideIndexes = {}; // Stores current index for each slideshow
+        let slideshowTimeouts = {}; // Stores timeout IDs for auto-advance
+
+        function initializeSlideshows() {
+            document.querySelectorAll('.slideshow-container').forEach(container => {
+                const id = container.id;
+                if (!id) {
+                    console.error("Slideshow container needs an ID:", container);
+                    return;
+                }
+                slideIndexes[id] = 0; // Start at first slide
+                showSlides(0, id, false); // Show initial slide without transition
+
+                const figures = container.querySelectorAll('figure');
+                const infoBox = container.nextElementSibling; // Assumes info box is immediately after
+
+                // Pause/Resume on hover for container and info box
+                container.addEventListener('mouseenter', () => pauseSlideshow(id));
+                container.addEventListener('mouseleave', () => resumeSlideshow(id));
+                if (infoBox?.classList.contains('slideshow-info')) {
+                    infoBox.addEventListener('mouseenter', () => pauseSlideshow(id));
+                    infoBox.addEventListener('mouseleave', () => resumeSlideshow(id));
+                }
+
+                // Start auto-advance if more than one slide
+                if (figures.length > 1) {
+                    slideshowTimeouts[id] = setTimeout(() => autoAdvanceSlides(id), 5000); // Start after 5s
+                }
+
+                // Play video on hover (only when slide is active)
+                container.querySelectorAll('video').forEach(video => {
+                    video.addEventListener('mouseenter', () => {
+                         // Only play if the parent figure is active
+                         if (video.closest('figure')?.classList.contains('active')) {
+                            video.play().catch(e => {/* Autoplay likely prevented */});
+                         }
+                    });
+                    video.addEventListener('mouseleave', () => {
+                        video.pause();
+                    });
                 });
-                video.addEventListener('mouseleave', function () {
+
+                updateSlideshowCaption(id); // Set initial caption
+            });
+        }
+
+        // Go to next/previous slide
+        function plusSlides(n, slideshowId, useTransition = false) {
+            clearTimeout(slideshowTimeouts[slideshowId]); // Clear existing timeout
+            showSlides(slideIndexes[slideshowId] + n, slideshowId, useTransition); // Show the new slide
+            // Restart timeout after manual navigation
+            const container = document.getElementById(slideshowId);
+            if (container?.querySelectorAll('figure').length > 1) {
+                slideshowTimeouts[slideshowId] = setTimeout(() => autoAdvanceSlides(slideshowId), 8000); // Longer delay after interaction
+            }
+        }
+
+        // Auto-advance to the next slide
+        function autoAdvanceSlides(slideshowId) {
+            showSlides(slideIndexes[slideshowId] + 1, slideshowId, true); // Use transition for auto-advance
+            // Set timeout for the next advance
+            const container = document.getElementById(slideshowId);
+            if (container?.querySelectorAll('figure').length > 1) {
+                slideshowTimeouts[slideshowId] = setTimeout(() => autoAdvanceSlides(slideshowId), 5000); // 5s interval
+            }
+        }
+
+        // Pause auto-advance
+        function pauseSlideshow(slideshowId) {
+            clearTimeout(slideshowTimeouts[slideshowId]);
+        }
+
+        // Resume auto-advance
+        function resumeSlideshow(slideshowId) {
+            clearTimeout(slideshowTimeouts[slideshowId]); // Clear just in case
+            const container = document.getElementById(slideshowId);
+            if (container?.querySelectorAll('figure').length > 1) {
+                slideshowTimeouts[slideshowId] = setTimeout(() => autoAdvanceSlides(slideshowId), 3000); // Resume faster (3s)
+            }
+        }
+
+        // Update the caption below the slideshow
+        function updateSlideshowCaption(slideshowId) {
+            const slideshow = document.getElementById(slideshowId);
+            if (!slideshow) return;
+            const slides = slideshow.getElementsByTagName('figure');
+            const captionDiv = slideshow.nextElementSibling?.querySelector('.slideshow-caption');
+            if (!captionDiv) return;
+
+            const currentIndex = slideIndexes[slideshowId] >= 0 ? slideIndexes[slideshowId] : 0;
+
+            if (slides.length > 0 && currentIndex < slides.length) {
+                const currentSlide = slides[currentIndex];
+                const hiddenCaption = currentSlide?.querySelector('.hidden-caption');
+                captionDiv.textContent = hiddenCaption ? hiddenCaption.textContent.trim() : `Item ${currentIndex + 1}`;
+            } else {
+                captionDiv.textContent = ''; // Clear caption if no slides or index issue
+            }
+        }
+
+        // Core function to display a specific slide
+        function showSlides(n, slideshowId, useTransition) {
+            const slideshow = document.getElementById(slideshowId);
+            if (!slideshow) return;
+            const slides = slideshow.getElementsByTagName('figure');
+            if (slides.length === 0) return;
+
+            // Calculate new index and wrap around
+            let newIndex = n % slides.length;
+            if (newIndex < 0) {
+                newIndex += slides.length; // Handle negative wrap-around
+            }
+            slideIndexes[slideshowId] = newIndex; // Store the new index
+
+            // Apply or remove transition class
+            useTransition ? slideshow.classList.add('fade-transition') : slideshow.classList.remove('fade-transition');
+
+            // Hide all slides and pause their videos
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+                const video = slides[i].querySelector('video');
+                if (video) {
                     video.pause();
-                    video.currentTime = 0;
-                    video.load();
-                    let container = video.closest('.slideshow-container');
-                    if (container) resetTimer(container.id);
-                });
-            });
-        });
-        // Lightbox controls
-        var currentSlideshowId = null, currentSlideIndex = 1;
-        function openLightbox(containerId, figureIndex) {
-            currentSlideshowId = containerId;
-            currentSlideIndex = figureIndex;
-            showSlides(figureIndex, containerId);
-            updateLightbox();
-            document.getElementById("lightboxOverlay").style.display = "flex";
+                    // Optional: Reset video time? video.currentTime = 0;
+                }
+            }
+
+            // Show the target slide
+            if (slides[slideIndexes[slideshowId]]) {
+                slides[slideIndexes[slideshowId]].classList.add('active');
+            }
+
+            updateSlideshowCaption(slideshowId); // Update caption
+
+            // Attempt to play video if it's the active slide and the slideshow is hovered
+            const activeVideo = slides[slideIndexes[slideshowId]]?.querySelector('video');
+            if (activeVideo && slideshow.matches(':hover')) {
+                 activeVideo.play().catch(e => {/* Autoplay likely prevented */});
+            }
         }
-        function closeLightbox() {
-            var lightboxVideo = document.getElementById("lightboxVideo");
-            lightboxVideo.pause();
-            lightboxVideo.currentTime = 0;
-            document.getElementById("lightboxOverlay").style.display = "none";
+
+
+        // --- Lightbox Logic ---
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxContent = document.getElementById('lightboxContent');
+        const lightboxMediaContainer = document.getElementById('lightboxMediaContainer');
+        const lightboxVideo = document.getElementById('lightboxVideo');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+
+        let currentLightboxSlideshowId = null; // ID of the slideshow opened in lightbox
+        let currentLightboxIndex = 0; // Index of the currently shown item in lightbox
+        let currentSlides = []; // Array of <figure> elements from the source slideshow
+
+        // Helper to get slide figures from a slideshow ID
+        function getSlidesFromSlideshow(slideshowId) {
+            const el = document.getElementById(slideshowId);
+            return el ? Array.from(el.getElementsByTagName('figure')) : [];
         }
-        function lightboxChange(n) {
-            var slides = document.getElementById(currentSlideshowId).getElementsByTagName("figure");
-            var newIndex = currentSlideIndex + n;
-            if (newIndex > slides.length) newIndex = 1;
-            if (newIndex < 1) newIndex = slides.length;
-            currentSlideIndex = newIndex;
-            showSlides(newIndex, currentSlideshowId);
-            updateLightbox();
+
+        // Open the lightbox
+        function openLightbox(slideshowId, index) {
+            currentLightboxSlideshowId = slideshowId;
+            currentSlides = getSlidesFromSlideshow(slideshowId);
+            if (currentSlides.length === 0) return; // Don't open if no slides
+
+            currentLightboxIndex = index;
+            updateLightboxContent(); // Load the selected item
+
+            lightboxOverlay.style.display = 'flex'; // Show the overlay
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.addEventListener('keydown', handleLightboxKeys); // Add keyboard controls
         }
-        function updateLightbox() {
-            var slides = document.getElementById(currentSlideshowId).getElementsByTagName("figure");
-            if (!slides.length) return;
-            if (currentSlideIndex > slides.length) currentSlideIndex = 1;
-            if (currentSlideIndex < 1) currentSlideIndex = slides.length;
-            var video = slides[currentSlideIndex - 1].getElementsByTagName("video")[0];
-            if (!video) return;
-            var source = video.querySelector("source").getAttribute("src");
-            var poster = video.getAttribute("poster") || "";
-            var lightboxVideo = document.getElementById("lightboxVideo");
-            var lightboxSource = lightboxVideo.querySelector("source");
-            lightboxSource.setAttribute("src", source);
-            lightboxVideo.setAttribute("poster", poster);
-            lightboxVideo.load();
-            lightboxVideo.play();
-            var captionEl = slides[currentSlideIndex - 1].querySelector("figcaption");
-            var lightboxCaption = document.getElementById("lightboxCaption");
-            lightboxCaption.textContent = captionEl ? captionEl.textContent : "";
-        }
-        // Scroll reveal
-        document.addEventListener("DOMContentLoaded", function () {
-            const reveals = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.2 });
-            reveals.forEach(reveal => observer.observe(reveal));
-        });
-        // Navigation active state on scroll
-        window.addEventListener('scroll', function () {
-            const headerHeight = 80;
-            const scrollY = window.pageYOffset;
-            if (scrollY < 100) {
-                document.querySelectorAll('nav a').forEach(link => link.classList.remove('active-nav'));
+
+        // Update the content (image/video and caption) of the lightbox
+        function updateLightboxContent() {
+            // Basic validation
+            if (currentSlides.length === 0 || currentLightboxIndex < 0 || currentLightboxIndex >= currentSlides.length) {
+                closeLightbox(); // Close if data is invalid
                 return;
             }
-            document.querySelectorAll('section').forEach(section => {
-                const id = section.getAttribute('id');
-                const navLink = document.querySelector(`nav a[href="#${id}"]`);
-                let triggerOffset = (id === "about" || id === "solo-projects") ? 0 : -150;
-                if (id === "contact") {
-                    if (window.innerHeight + scrollY >= document.body.scrollHeight - 50)
-                        navLink.classList.add('active-nav');
-                    else
-                        navLink.classList.remove('active-nav');
-                } else {
-                    if (scrollY + headerHeight >= section.offsetTop + triggerOffset)
-                        navLink.classList.add('active-nav');
-                    else
-                        navLink.classList.remove('active-nav');
-                }
-            });
-        });
-        // Theme toggle
-        (function () {
-            const toggle = document.getElementById('themeToggle');
-            const userTheme = localStorage.getItem('theme');
-            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-            if (userTheme) {
-                if (userTheme === 'light') {
-                    document.documentElement.classList.add('light-theme');
-                    toggle.checked = true;
-                }
-            } else {
-                if (prefersLight) {
-                    document.documentElement.classList.add('light-theme');
-                    toggle.checked = true;
-                }
-            }
-            toggle.addEventListener('change', function () {
-                if (this.checked) {
-                    document.documentElement.classList.add('light-theme');
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    document.documentElement.classList.remove('light-theme');
-                    localStorage.setItem('theme', 'dark');
-                }
-            });
-        })();
-    </script>
-    <!-- Add this right before the closing body tag -->
-    <div id="lightboxOverlay" class="lightbox-overlay">
-        <div class="lightbox-content">
-            <div class="lightbox-header">
-                <h3 class="lightbox-title">Video Preview</h3>
-                <button class="lightbox-close" onclick="closeLightbox()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div class="lightbox-body">
-                <button class="lightbox-nav lightbox-prev" onclick="lightboxChange(-1)">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6" />
-                    </svg>
-                </button>
-                <div class="video-container">
-                    <video id="lightboxVideo" controls>
-                        <source src="" type="video/mp4">
-                    </video>
-                </div>
-                <button class="lightbox-nav lightbox-next" onclick="lightboxChange(1)">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6" />
-                    </svg>
-                </button>
-            </div>
-            <div class="lightbox-footer">
-                <div id="lightboxCaption" class="lightbox-caption"></div>
-                <div class="lightbox-counter">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <style>
-        /* Lightbox Styles */
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            z-index: 10000;
-            padding: 2rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(8px);
-        }
+            const currentFigure = currentSlides[currentLightboxIndex];
+            if (!currentFigure) return; // Should not happen, but safety check
 
-        .lightbox-content {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: var(--bg-color);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
+            // Find media elements and caption within the figure
+            const videoElement = currentFigure.querySelector('video');
+            const imgElement = currentFigure.querySelector('img'); // Look for img if no video
+            const hiddenCaption = currentFigure.querySelector('.hidden-caption');
 
-        .lightbox-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .lightbox-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .lightbox-close {
-            background: none;
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s;
-        }
-
-            .lightbox-close:hover {
-                background-color: var(--border-color);
-            }
-
-        .lightbox-body {
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            gap: 1rem;
-        }
-
-        .video-container {
-            flex: 1;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        #lightboxVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: #000;
-        }
-
-        .lightbox-nav {
-            background: none;
-            border: none;
-            padding: 1rem;
-            cursor: pointer;
-            color: var(--text-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-            .lightbox-nav:hover {
-                background-color: var(--border-color);
-                transform: scale(1.1);
-            }
-
-        .lightbox-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .lightbox-caption {
-            font-size: 1rem;
-            color: var(--text-color);
-        }
-
-        .lightbox-counter {
-            font-size: 0.9rem;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        @media (max-width: 768px) {
-            .lightbox-overlay {
-                padding: 1rem;
-            }
-
-            .lightbox-nav {
-                padding: 0.5rem;
-            }
-
-            .lightbox-body {
-                padding: 0.5rem;
-                gap: 0.5rem;
-            }
-        }
-    </style>
-
-    <script>
-        // Update the lightbox-related JavaScript functions
-        function openLightbox(containerId, figureIndex) {
-            currentSlideshowId = containerId;
-            currentSlideIndex = figureIndex;
-
-            // Update total slides counter
-            const slides = document.getElementById(containerId).getElementsByTagName("figure");
-            document.getElementById("totalSlides").textContent = slides.length;
-
-            showSlides(figureIndex, containerId);
-            updateLightbox();
-            document.getElementById("lightboxOverlay").style.display = "flex";
-
-            // Add keyboard event listeners
-            document.addEventListener('keydown', handleLightboxKeypress);
-        }
-
-        function closeLightbox() {
-            const lightboxVideo = document.getElementById("lightboxVideo");
+            // Reset lightbox media elements
+            lightboxVideo.style.display = 'none';
+            lightboxImage.style.display = 'none';
             lightboxVideo.pause();
-            lightboxVideo.currentTime = 0;
-            document.getElementById("lightboxOverlay").style.display = "none";
+            lightboxVideo.removeAttribute('src'); // Use removeAttribute for clarity
+            lightboxImage.removeAttribute('src');
+            lightboxVideo.poster = ''; // Clear poster
 
-            // Remove keyboard event listeners
-            document.removeEventListener('keydown', handleLightboxKeypress);
+            // Load video if found
+            if (videoElement) {
+                const source = videoElement.querySelector('source');
+                if (source) {
+                    lightboxVideo.src = source.src;
+                    lightboxVideo.poster = videoElement.poster || ''; // Use poster from original video
+                    lightboxVideo.style.display = 'block';
+                    lightboxVideo.load(); // Important for some browsers
+                    lightboxVideo.play().catch(e => { /* Autoplay might be blocked */ });
+                }
+            }
+            // Load image if no video found
+            else if (imgElement) {
+                lightboxImage.src = imgElement.src;
+                lightboxImage.alt = imgElement.alt || (hiddenCaption?.textContent || 'Lightbox Image');
+                lightboxImage.style.display = 'block';
+            }
+
+            // Update caption
+            lightboxCaption.textContent = hiddenCaption?.textContent.trim() || `Item ${currentLightboxIndex + 1}`;
+
+            // Show/hide navigation arrows
+            const showNav = currentSlides.length > 1;
+            lightboxPrev.style.display = showNav ? 'block' : 'none';
+            lightboxNext.style.display = showNav ? 'block' : 'none';
         }
 
-        function handleLightboxKeypress(e) {
-            switch (e.key) {
-                case "ArrowLeft":
-                    lightboxChange(-1);
-                    break;
-                case "ArrowRight":
-                    lightboxChange(1);
-                    break;
-                case "Escape":
-                    closeLightbox();
-                    break;
+        // Close the lightbox
+        function closeLightbox() {
+            lightboxOverlay.style.display = 'none'; // Hide overlay
+            document.body.style.overflow = ''; // Restore background scrolling
+            // Stop and clear media
+            lightboxVideo.pause();
+            lightboxVideo.removeAttribute('src');
+            lightboxImage.removeAttribute('src');
+            // Reset state variables
+            currentSlides = [];
+            currentLightboxSlideshowId = null;
+            document.removeEventListener('keydown', handleLightboxKeys); // Remove keyboard listener
+        }
+
+        // Close lightbox if clicking on the overlay background
+        function closeLightboxOutside(event) {
+            if (event.target === lightboxOverlay) {
+                closeLightbox();
             }
         }
 
-        function updateLightbox() {
-            const slides = document.getElementById(currentSlideshowId).getElementsByTagName("figure");
-            if (!slides.length) return;
-
-            if (currentSlideIndex > slides.length) currentSlideIndex = 1;
-            if (currentSlideIndex < 1) currentSlideIndex = slides.length;
-
-            // Update current slide counter
-            document.getElementById("currentSlide").textContent = currentSlideIndex;
-
-            const video = slides[currentSlideIndex - 1].getElementsByTagName("video")[0];
-            if (!video) return;
-
-            const source = video.querySelector("source").getAttribute("src");
-            const poster = video.getAttribute("poster") || "";
-
-            const lightboxVideo = document.getElementById("lightboxVideo");
-            const lightboxSource = lightboxVideo.querySelector("source");
-
-            lightboxSource.setAttribute("src", source);
-            lightboxVideo.setAttribute("poster", poster);
-            lightboxVideo.load();
-            lightboxVideo.play();
-
-            const captionEl = slides[currentSlideIndex - 1].querySelector("figcaption");
-            const lightboxCaption = document.getElementById("lightboxCaption");
-            lightboxCaption.textContent = captionEl ? captionEl.textContent : "";
+        // Change to the next/previous slide in the lightbox
+        function changeLightboxSlide(n) {
+            let newIndex = currentLightboxIndex + n;
+            const len = currentSlides.length;
+            // Wrap around using modulo
+            newIndex = (newIndex % len + len) % len;
+            currentLightboxIndex = newIndex;
+            updateLightboxContent(); // Load the new slide
         }
+
+        // Handle keyboard events for lightbox navigation/closing
+        function handleLightboxKeys(event) {
+            if (event.key === 'Escape') {
+                closeLightbox();
+            } else if (event.key === 'ArrowLeft') {
+                if (currentSlides.length > 1) changeLightboxSlide(-1);
+            } else if (event.key === 'ArrowRight') {
+                 if (currentSlides.length > 1) changeLightboxSlide(1);
+            }
+        }
+
+
+        // --- Reveal on Scroll ---
+        function revealSections() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const elementVisibleThreshold = 100; // Pixels from bottom edge to trigger reveal
+
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                // Check if element top is within the visible viewport range
+                if (elementTop < windowHeight - elementVisibleThreshold) {
+                    el.classList.add('visible');
+                }
+                // Optional: Remove 'visible' if element scrolls back up out of view
+                // else if (elementTop > windowHeight) {
+                //     el.classList.remove('visible');
+                // }
+            });
+        }
+
+        // --- Initializations ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSlideshows(); // Set up all slideshows
+            revealSections(); // Run reveal check on load
+            changeActiveLink(); // Set initial active nav link
+        });
+
+        // Add scroll event listeners
+        window.addEventListener('scroll', () => {
+            revealSections(); // Check reveals on scroll
+            changeActiveLink(); // Update active nav link on scroll
+        });
+
     </script>
 </body>
 </html>
