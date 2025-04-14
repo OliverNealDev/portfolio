@@ -357,7 +357,7 @@
 
         .download-button {
             display: inline-block;
-            margin-top: 1.5rem;
+            margin-top: 1.5rem; /* Default margin for resume button */
             padding: 0.8rem 1.8rem;
             background: var(--main-gradient);
             color: var(--button-accent-text-color);
@@ -506,6 +506,12 @@
             color: var(--secondary-color); /* Use accent color for dates */
             opacity: 0.8;
         }
+        /* Style for download button within education entry */
+        .education-entry .download-button {
+             margin-top: 1rem; /* Add some space above the button */
+             /* Inherits other styles from .download-button */
+        }
+
 
         /* --- Project Cards (Restructured) --- */
         .project-grid {
@@ -1171,7 +1177,11 @@
                 <h2>Education</h2>
                 <div class="education-entry">
                     <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
-                    <h3>BSc (Hons) Computer Games Programming / Related Field</h3> <p>Local University (Newcastle Area - TBC)</p> <p class="dates">Planned Start: Autumn 2025</p> <p>Planning to pursue a full Bachelor's degree, building upon foundational knowledge to further specialize in advanced game development concepts and techniques.</p> </div>
+                    <h3>BSc (Hons) Computer Games Programming / Related Field</h3>
+                    <p>Local University (Newcastle Area - TBC)</p>
+                    <p class="dates">Planned Start: Autumn 2025</p>
+                    <p>Planning to pursue a full Bachelor's degree, building upon foundational knowledge to further specialize in advanced game development concepts and techniques.</p>
+                </div>
                  <div class="education-entry">
                     <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
                     <h3>FdSc Games Technologies</h3>
@@ -1181,10 +1191,13 @@
                 </div>
                 <div class="education-entry">
                     <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
-                    <h3>Level 3 Extended Diploma in Creative Media Production & Technology (Games)</h3>
+                    <h3>BTEC Level 3 National Foundation Diploma in Creative Digital Media Production</h3>
                     <p>Newcastle College, Newcastle upon Tyne</p>
-                    <p class="dates">Completed: Summer 2023 (Achieved Distinction)</p>
-                    <p>One-year course providing foundational skills in game design principles, digital media production, and relevant technologies.</p>
+                    <p class="dates">Awarded: June 2023 (Grade: Distinction)</p>
+                    <p>Covered key aspects of digital media creation, including pre-production, media representation, campaigns, and practical production skills in web and digital games.</p>
+                    <a href="Oliver Neal Certificate.pdf" download="Oliver_Neal_Certificate.pdf" class="download-button">
+                        Download Certificate (PDF)
+                    </a>
                 </div>
             </section>
 
