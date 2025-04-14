@@ -17,7 +17,7 @@
             --bg-color: #121212;
             --text-color: #e0e0e0;
             --accent-color: #FFA500; /* Start of gradient color, used for simpler accents */
-            --secondary-color: #ff69b4;
+            --secondary-color: #ff69b4; /* Used for dates etc. */
             --header-bg: #222;
             --border-color: #444;
             --font-family: 'Roboto', sans-serif;
@@ -31,6 +31,7 @@
             --icon-color: #e0e0e0; /* Icon color for SVGs */
             --shadow-color: rgba(0, 0, 0, 0.5); /* Shadow color for dark */
             --text-secondary-color: #aaa; /* Added for captions etc */
+            --project-link-icon-filter: none; /* Default no filter for project link icons */
         }
         /* Light Theme */
         .light-theme {
@@ -49,6 +50,7 @@
             --icon-color: #333333; /* Icon color for SVGs */
             --shadow-color: rgba(0, 0, 0, 0.1); /* Shadow color for light */
             --text-secondary-color: #555; /* Added for captions etc */
+            --project-link-icon-filter: none; /* Default no filter */
         }
         /* RESET */
         * {
@@ -137,7 +139,7 @@
                 line-height: 24px; /* Helps vertical alignment */
             }
 
-            /* === MODIFIED Navigation Icons === */
+            /* Navigation Icons (Images) */
             .nav-icons img {
                 display: block; /* Prevent extra space below img */
                 width: 24px; /* FIXED: Explicit size */
@@ -145,26 +147,16 @@
                 object-fit: contain; /* Ensure aspect ratio is maintained */
                 transition: opacity 0.2s ease, filter 0.3s ease; /* Added filter transition */
             }
-            /* ================================ */
 
                 .nav-icons img:hover {
                     opacity: 0.7;
                 }
 
         /* START: Icon Inversion Rules */
-        /* Invert GitHub icons in LIGHT mode */
+        /* Invert GitHub icons in LIGHT mode (Nav and Contact) */
         .light-theme .nav-icons a[href*="github.com/OliverNealDev"] img,
         .light-theme #contact .contact-icon[src="github-icon.png"] {
             filter: invert(1);
-        }
-        /* Invert NEW (Simple Icons) Unreal Engine icon in DARK mode (by default) */
-        /* Base icon is white, so invert in dark theme */
-        #skills .skill-icon[src*="simpleicons.org/unrealengine"] {
-            filter: invert(1);
-        }
-        /* Reset NEW (Simple Icons) Unreal Engine icon filter in LIGHT mode */
-        .light-theme #skills .skill-icon[src*="simpleicons.org/unrealengine"] {
-            filter: none; /* Show the white icon as is */
         }
         /* END: Icon Inversion Rules */
 
@@ -256,6 +248,7 @@
             }
 
         /* Icon Theming */
+        /* Contact Icons (Images) */
         .contact-icon {
             transition: opacity 0.2s ease, filter 0.3s ease; /* Added filter transition */
             width: 24px; /* FIXED: Explicit size */
@@ -265,15 +258,32 @@
             margin-right: 8px; /* Space between icon and text */
         }
 
+        /* Skill Icons (Images and SVGs) */
         .skill-icon {
-            transition: filter 0.3s ease; /* Added filter transition */
+            display: inline-block; /* Changed from flex for span/svg */
             width: 20px; /* Keep skill icons slightly smaller */
             height: 20px;
             margin-right: 10px;
             flex-shrink: 0;
-            object-fit: contain;
             vertical-align: middle;
+            transition: filter 0.3s ease; /* Keep filter transition for potential future use */
         }
+            /* Style SVGs within skill-icon spans */
+            .skill-icon svg {
+                display: block; /* Ensure SVG fills the container */
+                width: 100%;
+                height: 100%;
+                fill: var(--icon-color); /* Use theme variable for SVG fill */
+                transition: fill 0.3s ease; /* Add transition for fill color */
+            }
+            /* Style IMGs within skill-icon list items (if any remain) */
+            .skill-icon img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
 
         /* Main Content */
         main {
@@ -427,8 +437,8 @@
 
             .skill-category li {
                 margin-bottom: 0.8rem;
-                display: flex;
-                align-items: center;
+                display: flex; /* Use flex for alignment */
+                align-items: center; /* Vertically center icon and text */
                 color: var(--text-color);
                 opacity: 0.9;
                 font-size: 0.95rem;
@@ -599,12 +609,12 @@
                     object-fit: contain;
                     margin-right: 6px;
                     vertical-align: middle; /* Should be handled by flex */
-                    /* Add inversion for light theme if needed */
-                    filter: var(--project-link-icon-filter, none);
+                    filter: var(--project-link-icon-filter, none); /* Apply theme-based filter */
+                    transition: filter 0.3s ease; /* Add transition for filter */
                 }
                 /* Invert github icon in light theme for project links */
                 .light-theme .project-links a.github img {
-                   --project-link-icon-filter: invert(1);
+                    --project-link-icon-filter: invert(1);
                 }
 
 
@@ -969,32 +979,38 @@
                     <div class="skill-category">
                         <h3>Languages & Engines</h3>
                         <ul>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C Sharp Icon" class="skill-icon">C#</li>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity Icon" class="skill-icon">Unity Engine</li>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python Icon" class="skill-icon">Python</li>
-                            <li><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt="Unreal Engine Icon" class="skill-icon">Unreal Engine 5 (Basic)</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C Sharp Icon"></span>C#</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity Icon"></span>Unity Engine</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python Icon"></span>Python</li>
+                            <li>
+                                <span class="skill-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Unreal Engine Icon">
+                                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.112 1.159c6.003 0 10.87 4.867 10.87 10.87s-4.867 10.87-10.87 10.87-10.87-4.867-10.87-10.87 4.867-10.87 10.87-10.87zm-4.13 3.046v1.95h2.273v10.473h-2.274V6.154H5.982V4.205h6.182zm4.13 4.788v2.193c0 .99-.18 1.77-.54 2.34-.36.57-.88.995-1.56 1.276-.68.28-1.46.42-2.34.42-.88 0-1.66-.14-2.34-.42-.68-.28-1.2-.706-1.56-1.276-.36-.57-.54-1.35-.54-2.34V8.993c0-.99.18-1.77.54-2.34.36-.57.88-.995 1.56-1.276.68-.28 1.46-.42 2.34-.42.88 0 1.66.14 2.34.42.68.28 1.2.706 1.56 1.276.36.57.54 1.35.54 2.34zm-2.21 0v2.193c0 .39-.04.678-.12.866-.08.188-.2.336-.36.445-.16.11-.35.188-.57.234-.22.047-.45.07-.7.07-.25 0-.48-.023-.7-.07-.22-.046-.41-.124-.57-.234-.16-.11-.28-.257-.36-.445-.08-.188-.12-.476-.12-.866V8.993c0-.39.04.678.12-.866.08-.188.2-.336.36.445.16.11.35.188.57.234.22.047.45.07.7-.07.25 0 .48.023.7.07.22.046.41.124.57.234.16.11.28.257.36.445.08.188.12.476.12.866z"/>
+                                    </svg>
+                                </span>Unreal Engine 5 (Basic)
+                            </li>
                         </ul>
                     </div>
                     <div class="skill-category">
                         <h3>Tools & Software</h3>
                         <ul>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git Icon" class="skill-icon">Git / Version Control</li>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code Icon" class="skill-icon">Visual Studio / VS Code</li>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rider/rider-original.svg" alt="Rider Icon" class="skill-icon">Jetbrains Rider</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.5 14.06a5.49 5.49 0 0 0-7.87 1.17A5.5 5.5 0 1 0 5.5 9.5a5.49 5.49 0 0 0 4.44 5.44 5.5 5.5 0 0 0 8.56-.88Zm-13 1.44a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm4.44-6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm8.56 6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Z" /></svg></span>Unity Version Control (Plastic SCM)</li>
-                            <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/trello/trello-original.svg" alt="Trello Icon" class="skill-icon">Trello / Project Management</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git Icon"></span>Git / Version Control</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code Icon"></span>Visual Studio / VS Code</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rider/rider-original.svg" alt="Rider Icon"></span>Jetbrains Rider</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Plastic SCM Icon"><path d="M18.5 14.06a5.49 5.49 0 0 0-7.87 1.17A5.5 5.5 0 1 0 5.5 9.5a5.49 5.49 0 0 0 4.44 5.44 5.5 5.5 0 0 0 8.56-.88Zm-13 1.44a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm4.44-6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm8.56 6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Z" /></svg></span>Unity Version Control (Plastic SCM)</li>
+                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/trello/trello-original.svg" alt="Trello Icon"></span>Trello / Project Management</li>
                         </ul>
                     </div>
                     <div class="skill-category">
                         <h3>Concepts & Techniques</h3>
                         <ul>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11s-1.3 2.5-3 2.5-3-2.5-3-2.5S11.3 6 13 6s3 5 3 5zm-3 8.5a8.5 8.5 0 1 1 5.3-15.3A8.5 8.5 0 0 1 13 19.5zm0-15a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM13 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" /></svg></span>Multiplayer (Netcode for GameObjects)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm4-9h-3V8a1 1 0 0 0-2 0v3H8a1 1 0 0 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 0 0 0-2z" /></svg></span>Performance Optimization</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15 21h-2v-2h2zm4-2h-2v-2h2zm-4-4h-2v-2h2zM7 5h2v2H7zm12 0h-2v2h2zm-4 4h-2v2h2zm-4 0H9v2h2zm-4 0H5v2h2zm0 4H5v2h2zm0 4H5v2h2zm4 4H9v-2h2zm8-16h-2V3h2zm-4 0h-2V3h2zm-4 0H9V3h2zM7 3v2H5V3zm12 10h-2v-2h2zm0 4h-2v-2h2z" /></svg></span>Finite State Machines (FSMs)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7H7a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2a4 4 0 0 0-4-4zm-1 6H8v-2h8zM7 9h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" /></svg></span>Object-Oriented Programming (OOP)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-9 18H4V4h7zm9 0h-7V4h7z" /></svg></span>UI Implementation (UGUI)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2zm-8 8a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm0-6a2 2 0 1 0 2 2 2 2 0 0 0-2-2zM6 14h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2z" /></svg></span>Debugging & Profiling</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04A8.5 8.5 0 0 0 12 4a8.5 8.5 0 0 0-7.37 4.03 6 6 0 0 0-1.13 11.97h17a5 5 0 0 0 .5-9.96zM12 18a3 3 0 1 1 3-3 3 3 0 0 1-3 3z" /></svg></span>Unity Authentication & Services</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Networking Icon"><path d="M16 11s-1.3 2.5-3 2.5-3-2.5-3-2.5S11.3 6 13 6s3 5 3 5zm-3 8.5a8.5 8.5 0 1 1 5.3-15.3A8.5 8.5 0 0 1 13 19.5zm0-15a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM13 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" /></svg></span>Multiplayer (Netcode for GameObjects)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Optimization Icon"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm4-9h-3V8a1 1 0 0 0-2 0v3H8a1 1 0 0 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 0 0 0-2z" /></svg></span>Performance Optimization</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="FSM Icon"><path d="M15 21h-2v-2h2zm4-2h-2v-2h2zm-4-4h-2v-2h2zM7 5h2v2H7zm12 0h-2v2h2zm-4 4h-2v2h2zm-4 0H9v2h2zm-4 0H5v2h2zm0 4H5v2h2zm0 4H5v2h2zm4 4H9v-2h2zm8-16h-2V3h2zm-4 0h-2V3h2zm-4 0H9V3h2zM7 3v2H5V3zm12 10h-2v-2h2zm0 4h-2v-2h2z" /></svg></span>Finite State Machines (FSMs)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="OOP Icon"><path d="M17 7H7a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2a4 4 0 0 0-4-4zm-1 6H8v-2h8zM7 9h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" /></svg></span>Object-Oriented Programming (OOP)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="UI Icon"><path d="M20 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-9 18H4V4h7zm9 0h-7V4h7z" /></svg></span>UI Implementation (UGUI)</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Debugging Icon"><path d="M20 8h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2zm-8 8a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm0-6a2 2 0 1 0 2 2 2 2 0 0 0-2-2zM6 14h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2z" /></svg></span>Debugging & Profiling</li>
+                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Cloud Services Icon"><path d="M19.35 10.04A8.5 8.5 0 0 0 12 4a8.5 8.5 0 0 0-7.37 4.03 6 6 0 0 0-1.13 11.97h17a5 5 0 0 0 .5-9.96zM12 18a3 3 0 1 1 3-3 3 3 0 0 1-3 3z" /></svg></span>Unity Authentication & Services</li>
                         </ul>
                     </div>
                 </div>
@@ -1201,7 +1217,6 @@
     <script>
         // --- Theme Toggle ---
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body; // Keep reference if needed elsewhere
         const html = document.documentElement; // Target root element for theme class
 
         // Function to apply the theme class and update toggle state
@@ -1252,9 +1267,9 @@
                  link.classList.remove('active-nav');
              });
 
-             // MODIFIED: Prioritize Contact link if at the bottom of the page
+             // Prioritize Contact link if at the bottom of the page
              if (bottomOfPageReached && contactLink) {
-                  contactLink.classList.add('active-nav');
+                 contactLink.classList.add('active-nav');
              } else {
                  // Apply active class based on determined section
                  let activeLinkFound = false;
@@ -1266,7 +1281,7 @@
                      }
                  }
 
-                 // Fallback to 'about' if no section is active (e.g., at the very top) or if the found section has no link
+                 // Fallback to 'about' if no section is active or if the found section has no link
                  if (!activeLinkFound) {
                      document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
                  }
@@ -1307,10 +1322,10 @@
                 // Play video on hover (only when slide is active)
                 container.querySelectorAll('video').forEach(video => {
                     video.addEventListener('mouseenter', () => {
-                           // Only play if the parent figure is active
-                           if (video.closest('figure')?.classList.contains('active')) {
-                             video.play().catch(e => {/* Autoplay likely prevented */});
-                           }
+                         // Only play if the parent figure is active
+                         if (video.closest('figure')?.classList.contains('active')) {
+                          video.play().catch(e => {/* Autoplay likely prevented */});
+                         }
                     });
                     video.addEventListener('mouseleave', () => {
                         video.pause();
@@ -1411,7 +1426,7 @@
 
             // Attempt to play video if it's the active slide and the slideshow is hovered
             const activeVideo = slides[slideIndexes[slideshowId]]?.querySelector('video');
-            if (activeVideo && slideshow.matches(':hover')) {
+            if (activeVideo && (slideshow.matches(':hover') || slideshow.nextElementSibling?.matches(':hover'))) {
                  activeVideo.play().catch(e => {/* Autoplay likely prevented */});
             }
         }
@@ -1559,7 +1574,7 @@
                 }
                 // Optional: Remove 'visible' if element scrolls back up out of view
                 // else if (elementTop > windowHeight) {
-                //      el.classList.remove('visible');
+                //     el.classList.remove('visible');
                 // }
             });
         }
