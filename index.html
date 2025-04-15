@@ -747,9 +747,10 @@
         }
 
         #lightboxMediaContainer {
+            /* Removed max-width and max-height */
             width: 100%;
-            max-width: calc(90vw - 40px); /* Adjust for padding */
-            max-height: calc(90vh - 90px); /* Adjust for padding and caption */
+            /* max-width: calc(90vw - 40px); */ /* Removed */
+            /* max-height: calc(90vh - 90px); */ /* Removed */
             display: flex; /* Center media */
             justify-content: center;
             align-items: center;
@@ -759,9 +760,13 @@
 
         #lightboxVideo, #lightboxImage {
             display: none; /* Hide both initially */
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Ensure media fits */
+            /* Apply constraints and aspect ratio directly to media */
+            max-width: calc(90vw - 40px); /* Adjust for lightbox padding */
+            max-height: calc(90vh - 90px); /* Adjust for padding & caption */
+            aspect-ratio: 16 / 9; /* Enforce 16:9 ratio */
+            object-fit: contain; /* Ensure media fits without cropping */
+            width: auto; /* Allow flexible width */
+            height: auto; /* Allow flexible height */
             border-radius: 4px; /* Slight rounding */
         }
 
@@ -920,6 +925,11 @@
             }
             #lightboxPrev { left: 5px; } /* Bring controls inside on mobile */
             #lightboxNext { right: 5px; }
+            /* Adjust lightbox media constraints for smaller screens */
+             #lightboxVideo, #lightboxImage {
+                 max-width: calc(90vw - 20px); /* Less padding */
+                 max-height: calc(90vh - 80px); /* Less padding, more caption space */
+             }
         }
 
         @media (max-width: 600px) {
@@ -936,8 +946,13 @@
             .project-links a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
             footer { font-size: 0.8rem; }
             #lightboxContent { padding: 10px; padding-bottom: 40px; }
-            #lightboxMediaContainer { max-width: calc(90vw - 20px); max-height: calc(90vh - 70px); }
+            #lightboxMediaContainer { max-width: calc(90vw - 20px); max-height: calc(90vh - 70px); } /* Reverted mobile container sizing */
             #lightboxCaption { bottom: 10px; left: 10px; right: 10px; }
+             /* Further adjust lightbox media constraints for very small screens */
+             #lightboxVideo, #lightboxImage {
+                 max-width: calc(90vw - 20px);
+                 max-height: calc(90vh - 60px); /* Even less padding, more caption space */
+             }
         }
     </style>
 </head>
@@ -1668,4 +1683,3 @@
     </script>
 </body>
 </html>
-
