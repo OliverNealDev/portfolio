@@ -555,8 +555,17 @@
             .project-header h3 {
                 font-size: 1.2rem;
                 color: var(--text-color);
-                transition: color 0.3s ease;
+                /* Removed transition: color 0.3s ease; for instant gradient */
                 margin-bottom: 0; /* Remove default h3 margin */
+            }
+
+            /* NEW: Add gradient effect to project title on card hover */
+            .project-card:hover .project-header h3 {
+                 background: var(--main-gradient);
+                 -webkit-background-clip: text;
+                 background-clip: text;
+                 -webkit-text-fill-color: transparent;
+                 color: transparent; /* Fallback */
             }
 
             .project-header .project-date {
@@ -1152,12 +1161,27 @@
             <section id="future-projects" class="reveal">
                 <h2>In Development</h2>
                 <div class="project-grid">
-                    <div class="project-card" id="vr-multiplayer-fps"> <div class="slideshow-wrapper">
+                    <div class="project-card" id="vr-multiplayer-fps">
+                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="vrFpsSlideshow">
-                                <figure class="active"> <video muted playsinline loop poster="Project Media/VRMultiplayerFPS/Weapon HandlingPoster.png" onclick="openLightbox('vrFpsSlideshow', 0)"> <source src="Project Media/VRMultiplayerFPS/Weapon Handling.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">VR Weapon Handling</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/VRMultiplayerFPS/MultiplayerVRPoster.png" onclick="openLightbox('vrFpsSlideshow', 1)"> <source src="Project Media/VRMultiplayerFPS/MultiplayerVR.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption> </figure>
+                                <figure class="active">
+                                    <img src="https://placehold.co/1600x900/1a1a1a/666666?text=VR+Game+Placeholder+1" alt="VR Game - Placeholder 1" onclick="openLightbox('vrFpsSlideshow', 0)">
+                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="https://placehold.co/1600x900/1a1a1a/666666?text=VR+Game+Placeholder+2" alt="VR Game - Placeholder 2" onclick="openLightbox('vrFpsSlideshow', 1)">
+                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="https://placehold.co/1600x900/1a1a1a/666666?text=VR+Game+Placeholder+3" alt="VR Game - Placeholder 3" onclick="openLightbox('vrFpsSlideshow', 2)">
+                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
+                                </figure>
                             </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'vrFpsSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Placeholder 1</div> <span class="next" onclick="plusSlides(1,'vrFpsSlideshow',true)">&#10095;</span> </div>
+                            <div class="slideshow-info">
+                                <span class="prev" onclick="plusSlides(-1,'vrFpsSlideshow',true)">&#10094;</span>
+                                <div class="slideshow-caption">Placeholder 1</div>
+                                <span class="next" onclick="plusSlides(1,'vrFpsSlideshow',true)">&#10095;</span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <div class="project-header">
@@ -1170,6 +1194,39 @@
                                 </div>
                         </div>
                     </div>
+                    <div class="project-card" id="hells-champion">
+                        <div class="slideshow-wrapper">
+                           <div class="slideshow-container" id="hellsChampionSlideshow">
+                               <figure class="active">
+                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+1" alt="Hell's Champion - Placeholder 1" onclick="openLightbox('hellsChampionSlideshow', 0)">
+                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
+                               </figure>
+                               <figure>
+                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+2" alt="Hell's Champion - Placeholder 2" onclick="openLightbox('hellsChampionSlideshow', 1)">
+                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
+                               </figure>
+                               <figure>
+                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+3" alt="Hell's Champion - Placeholder 3" onclick="openLightbox('hellsChampionSlideshow', 2)">
+                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
+                               </figure>
+                           </div>
+                           <div class="slideshow-info">
+                               <span class="prev" onclick="plusSlides(-1,'hellsChampionSlideshow',true)">&#10094;</span>
+                               <div class="slideshow-caption">Placeholder 1</div>
+                               <span class="next" onclick="plusSlides(1,'hellsChampionSlideshow',true)">&#10095;</span>
+                           </div>
+                       </div>
+                       <div class="project-content">
+                           <div class="project-header">
+                               <h3>Hell's Champion (Codename)</h3>
+                               <span class="project-date">Demo ETA Sep 2025</span>
+                           </div>
+                           <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
+                           <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
+                           <div class="project-links">
+                               </div>
+                       </div>
+                   </div>
                 </div>
             </section>
 
@@ -1344,7 +1401,7 @@
                          }
                     });
                     video.addEventListener('mouseleave', () => {
-                        video.pause();
+                         video.pause();
                     });
                 });
 
@@ -1611,3 +1668,4 @@
     </script>
 </body>
 </html>
+
