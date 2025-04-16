@@ -109,7 +109,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: nowrap;
+            flex-wrap: nowrap; /* Prevent wrapping on large screens */
         }
 
         .logo-and-icons {
@@ -162,19 +162,19 @@
 
 
         nav {
-            margin-left: auto;
-            margin-right: 1rem;
-            flex-grow: 1;
-            text-align: right;
+            margin-left: auto; /* Pushes nav right */
+            margin-right: 1rem; /* Space between nav and toggle */
+            /* flex-grow: 1; */ /* Removed flex-grow to prevent pushing toggle too far */
+            text-align: right; /* Align links right within nav */
         }
 
             nav ul {
                 list-style: none;
-                display: inline-flex;
+                display: inline-flex; /* Keep links inline */
                 gap: 1.2rem;
                 align-items: center;
-                justify-content: flex-end;
-                flex-wrap: nowrap;
+                justify-content: flex-end; /* Align links to the end */
+                flex-wrap: nowrap; /* Prevent nav links wrapping on large screens */
                 padding: 0;
                 margin: 0;
             }
@@ -198,11 +198,13 @@
                 }
 
         .theme-toggle {
-            margin-left: 0; /* Adjusted from original */
-            position: relative;
-            top: 0; /* Adjusted from original */
-            flex-shrink: 0;
-            margin-top: 0; /* Ensure no extra top margin */
+            /* margin-left: 0; */ /* Removed, spacing handled by nav margin */
+            /* position: relative; */ /* Removed */
+            /* top: 0; */ /* Removed */
+            flex-shrink: 0; /* Prevent toggle from shrinking */
+            /* margin-top: 0; */ /* Ensure no extra top margin */
+            display: flex; /* Added to help center the input if needed */
+            align-items: center; /* Vertically center the input */
         }
 
         .theme-checkbox {
@@ -221,6 +223,7 @@
             cursor: pointer;
             font-size: var(--toggle-size);
             border: 1px solid var(--border-color); /* Add subtle border */
+            display: block; /* Ensure it takes up space */
         }
 
             .theme-checkbox::before {
@@ -913,31 +916,44 @@
                 grid-template-columns: 1fr; /* Single column */
             }
             .nav-container {
-                flex-direction: column; /* Stack nav items */
-                align-items: flex-start; /* Align items left */
-                gap: 0.5rem;
+                flex-direction: row; /* Keep row layout */
+                flex-wrap: wrap; /* Allow wrapping */
+                align-items: center; /* Vertically center items */
+                gap: 0.5rem 1rem; /* Row gap, Column gap */
+                justify-content: space-between; /* Space out items */
+            }
+            .logo-and-icons {
+                /* Takes natural width */
+                /* Order can be adjusted if needed */
             }
             nav {
-                margin-left: 0;
-                margin-right: 0;
-                text-align: left;
-                width: 100%; /* Full width nav */
+                margin-left: 0; /* Reset margin */
+                margin-right: 0; /* Reset margin */
+                text-align: left; /* Align links left */
+                width: 100%; /* Allow nav to take full width if it wraps */
+                order: 3; /* Move nav below logo/icons and toggle on wrap */
+                flex-basis: 100%; /* Ensure it takes full width when wrapping */
             }
             nav ul {
                 justify-content: flex-start; /* Align links left */
                 gap: 0.8rem; /* Reduce gap */
                 flex-wrap: wrap; /* Allow nav links to wrap */
+                /* No need for inline-flex if nav is full width */
+                display: flex;
             }
             .theme-toggle {
-                position: absolute; /* Position toggle top right */
-                top: 0.75rem;
-                right: 5%; /* Align with container padding */
+                /* Removed absolute positioning */
+                /* align-self: center; */ /* Center vertically within its flex line */
+                /* margin-left: auto; */ /* Push toggle to the right if needed, handled by space-between on container */
+                 order: 2; /* Place toggle after logo/icons but before nav when wrapping */
             }
             main {
-                padding-top: 120px; /* Increase padding for taller header */
+                 /* Adjust padding based on potential wrapped header height */
+                 /* This might need dynamic calculation or a larger fixed value */
+                 padding-top: 100px; /* Increased padding slightly */
             }
             section {
-                scroll-margin-top: 120px; /* Adjust scroll margin */
+                 scroll-margin-top: 100px; /* Adjust scroll margin */
             }
             .about-container {
                 flex-direction: column; /* Stack image and text */
@@ -974,12 +990,25 @@
             .project-links a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
             footer { font-size: 0.8rem; }
             #lightboxContent { padding: 10px; padding-bottom: 40px; }
-            #lightboxMediaContainer { max-width: calc(90vw - 20px); max-height: calc(90vh - 70px); } /* Reverted mobile container sizing */
+            #lightboxMediaContainer { /* Removed container sizing, applied to media directly */ }
             #lightboxCaption { bottom: 10px; left: 10px; right: 10px; }
              /* Further adjust lightbox media constraints for very small screens */
              #lightboxVideo, #lightboxImage {
                  max-width: calc(90vw - 20px);
                  max-height: calc(90vh - 60px); /* Even less padding, more caption space */
+             }
+             /* Adjust nav further if needed on very small screens */
+             .nav-container {
+                 gap: 0.5rem; /* Reduce gap slightly */
+             }
+             nav ul {
+                 gap: 0.5rem; /* Reduce nav link gap */
+             }
+             main {
+                 padding-top: 120px; /* May need more padding if header wraps significantly */
+             }
+             section {
+                 scroll-margin-top: 120px;
              }
         }
     </style>
@@ -1272,7 +1301,7 @@
                            <div class="project-links">
                                </div>
                        </div>
-                   </div>
+                    </div>
                 </div>
             </section>
 
@@ -1365,21 +1394,44 @@
         // --- Active Navigation Link Highlighting ---
         const navLinks = document.querySelectorAll('nav a');
         const sections = document.querySelectorAll('main section'); // Select sections within main
-        const headerHeight = document.querySelector('header')?.offsetHeight || 80; // Get header height or fallback
+        const header = document.querySelector('header'); // Cache header element
+        let headerHeight = header?.offsetHeight || 80; // Initial header height
         const contactLink = document.querySelector('nav a[href="#contact"]'); // Cache contact link selector
+
+        // Function to update header height (useful if header height changes dynamically)
+        function updateHeaderHeight() {
+            headerHeight = header?.offsetHeight || 80;
+        }
+
+        // Update header height on resize or orientation change
+        window.addEventListener('resize', updateHeaderHeight);
+        window.addEventListener('orientationchange', updateHeaderHeight);
+
 
         function changeActiveLink() {
             let currentSectionId = '';
             const scrollPosition = window.scrollY;
-            const scrollPositionWithOffset = scrollPosition + headerHeight + 20; // Offset for activation point
+            // Use the dynamically updated headerHeight
+            const scrollPositionWithOffset = scrollPosition + headerHeight + 20;
             const bottomOfPageReached = (window.innerHeight + scrollPosition >= document.documentElement.scrollHeight - 50); // Check if near bottom (within 50px)
 
             // Determine current section based on scroll position
             sections.forEach(section => {
-                if (scrollPositionWithOffset >= section.offsetTop) {
-                    currentSectionId = section.id;
+                // Ensure section has an ID and is visible enough
+                if (section.id && section.offsetTop <= scrollPositionWithOffset) {
+                     // Check if the section bottom is also past the offset point
+                     // This prevents activating sections that are mostly scrolled past
+                     if ((section.offsetTop + section.offsetHeight) > scrollPositionWithOffset) {
+                        currentSectionId = section.id;
+                     }
                 }
             });
+
+             // If scrolled almost to the top, default to 'about'
+             if (scrollPosition < headerHeight) {
+                 currentSectionId = 'about';
+             }
+
 
              // Remove active class from all links first
              navLinks.forEach((link) => {
@@ -1388,6 +1440,8 @@
 
              // Prioritize Contact link if at the bottom of the page
              if (bottomOfPageReached && contactLink) {
+                 // Deactivate other links if contact is forced active
+                 navLinks.forEach(link => { if(link !== contactLink) link.classList.remove('active-nav'); });
                  contactLink.classList.add('active-nav');
              } else {
                  // Apply active class based on determined section
@@ -1401,7 +1455,7 @@
                  }
 
                  // Fallback to 'about' if no section is active or if the found section has no link
-                 if (!activeLinkFound) {
+                 if (!activeLinkFound && !bottomOfPageReached) { // Avoid fallback if bottom reached (handled above)
                      document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
                  }
              }
@@ -1700,6 +1754,7 @@
 
         // --- Initializations ---
         document.addEventListener('DOMContentLoaded', () => {
+            updateHeaderHeight(); // Get initial header height
             initializeSlideshows(); // Set up all slideshows
             revealSections(); // Run reveal check on load
             changeActiveLink(); // Set initial active nav link
