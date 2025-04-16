@@ -32,6 +32,7 @@
             --shadow-color: rgba(0, 0, 0, 0.5); /* Shadow color for dark */
             --text-secondary-color: #aaa; /* Added for captions etc */
             --project-link-icon-filter: none; /* Default no filter for project link icons */
+            --link-icon-color: #e0e0e0; /* NEW: Color for SVG icons in project links */
         }
         /* Light Theme */
         .light-theme {
@@ -51,6 +52,7 @@
             --shadow-color: rgba(0, 0, 0, 0.1); /* Shadow color for light */
             --text-secondary-color: #555; /* Added for captions etc */
             --project-link-icon-filter: none; /* Default no filter */
+            --link-icon-color: #333333; /* NEW: Color for SVG icons in project links */
         }
         /* RESET */
         * {
@@ -623,13 +625,17 @@
         .project-links {
             flex-shrink: 0;
             margin-top: 0.5rem; /* Add some space above links */
+            /* NEW: Allow wrapping for buttons */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* Add gap between buttons */
         }
 
             .project-links a {
                 display: inline-flex; /* Align icon and text */
                 align-items: center;
-                margin-right: 8px;
-                margin-top: 5px; /* Space between wrapped buttons */
+                /* margin-right: 8px; REMOVED - use gap instead */
+                /* margin-top: 5px; REMOVED - use gap instead */
                 padding: 0.4rem 0.8rem;
                 background: var(--button-bg);
                 color: var(--button-text-color);
@@ -645,18 +651,31 @@
                     border-color: var(--accent-color);
                 }
 
-                .project-links a img {
+                /* Style for ALL icons within project links (IMG and SVG) */
+                .project-links a img,
+                .project-links a svg {
                     width: 16px;
                     height: 16px; /* Ensure consistent size */
                     object-fit: contain;
                     margin-right: 6px;
                     vertical-align: middle; /* Should be handled by flex */
-                    filter: var(--project-link-icon-filter, none); /* Apply theme-based filter */
-                    transition: filter 0.3s ease; /* Add transition for filter */
+                    transition: filter 0.3s ease, fill 0.3s ease; /* Add fill transition */
                 }
+
+                /* Specific style for IMG icons */
+                .project-links a img {
+                     filter: var(--project-link-icon-filter, none); /* Apply theme-based filter */
+                }
+
+                /* Specific style for SVG icons */
+                .project-links a svg {
+                     fill: var(--link-icon-color); /* Use new variable for SVG fill */
+                }
+
+
                 /* Invert github icon in light theme for project links */
                 .light-theme .project-links a.github img {
-                    --project-link-icon-filter: invert(1);
+                     --project-link-icon-filter: invert(1);
                 }
 
 
@@ -1126,6 +1145,10 @@
                             <div class="project-links">
                                 <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                                 <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Play in browser </a>
+                                <a href="unicellular-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1146,6 +1169,10 @@
                             <div class="project-links">
                                 <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                                 <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Play in browser </a>
+                                <a href="pinnable-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1164,6 +1191,10 @@
                             <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                             <div class="project-links">
                                 <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
+                                <a href="tank-game-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1181,6 +1212,10 @@
                             <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                             <div class="project-links">
                                 <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
+                                <a href="shooter-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1205,10 +1240,14 @@
                         </div>
                         <div class="project-content">
                             <div class="project-header"> <h3>Candy Corporate</h3> <span class="project-date">April 2024</span> </div>
-                            <p>A game inspired by Lethal Company focused on level design and tile creation.</p>
+                            <p>A game inspired by Lethal Company focused on level design and tile creation. <strong>My Role: [Describe your specific contributions here!]</strong></p>
                             <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
                             <div class="project-links">
                                 <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Itch.io </a>
+                                <a href="candy-corporate-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1223,10 +1262,14 @@
                         </div>
                         <div class="project-content">
                             <div class="project-header"> <h3>Tides of the Moon</h3> <span class="project-date">Jan 2025</span> </div>
-                            <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms.</p>
+                            <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms. <strong>My Role: [Describe your specific contributions here!]</strong></p>
                             <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
                             <div class="project-links">
                                 <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
+                                <a href="tides-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1266,7 +1309,11 @@
                             <p>Currently developing a small VR game entailing the exploration of a haunted mansion, built with Unity's XR Interaction Toolkit.</p>
                             <p class="tech">Technologies: Unity 3D, VR (XR Interaction Toolkit)</p>
                             <div class="project-links">
-                                </div>
+                                 <a href="vr-game-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="project-card" id="hells-champion">
@@ -1299,7 +1346,11 @@
                            <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
                            <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
                            <div class="project-links">
-                               </div>
+                                <a href="hells-champion-details.html" target="_blank" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    Learn More
+                                </a>
+                           </div>
                        </div>
                     </div>
                 </div>
@@ -1422,7 +1473,7 @@
                      // Check if the section bottom is also past the offset point
                      // This prevents activating sections that are mostly scrolled past
                      if ((section.offsetTop + section.offsetHeight) > scrollPositionWithOffset) {
-                        currentSectionId = section.id;
+                         currentSectionId = section.id;
                      }
                 }
             });
