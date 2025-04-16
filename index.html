@@ -32,9 +32,6 @@
             --shadow-color: rgba(0, 0, 0, 0.5); /* Shadow color for dark */
             --text-secondary-color: #aaa; /* Added for captions etc */
             --project-link-icon-filter: none; /* Default no filter for project link icons */
-            --hero-overlay-bg: rgba(18, 18, 18, 0.6); /* Dark overlay for hero */
-            --hero-text-color: #ffffff;
-            --hero-text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
         /* Light Theme */
         .light-theme {
@@ -54,9 +51,6 @@
             --shadow-color: rgba(0, 0, 0, 0.1); /* Shadow color for light */
             --text-secondary-color: #555; /* Added for captions etc */
             --project-link-icon-filter: none; /* Default no filter */
-            --hero-overlay-bg: rgba(255, 255, 255, 0.5); /* Light overlay for hero */
-            --hero-text-color: #111111;
-            --hero-text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
         /* RESET */
         * {
@@ -92,8 +86,6 @@
             width: 100%;
             background-color: var(--bg-color);
             transition: background-color 0.3s ease;
-            position: relative; /* Needed for reveal elements */
-            z-index: 1; /* Ensure content is above hero background if overlapping */
         }
 
         /* Header & Navigation */
@@ -292,102 +284,17 @@
                 object-fit: contain;
             }
 
-        /* --- Hero Section --- */
-        #hero {
-            height: 100vh; /* Full viewport height */
-            position: relative; /* For positioning children */
-            overflow: hidden; /* Hide overflowing video */
-            display: flex;
-            align-items: center; /* Vertically center content */
-            justify-content: center; /* Horizontally center content */
-            text-align: center;
-            background-color: var(--bg-color); /* Fallback background */
-            padding-top: 80px; /* Account for fixed header height */
-            box-sizing: content-box; /* Padding adds to height */
-            margin-bottom: -80px; /* Pull following content up */
-        }
-
-        .hero-video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh; /* Cover full viewport height */
-            z-index: -1; /* Behind content */
-        }
-
-            .hero-video-background video {
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* Cover the area, potentially cropping */
-                filter: blur(4px) brightness(0.6); /* Adjust blur and brightness */
-                transform: scale(1.05); /* Slightly zoom to hide edges from blur */
-            }
-
-        .hero-content {
-            position: relative; /* Ensure it's above the pseudo-element overlay */
-            z-index: 1;
-            color: var(--hero-text-color);
-            max-width: 800px; /* Limit content width */
-            padding: 2rem;
-            /* Add a subtle overlay using a pseudo-element on the content */
-            background-color: var(--hero-overlay-bg); /* Use theme variable */
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease;
-        }
-
-            .hero-content h1 {
-                font-size: 2.8rem; /* Larger hero title */
-                margin-bottom: 0.5rem;
-                font-weight: 700;
-                color: var(--hero-text-color); /* Use theme variable */
-                text-shadow: var(--hero-text-shadow); /* Use theme variable */
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-                margin-bottom: 1.5rem;
-                color: var(--hero-text-color); /* Use theme variable */
-                opacity: 0.9;
-                text-shadow: var(--hero-text-shadow); /* Use theme variable */
-            }
-            /* Style for a potential button in hero */
-            .hero-content .hero-button {
-                display: inline-block;
-                padding: 0.8rem 1.8rem;
-                background: var(--main-gradient);
-                color: var(--button-accent-text-color);
-                text-decoration: none;
-                font-weight: bold;
-                border-radius: 6px;
-                border: none;
-                transition: filter 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-                cursor: pointer;
-                box-shadow: 0 2px 4px var(--shadow-color);
-            }
-            .hero-content .hero-button:hover {
-                 filter: brightness(1.15);
-                 transform: translateY(-2px);
-                 box-shadow: 0 4px 8px var(--shadow-color);
-            }
-
 
         /* Main Content */
         main {
             width: 90%;
             max-width: 1100px;
             margin: 0 auto;
-            /* padding-top: 80px; /* REMOVED - Handled by hero section margin/padding */
-            position: relative; /* Ensure main content is correctly layered */
-            z-index: 2; /* Above hero video, below header */
-            background-color: var(--bg-color); /* Ensure main has background */
-            padding-top: 3rem; /* Add space between hero and first section */
+            padding-top: 80px; /* Ensure content starts below fixed header */
         }
 
         #about {
            /* No specific styles needed */
-           padding-top: 0; /* Remove default padding if it's the first section */
         }
 
         .about-container {
@@ -503,11 +410,6 @@
             padding-bottom: 0.5rem;
             text-align: left; /* Align section titles left */
         }
-        /* Remove top margin for the very first section title after hero */
-        main > section:first-of-type h2 {
-             margin-top: 0;
-        }
-
 
         /* Skills Section */
         #skills {
@@ -989,9 +891,6 @@
             border-top: 1px solid var(--border-color);
             color: var(--text-secondary-color);
             font-size: 0.9rem;
-            position: relative; /* Ensure footer is above hero bg */
-            z-index: 2;
-            background-color: var(--bg-color); /* Ensure footer has bg */
         }
 
         /* Reveal on Scroll */
@@ -1009,30 +908,10 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-             /* Hero Adjustments */
-            #hero {
-                padding-top: 60px; /* Adjust for potentially smaller header */
-                margin-bottom: -60px;
-                height: 90vh; /* Slightly shorter on mobile */
-            }
-             .hero-video-background {
-                 height: 90vh;
-             }
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            .hero-content p {
-                font-size: 1rem;
-            }
-            main {
-                padding-top: 2rem; /* Reduce top padding */
-            }
-
-            /* Project Grid */
+            /* Adjust project card grid for single column */
             .project-grid {
                 grid-template-columns: 1fr; /* Single column */
             }
-            /* Header/Nav */
             .nav-container {
                 flex-direction: column; /* Stack nav items */
                 align-items: flex-start; /* Align items left */
@@ -1054,11 +933,12 @@
                 top: 0.75rem;
                 right: 5%; /* Align with container padding */
             }
-            /* Adjust scroll margin for taller mobile header */
-            section {
-                scroll-margin-top: 120px;
+            main {
+                padding-top: 120px; /* Increase padding for taller header */
             }
-            /* About Section */
+            section {
+                scroll-margin-top: 120px; /* Adjust scroll margin */
+            }
             .about-container {
                 flex-direction: column; /* Stack image and text */
                 align-items: center; /* Re-center items when stacked */
@@ -1071,49 +951,36 @@
              .about-img {
                  margin-top: 0; /* Reset top margin when stacked */
              }
-            /* Lightbox */
             #lightboxPrev { left: 5px; } /* Bring controls inside on mobile */
             #lightboxNext { right: 5px; }
-             /* Adjust lightbox media constraints for smaller screens */
-              #lightboxVideo, #lightboxImage {
-                  max-width: calc(90vw - 20px); /* Less padding */
-                  max-height: calc(90vh - 80px); /* Less padding, more caption space */
-              }
+            /* Adjust lightbox media constraints for smaller screens */
+             #lightboxVideo, #lightboxImage {
+                 max-width: calc(90vw - 20px); /* Less padding */
+                 max-height: calc(90vh - 80px); /* Less padding, more caption space */
+             }
         }
 
         @media (max-width: 600px) {
-            /* Hero Adjustments */
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
-            .hero-content p {
-                font-size: 0.9rem;
-            }
-            /* Skills */
             .skills-container {
                 grid-template-columns: 1fr; /* Single column skills */
             }
-            /* General Font Sizes */
             .about-text h1 { font-size: 1.8rem; }
             section h2 { font-size: 1.6rem; }
-            /* Projects */
             .project-grid {
                 grid-template-columns: 1fr; /* Ensure single column */
                 gap: 1rem; /* Reduce gap */
             }
             .project-content { padding: 1rem; } /* Reduce card padding */
             .project-links a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
-            /* Footer */
             footer { font-size: 0.8rem; }
-            /* Lightbox */
             #lightboxContent { padding: 10px; padding-bottom: 40px; }
             #lightboxMediaContainer { max-width: calc(90vw - 20px); max-height: calc(90vh - 70px); } /* Reverted mobile container sizing */
             #lightboxCaption { bottom: 10px; left: 10px; right: 10px; }
              /* Further adjust lightbox media constraints for very small screens */
-              #lightboxVideo, #lightboxImage {
-                  max-width: calc(90vw - 20px);
-                  max-height: calc(90vh - 60px); /* Even less padding, more caption space */
-              }
+             #lightboxVideo, #lightboxImage {
+                 max-width: calc(90vw - 20px);
+                 max-height: calc(90vh - 60px); /* Even less padding, more caption space */
+             }
         }
     </style>
 </head>
@@ -1144,17 +1011,6 @@
             </div>
         </div>
     </header>
-
-    <section id="hero">
-        <div class="hero-video-background">
-            <video id="heroVideo" autoplay muted loop playsinline>
-                </video>
-        </div>
-        <div class="hero-content">
-            <h1>Oliver Neal</h1>
-            <p>Passionate Games Developer | Unity & C# Specialist</p>
-            </div>
-    </section>
 
     <div id="solidContent">
         <main>
@@ -1387,36 +1243,36 @@
                     <div class="project-card" id="hells-champion">
                         <div class="slideshow-wrapper">
                            <div class="slideshow-container" id="hellsChampionSlideshow">
-                                <figure class="active">
-                                    <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+1" alt="Hell's Champion - Placeholder 1" onclick="openLightbox('hellsChampionSlideshow', 0)">
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+2" alt="Hell's Champion - Placeholder 2" onclick="openLightbox('hellsChampionSlideshow', 1)">
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+3" alt="Hell's Champion - Placeholder 3" onclick="openLightbox('hellsChampionSlideshow', 2)">
-                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
-                                </figure>
-                            </div>
+                               <figure class="active">
+                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+1" alt="Hell's Champion - Placeholder 1" onclick="openLightbox('hellsChampionSlideshow', 0)">
+                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
+                               </figure>
+                               <figure>
+                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+2" alt="Hell's Champion - Placeholder 2" onclick="openLightbox('hellsChampionSlideshow', 1)">
+                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
+                               </figure>
+                               <figure>
+                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+3" alt="Hell's Champion - Placeholder 3" onclick="openLightbox('hellsChampionSlideshow', 2)">
+                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
+                               </figure>
+                           </div>
                            <div class="slideshow-info">
-                                <span class="prev" onclick="plusSlides(-1,'hellsChampionSlideshow',true)">&#10094;</span>
-                                <div class="slideshow-caption">Placeholder 1</div>
-                                <span class="next" onclick="plusSlides(1,'hellsChampionSlideshow',true)">&#10095;</span>
-                            </div>
-                        </div>
+                               <span class="prev" onclick="plusSlides(-1,'hellsChampionSlideshow',true)">&#10094;</span>
+                               <div class="slideshow-caption">Placeholder 1</div>
+                               <span class="next" onclick="plusSlides(1,'hellsChampionSlideshow',true)">&#10095;</span>
+                           </div>
+                       </div>
                        <div class="project-content">
-                            <div class="project-header">
-                                <h3>Hell's Champion (Codename)</h3>
-                                <span class="project-date">Demo ETA Sep 2025</span>
-                            </div>
-                            <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
-                            <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
-                            <div class="project-links">
-                                </div>
-                        </div>
-                    </div>
+                           <div class="project-header">
+                               <h3>Hell's Champion (Codename)</h3>
+                               <span class="project-date">Demo ETA Sep 2025</span>
+                           </div>
+                           <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
+                           <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
+                           <div class="project-links">
+                               </div>
+                       </div>
+                   </div>
                 </div>
             </section>
 
@@ -1508,23 +1364,21 @@
 
         // --- Active Navigation Link Highlighting ---
         const navLinks = document.querySelectorAll('nav a');
-        const sections = document.querySelectorAll('#solidContent main section'); // Select sections within main content area only
+        const sections = document.querySelectorAll('main section'); // Select sections within main
         const headerHeight = document.querySelector('header')?.offsetHeight || 80; // Get header height or fallback
         const contactLink = document.querySelector('nav a[href="#contact"]'); // Cache contact link selector
 
         function changeActiveLink() {
             let currentSectionId = '';
             const scrollPosition = window.scrollY;
-            // Adjust offset slightly higher to activate sooner when scrolling up
-            const scrollPositionWithOffset = scrollPosition + headerHeight + 50;
-            const bottomOfPageReached = (window.innerHeight + scrollPosition >= document.documentElement.scrollHeight - 50); // Check if near bottom
+            const scrollPositionWithOffset = scrollPosition + headerHeight + 20; // Offset for activation point
+            const bottomOfPageReached = (window.innerHeight + scrollPosition >= document.documentElement.scrollHeight - 50); // Check if near bottom (within 50px)
 
-            // Determine current section based on scroll position relative to main content sections
+            // Determine current section based on scroll position
             sections.forEach(section => {
-                // Ensure section has an ID and is visible enough
-                 if (section.id && scrollPositionWithOffset >= section.offsetTop ) {
+                if (scrollPositionWithOffset >= section.offsetTop) {
                     currentSectionId = section.id;
-                 }
+                }
             });
 
              // Remove active class from all links first
@@ -1546,15 +1400,9 @@
                      }
                  }
 
-                 // Fallback to 'about' if scrolled near top or no section active
-                 if (!activeLinkFound && scrollPosition < (document.getElementById('about')?.offsetTop || window.innerHeight) - headerHeight - 50) {
+                 // Fallback to 'about' if no section is active or if the found section has no link
+                 if (!activeLinkFound) {
                      document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
-                 } else if (!activeLinkFound) {
-                     // If scrolled past 'about' but no other section is active yet, keep 'about' active
-                     const aboutLink = document.querySelector('nav a[href="#about"]');
-                     if (aboutLink && scrollPosition >= (document.getElementById('about')?.offsetTop || 0) - headerHeight - 50) {
-                        aboutLink.classList.add('active-nav');
-                     }
                  }
              }
         }
@@ -1592,9 +1440,6 @@
 
                 // Play video on hover (only when slide is active)
                 container.querySelectorAll('video').forEach(video => {
-                    // Ensure videos in slideshows are initially muted and have playsinline
-                    video.muted = true;
-                    video.playsInline = true;
                     video.addEventListener('mouseenter', () => {
                          // Only play if the parent figure is active
                          if (video.closest('figure')?.classList.contains('active')) {
@@ -1853,62 +1698,9 @@
             });
         }
 
-        // --- Hero Video Cycling ---
-        const heroVideoElement = document.getElementById('heroVideo');
-        let projectVideoSources = [];
-        let currentHeroVideoIndex = -1;
-
-        function collectVideoSources() {
-            // Find all video sources within project slideshow figures
-            const sources = document.querySelectorAll('.project-card .slideshow-container figure video source[type="video/mp4"]');
-            projectVideoSources = Array.from(sources).map(source => source.src);
-            // Remove duplicates just in case
-            projectVideoSources = [...new Set(projectVideoSources)];
-            // console.log("Collected video sources:", projectVideoSources); // Debugging
-        }
-
-        function playNextHeroVideo() {
-            if (!heroVideoElement || projectVideoSources.length === 0) {
-                console.warn("Hero video element or sources not found.");
-                return; // Exit if no video element or sources
-            }
-
-            let nextIndex;
-            if (projectVideoSources.length === 1) {
-                nextIndex = 0; // Only one video, just loop it
-            } else {
-                // Select a random index different from the current one
-                do {
-                    nextIndex = Math.floor(Math.random() * projectVideoSources.length);
-                } while (nextIndex === currentHeroVideoIndex);
-            }
-
-
-            currentHeroVideoIndex = nextIndex;
-            const nextVideoSrc = projectVideoSources[currentHeroVideoIndex];
-
-            // console.log("Playing next hero video:", nextVideoSrc); // Debugging
-
-            heroVideoElement.src = nextVideoSrc;
-            heroVideoElement.playbackRate = 1.5; // Set playback speed
-            heroVideoElement.load(); // Load the new source
-            heroVideoElement.play().catch(error => {
-                console.error("Hero video autoplay failed:", error);
-                // Handle potential autoplay restrictions, maybe show a static image?
-            });
-        }
-
-        // Add event listener for when the hero video ends
-        if (heroVideoElement) {
-            heroVideoElement.addEventListener('ended', playNextHeroVideo);
-        }
-
-
         // --- Initializations ---
         document.addEventListener('DOMContentLoaded', () => {
-            collectVideoSources(); // Find all project videos
-            playNextHeroVideo(); // Start the first random hero video
-            initializeSlideshows(); // Set up all project slideshows
+            initializeSlideshows(); // Set up all slideshows
             revealSections(); // Run reveal check on load
             changeActiveLink(); // Set initial active nav link
         });
