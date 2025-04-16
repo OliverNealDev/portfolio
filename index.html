@@ -33,6 +33,12 @@
             --text-secondary-color: #aaa; /* Added for captions etc */
             --project-link-icon-filter: none; /* Default no filter for project link icons */
             --link-icon-color: #e0e0e0; /* NEW: Color for SVG icons in project links */
+            --message-box-bg: #2a2a2a;
+            --message-box-border: #555;
+            --message-box-text: #e0e0e0;
+            --message-box-button-bg: #444;
+            --message-box-button-hover-bg: #666;
+            --message-box-overlay-bg: rgba(0, 0, 0, 0.7);
         }
         /* Light Theme */
         .light-theme {
@@ -53,6 +59,12 @@
             --text-secondary-color: #555; /* Added for captions etc */
             --project-link-icon-filter: none; /* Default no filter */
             --link-icon-color: #333333; /* NEW: Color for SVG icons in project links */
+            --message-box-bg: #ffffff;
+            --message-box-border: #ccc;
+            --message-box-text: #333333;
+            --message-box-button-bg: #eee;
+            --message-box-button-hover-bg: #ddd;
+            --message-box-overlay-bg: rgba(0, 0, 0, 0.5);
         }
         /* RESET */
         * {
@@ -631,7 +643,8 @@
             gap: 8px; /* Add gap between buttons */
         }
 
-            .project-links a {
+            /* Style for all project link buttons (including 'Learn More') */
+            .project-links a, .project-links button.details {
                 display: inline-flex; /* Align icon and text */
                 align-items: center;
                 /* margin-right: 8px; REMOVED - use gap instead */
@@ -644,16 +657,19 @@
                 font-size: 0.85rem;
                 transition: background 0.2s ease, filter 0.3s ease, border-color 0.2s ease;
                 border: 1px solid transparent;
+                cursor: pointer; /* Ensure cursor changes for buttons */
+                font-family: inherit; /* Inherit font */
             }
 
-                .project-links a:hover {
+                .project-links a:hover, .project-links button.details:hover {
                     background: var(--button-hover-bg);
                     border-color: var(--accent-color);
                 }
 
                 /* Style for ALL icons within project links (IMG and SVG) */
                 .project-links a img,
-                .project-links a svg {
+                .project-links a svg,
+                .project-links button.details svg { /* Include button SVG */
                     width: 16px;
                     height: 16px; /* Ensure consistent size */
                     object-fit: contain;
@@ -668,7 +684,8 @@
                 }
 
                 /* Specific style for SVG icons */
-                .project-links a svg {
+                .project-links a svg,
+                .project-links button.details svg { /* Include button SVG */
                      fill: var(--link-icon-color); /* Use new variable for SVG fill */
                 }
 
@@ -928,6 +945,62 @@
                 transform: translateY(0);
             }
 
+        /* Custom Message Box Styles */
+        .custom-message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--message-box-overlay-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100; /* Above lightbox */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+        .custom-message-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease;
+        }
+        .custom-message-box {
+            background-color: var(--message-box-bg);
+            color: var(--message-box-text);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--message-box-border);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+         .custom-message-overlay.visible .custom-message-box {
+            transform: scale(1.0);
+        }
+        .custom-message-box p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .custom-message-box button {
+            padding: 8px 20px;
+            background-color: var(--message-box-button-bg);
+            color: var(--message-box-text);
+            border: 1px solid var(--message-box-border);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        .custom-message-box button:hover {
+            background-color: var(--message-box-button-hover-bg);
+        }
+
+
         /* Responsive */
         @media (max-width: 768px) {
             /* Adjust project card grid for single column */
@@ -1006,7 +1079,7 @@
                 gap: 1rem; /* Reduce gap */
             }
             .project-content { padding: 1rem; } /* Reduce card padding */
-            .project-links a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+            .project-links a, .project-links button.details { padding: 0.3rem 0.6rem; font-size: 0.8rem; } /* Adjust button padding */
             footer { font-size: 0.8rem; }
             #lightboxContent { padding: 10px; padding-bottom: 40px; }
             #lightboxMediaContainer { /* Removed container sizing, applied to media directly */ }
@@ -1028,6 +1101,9 @@
              }
              section {
                  scroll-margin-top: 120px;
+             }
+             .custom-message-box {
+                width: 90%; /* Make message box wider on small screens */
              }
         }
     </style>
@@ -1145,10 +1221,10 @@
                             <div class="project-links">
                                 <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                                 <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Play in browser </a>
-                                <a href="unicellular-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('Unicellular')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1169,10 +1245,10 @@
                             <div class="project-links">
                                 <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
                                 <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Play in browser </a>
-                                <a href="pinnable-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('Pinnable')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1191,10 +1267,10 @@
                             <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                             <div class="project-links">
                                 <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
-                                <a href="tank-game-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('3D Netcode Tank Game')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1212,10 +1288,10 @@
                             <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                             <div class="project-links">
                                 <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
-                                <a href="shooter-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('2D Netcode Shooter')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1244,10 +1320,10 @@
                             <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
                             <div class="project-links">
                                 <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'"/> Itch.io </a>
-                                <a href="candy-corporate-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('Candy Corporate')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1266,10 +1342,10 @@
                             <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
                             <div class="project-links">
                                 <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'"/> Github </a>
-                                <a href="tides-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('Tides of the Moon')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1309,10 +1385,10 @@
                             <p>Currently developing a small VR game entailing the exploration of a haunted mansion, built with Unity's XR Interaction Toolkit.</p>
                             <p class="tech">Technologies: Unity 3D, VR (XR Interaction Toolkit)</p>
                             <div class="project-links">
-                                 <a href="vr-game-details.html" target="_blank" class="details">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                                    Learn More
-                                </a>
+                                 <button class="details" onclick="showProjectDetailsMessage('Untitled VR Game')">
+                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                     Learn More
+                                 </button>
                             </div>
                         </div>
                     </div>
@@ -1346,10 +1422,10 @@
                            <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
                            <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
                            <div class="project-links">
-                                <a href="hells-champion-details.html" target="_blank" class="details">
+                                <button class="details" onclick="showProjectDetailsMessage('Hell\'s Champion')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     Learn More
-                                </a>
+                                </button>
                            </div>
                        </div>
                     </div>
@@ -1410,6 +1486,13 @@
                 <img id="lightboxImage" alt="Lightbox Image" style="display: none;">
             </div>
             <div id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <div id="customMessageOverlay" class="custom-message-overlay">
+        <div id="customMessageBox" class="custom-message-box">
+            <p id="customMessageText"></p>
+            <button id="customMessageCloseBtn">OK</button>
         </div>
     </div>
 
@@ -1480,35 +1563,35 @@
 
              // If scrolled almost to the top, default to 'about'
              if (scrollPosition < headerHeight) {
-                 currentSectionId = 'about';
+                  currentSectionId = 'about';
              }
 
 
              // Remove active class from all links first
              navLinks.forEach((link) => {
-                 link.classList.remove('active-nav');
+                  link.classList.remove('active-nav');
              });
 
              // Prioritize Contact link if at the bottom of the page
              if (bottomOfPageReached && contactLink) {
-                 // Deactivate other links if contact is forced active
-                 navLinks.forEach(link => { if(link !== contactLink) link.classList.remove('active-nav'); });
-                 contactLink.classList.add('active-nav');
+                  // Deactivate other links if contact is forced active
+                  navLinks.forEach(link => { if(link !== contactLink) link.classList.remove('active-nav'); });
+                  contactLink.classList.add('active-nav');
              } else {
-                 // Apply active class based on determined section
-                 let activeLinkFound = false;
-                 if (currentSectionId) {
-                     const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
-                     if (activeLink) {
-                         activeLink.classList.add('active-nav');
-                         activeLinkFound = true;
-                     }
-                 }
+                  // Apply active class based on determined section
+                  let activeLinkFound = false;
+                  if (currentSectionId) {
+                      const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
+                      if (activeLink) {
+                          activeLink.classList.add('active-nav');
+                          activeLinkFound = true;
+                      }
+                  }
 
-                 // Fallback to 'about' if no section is active or if the found section has no link
-                 if (!activeLinkFound && !bottomOfPageReached) { // Avoid fallback if bottom reached (handled above)
-                     document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
-                 }
+                  // Fallback to 'about' if no section is active or if the found section has no link
+                  if (!activeLinkFound && !bottomOfPageReached) { // Avoid fallback if bottom reached (handled above)
+                      document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
+                  }
              }
         }
 
@@ -1802,6 +1885,39 @@
                 // }
             });
         }
+
+        // --- Custom Message Box Logic ---
+        const messageOverlay = document.getElementById('customMessageOverlay');
+        const messageTextElement = document.getElementById('customMessageText');
+        const messageCloseBtn = document.getElementById('customMessageCloseBtn');
+
+        function showProjectDetailsMessage(projectName) {
+            const message = `Details for the '${projectName}' project have not been formatted into a webpage yet. Please check back later or contact me for more information.`;
+            messageTextElement.textContent = message;
+            messageOverlay.classList.add('visible');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling while message is open
+        }
+
+        function hideProjectDetailsMessage() {
+            messageOverlay.classList.remove('visible');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Event listeners for the custom message box
+        messageCloseBtn.addEventListener('click', hideProjectDetailsMessage);
+        messageOverlay.addEventListener('click', (event) => {
+            // Close only if clicking the overlay itself, not the box inside
+            if (event.target === messageOverlay) {
+                hideProjectDetailsMessage();
+            }
+        });
+         // Add Escape key listener for the message box
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && messageOverlay.classList.contains('visible')) {
+                hideProjectDetailsMessage();
+            }
+        });
+
 
         // --- Initializations ---
         document.addEventListener('DOMContentLoaded', () => {
