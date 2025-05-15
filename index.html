@@ -163,7 +163,7 @@
                 object-fit: contain; /* Ensure aspect ratio is maintained */
                 transition: opacity 0.2s ease, filter 0.3s ease; /* Added filter transition */
                 /* Lazy load header icons - might have minimal impact but doesn't hurt */
-                loading="lazy";
+                loading ="lazy";
             }
 
                 .nav-icons img:hover {
@@ -277,7 +277,7 @@
             object-fit: contain;
             vertical-align: middle; /* Align nicely with text */
             margin-right: 8px; /* Space between icon and text */
-            loading="lazy"; /* Lazy load contact icons */
+            loading ="lazy"; /* Lazy load contact icons */
         }
 
         /* Skill Icons (Images and SVGs) */
@@ -304,7 +304,7 @@
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
-                loading="lazy"; /* Lazy load skill icons */
+                loading ="lazy"; /* Lazy load skill icons */
             }
 
 
@@ -317,7 +317,7 @@
         }
 
         #about {
-           /* No specific styles needed */
+            /* No specific styles needed */
         }
 
         .about-container {
@@ -344,7 +344,7 @@
                 height: 100%;
                 object-fit: cover;
                 display: block; /* Remove potential bottom space */
-                loading="lazy"; /* Lazy load profile picture */
+                loading ="lazy"; /* Lazy load profile picture */
             }
 
         .about-text {
@@ -365,15 +365,16 @@
                 text-align: left;
                 margin: 0; /* Reset margin */
             }
+
             .about-img {
-                 margin-top: 0.5rem; /* Keep slight top margin for alignment */
+                margin-top: 0.5rem; /* Keep slight top margin for alignment */
             }
         }
-         /* Reset image margin when container stacks */
+        /* Reset image margin when container stacks */
         @media (max-width: 600px) {
-             .about-img {
-                 margin-top: 0;
-             }
+            .about-img {
+                margin-top: 0;
+            }
         }
 
 
@@ -390,17 +391,18 @@
             opacity: 0.9;
             max-width: 75ch; /* Limit line length for readability */
         }
-        /* Added style for links within about text */
-        .about-text p a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: bold;
-            transition: filter 0.2s ease;
-        }
-        .about-text p a:hover {
-            filter: brightness(1.2);
-            text-decoration: underline;
-        }
+            /* Added style for links within about text */
+            .about-text p a {
+                color: var(--accent-color);
+                text-decoration: none;
+                font-weight: bold;
+                transition: filter 0.2s ease;
+            }
+
+                .about-text p a:hover {
+                    filter: brightness(1.2);
+                    text-decoration: underline;
+                }
 
 
         .download-button {
@@ -556,8 +558,8 @@
         }
         /* Style for download button within education entry */
         .education-entry .download-button {
-             margin-top: 1rem; /* Add some space above the button */
-             /* Inherits other styles from .download-button */
+            margin-top: 1rem; /* Add some space above the button */
+            /* Inherits other styles from .download-button */
         }
 
 
@@ -607,21 +609,21 @@
                 margin-bottom: 0; /* Remove default h3 margin */
             }
 
-            /* NEW: Add gradient effect to project title on card hover */
-            .project-card:hover .project-header h3 {
-                 background: var(--main-gradient);
-                 -webkit-background-clip: text;
-                 background-clip: text;
-                 -webkit-text-fill-color: transparent;
-                 color: transparent; /* Fallback */
-            }
+        /* NEW: Add gradient effect to project title on card hover */
+        .project-card:hover .project-header h3 {
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent; /* Fallback */
+        }
 
-            .project-header .project-date {
-                font-size: 0.9rem;
-                font-style: italic;
-                color: var(--text-secondary-color); /* Use secondary text */
-                opacity: 0.9; /* Slightly less opacity */
-            }
+        .project-header .project-date {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--text-secondary-color); /* Use secondary text */
+            opacity: 0.9; /* Slightly less opacity */
+        }
 
         /* Select only direct p children for description */
         .project-content > p:not(.tech) {
@@ -687,21 +689,21 @@
 
                 /* Specific style for IMG icons */
                 .project-links a img {
-                     filter: var(--project-link-icon-filter, none); /* Apply theme-based filter */
-                     loading="lazy"; /* Lazy load project link icons */
+                    filter: var(--project-link-icon-filter, none); /* Apply theme-based filter */
+                    loading ="lazy"; /* Lazy load project link icons */
                 }
 
                 /* Specific style for SVG icons */
                 .project-links a svg,
                 .project-links button.details svg { /* Include button SVG */
-                     fill: var(--link-icon-color); /* Use new variable for SVG fill */
+                    fill: var(--link-icon-color); /* Use new variable for SVG fill */
                 }
 
 
-                /* Invert github icon in light theme for project links */
-                .light-theme .project-links a.github img {
-                     --project-link-icon-filter: invert(1);
-                }
+        /* Invert github icon in light theme for project links */
+        .light-theme .project-links a.github img {
+            --project-link-icon-filter: invert(1);
+        }
 
 
         /* Slideshow (Restructured) */
@@ -749,12 +751,13 @@
                 background: #000; /* Fallback background */
                 display: block; /* Remove potential bottom space */
             }
-             /* Lazy load slideshow posters */
-            .slideshow-container figure video[poster] {
-                /* The poster attribute itself handles loading, but we can ensure the video element is lazy-loaded if needed, though browser handling is complex. Let's rely on the poster attribute's behavior for now. */
-            }
+                /* Lazy load slideshow posters */
+                .slideshow-container figure video[poster] {
+                    /* The poster attribute itself handles loading, but we can ensure the video element is lazy-loaded if needed, though browser handling is complex. Let's rely on the poster attribute's behavior for now. */
+                }
+
             .slideshow-container figure img {
-                 loading="lazy";
+                loading ="lazy";
             }
 
 
@@ -877,7 +880,11 @@
             transition: background 0.2s ease;
             z-index: 1001; /* Above content */
         }
-        #lightboxClose:hover { background: var(--button-hover-bg); color: var(--text-color); }
+
+            #lightboxClose:hover {
+                background: var(--button-hover-bg);
+                color: var(--text-color);
+            }
 
         #lightboxPrev, #lightboxNext {
             position: absolute;
@@ -895,20 +902,30 @@
             transition: background 0.2s ease;
             z-index: 1001; /* Above content */
         }
-        #lightboxPrev { left: -40px; } /* Position outside */
-        #lightboxNext { right: -40px; } /* Position outside */
-        #lightboxPrev:hover, #lightboxNext:hover { background: var(--accent-color); }
+
+        #lightboxPrev {
+            left: -40px;
+        }
+        /* Position outside */
+        #lightboxNext {
+            right: -40px;
+        }
+            /* Position outside */
+            #lightboxPrev:hover, #lightboxNext:hover {
+                background: var(--accent-color);
+            }
 
 
         /* Contact Section */
         #contact {
             text-align: center;
         }
-        #contact h2 {
-            text-align: center; /* Center contact title */
-            border-bottom: none; /* Remove border */
-            margin-bottom: 2rem; /* Space below title */
-        }
+
+            #contact h2 {
+                text-align: center; /* Center contact title */
+                border-bottom: none; /* Remove border */
+                margin-bottom: 2rem; /* Space below title */
+            }
 
         .contact-list {
             list-style: none;
@@ -919,23 +936,24 @@
             gap: 1rem; /* Space between items */
         }
 
-        .contact-list li {
-            display: flex;
-            align-items: center;
-        }
+            .contact-list li {
+                display: flex;
+                align-items: center;
+            }
 
-        .contact-list a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-        .contact-list a:hover {
-            background: var(--main-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent; /* Fallback */
-        }
+            .contact-list a {
+                color: var(--text-color);
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+
+                .contact-list a:hover {
+                    background: var(--main-gradient);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    color: transparent; /* Fallback */
+                }
 
 
         /* Footer */
@@ -977,11 +995,13 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0s linear 0.3s;
         }
-        .custom-message-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.3s ease;
-        }
+
+            .custom-message-overlay.visible {
+                opacity: 1;
+                visibility: visible;
+                transition: opacity 0.3s ease;
+            }
+
         .custom-message-box {
             background-color: var(--message-box-bg);
             color: var(--message-box-text);
@@ -995,13 +1015,16 @@
             transform: scale(0.9);
             transition: transform 0.3s ease;
         }
-         .custom-message-overlay.visible .custom-message-box {
+
+        .custom-message-overlay.visible .custom-message-box {
             transform: scale(1.0);
         }
+
         .custom-message-box p {
             margin-bottom: 20px;
             line-height: 1.5;
         }
+
         .custom-message-box button {
             padding: 8px 20px;
             background-color: var(--message-box-button-bg);
@@ -1012,9 +1035,10 @@
             font-weight: bold;
             transition: background-color 0.2s ease;
         }
-        .custom-message-box button:hover {
-            background-color: var(--message-box-button-hover-bg);
-        }
+
+            .custom-message-box button:hover {
+                background-color: var(--message-box-button-hover-bg);
+            }
 
 
         /* Responsive */
@@ -1023,6 +1047,7 @@
             .project-grid {
                 grid-template-columns: 1fr; /* Single column */
             }
+
             .nav-container {
                 flex-direction: row; /* Keep row layout */
                 flex-wrap: wrap; /* Allow wrapping */
@@ -1030,10 +1055,12 @@
                 gap: 0.5rem 1rem; /* Row gap, Column gap */
                 justify-content: space-between; /* Space out items */
             }
+
             .logo-and-icons {
                 /* Takes natural width */
                 /* Order can be adjusted if needed */
             }
+
             nav {
                 margin-left: 0; /* Reset margin */
                 margin-right: 0; /* Reset margin */
@@ -1042,85 +1069,130 @@
                 order: 3; /* Move nav below logo/icons and toggle on wrap */
                 flex-basis: 100%; /* Ensure it takes full width when wrapping */
             }
-            nav ul {
-                justify-content: flex-start; /* Align links left */
-                gap: 0.8rem; /* Reduce gap */
-                flex-wrap: wrap; /* Allow nav links to wrap */
-                /* No need for inline-flex if nav is full width */
-                display: flex;
-            }
+
+                nav ul {
+                    justify-content: flex-start; /* Align links left */
+                    gap: 0.8rem; /* Reduce gap */
+                    flex-wrap: wrap; /* Allow nav links to wrap */
+                    /* No need for inline-flex if nav is full width */
+                    display: flex;
+                }
+
             .theme-toggle {
                 /* Removed absolute positioning */
                 /* align-self: center; */ /* Center vertically within its flex line */
                 /* margin-left: auto; */ /* Push toggle to the right if needed, handled by space-between on container */
-                 order: 2; /* Place toggle after logo/icons but before nav when wrapping */
+                order: 2; /* Place toggle after logo/icons but before nav when wrapping */
             }
+
             main {
-                 /* Adjust padding based on potential wrapped header height */
-                 /* This might need dynamic calculation or a larger fixed value */
-                 padding-top: 100px; /* Increased padding slightly */
+                /* Adjust padding based on potential wrapped header height */
+                /* This might need dynamic calculation or a larger fixed value */
+                padding-top: 100px; /* Increased padding slightly */
             }
+
             section {
-                 scroll-margin-top: 100px; /* Adjust scroll margin */
+                scroll-margin-top: 100px; /* Adjust scroll margin */
             }
+
             .about-container {
                 flex-direction: column; /* Stack image and text */
                 align-items: center; /* Re-center items when stacked */
                 text-align: center;
             }
+
             .about-text {
                 align-items: center; /* Center text/button */
                 text-align: center;
             }
-             .about-img {
-                 margin-top: 0; /* Reset top margin when stacked */
-             }
-            #lightboxPrev { left: 5px; } /* Bring controls inside on mobile */
-            #lightboxNext { right: 5px; }
+
+            .about-img {
+                margin-top: 0; /* Reset top margin when stacked */
+            }
+
+            #lightboxPrev {
+                left: 5px;
+            }
+            /* Bring controls inside on mobile */
+            #lightboxNext {
+                right: 5px;
+            }
             /* Adjust lightbox media constraints for smaller screens */
-             #lightboxVideo, #lightboxImage {
-                 max-width: calc(90vw - 20px); /* Less padding */
-                 max-height: calc(90vh - 80px); /* Less padding, more caption space */
-             }
+            #lightboxVideo, #lightboxImage {
+                max-width: calc(90vw - 20px); /* Less padding */
+                max-height: calc(90vh - 80px); /* Less padding, more caption space */
+            }
         }
 
         @media (max-width: 600px) {
             .skills-container {
                 grid-template-columns: 1fr; /* Single column skills */
             }
-            .about-text h1 { font-size: 1.8rem; }
-            section h2 { font-size: 1.6rem; }
+
+            .about-text h1 {
+                font-size: 1.8rem;
+            }
+
+            section h2 {
+                font-size: 1.6rem;
+            }
+
             .project-grid {
                 grid-template-columns: 1fr; /* Ensure single column */
                 gap: 1rem; /* Reduce gap */
             }
-            .project-content { padding: 1rem; } /* Reduce card padding */
-            .project-links a, .project-links button.details { padding: 0.3rem 0.6rem; font-size: 0.8rem; } /* Adjust button padding */
-            footer { font-size: 0.8rem; }
-            #lightboxContent { padding: 10px; padding-bottom: 40px; }
-            #lightboxMediaContainer { /* Removed container sizing, applied to media directly */ }
-            #lightboxCaption { bottom: 10px; left: 10px; right: 10px; }
-             /* Further adjust lightbox media constraints for very small screens */
-             #lightboxVideo, #lightboxImage {
-                 max-width: calc(90vw - 20px);
-                 max-height: calc(90vh - 60px); /* Even less padding, more caption space */
-             }
-             /* Adjust nav further if needed on very small screens */
-             .nav-container {
-                 gap: 0.5rem; /* Reduce gap slightly */
-             }
-             nav ul {
-                 gap: 0.5rem; /* Reduce nav link gap */
-             }
-             main {
-                 padding-top: 120px; /* May need more padding if header wraps significantly */
-             }
-             section {
-                 scroll-margin-top: 120px;
-             }
-             .custom-message-box {
+
+            .project-content {
+                padding: 1rem;
+            }
+            /* Reduce card padding */
+            .project-links a, .project-links button.details {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            /* Adjust button padding */
+            footer {
+                font-size: 0.8rem;
+            }
+
+            #lightboxContent {
+                padding: 10px;
+                padding-bottom: 40px;
+            }
+
+            #lightboxMediaContainer { /* Removed container sizing, applied to media directly */
+            }
+
+            #lightboxCaption {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+            }
+            /* Further adjust lightbox media constraints for very small screens */
+            #lightboxVideo, #lightboxImage {
+                max-width: calc(90vw - 20px);
+                max-height: calc(90vh - 60px); /* Even less padding, more caption space */
+            }
+            /* Adjust nav further if needed on very small screens */
+            .nav-container {
+                gap: 0.5rem; /* Reduce gap slightly */
+            }
+
+            nav ul {
+                gap: 0.5rem; /* Reduce nav link gap */
+            }
+
+            main {
+                padding-top: 120px; /* May need more padding if header wraps significantly */
+            }
+
+            section {
+                scroll-margin-top: 120px;
+            }
+
+            .custom-message-box {
                 width: 90%; /* Make message box wider on small screens */
-             }
+            }
         }
     </style>
 </head>
@@ -1130,9 +1202,9 @@
             <div class="logo-and-icons">
                 <div class="nav-logo">Oliver Neal</div>
                 <div class="nav-icons">
-                    <a href="https://github.com/OliverNealDev" target="_blank" title="GitHub"> <img src="github-icon.png" alt="GitHub" onerror="this.style.display='none'" loading="lazy"/> </a>
-                    <a href="https://embitgames.itch.io" target="_blank" title="Itch.io"> <img src="itch-icon.png" alt="Itch.io" onerror="this.style.display='none'" loading="lazy"/> </a>
-                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" title="LinkedIn"> <img src="linkedin-icon.png" alt="LinkedIn" onerror="this.style.display='none'" loading="lazy"/> </a>
+                    <a href="https://github.com/OliverNealDev" target="_blank" title="GitHub"> <img src="github-icon.png" alt="GitHub" onerror="this.style.display='none'" loading="lazy" /> </a>
+                    <a href="https://embitgames.itch.io" target="_blank" title="Itch.io"> <img src="itch-icon.png" alt="Itch.io" onerror="this.style.display='none'" loading="lazy" /> </a>
+                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" title="LinkedIn"> <img src="linkedin-icon.png" alt="LinkedIn" onerror="this.style.display='none'" loading="lazy" /> </a>
                 </div>
             </div>
             <nav>
@@ -1157,7 +1229,7 @@
             <section id="about" class="reveal">
                 <div class="about-container">
                     <div class="about-img">
-                        <img src="oliver.png" alt="Oliver Neal Selfie" onerror="this.src='https://placehold.co/200x200/cccccc/333333?text=ON'; this.onerror=null;" loading="lazy"/>
+                        <img src="oliver.png" alt="Oliver Neal Selfie" onerror="this.src='https://placehold.co/200x200/cccccc/333333?text=ON'; this.onerror=null;" loading="lazy" />
                     </div>
                     <div class="about-text">
                         <h1>Hello, I'm Oliver Neal!</h1>
@@ -1186,7 +1258,7 @@
                             <li>
                                 <span class="skill-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Unreal Engine Icon">
-                                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.112 1.159c6.003 0 10.87 4.867 10.87 10.87s-4.867 10.87-10.87 10.87-10.87-4.867-10.87-10.87 4.867-10.87 10.87-10.87zm-4.13 3.046v1.95h2.273v10.473h-2.274V6.154H5.982V4.205h6.182zm4.13 4.788v2.193c0 .99-.18 1.77-.54 2.34-.36.57-.88.995-1.56 1.276-.68.28-1.46.42-2.34.42-.88 0-1.66-.14-2.34-.42-.68-.28-1.2-.706-1.56-1.276-.36-.57-.54-1.35-.54-2.34V8.993c0-.99.18-1.77.54-2.34.36-.57.88-.995 1.56-1.276.68-.28 1.46-.42 2.34-.42.88 0 1.66.14 2.34.42.68.28 1.2.706 1.56 1.276.36.57.54 1.35.54 2.34zm-2.21 0v2.193c0 .39-.04.678-.12.866-.08.188-.2.336-.36.445-.16.11-.35.188-.57.234-.22.047-.45.07-.7.07-.25 0-.48-.023-.7-.07-.22-.046-.41-.124-.57-.234-.16-.11-.28-.257-.36-.445-.08-.188-.12-.476-.12-.866V8.993c0-.39.04.678.12-.866.08-.188.2-.336-.36.445.16.11.35.188.57.234.22.047.45.07.7-.07.25 0 .48.023.7.07.22.046.41.124.57.234.16.11.28.257.36.445.08.188.12.476.12.866z"/>
+                                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.112 1.159c6.003 0 10.87 4.867 10.87 10.87s-4.867 10.87-10.87 10.87-10.87-4.867-10.87-10.87 4.867-10.87 10.87-10.87zm-4.13 3.046v1.95h2.273v10.473h-2.274V6.154H5.982V4.205h6.182zm4.13 4.788v2.193c0 .99-.18 1.77-.54 2.34-.36.57-.88.995-1.56 1.276-.68.28-1.46.42-2.34.42-.88 0-1.66-.14-2.34-.42-.68-.28-1.2-.706-1.56-1.276-.36-.57-.54-1.35-.54-2.34V8.993c0-.99.18-1.77.54-2.34.36-.57.88-.995 1.56-1.276.68-.28 1.46-.42 2.34-.42.88 0 1.66.14 2.34.42.68.28 1.2.706 1.56 1.276.36.57.54 1.35.54 2.34zm-2.21 0v2.193c0 .39-.04.678-.12.866-.08.188-.2.336-.36.445-.16.11-.35.188-.57.234-.22.047-.45.07-.7.07-.25 0-.48-.023-.7-.07-.22-.046-.41-.124-.57-.234-.16-.11-.28-.257-.36-.445-.08-.188-.12-.476-.12-.866V8.993c0-.39.04.678.12-.866.08-.188.2-.336-.36.445.16.11.35.188.57.234.22.047.45.07.7-.07.25 0 .48.023.7.07.22.046.41.124.57.234.16.11.28.257.36.445.08.188.12.476.12.866z" />
                                     </svg>
                                 </span>Unreal Engine 5 (Basic)
                             </li>
@@ -1223,10 +1295,26 @@
                     <div class="project-card" id="unicellular">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unicellularSlideshow">
-                                <figure class="active"> <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow', 0)"> <source src="Project Media/Unicellular/UnicellInteraction.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Unicell Interactions</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow', 1)"> <source src="Project Media/Unicellular/BuyingUnicells.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Purchasing Unicells</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow', 2)"> <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">1000 Unicells @ 144+ fps</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow', 3)"> <source src="Project Media/Unicellular/10kEntities.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">6000 Unicells @ ~100 fps</figcaption> </figure>
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.png" onclick="openLightbox('unicellularSlideshow', 0)">
+                                        <source src="Project Media/Unicellular/UnicellInteraction.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Unicell Interactions</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.png" onclick="openLightbox('unicellularSlideshow', 1)">
+                                        <source src="Project Media/Unicellular/BuyingUnicells.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Purchasing Unicells</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.png" onclick="openLightbox('unicellularSlideshow', 2)">
+                                        <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">1000 Unicells @ 144+ fps</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.png" onclick="openLightbox('unicellularSlideshow', 3)">
+                                        <source src="Project Media/Unicellular/10kEntities.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">6000 Unicells @ ~100 fps</figcaption>
+                                </figure>
                             </div>
                             <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Unicell Interactions</div> <span class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</span> </div>
                         </div>
@@ -1235,10 +1323,10 @@
                             <p>Idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project handles thousands of entities with FSMs and interactions.</p>
                             <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
                             <div class="project-links">
-                                <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy"/> Github </a>
-                                <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy"/> Play in browser </a>
+                                <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
+                                <a href="https://embitgames.itch.io/unicellular" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
                                 <button class="details" onclick="showProjectDetailsMessage('Unicellular')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
                             </div>
@@ -1247,10 +1335,26 @@
                     <div class="project-card" id="pinnable">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="pinnableSlideshow">
-                                <figure class="active"> <video muted playsinline loop poster="Project Media/Pinnable/GameplayPoster.png" onclick="openLightbox('pinnableSlideshow', 0)"> <source src="Project Media/Pinnable/Gameplay.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Pinnable/DyingPoster.png" onclick="openLightbox('pinnableSlideshow', 1)"> <source src="Project Media/Pinnable/Dying.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Defeat UX</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Pinnable/HowToPlayPoster.png" onclick="openLightbox('pinnableSlideshow', 2)"> <source src="Project Media/Pinnable/HowToPlay.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">How To Play Menu</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Pinnable/OptionsPoster.png" onclick="openLightbox('pinnableSlideshow', 3)"> <source src="Project Media/Pinnable/Options.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Options Menu</figcaption> </figure>
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/Pinnable/GameplayPoster.png" onclick="openLightbox('pinnableSlideshow', 0)">
+                                        <source src="Project Media/Pinnable/Gameplay.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Pinnable/DyingPoster.png" onclick="openLightbox('pinnableSlideshow', 1)">
+                                        <source src="Project Media/Pinnable/Dying.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Defeat UX</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Pinnable/HowToPlayPoster.png" onclick="openLightbox('pinnableSlideshow', 2)">
+                                        <source src="Project Media/Pinnable/HowToPlay.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">How To Play Menu</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Pinnable/OptionsPoster.png" onclick="openLightbox('pinnableSlideshow', 3)">
+                                        <source src="Project Media/Pinnable/Options.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Options Menu</figcaption>
+                                </figure>
                             </div>
                             <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Gameplay</div> <span class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</span> </div>
                         </div>
@@ -1259,10 +1363,10 @@
                             <p>A 2D platformer where players collect falling marbles bouncing off moving pins, inspired by <em>Peggle</em>.</p>
                             <p class="tech">Technologies: Unity 2D, Difficulty Scaling Systems</p>
                             <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy"/> Github </a>
-                                <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy"/> Play in browser </a>
+                                <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
+                                <a href="https://embitgames.itch.io/pinnable" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
                                 <button class="details" onclick="showProjectDetailsMessage('Pinnable')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
                             </div>
@@ -1271,9 +1375,21 @@
                     <div class="project-card" id="3d-netcode-tank-game">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="tankGameSlideshow">
-                                <figure class="active"> <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.png" onclick="openLightbox('tankGameSlideshow', 0)"> <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.png" onclick="openLightbox('tankGameSlideshow', 1)"> <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.png" onclick="openLightbox('tankGameSlideshow', 2)"> <source src="Project Media/3DNetcodeTankGame/Login.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption> </figure>
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.png" onclick="openLightbox('tankGameSlideshow', 0)">
+                                        <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.png" onclick="openLightbox('tankGameSlideshow', 1)">
+                                        <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.png" onclick="openLightbox('tankGameSlideshow', 2)">
+                                        <source src="Project Media/3DNetcodeTankGame/Login.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption>
+                                </figure>
                             </div>
                             <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Multiplayer Functionality</div> <span class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</span> </div>
                         </div>
@@ -1282,9 +1398,9 @@
                             <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
                             <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                             <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy"/> Github </a>
+                                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
                                 <button class="details" onclick="showProjectDetailsMessage('3D Netcode Tank Game')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
                             </div>
@@ -1293,8 +1409,16 @@
                     <div class="project-card" id="2d-netcode-shooter">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="shooterSlideshow">
-                                <figure class="active"> <video muted playsinline loop poster="Project Media/2DNetcodeShooter/MultiplayerGameplayPoster.png" onclick="openLightbox('shooterSlideshow', 0)"> <source src="Project Media/2DNetcodeShooter/MultiplayerGameplay.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/2DNetcodeShooter/LobbyPoster.png" onclick="openLightbox('shooterSlideshow', 1)"> <source src="Project Media/2DNetcodeShooter/Lobby.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Lobby System</figcaption> </figure>
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/2DNetcodeShooter/MultiplayerGameplayPoster.png" onclick="openLightbox('shooterSlideshow', 0)">
+                                        <source src="Project Media/2DNetcodeShooter/MultiplayerGameplay.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/2DNetcodeShooter/LobbyPoster.png" onclick="openLightbox('shooterSlideshow', 1)">
+                                        <source src="Project Media/2DNetcodeShooter/Lobby.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Lobby System</figcaption>
+                                </figure>
                             </div>
                             <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'shooterSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Gameplay</div> <span class="next" onclick="plusSlides(1,'shooterSlideshow',true)">&#10095;</span> </div>
                         </div>
@@ -1303,9 +1427,9 @@
                             <p>A fast-paced shooter using distributed authority networking with Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
                             <p class="tech">Technologies: Unity 2D, Distributed Authority Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
                             <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy"/> Github </a>
+                                <a href="https://github.com/OliverNealDev/2DNetcodeShooter" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
                                 <button class="details" onclick="showProjectDetailsMessage('2D Netcode Shooter')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
                             </div>
@@ -1320,13 +1444,41 @@
                     <div class="project-card" id="candy-corporate">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="candySlideshow">
-                                <figure class="active"> <video muted playsinline loop poster="Project Media/Candy Corporate/BasementPoster.png" onclick="openLightbox('candySlideshow',0)"> <source src="Project Media/Candy Corporate/Basement.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Map Exploration</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/FrontOfMapPoster.png" onclick="openLightbox('candySlideshow',1)"> <source src="Project Media/Candy Corporate/FrontOfMap.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Entrance</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/BuyingLeavingPoster.png" onclick="openLightbox('candySlideshow',2)"> <source src="Project Media/Candy Corporate/BuyingLeaving.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Cashing Out</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/MenuPoster.png" onclick="openLightbox('candySlideshow',3)"> <source src="Project Media/Candy Corporate/Menu.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/ObjectivesPoster.png" onclick="openLightbox('candySlideshow',4)"> <source src="Project Media/Candy Corporate/Objectives.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Objectives</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/CodexPoster.png" onclick="openLightbox('candySlideshow',5)"> <source src="Project Media/Candy Corporate/Codex.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Codex</figcaption> </figure>
-                                <figure> <video muted playsinline loop poster="Project Media/Candy Corporate/CreditsPoster.png" onclick="openLightbox('candySlideshow',6)"> <source src="Project Media/Candy Corporate/Credits.webm" type="video/webm"> Your browser does not support the video tag. </video> <figcaption class="hidden-caption" style="display:none;">Credits</figcaption> </figure>
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/BasementPoster.png" onclick="openLightbox('candySlideshow',0)">
+                                        <source src="Project Media/Candy Corporate/Basement.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Map Exploration</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/FrontOfMapPoster.png" onclick="openLightbox('candySlideshow',1)">
+                                        <source src="Project Media/Candy Corporate/FrontOfMap.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Entrance</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/BuyingLeavingPoster.png" onclick="openLightbox('candySlideshow',2)">
+                                        <source src="Project Media/Candy Corporate/BuyingLeaving.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Cashing Out</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/MenuPoster.png" onclick="openLightbox('candySlideshow',3)">
+                                        <source src="Project Media/Candy Corporate/Menu.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/ObjectivesPoster.png" onclick="openLightbox('candySlideshow',4)">
+                                        <source src="Project Media/Candy Corporate/Objectives.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Objectives</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/CodexPoster.png" onclick="openLightbox('candySlideshow',5)">
+                                        <source src="Project Media/Candy Corporate/Codex.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Codex</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Candy Corporate/CreditsPoster.png" onclick="openLightbox('candySlideshow',6)">
+                                        <source src="Project Media/Candy Corporate/Credits.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Credits</figcaption>
+                                </figure>
                             </div>
                             <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'candySlideshow',true)">&#10094;</span> <div class="slideshow-caption">Map Exploration</div> <span class="next" onclick="plusSlides(1,'candySlideshow',true)">&#10095;</span> </div>
                         </div>
@@ -1335,9 +1487,9 @@
                             <p>A game inspired by Lethal Company focused on level design and tile creation. <strong>My Role: [Describe your specific contributions here!]</strong></p>
                             <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
                             <div class="project-links">
-                                <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy"/> Itch.io </a>
+                                <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" class="itchio"> <img src="itch-icon.png" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Itch.io </a>
                                 <button class="details" onclick="showProjectDetailsMessage('Candy Corporate')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
                             </div>
@@ -1357,9 +1509,9 @@
                             <p>A rapid prototype of a Starfox-inspired game. Not pursued further due to gamefeel criticisms. <strong>My Role: [Describe your specific contributions here!]</strong></p>
                             <p class="tech">Technologies: Unity 3D, Github-Collaboration</p>
                             <div class="project-links">
-                                <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy"/> Github </a>
+                                <a href="https://github.com/ImJustSpirit/TidesOfTheMoon" target="_blank" class="github"> <img src="github-icon.png" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
                                 <button class="details" onclick="showProjectDetailsMessage('Tides of the Moon')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
                             </div>
@@ -1372,7 +1524,7 @@
                 <h2>In Development</h2>
                 <div class="project-grid">
                     <div class="project-card" id="vr-multiplayer-fps">
-                         <div class="slideshow-wrapper">
+                        <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="vrFpsSlideshow">
                                 <figure class="active">
                                     <img src="https://placehold.co/1600x900/1a1a1a/666666?text=VR+Game+Placeholder+1" alt="VR Game - Placeholder 1" onclick="openLightbox('vrFpsSlideshow', 0)" loading="lazy">
@@ -1401,49 +1553,49 @@
                             <p>Currently developing a small VR game entailing the exploration of a haunted mansion, built with Unity's XR Interaction Toolkit.</p>
                             <p class="tech">Technologies: Unity 3D, VR (XR Interaction Toolkit)</p>
                             <div class="project-links">
-                                 <button class="details" onclick="showProjectDetailsMessage('Untitled VR Game')">
-                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                                     Learn More
-                                 </button>
+                                <button class="details" onclick="showProjectDetailsMessage('Untitled VR Game')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
+                                    Learn More
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="project-card" id="hells-champion">
                         <div class="slideshow-wrapper">
-                           <div class="slideshow-container" id="hellsChampionSlideshow">
-                               <figure class="active">
-                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+1" alt="Hell's Champion - Placeholder 1" onclick="openLightbox('hellsChampionSlideshow', 0)" loading="lazy">
-                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
-                               </figure>
-                               <figure>
-                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+2" alt="Hell's Champion - Placeholder 2" onclick="openLightbox('hellsChampionSlideshow', 1)" loading="lazy">
-                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
-                               </figure>
-                               <figure>
-                                   <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+3" alt="Hell's Champion - Placeholder 3" onclick="openLightbox('hellsChampionSlideshow', 2)" loading="lazy">
-                                   <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
-                               </figure>
-                           </div>
-                           <div class="slideshow-info">
-                               <span class="prev" onclick="plusSlides(-1,'hellsChampionSlideshow',true)">&#10094;</span>
-                               <div class="slideshow-caption">Placeholder 1</div>
-                               <span class="next" onclick="plusSlides(1,'hellsChampionSlideshow',true)">&#10095;</span>
-                           </div>
-                       </div>
-                       <div class="project-content">
-                           <div class="project-header">
-                               <h3>Hell's Champion (Codename)</h3>
-                               <span class="project-date">Demo ETA Sep 2025</span>
-                           </div>
-                           <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
-                           <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
-                           <div class="project-links">
+                            <div class="slideshow-container" id="hellsChampionSlideshow">
+                                <figure class="active">
+                                    <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+1" alt="Hell's Champion - Placeholder 1" onclick="openLightbox('hellsChampionSlideshow', 0)" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 1</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+2" alt="Hell's Champion - Placeholder 2" onclick="openLightbox('hellsChampionSlideshow', 1)" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 2</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="https://placehold.co/1600x900/1f1f1f/555555?text=Hell%27s+Champion+Placeholder+3" alt="Hell's Champion - Placeholder 3" onclick="openLightbox('hellsChampionSlideshow', 2)" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Placeholder 3</figcaption>
+                                </figure>
+                            </div>
+                            <div class="slideshow-info">
+                                <span class="prev" onclick="plusSlides(-1,'hellsChampionSlideshow',true)">&#10094;</span>
+                                <div class="slideshow-caption">Placeholder 1</div>
+                                <span class="next" onclick="plusSlides(1,'hellsChampionSlideshow',true)">&#10095;</span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3>Hell's Champion (Codename)</h3>
+                                <span class="project-date">Demo ETA Sep 2025</span>
+                            </div>
+                            <p>A deckbuilding FPS fusion set across the nine Norse realms. Players explore levels, defeat enemies, gather materials, and upgrade their arsenal of elemental abilities using a customizable deck and augments.</p>
+                            <p class="tech">Technologies: Unity 3D, Deckbuilding, FPS Mechanics</p>
+                            <div class="project-links">
                                 <button class="details" onclick="showProjectDetailsMessage('Hell\'s Champion')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
                                     Learn More
                                 </button>
-                           </div>
-                       </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1457,7 +1609,7 @@
                     <p class="dates">Planned Start: Autumn 2025</p>
                     <p>Planning to pursue a full Bachelor's degree, building upon foundational knowledge to further specialize in advanced game development concepts and techniques.</p>
                 </div>
-                 <div class="education-entry">
+                <div class="education-entry">
                     <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
                     <h3>FdSc Games Technologies</h3>
                     <p>Newcastle College University Centre, Newcastle upon Tyne</p>
@@ -1479,10 +1631,10 @@
             <section id="contact" class="reveal">
                 <h2>Contact Me</h2>
                 <ul class="contact-list">
-                    <li> <img src="email-icon.png" alt="Email Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy"/> <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a> </li>
-                    <li> <img src="linkedin-icon.png" alt="LinkedIn Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy"/> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">LinkedIn Profile</a> </li>
-                    <li> <img src="github-icon.png" alt="GitHub Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy"/> <a href="https://github.com/OliverNealDev" target="_blank">GitHub Profile</a> </li>
-                    <li> <img src="itch-icon.png" alt="Itch.io Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy"/> <a href="https://embitgames.itch.io" target="_blank">Itch.io Profile</a> </li>
+                    <li> <img src="email-icon.png" alt="Email Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a> </li>
+                    <li> <img src="linkedin-icon.png" alt="LinkedIn Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank">LinkedIn Profile</a> </li>
+                    <li> <img src="github-icon.png" alt="GitHub Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="https://github.com/OliverNealDev" target="_blank">GitHub Profile</a> </li>
+                    <li> <img src="itch-icon.png" alt="Itch.io Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="https://embitgames.itch.io" target="_blank">Itch.io Profile</a> </li>
                 </ul>
             </section>
         </main>
@@ -1520,14 +1672,14 @@
         function throttle(func, limit) {
             let lastFunc;
             let lastRan;
-            return function(...args) {
+            return function (...args) {
                 const context = this;
                 if (!lastRan) {
                     func.apply(context, args);
                     lastRan = Date.now();
                 } else {
                     clearTimeout(lastFunc);
-                    lastFunc = setTimeout(function() {
+                    lastFunc = setTimeout(function () {
                         if ((Date.now() - lastRan) >= limit) {
                             func.apply(context, args);
                             lastRan = Date.now();
@@ -1594,46 +1746,46 @@
             sections.forEach(section => {
                 // Ensure section has an ID and is visible enough
                 if (section.id && section.offsetTop <= scrollPositionWithOffset) {
-                     // Check if the section bottom is also past the offset point
-                     // This prevents activating sections that are mostly scrolled past
-                     if ((section.offsetTop + section.offsetHeight) > scrollPositionWithOffset) {
-                         currentSectionId = section.id;
-                     }
+                    // Check if the section bottom is also past the offset point
+                    // This prevents activating sections that are mostly scrolled past
+                    if ((section.offsetTop + section.offsetHeight) > scrollPositionWithOffset) {
+                        currentSectionId = section.id;
+                    }
                 }
             });
 
-             // If scrolled almost to the top, default to 'about'
-             if (scrollPosition < headerHeight) {
-                  currentSectionId = 'about';
-             }
+            // If scrolled almost to the top, default to 'about'
+            if (scrollPosition < headerHeight) {
+                currentSectionId = 'about';
+            }
 
 
-             // Remove active class from all links first
-             navLinks.forEach((link) => {
-                  link.classList.remove('active-nav');
-             });
+            // Remove active class from all links first
+            navLinks.forEach((link) => {
+                link.classList.remove('active-nav');
+            });
 
-             // Prioritize Contact link if at the bottom of the page
-             if (bottomOfPageReached && contactLink) {
-                  // Deactivate other links if contact is forced active
-                  navLinks.forEach(link => { if(link !== contactLink) link.classList.remove('active-nav'); });
-                  contactLink.classList.add('active-nav');
-             } else {
-                  // Apply active class based on determined section
-                  let activeLinkFound = false;
-                  if (currentSectionId) {
-                      const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
-                      if (activeLink) {
-                          activeLink.classList.add('active-nav');
-                          activeLinkFound = true;
-                      }
-                  }
+            // Prioritize Contact link if at the bottom of the page
+            if (bottomOfPageReached && contactLink) {
+                // Deactivate other links if contact is forced active
+                navLinks.forEach(link => { if (link !== contactLink) link.classList.remove('active-nav'); });
+                contactLink.classList.add('active-nav');
+            } else {
+                // Apply active class based on determined section
+                let activeLinkFound = false;
+                if (currentSectionId) {
+                    const activeLink = document.querySelector(`nav a[href="#${currentSectionId}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active-nav');
+                        activeLinkFound = true;
+                    }
+                }
 
-                  // Fallback to 'about' if no section is active or if the found section has no link
-                  if (!activeLinkFound && !bottomOfPageReached) { // Avoid fallback if bottom reached (handled above)
-                      document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
-                  }
-             }
+                // Fallback to 'about' if no section is active or if the found section has no link
+                if (!activeLinkFound && !bottomOfPageReached) { // Avoid fallback if bottom reached (handled above)
+                    document.querySelector('nav a[href="#about"]')?.classList.add('active-nav');
+                }
+            }
         }
 
 
@@ -1670,13 +1822,13 @@
                 // Play video on hover (only when slide is active)
                 container.querySelectorAll('video').forEach(video => {
                     video.addEventListener('mouseenter', () => {
-                         // Only play if the parent figure is active
-                         if (video.closest('figure')?.classList.contains('active')) {
-                          video.play().catch(e => {/* Autoplay likely prevented */});
-                         }
+                        // Only play if the parent figure is active
+                        if (video.closest('figure')?.classList.contains('active')) {
+                            video.play().catch(e => {/* Autoplay likely prevented */ });
+                        }
                     });
                     video.addEventListener('mouseleave', () => {
-                         video.pause();
+                        video.pause();
                     });
                 });
 
@@ -1775,7 +1927,7 @@
             // Attempt to play video if it's the active slide and the slideshow is hovered
             const activeVideo = slides[slideIndexes[slideshowId]]?.querySelector('video');
             if (activeVideo && (slideshow.matches(':hover') || slideshow.nextElementSibling?.matches(':hover'))) {
-                 activeVideo.play().catch(e => {/* Autoplay likely prevented */});
+                activeVideo.play().catch(e => {/* Autoplay likely prevented */ });
             }
         }
 
@@ -1903,7 +2055,7 @@
             } else if (event.key === 'ArrowLeft') {
                 if (currentSlides.length > 1) changeLightboxSlide(-1);
             } else if (event.key === 'ArrowRight') {
-                 if (currentSlides.length > 1) changeLightboxSlide(1);
+                if (currentSlides.length > 1) changeLightboxSlide(1);
             }
         }
 
@@ -1952,7 +2104,7 @@
                 hideProjectDetailsMessage();
             }
         });
-         // Add Escape key listener for the message box
+        // Add Escape key listener for the message box
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && messageOverlay.classList.contains('visible')) {
                 hideProjectDetailsMessage();
