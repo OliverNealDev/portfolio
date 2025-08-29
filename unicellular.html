@@ -364,6 +364,26 @@
             font-size: 1.1rem;
             margin: 1rem 0 0.5rem;
         }
+        .doc-figure {
+            margin: 0.75rem 0 0;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            background: #000;
+        }
+        .doc-figure video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .doc-figure figcaption {
+            font-size: 0.9rem;
+            color: var(--text-secondary-color);
+            padding: 0.5rem 0.75rem;
+            background: var(--header-bg);
+            border-top: 1px solid var(--border-color);
+        }
         .doc-table-wrapper {
             overflow-x: auto;
         }
@@ -733,20 +753,29 @@ public void IncrementUnicellPopulation(string UnicellType)
             <section id="performance" class="doc-card reveal">
                 <h2>Performance Notes</h2>
                 <p>Initial profiling focuses on entity spawning and per-frame manager updates; further optimisation is ongoing.</p>
+                <p>All profiling was recorded in-editor on a Ryzen&nbsp;7&nbsp;7800X3D. Demo clips on the main portfolio page show:</p>
+                <ul style="margin-left:1.25rem;">
+                    <li>1000&nbsp;Unicells sustaining 144+&nbsp;fps.</li>
+                    <li>6000&nbsp;Unicells maintaining roughly 100&nbsp;fps.</li>
+                </ul>
+                <figure class="doc-figure">
+                    <video controls muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.webp">
+                        <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm"> Your browser does not support the video tag.
+                    </video>
+                    <figcaption>1000 Unicells @ 144+ fps</figcaption>
+                </figure>
+                <figure class="doc-figure">
+                    <video controls muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.webp">
+                        <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm"> Your browser does not support the video tag.
+                    </video>
+                    <figcaption>6000 Unicells @ ~100 fps</figcaption>
+                </figure>
             </section>
 
             <section id="testing" class="doc-card reveal">
                 <h2>Testing &amp; Validation</h2>
                 <p>Functionality is verified through manual playtesting; automated unit tests are not yet available.</p>
-            </section>
-
-            <section id="tradeoffs" class="doc-card reveal">
-                <h2>Trade-offs &amp; Next Steps</h2>
-                <ul style="margin-left:1.25rem;">
-                    <li>Custom ECS managers keep code familiar but lack the memory benefits of DOTS.</li>
-                    <li>Heavy reliance on serialised data simplifies tweaking yet increases boilerplate.</li>
-                    <li>Future work includes adding AI behaviours and automated performance tests.</li>
-                </ul>
+                <p>Manual playtests were carried out with multiple people. One tester discovered a bug where 64-bit <code>long</code> values were truncated to 32-bit <code>int</code>s; explicit conversions have been added to prevent this from recurring. Automated unit tests are not yet available.</p>
             </section>
         </div>
     </main>
