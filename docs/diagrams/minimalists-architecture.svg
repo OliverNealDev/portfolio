@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="638px" preserveAspectRatio="none" style="width:570px;height:638px;" version="1.1" viewBox="0 0 570 638" width="570px" zoomAndPan="magnify"><defs><filter height="300%" id="f1suzff9rzlugt" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="212" x="185" y="16.708">Minimalists Architecture</text><!--MD5=[406b65fecc21e832f7a9b6ebadc6dce1]
+cluster Client--><polygon fill="#FFFFFF" filter="url(#f1suzff9rzlugt)" points="22,44.9531,73,44.9531,80,67.25,219,67.25,219,131.9531,22,131.9531,22,44.9531" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="22" x2="80" y1="67.25" y2="67.25"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="45" x="26" y="59.9482">Client</text><!--MD5=[2c2e2644034c00788261e03c85b06837]
+cluster Core--><polygon fill="#FFFFFF" filter="url(#f1suzff9rzlugt)" points="24,155.9531,68,155.9531,75,178.25,196,178.25,196,626.9531,24,626.9531,24,155.9531" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="24" x2="75" y1="178.25" y2="178.25"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="38" x="28" y="170.9482">Core</text><!--MD5=[3140abaae0b3d104aa9cf4ac2ae50a2c]
+cluster Systems--><polygon fill="#FFFFFF" filter="url(#f1suzff9rzlugt)" points="220,251.9531,293,251.9531,300,274.25,548,274.25,548,338.9531,220,338.9531,220,251.9531" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="220" x2="300" y1="274.25" y2="274.25"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="224" y="266.9482">Systems</text><!--MD5=[c42ed81cef7fdd2e33758127945b9a5b]
+entity UI--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="33" x="169.5" y="79.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="164.5" y="84.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="164.5" y="106.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="13" x="179.5" y="102.9482">UI</text><!--MD5=[fc0054d9ddc94c7e8402361e2c99c16f]
+entity PlayerInput--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="96" x="38" y="79.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="33" y="84.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="33" y="106.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="76" x="48" y="102.9482">PlayerInput</text><!--MD5=[15c6a15eea69fbf21bbc68da06b7aff8]
+entity GameManager--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="121" x="58.5" y="190.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="53.5" y="195.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="53.5" y="217.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="101" x="68.5" y="213.9482">GameManager</text><!--MD5=[88f08b416176b5c0dcf547df76ebf6de]
+entity NodeManager--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="117" x="60.5" y="286.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="55.5" y="291.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="55.5" y="313.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="97" x="70.5" y="309.9482">NodeManager</text><!--MD5=[ed3747ad05e6730ca3536a40b62ba942]
+entity Node--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="57" x="40.5" y="382.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="35.5" y="387.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="35.5" y="409.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="50.5" y="405.9482">Node</text><!--MD5=[393655ea98b8cc7762ecac08ac25a8bc]
+entity Unit--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="47" x="132.5" y="382.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="127.5" y="387.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="127.5" y="409.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="27" x="142.5" y="405.9482">Unit</text><!--MD5=[11300759dcafcde03945df77ed357bb3]
+entity UnitAI--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="111.5" y="478.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="106.5" y="483.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="106.5" y="505.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="39" x="121.5" y="501.9482">UnitAI</text><!--MD5=[3ff36782d88bcbec28674d5db246d162]
+entity Pathfinding--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="97" x="83.5" y="574.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="78.5" y="579.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="78.5" y="601.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="77" x="93.5" y="597.9482">Pathfinding</text><!--MD5=[3cedd4bfe2355701e0d5b99a3b9d9fbd]
+entity EconomySystem--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="135" x="396.5" y="286.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="391.5" y="291.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="391.5" y="313.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="115" x="406.5" y="309.9482">EconomySystem</text><!--MD5=[ffc53dd5db725fc734b5edddf084a081]
+entity CombatSystem--><rect fill="#FEFECE" filter="url(#f1suzff9rzlugt)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="125" x="236.5" y="286.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="231.5" y="291.9531"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="231.5" y="313.25"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="105" x="246.5" y="309.9482">CombatSystem</text><!--MD5=[13f4b7a78b2f82d481924b2aaedc6207]
+link UI to GameManager--><path d="M175.53,115.9831 C163.9,134.9131 145.08,165.5231 132.39,186.1731 " fill="none" id="UI-&gt;GameManager" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="129.62,190.6831,137.7435,185.1146,132.2405,186.4248,130.9302,180.9218,129.62,190.6831" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[089768bde61a4f9816dff4826bf02d45]
+link PlayerInput to GameManager--><path d="M91.16,115.9831 C96.84,134.7531 106,165.0031 112.25,185.6531 " fill="none" id="PlayerInput-&gt;GameManager" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="113.77,190.6831,115.0018,180.9116,112.3267,185.896,107.3423,183.2209,113.77,190.6831" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6c9882244a6c87620b620f24fc34cfdd]
+link GameManager to NodeManager--><path d="M119,227.1931 C119,242.4331 119,264.7631 119,281.4131 " fill="none" id="GameManager-&gt;NodeManager" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="119,286.8231,123,277.8231,119,281.8231,115,277.8231,119,286.8231" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[fefa4d951d74cb5cc65d2295fdf2c478]
+link NodeManager to Node--><path d="M109.83,323.1931 C101.58,338.6931 89.43,361.5431 80.53,378.2731 " fill="none" id="NodeManager-&gt;Node" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="78.11,382.8231,85.8778,376.7682,80.4652,378.4125,78.8208,373,78.11,382.8231" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6e3c13cae7aca932bda4d4708318f263]
+link NodeManager to Unit--><path d="M125.79,323.1931 C131.84,338.5631 140.73,361.1531 147.3,377.8431 " fill="none" id="NodeManager-&gt;Unit" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="149.26,382.8231,149.6575,372.9823,147.4154,378.1758,142.2218,375.9337,149.26,382.8231" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cafbee84cff4f2e9510d18d5b2769ca7]
+link Unit to UnitAI--><path d="M153.25,419.1931 C150.8,434.5631 147.19,457.1531 144.53,473.8431 " fill="none" id="Unit-&gt;UnitAI" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="143.73,478.8231,149.1166,470.5778,144.5289,473.8874,141.2193,469.2997,143.73,478.8231" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[32a278725898818d97c93a7e5638b955]
+link UnitAI to Pathfinding--><path d="M139.35,515.1931 C137.88,530.5631 135.72,553.1531 134.12,569.8431 " fill="none" id="UnitAI-&gt;Pathfinding" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="133.64,574.8231,138.4938,566.2534,134.1248,569.8467,130.5315,565.4777,133.64,574.8231" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a4b7a2f700fe6b02071f45e23c189c8c]
+link GameManager to EconomySystem--><path d="M179.63,209.7231 C233.66,211.3931 314.02,218.5731 379,243.9531 C402.27,253.0431 425.2,269.8131 441.37,283.3231 " fill="none" id="GameManager-&gt;EconomySystem" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="445.33,286.6831,441.0641,277.8061,441.5207,283.4445,435.8823,283.901,445.33,286.6831" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[789e7224c2bfe2420b97b196d6fd8cde]
+link GameManager to CombatSystem--><path d="M160.16,227.1131 C171.87,232.2631 184.54,238.1131 196,243.9531 C220.34,256.3631 246.97,271.9331 267.05,284.1031 " fill="none" id="GameManager-&gt;CombatSystem" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="271.49,286.8031,265.882,278.7068,267.219,284.2034,261.7224,285.5404,271.49,286.8031" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[af6904c2f6780dc44acefe9aaeb242e0]
+@startuml
+skinparam componentStyle rectangle
+title Minimalists Architecture
+
+package Client {
+  [UI]
+  [PlayerInput]
+}
+
+package Core {
+  [GameManager]
+  [NodeManager]
+  [Node]
+  [Unit]
+  [UnitAI]
+  [Pathfinding]
+}
+
+package Systems {
+  [EconomySystem]
+  [CombatSystem]
+}
+
+[UI] - -> [GameManager]
+[PlayerInput] - -> [GameManager]
+[GameManager] - -> [NodeManager]
+[NodeManager] - -> [Node]
+[NodeManager] - -> [Unit]
+[Unit] - -> [UnitAI]
+[UnitAI] - -> [Pathfinding]
+[GameManager] - -> [EconomySystem]
+[GameManager] - -> [CombatSystem]
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 10:22:07 UTC 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 21.0.2+13-58
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
