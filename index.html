@@ -1216,6 +1216,46 @@
             <section id="solo-projects" class="reveal">
                 <h2>Solo Projects</h2>
                 <div class="project-grid">
+                    <div class="project-card" id="minimalists">
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="minimalistsSlideshow">
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/Minimalists/MainMenuPoster.webp" onclick="openLightbox('minimalistsSlideshow', 0)">
+                                        <source src="Project Media/Minimalists/MainMenu.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Minimalists/TutorialPoster.webp" onclick="openLightbox('minimalistsSlideshow', 1)">
+                                        <source src="Project Media/Minimalists/Tutorial.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Tutorial</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Minimalists/1v1Poster.webp" onclick="openLightbox('minimalistsSlideshow', 2)">
+                                        <source src="Project Media/Minimalists/1v1.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">1v1 Match</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/Minimalists/4vsPoster.webp" onclick="openLightbox('minimalistsSlideshow', 3)">
+                                        <source src="Project Media/Minimalists/4vs.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Four Player Versus</figcaption>
+                                </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'minimalistsSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Main Menu</div> <span class="next" onclick="plusSlides(1,'minimalistsSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Minimalists</h3> <span class="project-date">Aug 2025</span> </div>
+                            <p>A minimalistic RTS game featuring three construct types—house, turret, and helipad—that dynamically work together to create strategic gameplay.</p>
+                            <p class="tech">Technologies: Unity 3D, Finite State Machines, AI Behaviour, Level Design</p>
+                            <div class="project-links">
+                                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
+                                <a href="https://embitgames.itch.io/minimalists" target="_blank" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
+                                <button class="details" onclick="showProjectDetailsMessage('Minimalists')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="project-card" id="unicellular">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unicellularSlideshow">
