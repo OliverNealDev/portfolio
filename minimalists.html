@@ -1,117 +1,571 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Minimalists – Codebase Breakdown</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+
+    <!-- Meta / Social -->
+    <meta name="description" content="Architecture and code walkthrough for Minimalists, a minimalist RTS with AI-driven node control. Unity + C#." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Minimalists – AI & Node Control" />
+    <meta property="og:description" content="Architecture and code walkthrough for Minimalists, a minimalist RTS with AI-driven node control. Unity + C#." />
+    <meta property="og:image" content="/oliver.webp" />
+    <meta property="og:url" content="https://oliverneal.dev/minimalists.html" />
+    <link rel="icon" href="/oliver.webp" type="image/webp" />
+
+    <!-- Fonts (fall back to system if blocked) -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Prism (syntax highlighting + toolbar/copy) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+
     <style>
         :root {
-            --bg: #121212;
-            --bg-alt: #1e1e1e;
-            --text: #e0e0e0;
-            --accent: #ffa500;
-            --border: #333;
+            /* colours tuned to match your portfolio’s dark, warm accent look */
+            --bg: #0b0f14;
+            --bg-elev: #121821;
+            --bg-elev-2: #0f141b;
+            --text: #e6e9ee;
+            --muted: #9aa4b2;
+            --border: #1f2a37;
+            --accent: #ffa500; /* warm orange used across your site */
+            --accent-2: #ffb547;
+            --shadow: 0 10px 25px rgba(0,0,0,.35);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --code-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
             margin: 0;
-            padding-bottom: 4rem;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+            background: radial-gradient(1200px 800px at 20% -10%, rgba(255,165,0,.08), transparent 60%), var(--bg);
+            color: var(--text);
+            line-height: 1.75;
         }
-        a { color: var(--accent); }
-        header {
-            background: #1a1a1a;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+
+        /* Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: saturate(140%) blur(8px);
+            background: linear-gradient(to right, rgba(11,15,20,.85), rgba(11,15,20,.65));
+            border-bottom: 1px solid var(--border);
         }
-        header a {
-            color: #fff;
+
+        .nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: .85rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .crumb {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            color: var(--muted);
             text-decoration: none;
             font-weight: 600;
-        }
-        main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-        h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-        section { margin-top: 2rem; }
-        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
-        th { background: var(--bg-alt); }
-        tr:nth-child(even) { background: #1b1b1b; }
-        details { margin-top: 1rem; }
-        details summary {
-            cursor: pointer;
-            font-weight: bold;
-            background: var(--bg-alt);
-            padding: 0.5rem;
-            border-radius: 4px;
-        }
-        pre {
-            background: var(--bg-alt);
-            padding: 1rem;
-            border-radius: 4px;
-            overflow-x: auto;
-        }
-        img {
-            width: 100%;
-            max-width: 800px;
             border: 1px solid var(--border);
-            border-radius: 4px;
+            padding: .5rem .75rem;
+            border-radius: 999px;
+            transition: all .2s ease;
+            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+        }
+
+            .crumb:hover {
+                color: var(--text);
+                border-color: #2a3646;
+                transform: translateY(-1px);
+            }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255,165,0,.15);
+        }
+
+        /* Page shell */
+        .wrap {
+            max-width: 1100px;
+            margin: 1.25rem auto 4rem;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 1.75rem;
+        }
+
+        @media (max-width: 980px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            grid-column: 1 / -1;
+            background: linear-gradient(180deg, rgba(255,165,0,.07), rgba(255,165,0,.02));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: clamp(18px, 2vw, 28px);
+            box-shadow: var(--shadow);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .85rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            font-weight: 800;
+            background: rgba(255,165,0,.12);
+            border: 1px dashed rgba(255,165,0,.35);
+            padding: .35rem .6rem;
+            border-radius: 999px;
+        }
+
+        h1 {
+            font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+            line-height: 1.2;
+            margin: .6rem 0 .25rem;
+        }
+
+        .lead {
+            color: var(--muted);
+            max-width: 70ch;
+        }
+
+        /* CTAs */
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-top: .9rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 12px;
+            padding: .7rem .9rem;
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
+            color: var(--text);
+            transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+        }
+
+            .btn:hover {
+                transform: translateY(-1px);
+                border-color: #2a3646;
+            }
+
+            .btn.accent {
+                background: linear-gradient(180deg, rgba(255,165,0,.92), rgba(255,165,0,.75));
+                color: #0a0a0a;
+                border-color: rgba(255,165,0,.9);
+                box-shadow: 0 10px 24px rgba(255,165,0,.18), inset 0 1px 0 rgba(255,255,255,.4);
+            }
+
+                .btn.accent:hover {
+                    transform: translateY(-1.5px) scale(1.01);
+                }
+
+        /* Sidebar (TOC) */
+        aside {
+            position: sticky;
+            top: 70px;
+            height: fit-content;
+            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+        }
+
+        .toc-title {
+            font-weight: 800;
+            letter-spacing: .02em;
+            font-size: .95rem;
+            margin: .25rem 0 .6rem;
+        }
+
+        .toc {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: .4rem;
+        }
+
+            .toc a {
+                color: var(--muted);
+                text-decoration: none;
+                font-weight: 600;
+                border-radius: 8px;
+                padding: .35rem .5rem;
+                display: block;
+            }
+
+                .toc a:hover, .toc a.is-active {
+                    background: #151c25;
+                    color: var(--text);
+                }
+
+            .toc small {
+                font-size: .75rem;
+                opacity: .8;
+            }
+
+        /* Content */
+        main {
+            display: grid;
+            gap: 1.4rem;
+        }
+
+        section {
+            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: clamp(14px, 1.8vw, 20px);
+        }
+
+        h2 {
+            font-size: clamp(1.15rem, 2vw, 1.35rem);
+            margin: .2rem 0 .75rem;
+            padding-bottom: .45rem;
+            border-bottom: 1px dashed #233041;
+        }
+
+        h3 {
+            margin: .75rem 0 .35rem;
+            font-size: 1.05rem;
+        }
+
+        /* Media */
+        figure {
+            margin: .4rem 0 0;
+        }
+
+            figure img {
+                width: 100%;
+                height: auto;
+                border-radius: var(--radius-sm);
+                border: 1px solid var(--border);
+                background: #0c1117;
+            }
+
+        figcaption {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: .35rem;
+        }
+
+        /* Table */
+        .table-wrap {
+            overflow: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 560px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #223042;
+            padding: .7rem .75rem;
+            text-align: left;
+        }
+
+        th {
+            background: #121b26;
+            font-weight: 800;
+            letter-spacing: .02em;
+        }
+
+        tr:nth-child(even) td {
+            background: #0f1620;
+        }
+
+        /* Details */
+        details {
+            margin-top: .6rem;
+        }
+
+            details > summary {
+                list-style: none;
+                cursor: pointer;
+                user-select: none;
+                font-weight: 800;
+                padding: .55rem .7rem;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: #101722;
+                display: flex;
+                align-items: center;
+                gap: .6rem;
+            }
+
+            details[open] > summary {
+                border-color: #2a3646;
+                background: #0f1620;
+            }
+
+            details > summary::before {
+                content: "▸";
+                display: inline-block;
+                transform: translateY(-1px);
+                transition: transform .15s ease;
+                color: var(--accent);
+            }
+
+            details[open] > summary::before {
+                transform: rotate(90deg) translateX(1px);
+            }
+
+        /* Code */
+        pre[class*="language-"] {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #0b1118 !important;
+            font-family: var(--code-font);
+            font-size: .92rem;
+        }
+
+        .code-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--code-font);
+            padding: .5rem .75rem;
+            border: 1px solid var(--border);
+            border-radius: 10px 10px 0 0;
+            background: linear-gradient(180deg, #0f1520, #0b1118);
+            color: var(--muted);
+            font-size: .85rem;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            border-radius: 999px;
+            padding: .25rem .55rem;
+            font-weight: 700;
+            font-size: .78rem;
+            border: 1px solid var(--border);
+            background: #121a24;
+            color: var(--muted);
+        }
+
+            .pill .dot {
+                width: 8px;
+                height: 8px;
+            }
+
+        /* Small utilities */
+        .muted {
+            color: var(--muted);
+        }
+
+        .kbd {
+            font-family: var(--code-font);
+            font-weight: 700;
+            background: #121b24;
+            border: 1px solid var(--border);
+            padding: .1rem .35rem;
+            border-radius: 6px;
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width:860px) {
+            .split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Back-to-top */
+        .top {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 40;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #101722;
+            color: var(--text);
+            padding: .6rem .7rem;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            display: inline-flex;
+            gap: .5rem;
+            align-items: center;
+            opacity: .9;
+            transition: transform .12s ease, opacity .12s ease;
+        }
+
+            .top:hover {
+                transform: translateY(-2px);
+                opacity: 1;
+            }
+
+        /* Print */
+        @media print {
+            .site-header, aside, .top {
+                display: none !important;
+            }
+
+            .wrap {
+                display: block;
+            }
+
+            section {
+                break-inside: avoid;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            a {
+                color: black;
+            }
         }
     </style>
 </head>
 <body>
-<header><a href="index.html">← Back to Portfolio</a></header>
-<main>
-    <h1>Minimalists – AI & Node Control</h1>
-    <p class="overview">A minimalist real-time strategy prototype where houses, turrets and helipads collaborate through dynamic node control and streamlined AI. Built with Unity and data-driven ScriptableObjects to stay highly moddable and fast.</p>
 
-    <section id="architecture">
-        <h2>Architecture</h2>
-        <p>Core systems are divided between client input, game loop and combat/economy services.</p>
-        <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" />
-        <h3>Unit Command Sequence</h3>
-        <img src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram" />
-    </section>
+    <!-- Header / breadcrumb (matches portfolio vibe) -->
+    <header class="site-header">
+        <nav class="nav" aria-label="Breadcrumb">
+            <a class="crumb" href="/index.html">← Back to Portfolio</a>
+            <span class="crumb" aria-current="page"><span class="dot"></span> Minimalists – Codebase Breakdown</span>
+        </nav>
+    </header>
 
-    <section id="data-model">
-        <h2>Data Model</h2>
-        <table>
-            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
-            <tr><td>constructName</td><td>string</td><td>Display name of the structure</td></tr>
-            <tr><td>upgradeCost</td><td>int</td><td>Units required to upgrade</td></tr>
-            <tr><td>maxUnitCapacity</td><td>int</td><td>Population provided by this construct</td></tr>
-            <tr><td>unitsPerSecond</td><td>float</td><td>Passive unit generation rate</td></tr>
-        </table>
-        <p>The game leans on data-driven ScriptableObjects so designers can tune balance without touching code.</p>
-    </section>
+    <div class="wrap">
+        <!-- Sticky TOC -->
+        <aside aria-label="On this page">
+            <div class="toc-title">On this page</div>
+            <ul class="toc" id="toc"></ul>
+            <div style="margin-top:.8rem;" class="muted"><small>Tip: press <span class="kbd">/</span> in your browser to search.</small></div>
+        </aside>
 
-    <section id="apis">
-        <h2>Key APIs / Contracts</h2>
-        <pre><code class="language-csharp">public class GameManager : MonoBehaviour
+        <main id="content">
+            <!-- Hero -->
+            <section class="hero">
+                <span class="eyebrow">Featured System</span>
+                <h1>Minimalists – AI &amp; Node Control</h1>
+                <p class="lead">A minimalist real-time strategy prototype where houses, turrets and helipads collaborate through dynamic node control and streamlined AI. Built with Unity and data-driven ScriptableObjects to stay highly moddable and fast.</p>
+                <div class="cta-row">
+                    <a class="btn accent" href="https://embitgames.itch.io/minimalists" target="_blank" rel="noopener">▶ Play in Browser</a>
+                    <a class="btn" href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener">GitHub Repository</a>
+                    <a class="btn" href="#architecture">Jump to Architecture</a>
+                </div>
+            </section>
+
+            <!-- Architecture -->
+            <section id="architecture">
+                <h2>Architecture</h2>
+                <p>Core systems are divided between client input, game loop and combat/economy services.</p>
+
+                <div class="split">
+                    <figure>
+                        <img src="docs/diagrams/minimalists-architecture.svg" alt="High-level systems architecture for Minimalists" loading="lazy" />
+                        <figcaption>High-level systems overview.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram showing unit command flow" loading="lazy" />
+                        <figcaption>Unit command sequence from input → pathing → resolution.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- Data Model -->
+            <section id="data-model">
+                <h2>Data Model</h2>
+                <div class="table-wrap" role="region" aria-label="Data model fields" tabindex="0">
+                    <table>
+                        <thead>
+                            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>constructName</code></td><td>string</td><td>Display name of the structure</td></tr>
+                            <tr><td><code>upgradeCost</code></td><td>int</td><td>Units required to upgrade</td></tr>
+                            <tr><td><code>maxUnitCapacity</code></td><td>int</td><td>Population provided by this construct</td></tr>
+                            <tr><td><code>unitsPerSecond</code></td><td>float</td><td>Passive unit generation rate</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="muted">The game leans on data-driven <em>ScriptableObjects</em> so designers can tune balance without touching code.</p>
+            </section>
+
+            <!-- APIs / Contracts -->
+            <section id="apis">
+                <h2>Key APIs / Contracts</h2>
+
+                <div class="code-head"><span class="pill"><span class="dot"></span> API</span> <span>Game Manager</span></div>
+                <pre class="language-csharp"><code class="language-csharp">public class GameManager : MonoBehaviour
 {
     public void registerUnit(UnitController unit);
     public void unregisterUnit(UnitController unit);
 }</code></pre>
-        <pre><code class="language-csharp">public static class AStarPathfinder
+
+                <div class="code-head"><span class="pill"><span class="dot"></span> Utility</span> <span>A* Pathfinder</span></div>
+                <pre class="language-csharp"><code class="language-csharp">public static class AStarPathfinder
 {
     public static List&lt;Vector3&gt; FindPath(Vector3 startPosition, Vector3 endPosition,
         IEnumerable&lt;Transform&gt; obstacles, float agentRadius);
 }</code></pre>
-        <pre><code class="language-csharp">public class ConstructController : MonoBehaviour
+
+                <div class="code-head"><span class="pill"><span class="dot"></span> Gameplay</span> <span>Construct Controller</span></div>
+                <pre class="language-csharp"><code class="language-csharp">public class ConstructController : MonoBehaviour
 {
     public void SendUnits(ConstructController target, float percentage);
 }</code></pre>
-    </section>
+            </section>
 
-    <section id="snippets">
-        <h2>Representative Code Snippets</h2>
-        <p><strong>Map analysis assigns roles to each node</strong> – uses distance percentages to classify frontline, support and economic nodes.</p>
-        <details>
-            <summary>Show code</summary>
-            <pre><code class="language-csharp">@AIManager7.cs lines 66-103
+            <!-- Snippets -->
+            <section id="snippets">
+                <h2>Representative Code Snippets</h2>
+
+                <p><strong>Map analysis assigns roles to each node</strong> – uses distance percentages to classify frontline, support and economic nodes.</p>
+                <details>
+                    <summary>Show code</summary>
+                    <div class="code-head"><span class="pill"><span class="dot"></span> AI</span> <span>@AIManager7.cs lines 66–103</span></div>
+                    <pre class="language-csharp"><code class="language-csharp">@AIManager7.cs lines 66-103
 private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
 {
     nodeRoles.Clear();
@@ -134,7 +588,7 @@ private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
     int nodeCount = sortedNodes.Count;
     // Designate roles by percentage: closest 30% are Frontline, next 40% are Support, rest are Economic.
     int frontlineCount = Mathf.Max(1, Mathf.CeilToInt(nodeCount * 0.3f));
-    int supportCount = Mathf.CeilToInt(nodeCount * 0.4f);
+    int supportCount = Mathf.CeilToInt(nodeCount * 0.4f));
 
     for (int i = 0; i &lt; nodeCount; i++)
     {
@@ -153,13 +607,14 @@ private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
         }
     }
 }</code></pre>
-        </details>
-        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AIManager7.cs#L66-L103" target="_blank">View on GitHub (lines 66–103)</a></p>
+                </details>
+                <p><a class="btn" href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AIManager7.cs#L66-L103" target="_blank" rel="noopener">View on GitHub (lines 66–103)</a></p>
 
-        <p><strong>A* pathfinder core loop</strong> – processes open and closed sets with line‑of‑sight shortcut.</p>
-        <details>
-            <summary>Show code</summary>
-            <pre><code class="language-csharp">@AStarPathfinder.cs lines 30-70
+                <p><strong>A* pathfinder core loop</strong> – processes open and closed sets with line-of-sight shortcut.</p>
+                <details>
+                    <summary>Show code</summary>
+                    <div class="code-head"><span class="pill"><span class="dot"></span> Pathfinding</span> <span>@AStarPathfinder.cs lines 30–70</span></div>
+                    <pre class="language-csharp"><code class="language-csharp">@AStarPathfinder.cs lines 30-70
 openSet.Add(startNode);
 
 while (openSet.Count &gt; 0)
@@ -205,13 +660,14 @@ while (openSet.Count &gt; 0)
         }
     }
 }</code></pre>
-        </details>
-        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L30-L70" target="_blank">View on GitHub (lines 30–70)</a></p>
+                </details>
+                <p><a class="btn" href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L30-L70" target="_blank" rel="noopener">View on GitHub (lines 30–70)</a></p>
 
-        <p><strong>Streaming units between nodes</strong> – validates targets and spawns units along the navmesh.</p>
-        <details>
-            <summary>Show code</summary>
-            <pre><code class="language-csharp">@ConstructController.cs lines 415-450
+                <p><strong>Streaming units between nodes</strong> – validates targets and spawns units along the navmesh.</p>
+                <details>
+                    <summary>Show code</summary>
+                    <div class="code-head"><span class="pill"><span class="dot"></span> Gameplay</span> <span>@ConstructController.cs lines 415–450</span></div>
+                    <pre class="language-csharp"><code class="language-csharp">@ConstructController.cs lines 415-450
 public void SendUnits(ConstructController target, float percentage)
 {
     bool isValidTarget = true;
@@ -248,30 +704,79 @@ public void SendUnits(ConstructController target, float percentage)
         }
     }
 }</code></pre>
-        </details>
-        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L450" target="_blank">View on GitHub (lines 415–450)</a></p>
-    </section>
+                </details>
+                <p><a class="btn" href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L450" target="_blank" rel="noopener">View on GitHub (lines 415–450)</a></p>
+            </section>
 
-    <section id="performance">
-        <h2>Performance Notes</h2>
-        <p>Profiling is ongoing and formal benchmarks are not yet published.</p>
-    </section>
+            <!-- Performance -->
+            <section id="performance">
+                <h2>Performance Notes</h2>
+                <p>Profiling is ongoing and formal benchmarks are not yet published.</p>
+            </section>
 
-    <section id="testing">
-        <h2>Testing & Validation</h2>
-        <p>Currently verified through manual playtesting; no automated tests are in place.</p>
-    </section>
+            <!-- Testing -->
+            <section id="testing">
+                <h2>Testing &amp; Validation</h2>
+                <p>Currently verified through manual playtesting; no automated tests are in place.</p>
+            </section>
 
-    <section id="tradeoffs">
-        <h2>Trade-offs & Next Steps</h2>
-        <ul>
-            <li>Finite state AI is easy to reason about; behavior trees could scale variety later.</li>
-            <li>Custom pathfinder avoids heavy NavMesh but lacks dynamic obstacle support.</li>
-            <li>Data-driven design simplifies tuning yet requires editor diligence to avoid invalid combos.</li>
-        </ul>
-    </section>
-</main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+            <!-- Tradeoffs -->
+            <section id="tradeoffs">
+                <h2>Trade-offs &amp; Next Steps</h2>
+                <ul>
+                    <li>Finite state AI is easy to reason about; behavior trees could scale variety later.</li>
+                    <li>Custom pathfinder avoids heavy NavMesh but lacks dynamic obstacle support.</li>
+                    <li>Data-driven design simplifies tuning yet requires editor diligence to avoid invalid combos.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <a class="top" href="#content" aria-label="Back to top">↑ Top</a>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+    <script>
+        // Build a simple TOC from h2/h3
+        (function () {
+            const headings = [...document.querySelectorAll('main h2, main h3')];
+            const toc = document.getElementById('toc');
+            const slug = s => s.toLowerCase().trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            headings.forEach(h => {
+                if (!h.id) { h.id = slug(h.textContent); }
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${h.id}`;
+                a.textContent = h.textContent;
+                if (h.tagName === 'H3') {
+                    const sm = document.createElement('small');
+                    sm.textContent = h.textContent;
+                    a.innerHTML = '<small>' + a.textContent + '</small>';
+                }
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+
+            // Scroll spy (very lightweight)
+            const opts = { rootMargin: '-40% 0px -55% 0px', threshold: 0 };
+            const links = [...toc.querySelectorAll('a')];
+            const map = new Map(headings.map(h => [h.id, links.find(l => l.getAttribute('href') === '#' + h.id)]));
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    const l = map.get(e.target.id);
+                    if (!l) return;
+                    if (e.isIntersecting) { links.forEach(x => x.classList.remove('is-active')); l.classList.add('is-active'); }
+                });
+            }, opts);
+            headings.forEach(h => obs.observe(h));
+        })();
+    </script>
 </body>
 </html>
