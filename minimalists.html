@@ -2,45 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Minimalists – Codebase Breakdown</title>
-
-    <!-- Meta / Social -->
-    <meta name="description" content="Architecture and code walkthrough for Minimalists, a minimalist RTS with AI-driven node control. Unity + C#." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Minimalists – AI & Node Control" />
-    <meta property="og:description" content="Architecture and code walkthrough for Minimalists, a minimalist RTS with AI-driven node control. Unity + C#." />
-    <meta property="og:image" content="/oliver.webp" />
+    <meta property="og:image" content="https://oliverneal.dev/oliver.webp" />
+    <meta property="og:title" content="Minimalists – Codebase Breakdown" />
+    <meta property="og:description" content="A cohesive, portfolio-styled breakdown of the Minimalists RTS codebase: architecture, data model, key APIs, representative snippets, and technical notes." />
     <meta property="og:url" content="https://oliverneal.dev/minimalists.html" />
-    <link rel="icon" href="/oliver.webp" type="image/webp" />
+    <title>Minimalists – Codebase Breakdown</title>
+    <link rel="icon" href="oliver.webp" type="image/webp">
 
-    <!-- Fonts (fall back to system if blocked) -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
-
-    <!-- Prism (syntax highlighting + toolbar/copy) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
-
+    <!-- Fonts & Prism (match portfolio) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
     <style>
         :root {
-            /* colours tuned to match your portfolio’s dark, warm accent look */
-            --bg: #0b0f14;
-            --bg-elev: #121821;
-            --bg-elev-2: #0f141b;
-            --text: #e6e9ee;
-            --muted: #9aa4b2;
-            --border: #1f2a37;
-            --accent: #ffa500; /* warm orange used across your site */
-            --accent-2: #ffb547;
-            --shadow: 0 10px 25px rgba(0,0,0,.35);
-            --radius: 14px;
-            --radius-sm: 10px;
-            --code-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #FFA500;
+            --secondary-color: #ff69b4;
+            --header-bg: #222;
+            --border-color: #444;
+            --font-family: 'Roboto', sans-serif;
+            --light-bg: #1e1e1e;
+            --card-bg: #1e1e1e;
+            --button-bg: #333;
+            --button-hover-bg: #555;
+            --button-text-color: #fff;
+            --button-accent-text-color: #ffffff;
+            --main-gradient: linear-gradient(90deg, #FFA500, #FF4500);
+            --icon-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --text-secondary-color: #aaa;
+            --project-link-icon-filter: none;
+            --link-icon-color: #e0e0e0;
+            --message-box-bg: #2a2a2a;
+            --message-box-border: #555;
+            --message-box-text: #e0e0e0;
+            --message-box-button-bg: #444;
+            --message-box-button-hover-bg: #666;
+            --message-box-overlay-bg: rgba(0, 0, 0, 0.7);
         }
 
+        .light-theme {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --accent-color: #FFA500;
+            --header-bg: #f5f5f5;
+            --border-color: #ddd;
+            --light-bg: #fefefe;
+            --card-bg: #ffffff;
+            --button-bg: #eee;
+            --button-hover-bg: #ddd;
+            --button-text-color: #333;
+            --button-accent-text-color: #ffffff;
+            --main-gradient: linear-gradient(90deg, #FFA500, #FF4500);
+            --icon-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --text-secondary-color: #555;
+            --project-link-icon-filter: none;
+            --link-icon-color: #333333;
+            --message-box-bg: #ffffff;
+            --message-box-border: #ccc;
+            --message-box-text: #333333;
+            --message-box-button-bg: #eee;
+            --message-box-button-hover-bg: #ddd;
+            --message-box-overlay-bg: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Base (match portfolio) */
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
@@ -49,528 +84,604 @@
         }
 
         body {
-            margin: 0;
-            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-            background: radial-gradient(1200px 800px at 20% -10%, rgba(255,165,0,.08), transparent 60%), var(--bg);
-            color: var(--text);
-            line-height: 1.75;
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Header */
-        .site-header {
-            position: sticky;
+        h1, h2, h3 {
+            color: var(--text-color);
+        }
+
+        /* Header / Nav (identical) */
+        header {
+            position: fixed;
             top: 0;
-            z-index: 50;
-            backdrop-filter: saturate(140%) blur(8px);
-            background: linear-gradient(to right, rgba(11,15,20,.85), rgba(11,15,20,.65));
-            border-bottom: 1px solid var(--border);
+            left: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            color: var(--text-color);
+            padding: 0.75rem 0;
+            z-index: 999;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: background-color 0.3s ease;
         }
 
-        .nav {
+        .nav-container {
+            width: 90%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: .85rem 1rem;
             display: flex;
             align-items: center;
-            gap: .75rem;
+            justify-content: space-between;
+            flex-wrap: nowrap;
         }
 
-        .crumb {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            color: var(--muted);
-            text-decoration: none;
-            font-weight: 600;
-            border: 1px solid var(--border);
-            padding: .5rem .75rem;
-            border-radius: 999px;
-            transition: all .2s ease;
-            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
-        }
-
-            .crumb:hover {
-                color: var(--text);
-                border-color: #2a3646;
-                transform: translateY(-1px);
-            }
-
-        .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 999px;
-            background: var(--accent);
-            box-shadow: 0 0 0 3px rgba(255,165,0,.15);
-        }
-
-        /* Page shell */
-        .wrap {
-            max-width: 1100px;
-            margin: 1.25rem auto 4rem;
-            padding: 0 1rem;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 1.75rem;
-        }
-
-        @media (max-width: 980px) {
-            .wrap {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Hero */
-        .hero {
-            grid-column: 1 / -1;
-            background: linear-gradient(180deg, rgba(255,165,0,.07), rgba(255,165,0,.02));
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: clamp(18px, 2vw, 28px);
-            box-shadow: var(--shadow);
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            font-size: .85rem;
-            letter-spacing: .04em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-            font-weight: 800;
-            background: rgba(255,165,0,.12);
-            border: 1px dashed rgba(255,165,0,.35);
-            padding: .35rem .6rem;
-            border-radius: 999px;
-        }
-
-        h1 {
-            font-size: clamp(1.6rem, 2.6vw, 2.4rem);
-            line-height: 1.2;
-            margin: .6rem 0 .25rem;
-        }
-
-        .lead {
-            color: var(--muted);
-            max-width: 70ch;
-        }
-
-        /* CTAs */
-        .cta-row {
+        .logo-and-icons {
             display: flex;
-            flex-wrap: wrap;
-            gap: .6rem;
-            margin-top: .9rem;
-        }
-
-        .btn {
-            display: inline-flex;
             align-items: center;
-            gap: .6rem;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 12px;
-            padding: .7rem .9rem;
-            border: 1px solid var(--border);
-            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
-            color: var(--text);
-            transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+            gap: 1rem;
+            flex-shrink: 0;
         }
 
-            .btn:hover {
-                transform: translateY(-1px);
-                border-color: #2a3646;
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            white-space: nowrap;
+            color: var(--text-color);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+            .nav-icons a {
+                display: block;
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
             }
 
-            .btn.accent {
-                background: linear-gradient(180deg, rgba(255,165,0,.92), rgba(255,165,0,.75));
-                color: #0a0a0a;
-                border-color: rgba(255,165,0,.9);
-                box-shadow: 0 10px 24px rgba(255,165,0,.18), inset 0 1px 0 rgba(255,255,255,.4);
+            .nav-icons img {
+                display: block;
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+                transition: opacity 0.2s ease, filter 0.3s ease;
             }
 
-                .btn.accent:hover {
-                    transform: translateY(-1.5px) scale(1.01);
+                .nav-icons img:hover {
+                    opacity: 0.7;
                 }
 
-        /* Sidebar (TOC) */
-        aside {
-            position: sticky;
-            top: 70px;
-            height: fit-content;
-            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1rem;
+        .light-theme .nav-icons a[href*="github.com/OliverNealDev"] img {
+            filter: invert(1);
         }
 
-        .toc-title {
-            font-weight: 800;
-            letter-spacing: .02em;
-            font-size: .95rem;
-            margin: .25rem 0 .6rem;
+        nav {
+            margin-left: auto;
+            margin-right: 1rem;
+            text-align: right;
         }
 
-        .toc {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: .4rem;
-        }
+            nav ul {
+                list-style: none;
+                display: inline-flex;
+                gap: 1.2rem;
+                align-items: center;
+                justify-content: flex-end;
+                flex-wrap: nowrap;
+                padding: 0;
+                margin: 0;
+            }
 
-            .toc a {
-                color: var(--muted);
+            nav a {
+                color: var(--text-color);
                 text-decoration: none;
-                font-weight: 600;
-                border-radius: 8px;
-                padding: .35rem .5rem;
+                font-weight: bold;
+                transition: none;
+                padding: 0.2rem 0;
+                white-space: nowrap;
+            }
+
+                nav a.active-nav, nav a:hover {
+                    background: var(--main-gradient);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    color: transparent;
+                }
+
+        .theme-toggle {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-checkbox {
+            --toggle-size: 10px;
+            appearance: none;
+            width: 3.75em;
+            height: 1.875em;
+            background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+            background-size: 205%;
+            background-position: 0;
+            transition: 0.4s;
+            border-radius: 99em;
+            position: relative;
+            cursor: pointer;
+            font-size: var(--toggle-size);
+            border: 1px solid var(--border-color);
+            display: block;
+        }
+
+            .theme-checkbox::before {
+                content: "";
+                width: 1.35em;
+                height: 1.35em;
+                position: absolute;
+                top: 0.263em;
+                left: 0.263em;
+                background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+                background-size: 205%;
+                background-position: 100%;
+                border-radius: 50%;
+                transition: 0.4s;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            }
+
+            .theme-checkbox:checked::before {
+                left: calc(100% - 1.35em - 0.263em);
+                background-position: 0;
+            }
+
+            .theme-checkbox:checked {
+                background-position: 100%;
+            }
+
+        /* Main container (identical sizing) */
+        main {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 100px;
+        }
+
+        /* Utility from portfolio */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        /* Local page styles to match card look */
+        .page-hero {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary-color);
+        }
+
+            .breadcrumb a {
+                color: var(--text-color);
+                text-decoration: none;
+                border-bottom: 1px dashed transparent;
+            }
+
+                .breadcrumb a:hover {
+                    border-bottom-color: var(--accent-color);
+                    background: var(--main-gradient);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    color: transparent;
+                }
+
+        .page-title h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .page-sub {
+            color: var(--text-secondary-color);
+        }
+
+        .doc-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+
+            .doc-actions a {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 0.45rem 0.8rem;
+                background: var(--button-bg);
+                color: var(--button-text-color);
+                text-decoration: none;
+                border-radius: 4px;
+                border: 1px solid transparent;
+                font-size: 0.9rem;
+            }
+
+                .doc-actions a:hover {
+                    background: var(--button-hover-bg);
+                    border-color: var(--accent-color);
+                }
+
+            .doc-actions img, .doc-actions svg {
+                width: 16px;
+                height: 16px;
+                vertical-align: middle;
+            }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .doc-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            padding: 1.25rem;
+        }
+
+            .doc-card h2 {
+                font-size: 1.4rem;
+                margin: 0 0 0.75rem 0;
+                border-bottom: 2px solid var(--border-color);
+                padding-bottom: 0.5rem;
+            }
+
+            .doc-card h3 {
+                font-size: 1.1rem;
+                margin: 1rem 0 0.5rem;
+            }
+
+        .doc-figure {
+            margin: 0.75rem 0 0;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            background: #000;
+        }
+
+            .doc-figure img {
+                width: 100%;
+                height: auto;
                 display: block;
             }
 
-                .toc a:hover, .toc a.is-active {
-                    background: #151c25;
-                    color: var(--text);
-                }
-
-            .toc small {
-                font-size: .75rem;
-                opacity: .8;
+            .doc-figure figcaption {
+                font-size: 0.9rem;
+                color: var(--text-secondary-color);
+                padding: 0.5rem 0.75rem;
+                background: var(--header-bg);
+                border-top: 1px solid var(--border-color);
             }
 
-        /* Content */
-        main {
-            display: grid;
-            gap: 1.4rem;
-        }
-
-        section {
-            background: linear-gradient(180deg, var(--bg-elev), var(--bg-elev-2));
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: clamp(14px, 1.8vw, 20px);
-        }
-
-        h2 {
-            font-size: clamp(1.15rem, 2vw, 1.35rem);
-            margin: .2rem 0 .75rem;
-            padding-bottom: .45rem;
-            border-bottom: 1px dashed #233041;
-        }
-
-        h3 {
-            margin: .75rem 0 .35rem;
-            font-size: 1.05rem;
-        }
-
-        /* Media */
-        figure {
-            margin: .4rem 0 0;
-        }
-
-            figure img {
-                width: 100%;
-                height: auto;
-                border-radius: var(--radius-sm);
-                border: 1px solid var(--border);
-                background: #0c1117;
-            }
-
-        figcaption {
-            color: var(--muted);
-            font-size: .85rem;
-            margin-top: .35rem;
-        }
-
-        /* Table */
-        .table-wrap {
-            overflow: auto;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
+        /* Tables styled like site */
+        .doc-table-wrapper {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 560px;
+            margin-top: 0.5rem;
+            border: 1px solid var(--border-color);
         }
 
         th, td {
-            border-bottom: 1px solid #223042;
-            padding: .7rem .75rem;
+            padding: 0.75rem;
             text-align: left;
+            border-top: 1px solid var(--border-color);
         }
 
         th {
-            background: #121b26;
-            font-weight: 800;
-            letter-spacing: .02em;
+            background: var(--light-bg);
+            font-weight: 700;
         }
 
         tr:nth-child(even) td {
-            background: #0f1620;
+            background: rgba(255,255,255,0.02);
         }
 
-        /* Details */
+        /* <details> */
         details {
-            margin-top: .6rem;
+            margin-top: 0.75rem;
         }
 
-            details > summary {
-                list-style: none;
+            details summary {
                 cursor: pointer;
-                user-select: none;
-                font-weight: 800;
-                padding: .55rem .7rem;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                background: #101722;
-                display: flex;
-                align-items: center;
-                gap: .6rem;
+                font-weight: 600;
+                background: var(--light-bg);
+                padding: 0.6rem 0.75rem;
+                border: 1px solid var(--border-color);
+                border-radius: 6px;
             }
 
-            details[open] > summary {
-                border-color: #2a3646;
-                background: #0f1620;
+            details[open] summary {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
             }
 
-            details > summary::before {
-                content: "▸";
-                display: inline-block;
-                transform: translateY(-1px);
-                transition: transform .15s ease;
-                color: var(--accent);
-            }
-
-            details[open] > summary::before {
-                transform: rotate(90deg) translateX(1px);
-            }
-
-        /* Code */
+        /* Prism tweaks to match card bg */
         pre[class*="language-"] {
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: #0b1118 !important;
-            font-family: var(--code-font);
-            font-size: .92rem;
-        }
-
-        .code-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--code-font);
-            padding: .5rem .75rem;
-            border: 1px solid var(--border);
-            border-radius: 10px 10px 0 0;
-            background: linear-gradient(180deg, #0f1520, #0b1118);
-            color: var(--muted);
-            font-size: .85rem;
-        }
-
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: .45rem;
-            border-radius: 999px;
-            padding: .25rem .55rem;
-            font-weight: 700;
-            font-size: .78rem;
-            border: 1px solid var(--border);
-            background: #121a24;
-            color: var(--muted);
-        }
-
-            .pill .dot {
-                width: 8px;
-                height: 8px;
-            }
-
-        /* Small utilities */
-        .muted {
-            color: var(--muted);
-        }
-
-        .kbd {
-            font-family: var(--code-font);
-            font-weight: 700;
-            background: #121b24;
-            border: 1px solid var(--border);
-            padding: .1rem .35rem;
+            background: var(--card-bg) !important;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
+            box-shadow: inset 0 0 0 rgba(0,0,0,0);
+            padding: 1rem !important;
         }
 
-        .split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        code[class*="language-"] {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
         }
 
-        @media (max-width:860px) {
-            .split {
-                grid-template-columns: 1fr;
+        /* Section anchor bar (local TOC) */
+        .doc-toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.6rem;
+        }
+
+            .doc-toc a {
+                font-size: 0.9rem;
+                text-decoration: none;
+                color: var(--text-color);
+                padding: 0.35rem 0.6rem;
+                border-radius: 4px;
+                border: 1px solid transparent;
+                background: var(--button-bg);
+            }
+
+                .doc-toc a:hover {
+                    background: var(--button-hover-bg);
+                    border-color: var(--accent-color);
+                }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive (match portfolio breakpoints) */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.5rem 1rem;
+                justify-content: space-between;
+            }
+
+            nav {
+                margin-left: 0;
+                margin-right: 0;
+                text-align: left;
+                width: 100%;
+                order: 3;
+                flex-basis: 100%;
+            }
+
+                nav ul {
+                    justify-content: flex-start;
+                    gap: 0.8rem;
+                    flex-wrap: wrap;
+                    display: flex;
+                }
+
+            .theme-toggle {
+                order: 2;
+            }
+
+            main {
+                padding-top: 120px;
             }
         }
 
-        /* Back-to-top */
-        .top {
-            position: fixed;
-            right: 18px;
-            bottom: 18px;
-            z-index: 40;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: #101722;
-            color: var(--text);
-            padding: .6rem .7rem;
-            text-decoration: none;
-            box-shadow: var(--shadow);
-            display: inline-flex;
-            gap: .5rem;
-            align-items: center;
-            opacity: .9;
-            transition: transform .12s ease, opacity .12s ease;
-        }
-
-            .top:hover {
-                transform: translateY(-2px);
-                opacity: 1;
+        @media (max-width: 600px) {
+            .nav-container {
+                gap: 0.5rem;
             }
 
-        /* Print */
-        @media print {
-            .site-header, aside, .top {
-                display: none !important;
+            nav ul {
+                gap: 0.5rem;
             }
 
-            .wrap {
-                display: block;
-            }
-
-            section {
-                break-inside: avoid;
-            }
-
-            body {
-                background: white;
-                color: black;
-            }
-
-            a {
-                color: black;
+            .page-title h1 {
+                font-size: 1.7rem;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- Header / breadcrumb (matches portfolio vibe) -->
-    <header class="site-header">
-        <nav class="nav" aria-label="Breadcrumb">
-            <a class="crumb" href="/index.html">← Back to Portfolio</a>
-            <span class="crumb" aria-current="page"><span class="dot"></span> Minimalists – Codebase Breakdown</span>
-        </nav>
+    <header>
+        <div class="nav-container">
+            <div class="logo-and-icons">
+                <div class="nav-logo">Oliver Neal</div>
+                <div class="nav-icons">
+                    <a href="https://github.com/OliverNealDev" target="_blank" title="GitHub">
+                        <img src="github-icon.webp" alt="GitHub" onerror="this.style.display='none'" loading="lazy" />
+                    </a>
+                    <a href="https://embitgames.itch.io" target="_blank" title="Itch.io">
+                        <img src="itch-icon.webp" alt="Itch.io" onerror="this.style.display='none'" loading="lazy" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" title="LinkedIn">
+                        <img src="linkedin-icon.webp" alt="LinkedIn" onerror="this.style.display='none'" loading="lazy" />
+                    </a>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <!-- Link back to anchors on the main portfolio for identical nav behavior -->
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#solo-projects" class="active-nav">Solo</a></li>
+                    <li><a href="index.html#team-projects">Team</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle">
+                <input type="checkbox" class="theme-checkbox" id="themeToggle" title="Toggle Theme">
+            </div>
+        </div>
     </header>
 
-    <div class="wrap">
-        <!-- Sticky TOC -->
-        <aside aria-label="On this page">
-            <div class="toc-title">On this page</div>
-            <ul class="toc" id="toc"></ul>
-            <div style="margin-top:.8rem;" class="muted"><small>Tip: press <span class="kbd">/</span> in your browser to search.</small></div>
-        </aside>
-
-        <main id="content">
-            <!-- Hero -->
-            <section class="hero">
-                <span class="eyebrow">Featured System</span>
+    <main>
+        <!-- HERO -->
+        <section class="page-hero reveal">
+            <div class="breadcrumb">
+                <span>←</span>
+                <a href="index.html#solo-projects" title="Back to Portfolio">Back to Portfolio</a>
+            </div>
+            <div class="page-title">
                 <h1>Minimalists – AI &amp; Node Control</h1>
-                <p class="lead">A minimalist real-time strategy prototype where houses, turrets and helipads collaborate through dynamic node control and streamlined AI. Built with Unity and data-driven ScriptableObjects to stay highly moddable and fast.</p>
-                <div class="cta-row">
-                    <a class="btn accent" href="https://embitgames.itch.io/minimalists" target="_blank" rel="noopener">▶ Play in Browser</a>
-                    <a class="btn" href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener">GitHub Repository</a>
-                    <a class="btn" href="#architecture">Jump to Architecture</a>
-                </div>
+                <p class="page-sub">Codebase Breakdown • Unity • ScriptableObjects • FSM AI • Custom A*</p>
+            </div>
+            <div class="doc-actions">
+                <a href="https://embitgames.itch.io/minimalists" target="_blank" title="Play in browser" class="itchio">
+                    <img src="itch-icon.webp" alt="Itch icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser
+                </a>
+                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" title="View GitHub" class="github">
+                    <img src="github-icon.webp" alt="GitHub icon" onerror="this.style.display='none'" loading="lazy" /> View on GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Local TOC -->
+        <nav class="doc-toc reveal" aria-label="On this page">
+            <a href="#overview">Overview</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#data-model">Data Model</a>
+            <a href="#apis">Key APIs</a>
+            <a href="#snippets">Code Snippets</a>
+            <a href="#performance">Performance</a>
+            <a href="#testing">Testing</a>
+            <a href="#tradeoffs">Trade-offs</a>
+        </nav>
+
+        <div class="doc-grid">
+            <!-- OVERVIEW -->
+            <section id="overview" class="doc-card reveal">
+                <h2>Overview</h2>
+                <p>
+                    A minimalist real-time strategy prototype where houses, turrets and helipads collaborate through dynamic node control and streamlined AI.
+                    Built with Unity and data-driven <strong>ScriptableObjects</strong> to stay highly moddable and fast.
+                </p>
             </section>
 
-            <!-- Architecture -->
-            <section id="architecture">
+            <!-- ARCHITECTURE -->
+            <section id="architecture" class="doc-card reveal">
                 <h2>Architecture</h2>
-                <p>Core systems are divided between client input, game loop and combat/economy services.</p>
+                <p>Core systems are divided between client input, game loop, and combat/economy services.</p>
+                <figure class="doc-figure">
+                    <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" loading="lazy" />
+                    <figcaption>High-level architecture</figcaption>
+                </figure>
 
-                <div class="split">
-                    <figure>
-                        <img src="docs/diagrams/minimalists-architecture.svg" alt="High-level systems architecture for Minimalists" loading="lazy" />
-                        <figcaption>High-level systems overview.</figcaption>
-                    </figure>
-                    <figure>
-                        <img src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram showing unit command flow" loading="lazy" />
-                        <figcaption>Unit command sequence from input → pathing → resolution.</figcaption>
-                    </figure>
-                </div>
+                <h3>Unit Command Sequence</h3>
+                <figure class="doc-figure">
+                    <img src="docs/diagrams/minimalists-sequence.svg" alt="Unit command sequence diagram" loading="lazy" />
+                    <figcaption>Sequence from input → validation → spawn/stream → resolve</figcaption>
+                </figure>
             </section>
 
-            <!-- Data Model -->
-            <section id="data-model">
+            <!-- DATA MODEL -->
+            <section id="data-model" class="doc-card reveal">
                 <h2>Data Model</h2>
-                <div class="table-wrap" role="region" aria-label="Data model fields" tabindex="0">
+                <p>The game leans on data-driven ScriptableObjects so designers can tune balance without touching code.</p>
+                <div class="doc-table-wrapper">
                     <table>
                         <thead>
                             <tr><th>Field</th><th>Type</th><th>Description</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>constructName</code></td><td>string</td><td>Display name of the structure</td></tr>
-                            <tr><td><code>upgradeCost</code></td><td>int</td><td>Units required to upgrade</td></tr>
-                            <tr><td><code>maxUnitCapacity</code></td><td>int</td><td>Population provided by this construct</td></tr>
-                            <tr><td><code>unitsPerSecond</code></td><td>float</td><td>Passive unit generation rate</td></tr>
+                            <tr><td>constructName</td><td>string</td><td>Display name of the structure</td></tr>
+                            <tr><td>upgradeCost</td><td>int</td><td>Units required to upgrade</td></tr>
+                            <tr><td>maxUnitCapacity</td><td>int</td><td>Population provided by this construct</td></tr>
+                            <tr><td>unitsPerSecond</td><td>float</td><td>Passive unit generation rate</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="muted">The game leans on data-driven <em>ScriptableObjects</em> so designers can tune balance without touching code.</p>
             </section>
 
-            <!-- APIs / Contracts -->
-            <section id="apis">
+            <!-- APIs / CONTRACTS -->
+            <section id="apis" class="doc-card reveal">
                 <h2>Key APIs / Contracts</h2>
 
-                <div class="code-head"><span class="pill"><span class="dot"></span> API</span> <span>Game Manager</span></div>
-                <pre class="language-csharp"><code class="language-csharp">public class GameManager : MonoBehaviour
+                <h3>Game Manager</h3>
+                <pre><code class="language-csharp">public class GameManager : MonoBehaviour
 {
     public void registerUnit(UnitController unit);
     public void unregisterUnit(UnitController unit);
 }</code></pre>
 
-                <div class="code-head"><span class="pill"><span class="dot"></span> Utility</span> <span>A* Pathfinder</span></div>
-                <pre class="language-csharp"><code class="language-csharp">public static class AStarPathfinder
+                <h3>A* Pathfinder</h3>
+                <pre><code class="language-csharp">public static class AStarPathfinder
 {
-    public static List&lt;Vector3&gt; FindPath(Vector3 startPosition, Vector3 endPosition,
-        IEnumerable&lt;Transform&gt; obstacles, float agentRadius);
+    public static List&lt;Vector3&gt; FindPath(
+        Vector3 startPosition,
+        Vector3 endPosition,
+        IEnumerable&lt;Transform&gt; obstacles,
+        float agentRadius
+    );
 }</code></pre>
 
-                <div class="code-head"><span class="pill"><span class="dot"></span> Gameplay</span> <span>Construct Controller</span></div>
-                <pre class="language-csharp"><code class="language-csharp">public class ConstructController : MonoBehaviour
+                <h3>Construct Controller</h3>
+                <pre><code class="language-csharp">public class ConstructController : MonoBehaviour
 {
     public void SendUnits(ConstructController target, float percentage);
 }</code></pre>
             </section>
 
-            <!-- Snippets -->
-            <section id="snippets">
+            <!-- REPRESENTATIVE SNIPPETS -->
+            <section id="snippets" class="doc-card reveal">
                 <h2>Representative Code Snippets</h2>
 
                 <p><strong>Map analysis assigns roles to each node</strong> – uses distance percentages to classify frontline, support and economic nodes.</p>
                 <details>
                     <summary>Show code</summary>
-                    <div class="code-head"><span class="pill"><span class="dot"></span> AI</span> <span>@AIManager7.cs lines 66–103</span></div>
-                    <pre class="language-csharp"><code class="language-csharp">@AIManager7.cs lines 66-103
+<pre><code class="language-csharp">@AIManager7.cs lines 66-103
 private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
 {
     nodeRoles.Clear();
     var enemyNodes = GameManager.Instance.allConstructs
-        .Where(c =&gt; c.Owner != aiFaction && c.Owner != GameManager.Instance.unclaimedFaction)
+        .Where(c =&gt; c.Owner != aiFaction &amp;&amp; c.Owner != GameManager.Instance.unclaimedFaction)
         .ToList();
 
     // If no enemies exist or we have too few nodes for complex roles, they are all economic.
@@ -608,13 +719,12 @@ private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
     }
 }</code></pre>
                 </details>
-                <p><a class="btn" href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AIManager7.cs#L66-L103" target="_blank" rel="noopener">View on GitHub (lines 66–103)</a></p>
+                <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AIManager7.cs#L66-L103" target="_blank">View on GitHub (lines 66–103)</a></p>
 
                 <p><strong>A* pathfinder core loop</strong> – processes open and closed sets with line-of-sight shortcut.</p>
                 <details>
                     <summary>Show code</summary>
-                    <div class="code-head"><span class="pill"><span class="dot"></span> Pathfinding</span> <span>@AStarPathfinder.cs lines 30–70</span></div>
-                    <pre class="language-csharp"><code class="language-csharp">@AStarPathfinder.cs lines 30-70
+<pre><code class="language-csharp">@AStarPathfinder.cs lines 30-70
 openSet.Add(startNode);
 
 while (openSet.Count &gt; 0)
@@ -661,13 +771,12 @@ while (openSet.Count &gt; 0)
     }
 }</code></pre>
                 </details>
-                <p><a class="btn" href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L30-L70" target="_blank" rel="noopener">View on GitHub (lines 30–70)</a></p>
+                <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L30-L70" target="_blank">View on GitHub (lines 30–70)</a></p>
 
                 <p><strong>Streaming units between nodes</strong> – validates targets and spawns units along the navmesh.</p>
                 <details>
                     <summary>Show code</summary>
-                    <div class="code-head"><span class="pill"><span class="dot"></span> Gameplay</span> <span>@ConstructController.cs lines 415–450</span></div>
-                    <pre class="language-csharp"><code class="language-csharp">@ConstructController.cs lines 415-450
+<pre><code class="language-csharp">@ConstructController.cs lines 415-450
 public void SendUnits(ConstructController target, float percentage)
 {
     bool isValidTarget = true;
@@ -705,78 +814,91 @@ public void SendUnits(ConstructController target, float percentage)
     }
 }</code></pre>
                 </details>
-                <p><a class="btn" href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L450" target="_blank" rel="noopener">View on GitHub (lines 415–450)</a></p>
+                <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L450" target="_blank">View on GitHub (lines 415–450)</a></p>
             </section>
 
-            <!-- Performance -->
-            <section id="performance">
+            <!-- PERFORMANCE -->
+            <section id="performance" class="doc-card reveal">
                 <h2>Performance Notes</h2>
                 <p>Profiling is ongoing and formal benchmarks are not yet published.</p>
             </section>
 
-            <!-- Testing -->
-            <section id="testing">
+            <!-- TESTING -->
+            <section id="testing" class="doc-card reveal">
                 <h2>Testing &amp; Validation</h2>
                 <p>Currently verified through manual playtesting; no automated tests are in place.</p>
             </section>
 
-            <!-- Tradeoffs -->
-            <section id="tradeoffs">
+            <!-- TRADEOFFS -->
+            <section id="tradeoffs" class="doc-card reveal">
                 <h2>Trade-offs &amp; Next Steps</h2>
-                <ul>
+                <ul style="margin-left:1.25rem;">
                     <li>Finite state AI is easy to reason about; behavior trees could scale variety later.</li>
                     <li>Custom pathfinder avoids heavy NavMesh but lacks dynamic obstacle support.</li>
                     <li>Data-driven design simplifies tuning yet requires editor diligence to avoid invalid combos.</li>
                 </ul>
             </section>
-        </main>
-    </div>
+        </div>
+    </main>
 
-    <a class="top" href="#content" aria-label="Back to top">↑ Top</a>
+    <footer>
+        &copy; 2025 Oliver Neal. All rights reserved.
+    </footer>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <!-- Prism -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js" defer></script>
 
-    <script>
-        // Build a simple TOC from h2/h3
-        (function () {
-            const headings = [...document.querySelectorAll('main h2, main h3')];
-            const toc = document.getElementById('toc');
-            const slug = s => s.toLowerCase().trim()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-');
-            headings.forEach(h => {
-                if (!h.id) { h.id = slug(h.textContent); }
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = `#${h.id}`;
-                a.textContent = h.textContent;
-                if (h.tagName === 'H3') {
-                    const sm = document.createElement('small');
-                    sm.textContent = h.textContent;
-                    a.innerHTML = '<small>' + a.textContent + '</small>';
+    <script defer>
+        // Small utilities
+        function throttle(func, limit) {
+            let lastFunc; let lastRan;
+            return function (...args) {
+                const context = this;
+                if (!lastRan) { func.apply(context, args); lastRan = Date.now(); }
+                else {
+                    clearTimeout(lastFunc);
+                    lastFunc = setTimeout(function () {
+                        if ((Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); }
+                    }, limit - (Date.now() - lastRan));
                 }
-                li.appendChild(a);
-                toc.appendChild(li);
-            });
+            }
+        }
 
-            // Scroll spy (very lightweight)
-            const opts = { rootMargin: '-40% 0px -55% 0px', threshold: 0 };
-            const links = [...toc.querySelectorAll('a')];
-            const map = new Map(headings.map(h => [h.id, links.find(l => l.getAttribute('href') === '#' + h.id)]));
-            const obs = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    const l = map.get(e.target.id);
-                    if (!l) return;
-                    if (e.isIntersecting) { links.forEach(x => x.classList.remove('is-active')); l.classList.add('is-active'); }
-                });
-            }, opts);
-            headings.forEach(h => obs.observe(h));
-        })();
+        // Theme (identical behavior to index)
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        function applyTheme(theme) {
+            if (theme === 'light') { html.classList.add('light-theme'); themeToggle.checked = true; }
+            else { html.classList.remove('light-theme'); themeToggle.checked = false; }
+        }
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+        applyTheme(initialTheme);
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Reveal on scroll (match index)
+        function revealSections() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const elementVisibleThreshold = 100;
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisibleThreshold) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            revealSections();
+        });
+        window.addEventListener('scroll', throttle(revealSections, 150));
     </script>
 </body>
 </html>
