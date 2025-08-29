@@ -1,0 +1,18 @@
+@startuml
+' Sequence diagram for issuing unit command
+actor Player
+participant GameManager
+participant NodeManager
+participant UnitAI
+participant Pathfinding
+participant Unit
+participant EnemyUnit
+
+Player -> GameManager: Issue command
+GameManager -> NodeManager: Find target node
+NodeManager -> UnitAI: Assign task
+UnitAI -> Pathfinding: Request path
+Pathfinding --> UnitAI: Path
+UnitAI -> Unit: Move along path
+Unit -> EnemyUnit: Attack
+@enduml
