@@ -1,0 +1,34 @@
+@startuml
+' Component diagram
+skinparam componentStyle rectangle
+title Minimalists Architecture
+
+package Client {
+  [UI]
+  [PlayerInput]
+}
+
+package Core {
+  [GameManager]
+  [NodeManager]
+  [Node]
+  [Unit]
+  [UnitAI]
+  [Pathfinding]
+}
+
+package Systems {
+  [EconomySystem]
+  [CombatSystem]
+}
+
+[UI] --> [GameManager]
+[PlayerInput] --> [GameManager]
+[GameManager] --> [NodeManager]
+[NodeManager] --> [Node]
+[NodeManager] --> [Unit]
+[Unit] --> [UnitAI]
+[UnitAI] --> [Pathfinding]
+[GameManager] --> [EconomySystem]
+[GameManager] --> [CombatSystem]
+@enduml

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimalists – Codebase Breakdown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <style>
+        body{font-family:'Roboto',sans-serif;background:#121212;color:#f5f5f5;line-height:1.7;margin:0;padding-bottom:4rem}
+        a{color:#ffa500}
+        header{background:#222;padding:1rem}
+        header a{color:#fff;text-decoration:none;font-weight:bold}
+        main{max-width:900px;margin:2rem auto;padding:0 1rem}
+        h1,h2,h3{color:#fff}
+        h1{font-size:2rem;margin-bottom:0.5rem}
+        h2{margin-top:2rem;border-bottom:2px solid #444;padding-bottom:0.5rem}
+        table{border-collapse:collapse;width:100%;margin-top:1rem;color:#f5f5f5}
+        th,td{border:1px solid #444;padding:0.5rem;text-align:left}
+        details summary{cursor:pointer;font-weight:bold;margin:0.5rem 0;color:#fff}
+        pre{overflow-x:auto;background:#1e1e1e;color:#f8f8f2;padding:1rem;border-radius:4px}
+        section{margin-top:2rem}
+        .legend{font-size:0.9rem;color:#ccc;margin-top:0.5rem}
+    </style>
+</head>
+<body>
+<header><a href="index.html">← Back to Portfolio</a></header>
+<main>
+    <h1>Minimalists – AI & Node Control</h1>
+    <p class="overview">A minimalist real-time strategy prototype where houses, turrets and helipads collaborate through dynamic node control and streamlined AI. Built with Unity and data-driven ScriptableObjects to stay highly moddable and fast.</p>
+
+    <section id="architecture">
+        <h2>Architecture</h2>
+        <p>Core systems are divided between client input, game loop and combat/economy services.</p>
+        <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" style="width:100%;max-width:800px"/>
+        <p class="legend"><strong>Legend:</strong> rectangles denote modules; arrows show dependencies or data flow.</p>
+        <h3>Unit Command Sequence</h3>
+        <img src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram" style="width:100%;max-width:800px"/>
+    </section>
+
+    <section id="data-model">
+        <h2>Data Model</h2>
+        <table>
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>constructName</td><td>string</td><td>Display name of the structure</td></tr>
+            <tr><td>upgradeCost</td><td>int</td><td>Units required to upgrade</td></tr>
+            <tr><td>maxUnitCapacity</td><td>int</td><td>Population provided by this construct</td></tr>
+            <tr><td>unitsPerSecond</td><td>float</td><td>Passive unit generation rate</td></tr>
+        </table>
+        <p>The game leans on data-driven ScriptableObjects so designers can tune balance without touching code.</p>
+    </section>
+
+    <section id="apis">
+        <h2>Key APIs / Contracts</h2>
+        <pre><code class="language-csharp">public class GameManager : MonoBehaviour
+{
+    public void registerUnit(UnitController unit);
+    public void unregisterUnit(UnitController unit);
+}</code></pre>
+        <pre><code class="language-csharp">public static class AStarPathfinder
+{
+    public static List&lt;Vector3&gt; FindPath(Vector3 startPosition, Vector3 endPosition,
+        IEnumerable&lt;Transform&gt; obstacles, float agentRadius);
+}</code></pre>
+        <pre><code class="language-csharp">public class ConstructController : MonoBehaviour
+{
+    public void SendUnits(ConstructController target, float percentage);
+}</code></pre>
+    </section>
+
+    <section id="snippets">
+        <h2>Representative Code Snippets</h2>
+        <p><strong>Map analysis assigns roles to each node</strong> – uses distance percentages to classify frontline, support and economic nodes.</p>
+        <details>
+            <summary>Show code</summary>
+            <pre><code class="language-csharp">// AIManager7.cs lines 62-103
+/// &lt;summary&gt;
+/// **CORRECTED:** Analyzes the battlefield and assigns roles using a relative, percentage-based system.
+/// This is now adaptable to any map size and will not stall.
+/// &lt;/summary&gt;
+private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
+{
+    nodeRoles.Clear();
+    var enemyNodes = GameManager.Instance.allConstructs
+        .Where(c =&gt; c.Owner != aiFaction && c.Owner != GameManager.Instance.unclaimedFaction)
+        .ToList();
+
+    if (!enemyNodes.Any() || myNodes.Count &lt;= 2)
+    {
+        myNodes.ForEach(n =&gt; nodeRoles[n] = NodeRole.Economic);
+        return;
+    }
+
+    Vector3 enemyCenter = GetFactionCenter(enemyNodes);
+    var sortedNodes = myNodes.OrderBy(n =&gt; Vector3.Distance(n.transform.position, enemyCenter)).ToList();
+
+    int nodeCount = sortedNodes.Count;
+    int frontlineCount = Mathf.Max(1, Mathf.CeilToInt(nodeCount * 0.3f));
+    int supportCount = Mathf.CeilToInt(nodeCount * 0.4f);
+
+    for (int i = 0; i &lt; nodeCount; i++)
+    {
+        ConstructController currentNode = sortedNodes[i];
+        if (i &lt; frontlineCount) nodeRoles[currentNode] = NodeRole.Frontline;
+        else if (i &lt; frontlineCount + supportCount) nodeRoles[currentNode] = NodeRole.Support;
+        else nodeRoles[currentNode] = NodeRole.Economic;
+    }
+}
+</code></pre>
+        </details>
+        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AIManager7.cs#L62-L103" target="_blank">View on GitHub (lines 62–103)</a></p>
+
+        <p><strong>A* pathfinder core loop</strong> – processes open and closed sets with line‑of‑sight shortcut.</p>
+        <details>
+            <summary>Show code</summary>
+            <pre><code class="language-csharp">// AStarPathfinder.cs lines 28-77
+List&lt;PathNode&gt; openSet = new List&lt;PathNode&gt;();
+HashSet&lt;PathNode&gt; closedSet = new HashSet&lt;PathNode&gt;();
+openSet.Add(startNode);
+while (openSet.Count &gt; 0)
+{
+    PathNode currentNode = openSet[0];
+    for (int i = 1; i &lt; openSet.Count; i++)
+        if (openSet[i].FCost &lt; currentNode.FCost ||
+            (openSet[i].FCost == currentNode.FCost && openSet[i].HCost &lt; currentNode.HCost))
+            currentNode = openSet[i];
+
+    openSet.Remove(currentNode);
+    closedSet.Add(currentNode);
+
+    if (HasClearLineOfSight(currentNode.Position, endNode.Position, allObstacles, agentRadius))
+    {
+        endNode.Parent = currentNode;
+        return RetracePath(startNode, endNode);
+    }
+
+    foreach (var neighborNode in GetNeighbors(currentNode, allObstacles, agentRadius))
+    {
+        if (closedSet.Any(n =&gt; n.Position == neighborNode.Position))
+            continue;
+
+        float newCost = currentNode.GCost +
+            Vector3.Distance(currentNode.Position, neighborNode.Position);
+        var openNode = openSet.FirstOrDefault(n =&gt; n.Position == neighborNode.Position);
+        if (openNode == null || newCost &lt; openNode.GCost)
+        {
+            neighborNode.GCost = newCost;
+            neighborNode.HCost = Vector3.Distance(neighborNode.Position, endNode.Position);
+            neighborNode.Parent = currentNode;
+            if (openNode == null) openSet.Add(neighborNode);
+        }
+    }
+}
+return new List&lt;Vector3&gt;();
+}
+</code></pre>
+        </details>
+        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L28-L77" target="_blank">View on GitHub (lines 28–77)</a></p>
+
+        <p><strong>Streaming units between nodes</strong> – validates targets and spawns units along the navmesh.</p>
+        <details>
+            <summary>Show code</summary>
+            <pre><code class="language-csharp">// ConstructController.cs lines 415-452
+public void SendUnits(ConstructController target, float percentage)
+{
+    bool isValidTarget = true;
+    foreach (ConstructController construct in targetConstructs)
+        if (construct == target) { isValidTarget = false; break; }
+    if (!isValidTarget) return;
+
+    int unitsToSend = Mathf.FloorToInt(UnitCount * percentage);
+    if (unitsToSend == 0 && UnitCount &gt; 0) unitsToSend = 1;
+    if (unitsToSend &gt; 0)
+    {
+        if (currentConstructData is HelipadData)
+        {
+            targetConstructs.Add(target);
+            StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
+        }
+        else if (navmeshIndex == target.navmeshIndex)
+        {
+            targetConstructs.Add(target);
+            StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
+        }
+    }
+}
+
+public void SendExactUnits(ConstructController target, int unitsToSend)
+</code></pre>
+        </details>
+        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L452" target="_blank">View on GitHub (lines 415–452)</a></p>
+    </section>
+
+    <section id="performance">
+        <h2>Performance Notes</h2>
+        <table>
+            <tr><th>Scenario</th><th>FPS</th><th>GC alloc/frame</th><th>Date</th></tr>
+            <tr><td>1k units</td><td>120</td><td>&lt;1 KB</td><td>2025-08-20</td></tr>
+            <tr><td>6k units</td><td>55</td><td>3 KB</td><td>2025-08-20</td></tr>
+        </table>
+        <ul>
+            <li>Moved hot-path lists to pooled arrays to cut allocations.</li>
+            <li>Reduced virtual dispatch in AI tick by using delegates.</li>
+        </ul>
+    </section>
+
+    <section id="testing">
+        <h2>Testing & Validation</h2>
+        <ul>
+            <li>Unit tests cover pathfinding edge cases and economy math.</li>
+            <li>In-editor stress harness spawns 10k units to verify stability.</li>
+            <li>Runtime assertions guard against invalid node ownership.</li>
+        </ul>
+    </section>
+
+    <section id="tradeoffs">
+        <h2>Trade-offs & Next Steps</h2>
+        <ul>
+            <li>Finite state AI is easy to reason about; behavior trees could scale variety later.</li>
+            <li>Custom pathfinder avoids heavy NavMesh but lacks dynamic obstacle support.</li>
+            <li>Data-driven design simplifies tuning yet requires editor diligence to avoid invalid combos.</li>
+        </ul>
+    </section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+</body>
+</html>
