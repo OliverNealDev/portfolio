@@ -55,6 +55,13 @@
             --prism-blue: #82aaff;
             --prism-purple: #c792ea;
             --prism-yellow: #ffcb6b;
+            /* Diagram styling */
+            --diagram-grid-dark: rgba(255,255,255,0.06);
+            --diagram-grid-light: rgba(0,0,0,0.06);
+            --diagram-bg-tint-dark: linear-gradient(180deg, rgba(255,165,0,0.06), rgba(255,69,0,0.06));
+            --diagram-bg-tint-light: linear-gradient(180deg, rgba(255,165,0,0.08), rgba(255,69,0,0.08));
+            --diagram-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            --diagram-border: rgba(255,255,255,0.08);
         }
 
         .light-theme {
@@ -90,6 +97,9 @@
             --prism-blue: #005cc5;
             --prism-purple: #6f42c1;
             --prism-yellow: #b08800;
+            --diagram-grid-dark: rgba(0,0,0,0.06); /* reused as light grid */
+            --diagram-bg-tint-dark: var(--diagram-bg-tint-light);
+            --diagram-border: rgba(0,0,0,0.08);
         }
 
         /* Base (match portfolio) */
@@ -110,7 +120,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
-            /* Fix any halo/outline rendering in dark mode */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
@@ -222,7 +231,7 @@
                 padding: 0.2rem 0;
                 white-space: nowrap;
             }
-                /* FIX: scope gradient hover to header nav only so doc-toc buttons don't turn transparent */
+
                 header nav a.active-nav, header nav a:hover {
                     background: var(--main-gradient);
                     -webkit-background-clip: text;
@@ -396,26 +405,193 @@
                 margin: 1rem 0 0.5rem;
             }
 
-        .doc-figure {
-            margin: 0.75rem 0 0;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+        /* ---------- Nicer diagrams ---------- */
+        .diagram-card {
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid var(--diagram-border);
             overflow: hidden;
-            background: #000;
+            background: var(--card-bg);
+            box-shadow: var(--diagram-shadow);
+            padding: 0;
         }
 
-            .doc-figure img {
-                width: 100%;
-                height: auto;
-                display: block;
+        .diagram-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .75rem;
+            padding: .6rem .8rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(0deg, rgba(0,0,0,0.0), rgba(0,0,0,0.0)), var(--main-gradient);
+            -webkit-background-clip: text;
+            color: var(--text-color);
+        }
+
+        .diagram-title {
+            font-weight: 600;
+            font-size: .95rem;
+            line-height: 1.2;
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .diagram-toolbar {
+            display: inline-flex;
+            gap: .4rem;
+        }
+
+        .diagram-btn {
+            appearance: none;
+            border: 1px solid var(--border-color);
+            background: var(--button-bg);
+            color: var(--button-text-color);
+            padding: .35rem .6rem;
+            border-radius: 6px;
+            font-size: .85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            cursor: pointer;
+        }
+
+            .diagram-btn:hover {
+                background: var(--button-hover-bg);
+                border-color: var(--accent-color);
             }
 
-            .doc-figure figcaption {
-                font-size: 0.9rem;
-                color: var(--text-secondary-color);
-                padding: 0.5rem 0.75rem;
-                background: var(--header-bg);
-                border-top: 1px solid var(--border-color);
+        .diagram-canvas {
+            position: relative;
+            background:
+            /* subtle tint */
+            var(--diagram-bg-tint-dark),
+            /* grid */
+            linear-gradient(0deg, var(--diagram-grid-dark) 1px, transparent 1px), linear-gradient(90deg, var(--diagram-grid-dark) 1px, transparent 1px);
+            background-size: 100% 100%, 24px 24px, 24px 24px;
+            background-position: 0 0, 0 0, 0 0;
+        }
+
+        .light-theme .diagram-canvas {
+            background: var(--diagram-bg-tint-light), linear-gradient(0deg, var(--diagram-grid-dark) 1px, transparent 1px), linear-gradient(90deg, var(--diagram-grid-dark) 1px, transparent 1px);
+            background-size: 100% 100%, 24px 24px, 24px 24px;
+        }
+
+        .diagram-inner {
+            padding: 1rem;
+        }
+
+        .diagram-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.25));
+            transition: transform .25s ease, filter .25s ease;
+            cursor: zoom-in;
+        }
+
+            .diagram-img:hover {
+                transform: translateZ(0) scale(1.01);
+                filter: drop-shadow(0 6px 20px rgba(0,0,0,0.35));
+            }
+
+        .diagram-caption {
+            font-size: 0.9rem;
+            color: var(--text-secondary-color);
+            padding: 0.65rem .9rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--header-bg);
+        }
+
+        /* Lightbox */
+        .diagram-lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: var(--message-box-overlay-bg);
+            z-index: 10000;
+        }
+
+            .diagram-lightbox.open {
+                display: flex;
+            }
+
+        .diagram-viewer {
+            position: relative;
+            width: min(96vw, 1400px);
+            height: min(92vh, 900px);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: var(--diagram-shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .viewer-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .5rem .75rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--header-bg);
+        }
+
+        .viewer-canvas {
+            position: relative;
+            flex: 1;
+            overflow: auto;
+            background: linear-gradient(0deg, var(--diagram-grid-dark) 1px, transparent 1px), linear-gradient(90deg, var(--diagram-grid-dark) 1px, transparent 1px);
+            background-size: 24px 24px, 24px 24px;
+        }
+
+        .viewer-img {
+            display: block;
+            margin: 0 auto;
+            transform-origin: 0 0;
+            user-select: none;
+            -webkit-user-drag: none;
+            cursor: grab;
+        }
+
+            .viewer-img:active {
+                cursor: grabbing;
+            }
+
+        .viewer-footer {
+            display: flex;
+            gap: .5rem;
+            padding: .5rem .75rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--header-bg);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .viewer-meta {
+            font-size: .85rem;
+            color: var(--text-secondary-color);
+        }
+
+        .close-btn {
+            appearance: none;
+            border: 1px solid var(--border-color);
+            background: var(--button-bg);
+            color: var(--button-text-color);
+            padding: .35rem .6rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+            .close-btn:hover {
+                background: var(--button-hover-bg);
+                border-color: var(--accent-color);
             }
 
         /* Tables styled like site */
@@ -715,15 +891,41 @@
             <section id="architecture" class="doc-card reveal">
                 <h2>Architecture</h2>
                 <p>Core systems are divided between client input, game loop, and combat/economy services.</p>
-                <figure class="doc-figure">
-                    <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" loading="lazy" />
-                    <figcaption>High-level architecture</figcaption>
+
+                <figure class="diagram-card" data-diagram="Architecture">
+                    <div class="diagram-header">
+                        <div class="diagram-title">Architecture Diagram</div>
+                        <div class="diagram-toolbar">
+                            <button class="diagram-btn" data-zoom="#arch-diagram">🔎 Zoom</button>
+                            <a class="diagram-btn" href="docs/diagrams/minimalists-architecture.svg" target="_blank" rel="noopener">↗ Open</a>
+                            <a class="diagram-btn" href="docs/diagrams/minimalists-architecture.svg" download>⬇ Download</a>
+                        </div>
+                    </div>
+                    <div class="diagram-canvas">
+                        <div class="diagram-inner">
+                            <img id="arch-diagram" class="diagram-img" src="docs/diagrams/minimalists-architecture.svg" alt="High-level architecture diagram for Minimalists RTS" loading="lazy" />
+                        </div>
+                    </div>
+                    <figcaption class="diagram-caption">High-level data and system flows across input → game loop → services.</figcaption>
                 </figure>
 
                 <h3>Unit Command Sequence</h3>
-                <figure class="doc-figure">
-                    <img src="docs/diagrams/minimalists-sequence.svg" alt="Unit command sequence diagram" loading="lazy" />
-                    <figcaption>Sequence from input → validation → spawn/stream → resolve</figcaption>
+
+                <figure class="diagram-card" data-diagram="Sequence">
+                    <div class="diagram-header">
+                        <div class="diagram-title">Unit Command Sequence</div>
+                        <div class="diagram-toolbar">
+                            <button class="diagram-btn" data-zoom="#seq-diagram">🔎 Zoom</button>
+                            <a class="diagram-btn" href="docs/diagrams/minimalists-sequence.svg" target="_blank" rel="noopener">↗ Open</a>
+                            <a class="diagram-btn" href="docs/diagrams/minimalists-sequence.svg" download>⬇ Download</a>
+                        </div>
+                    </div>
+                    <div class="diagram-canvas">
+                        <div class="diagram-inner">
+                            <img id="seq-diagram" class="diagram-img" src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram of unit command from input to resolution" loading="lazy" />
+                        </div>
+                    </div>
+                    <figcaption class="diagram-caption">Input → validation → spawn/stream → resolve with clear checkpoints.</figcaption>
                 </figure>
             </section>
 
@@ -940,6 +1142,109 @@ public void SendUnits(ConstructController target, float percentage)
 
         document.addEventListener('DOMContentLoaded', () => { revealSections(); });
         window.addEventListener('scroll', throttle(revealSections, 150));
+
+        // -------- Diagram lightbox / zoom (no deps) --------
+        const lightbox = (() => {
+            const root = document.createElement('div');
+            root.className = 'diagram-lightbox';
+            root.innerHTML = `
+                    <div class="diagram-viewer" role="dialog" aria-modal="true" aria-label="Diagram viewer">
+                        <div class="viewer-toolbar">
+                            <div class="viewer-title">Diagram</div>
+                            <div class="diagram-toolbar">
+                                <button class="diagram-btn" data-action="zoom-in">＋ Zoom In</button>
+                                <button class="diagram-btn" data-action="zoom-out">－ Zoom Out</button>
+                                <button class="diagram-btn" data-action="reset">⤾ Reset</button>
+                                <a class="diagram-btn" data-action="open" target="_blank" rel="noopener">↗ Open</a>
+                                <button class="close-btn" data-action="close">Close</button>
+                            </div>
+                        </div>
+                        <div class="viewer-canvas">
+                            <img class="viewer-img" alt="Diagram"/>
+                        </div>
+                        <div class="viewer-footer">
+                            <div class="viewer-meta">Scroll to zoom • Drag to pan</div>
+                        </div>
+                    </div>
+                `;
+            document.body.appendChild(root);
+
+            const img = root.querySelector('.viewer-img');
+            const openLink = root.querySelector('[data-action="open"]');
+            const titleEl = root.querySelector('.viewer-title');
+            let scale = 1;
+            let offsetX = 0, offsetY = 0;
+            let isDragging = false, startX = 0, startY = 0;
+
+            function applyTransform() {
+                img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+            }
+            function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
+
+            root.addEventListener('click', (e) => {
+                if (e.target === root || e.target.dataset.action === 'close') close();
+            });
+
+            // Toolbar buttons
+            root.querySelector('[data-action="zoom-in"]').addEventListener('click', () => { scale = clamp(scale * 1.2, 0.25, 8); applyTransform(); });
+            root.querySelector('[data-action="zoom-out"]').addEventListener('click', () => { scale = clamp(scale / 1.2, 0.25, 8); applyTransform(); });
+            root.querySelector('[data-action="reset"]').addEventListener('click', () => { scale = 1; offsetX = 0; offsetY = 0; applyTransform(); });
+
+            // Wheel zoom
+            root.querySelector('.viewer-canvas').addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 1 / 1.1 : 1.1;
+                scale = clamp(scale * delta, 0.25, 8);
+                applyTransform();
+            }, { passive: false });
+
+            // Drag to pan
+            img.addEventListener('pointerdown', (e) => {
+                isDragging = true;
+                startX = e.clientX - offsetX;
+                startY = e.clientY - offsetY;
+                img.setPointerCapture(e.pointerId);
+            });
+            img.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                offsetX = e.clientX - startX;
+                offsetY = e.clientY - startY;
+                applyTransform();
+            });
+            img.addEventListener('pointerup', () => { isDragging = false; });
+
+            // ESC to close
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && root.classList.contains('open')) close(); });
+
+            function open({ src, title }) {
+                img.src = src;
+                openLink.href = src;
+                titleEl.textContent = title || 'Diagram';
+                scale = 1; offsetX = 0; offsetY = 0; applyTransform();
+                root.classList.add('open');
+            }
+            function close() { root.classList.remove('open'); }
+
+            return { open, close };
+        })();
+
+        // Hook up buttons and click-to-zoom
+        document.querySelectorAll('.diagram-btn[data-zoom]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetSel = btn.getAttribute('data-zoom');
+                const img = document.querySelector(targetSel);
+                if (img) {
+                    const title = btn.closest('.diagram-card')?.getAttribute('data-diagram') || 'Diagram';
+                    lightbox.open({ src: img.src, title });
+                }
+            });
+        });
+        document.querySelectorAll('.diagram-img').forEach(img => {
+            img.addEventListener('click', () => {
+                const title = img.closest('.diagram-card')?.getAttribute('data-diagram') || 'Diagram';
+                lightbox.open({ src: img.src, title });
+            });
+        });
     </script>
 </body>
 </html>
