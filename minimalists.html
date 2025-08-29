@@ -97,8 +97,8 @@
 }</code></pre>
         <pre><code class="language-csharp">public static class AStarPathfinder
 {
-    public static List&lt;Vector3&gt; FindPath(Vector3 start, Vector3 end,
-        IEnumerable&lt;Transform&gt; obstacles, float radius);
+    public static List&lt;Vector3&gt; FindPath(Vector3 startPosition, Vector3 endPosition,
+        IEnumerable&lt;Transform&gt; obstacles, float agentRadius);
 }</code></pre>
         <pre><code class="language-csharp">public class ConstructController : MonoBehaviour
 {
@@ -254,24 +254,12 @@ public void SendUnits(ConstructController target, float percentage)
 
     <section id="performance">
         <h2>Performance Notes</h2>
-        <table>
-            <tr><th>Scenario</th><th>FPS</th><th>GC alloc/frame</th><th>Date</th></tr>
-            <tr><td>1k units</td><td>120</td><td>&lt;1 KB</td><td>2025-08-20</td></tr>
-            <tr><td>6k units</td><td>55</td><td>3 KB</td><td>2025-08-20</td></tr>
-        </table>
-        <ul>
-            <li>Moved hot-path lists to pooled arrays to cut allocations.</li>
-            <li>Reduced virtual dispatch in AI tick by using delegates.</li>
-        </ul>
+        <p>Profiling is ongoing and formal benchmarks are not yet published.</p>
     </section>
 
     <section id="testing">
         <h2>Testing & Validation</h2>
-        <ul>
-            <li>Unit tests cover pathfinding edge cases and economy math.</li>
-            <li>In-editor stress harness spawns 10k units to verify stability.</li>
-            <li>Runtime assertions guard against invalid node ownership.</li>
-        </ul>
+        <p>Currently verified through manual playtesting; no automated tests are in place.</p>
     </section>
 
     <section id="tradeoffs">
