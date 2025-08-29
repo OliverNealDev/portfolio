@@ -6,17 +6,60 @@
     <title>Minimalists – Codebase Breakdown</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
     <style>
-        body{font-family:'Roboto',sans-serif;background:#121212;color:#e0e0e0;line-height:1.6;margin:0;padding-bottom:4rem}
-        a{color:#ffa500}
-        header{background:#222;padding:1rem}
-        header a{color:#fff;text-decoration:none;font-weight:bold}
-        main{max-width:900px;margin:2rem auto;padding:0 1rem}
-        h1{font-size:2rem;margin-bottom:0.5rem}
-        h2{margin-top:2rem;border-bottom:2px solid #444;padding-bottom:0.5rem}
-        table{border-collapse:collapse;width:100%;margin-top:1rem}
-        th,td{border:1px solid #444;padding:0.5rem;text-align:left}
-        details summary{cursor:pointer;font-weight:bold;margin:0.5rem 0}
-        pre{overflow-x:auto}
+        :root {
+            --bg: #121212;
+            --bg-alt: #1e1e1e;
+            --text: #e0e0e0;
+            --accent: #ffa500;
+            --border: #333;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding-bottom: 4rem;
+        }
+        a { color: var(--accent); }
+        header {
+            background: #1a1a1a;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        section { margin-top: 2rem; }
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
+        th { background: var(--bg-alt); }
+        tr:nth-child(even) { background: #1b1b1b; }
+        details { margin-top: 1rem; }
+        details summary {
+            cursor: pointer;
+            font-weight: bold;
+            background: var(--bg-alt);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        pre {
+            background: var(--bg-alt);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        img {
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -28,9 +71,9 @@
     <section id="architecture">
         <h2>Architecture</h2>
         <p>Core systems are divided between client input, game loop and combat/economy services.</p>
-        <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" style="width:100%;max-width:800px"/>
+        <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" />
         <h3>Unit Command Sequence</h3>
-        <img src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram" style="width:100%;max-width:800px"/>
+        <img src="docs/diagrams/minimalists-sequence.svg" alt="Sequence diagram" />
     </section>
 
     <section id="data-model">
@@ -76,6 +119,7 @@ private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
         .Where(c =&gt; c.Owner != aiFaction && c.Owner != GameManager.Instance.unclaimedFaction)
         .ToList();
 
+    // If no enemies exist or we have too few nodes for complex roles, they are all economic.
     if (!enemyNodes.Any() || myNodes.Count &lt;= 2)
     {
         myNodes.ForEach(n =&gt; nodeRoles[n] = NodeRole.Economic);
@@ -83,18 +127,30 @@ private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
     }
 
     Vector3 enemyCenter = GetFactionCenter(enemyNodes);
+
+    // Sort nodes by their distance to the enemy's center of mass.
     var sortedNodes = myNodes.OrderBy(n =&gt; Vector3.Distance(n.transform.position, enemyCenter)).ToList();
 
     int nodeCount = sortedNodes.Count;
+    // Designate roles by percentage: closest 30% are Frontline, next 40% are Support, rest are Economic.
     int frontlineCount = Mathf.Max(1, Mathf.CeilToInt(nodeCount * 0.3f));
     int supportCount = Mathf.CeilToInt(nodeCount * 0.4f);
 
     for (int i = 0; i &lt; nodeCount; i++)
     {
         ConstructController currentNode = sortedNodes[i];
-        if (i &lt; frontlineCount) nodeRoles[currentNode] = NodeRole.Frontline;
-        else if (i &lt; frontlineCount + supportCount) nodeRoles[currentNode] = NodeRole.Support;
-        else nodeRoles[currentNode] = NodeRole.Economic;
+        if (i &lt; frontlineCount)
+        {
+            nodeRoles[currentNode] = NodeRole.Frontline;
+        }
+        else if (i &lt; frontlineCount + supportCount)
+        {
+            nodeRoles[currentNode] = NodeRole.Support;
+        }
+        else
+        {
+            nodeRoles[currentNode] = NodeRole.Economic;
+        }
     }
 }</code></pre>
         </details>
@@ -103,15 +159,19 @@ private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
         <p><strong>A* pathfinder core loop</strong> – processes open and closed sets with line‑of‑sight shortcut.</p>
         <details>
             <summary>Show code</summary>
-            <pre><code class="language-csharp">@AStarPathfinder.cs lines 30-68
+            <pre><code class="language-csharp">@AStarPathfinder.cs lines 30-70
 openSet.Add(startNode);
+
 while (openSet.Count &gt; 0)
 {
     PathNode currentNode = openSet[0];
     for (int i = 1; i &lt; openSet.Count; i++)
-        if (openSet[i].FCost &lt; currentNode.FCost ||
-            (openSet[i].FCost == currentNode.FCost && openSet[i].HCost &lt; currentNode.HCost))
+    {
+        if (openSet[i].FCost &lt; currentNode.FCost || (openSet[i].FCost == currentNode.FCost &amp;&amp; openSet[i].HCost &lt; currentNode.HCost))
+        {
             currentNode = openSet[i];
+        }
+    }
 
     openSet.Remove(currentNode);
     closedSet.Add(currentNode);
@@ -125,36 +185,52 @@ while (openSet.Count &gt; 0)
     foreach (var neighborNode in GetNeighbors(currentNode, allObstacles, agentRadius))
     {
         if (closedSet.Any(n =&gt; n.Position == neighborNode.Position))
-            continue;
-
-        float newCost = currentNode.GCost +
-            Vector3.Distance(currentNode.Position, neighborNode.Position);
-        var openNode = openSet.FirstOrDefault(n =&gt; n.Position == neighborNode.Position);
-        if (openNode == null || newCost &lt; openNode.GCost)
         {
-            neighborNode.GCost = newCost;
+            continue;
+        }
+
+        float newMovementCostToNeighbor = currentNode.GCost + Vector3.Distance(currentNode.Position, neighborNode.Position);
+
+        var existingOpenNode = openSet.FirstOrDefault(n =&gt; n.Position == neighborNode.Position);
+        if (existingOpenNode == null || newMovementCostToNeighbor &lt; existingOpenNode.GCost)
+        {
+            neighborNode.GCost = newMovementCostToNeighbor;
             neighborNode.HCost = Vector3.Distance(neighborNode.Position, endNode.Position);
             neighborNode.Parent = currentNode;
-            if (openNode == null) openSet.Add(neighborNode);
+
+            if (existingOpenNode == null)
+            {
+                openSet.Add(neighborNode);
+            }
         }
     }
 }</code></pre>
         </details>
-        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L30-L68" target="_blank">View on GitHub (lines 30–68)</a></p>
+        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AStarPathfinder.cs#L30-L70" target="_blank">View on GitHub (lines 30–70)</a></p>
 
         <p><strong>Streaming units between nodes</strong> – validates targets and spawns units along the navmesh.</p>
         <details>
             <summary>Show code</summary>
-            <pre><code class="language-csharp">@ConstructController.cs lines 413-447
+            <pre><code class="language-csharp">@ConstructController.cs lines 415-450
 public void SendUnits(ConstructController target, float percentage)
 {
     bool isValidTarget = true;
     foreach (ConstructController construct in targetConstructs)
-        if (construct == target) { isValidTarget = false; break; }
+    {
+        if (construct == target)
+        {
+            isValidTarget = false;
+            break;
+        }
+    }
+
     if (!isValidTarget) return;
 
     int unitsToSend = Mathf.FloorToInt(UnitCount * percentage);
-    if (unitsToSend == 0 && UnitCount &gt; 0) unitsToSend = 1;
+    if (unitsToSend == 0 &amp;&amp; UnitCount &gt; 0)
+    {
+        unitsToSend = 1;
+    }
     if (unitsToSend &gt; 0)
     {
         if (currentConstructData is HelipadData)
@@ -162,15 +238,18 @@ public void SendUnits(ConstructController target, float percentage)
             targetConstructs.Add(target);
             StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
         }
-        else if (navmeshIndex == target.navmeshIndex)
+        else
         {
-            targetConstructs.Add(target);
-            StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
+            if (navmeshIndex == target.navmeshIndex)
+            {
+                targetConstructs.Add(target);
+                StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
+            }
         }
     }
 }</code></pre>
         </details>
-        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L413-L447" target="_blank">View on GitHub (lines 413–447)</a></p>
+        <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L450" target="_blank">View on GitHub (lines 415–450)</a></p>
     </section>
 
     <section id="performance">
