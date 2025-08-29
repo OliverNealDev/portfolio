@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="dark light" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://oliverneal.dev/oliver.webp" />
-    <meta property="og:title" content="Minimalists – Codebase Breakdown" />
-    <meta property="og:description" content="A cohesive, portfolio-styled breakdown of the Minimalists RTS codebase: architecture, data model, key APIs, representative snippets, and technical notes." />
-    <meta property="og:url" content="https://oliverneal.dev/minimalists.html" />
-    <title>Minimalists – Codebase Breakdown</title>
+    <meta property="og:image" content="https://example.com/unicellular.png" />
+    <meta property="og:title" content="Unicellular – Codebase Breakdown" />
+    <meta property="og:description" content="A cohesive, portfolio-styled breakdown of the Unicellular ECS codebase: architecture, data model, key APIs, representative snippets, and technical notes." />
+    <meta property="og:url" content="https://example.com/unicellular.html" />
+    <title>Unicellular – Codebase Breakdown</title>
     <link rel="icon" href="oliver.webp" type="image/webp">
 
     <!-- Fonts & Prism (match portfolio) -->
@@ -55,6 +55,13 @@
             --prism-blue: #82aaff;
             --prism-purple: #c792ea;
             --prism-yellow: #ffcb6b;
+            /* Diagram styling */
+            --diagram-grid-dark: rgba(255,255,255,0.06);
+            --diagram-grid-light: rgba(0,0,0,0.06);
+            --diagram-bg-tint-dark: linear-gradient(180deg, rgba(255,165,0,0.06), rgba(255,69,0,0.06));
+            --diagram-bg-tint-light: linear-gradient(180deg, rgba(255,165,0,0.08), rgba(255,69,0,0.08));
+            --diagram-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            --diagram-border: rgba(255,255,255,0.08);
         }
 
         .light-theme {
@@ -90,6 +97,9 @@
             --prism-blue: #005cc5;
             --prism-purple: #6f42c1;
             --prism-yellow: #b08800;
+            --diagram-grid-dark: rgba(0,0,0,0.06); /* reused as light grid */
+            --diagram-bg-tint-dark: var(--diagram-bg-tint-light);
+            --diagram-border: rgba(0,0,0,0.08);
         }
 
         /* Base (match portfolio) */
@@ -110,7 +120,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
-            /* Fix any halo/outline rendering in dark mode */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
@@ -120,17 +129,14 @@
             color: var(--text-color);
         }
 
-        /* Nuke stray shadows/strokes that cause glow/halos */
         body, h1, h2, h3, p, a, li, code, pre, table, th, td {
             text-shadow: none !important;
             -webkit-text-stroke: 0 !important;
         }
+        code[class*="language-"], pre[class*="language-"], .token {
+            text-shadow: none !important;
+        }
 
-            code[class*="language-"], pre[class*="language-"], .token {
-                text-shadow: none !important;
-            }
-
-        /* Header / Nav (scoped to header to avoid doc-toc hover bug) */
         header {
             position: fixed;
             top: 0;
@@ -143,7 +149,6 @@
             box-shadow: 0 2px 4px var(--shadow-color);
             transition: background-color 0.3s ease;
         }
-
         .nav-container {
             width: 90%;
             max-width: 1100px;
@@ -153,90 +158,77 @@
             justify-content: space-between;
             flex-wrap: nowrap;
         }
-
         .logo-and-icons {
             display: flex;
             align-items: center;
             gap: 1rem;
             flex-shrink: 0;
         }
-
         .nav-logo {
             font-size: 1.5rem;
             font-weight: bold;
             white-space: nowrap;
             color: var(--text-color);
         }
-
         .nav-icons {
             display: flex;
             gap: 0.75rem;
             align-items: center;
         }
-
-            .nav-icons a {
-                display: block;
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
-            }
-
-            .nav-icons img {
-                display: block;
-                width: 24px;
-                height: 24px;
-                object-fit: contain;
-                transition: opacity 0.2s ease, filter 0.3s ease;
-            }
-
-                .nav-icons img:hover {
-                    opacity: 0.7;
-                }
-
+        .nav-icons a {
+            display: block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+        }
+        .nav-icons img {
+            display: block;
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: opacity 0.2s ease, filter 0.3s ease;
+        }
+        .nav-icons img:hover {
+            opacity: 0.7;
+        }
         .light-theme .nav-icons a[href*="github.com/OliverNealDev"] img {
             filter: invert(1);
         }
-
         header nav {
             margin-left: auto;
             margin-right: 1rem;
             text-align: right;
         }
-
-            header nav ul {
-                list-style: none;
-                display: inline-flex;
-                gap: 1.2rem;
-                align-items: center;
-                justify-content: flex-end;
-                flex-wrap: nowrap;
-                padding: 0;
-                margin: 0;
-            }
-
-            header nav a {
-                color: var(--text-color);
-                text-decoration: none;
-                font-weight: bold;
-                transition: none;
-                padding: 0.2rem 0;
-                white-space: nowrap;
-            }
-                /* FIX: scope gradient hover to header nav only so doc-toc buttons don't turn transparent */
-                header nav a.active-nav, header nav a:hover {
-                    background: var(--main-gradient);
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    color: transparent;
-                }
-
+        header nav ul {
+            list-style: none;
+            display: inline-flex;
+            gap: 1.2rem;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: nowrap;
+            padding: 0;
+            margin: 0;
+        }
+        header nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: none;
+            padding: 0.2rem 0;
+            white-space: nowrap;
+        }
+        header nav a.active-nav, header nav a:hover {
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
         .theme-toggle {
             flex-shrink: 0;
             display: flex;
             align-items: center;
         }
-
         .theme-checkbox {
             --toggle-size: 10px;
             appearance: none;
@@ -253,60 +245,49 @@
             border: 1px solid var(--border-color);
             display: block;
         }
-
-            .theme-checkbox::before {
-                content: "";
-                width: 1.35em;
-                height: 1.35em;
-                position: absolute;
-                top: 0.263em;
-                left: 0.263em;
-                background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
-                background-size: 205%;
-                background-position: 100%;
-                border-radius: 50%;
-                transition: 0.4s;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            }
-
-            .theme-checkbox:checked::before {
-                left: calc(100% - 1.35em - 0.263em);
-                background-position: 0;
-            }
-
-            .theme-checkbox:checked {
-                background-position: 100%;
-            }
-
-        /* Main container (identical sizing) */
+        .theme-checkbox::before {
+            content: "";
+            width: 1.35em;
+            height: 1.35em;
+            position: absolute;
+            top: 0.263em;
+            left: 0.263em;
+            background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+            background-size: 205%;
+            background-position: 100%;
+            border-radius: 50%;
+            transition: 0.4s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .theme-checkbox:checked::before {
+            left: calc(100% - 1.35em - 0.263em);
+            background-position: 0;
+        }
+        .theme-checkbox:checked {
+            background-position: 100%;
+        }
         main {
             width: 90%;
             max-width: 1100px;
             margin: 0 auto;
             padding-top: 100px;
         }
-
-        /* Utility from portfolio */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             will-change: opacity, transform;
         }
-
-            .reveal.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        /* Local page styles to match card look */
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .page-hero {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             margin-bottom: 1.5rem;
         }
-
         .breadcrumb {
             display: inline-flex;
             align-items: center;
@@ -314,68 +295,58 @@
             font-size: 0.9rem;
             color: var(--text-secondary-color);
         }
-
-            .breadcrumb a {
-                color: var(--text-color);
-                text-decoration: none;
-                border-bottom: 1px dashed transparent;
-            }
-
-                .breadcrumb a:hover {
-                    border-bottom-color: var(--accent-color);
-                    background: var(--main-gradient);
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    color: transparent;
-                }
-
+        .breadcrumb a {
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+        }
+        .breadcrumb a:hover {
+            border-bottom-color: var(--accent-color);
+            background: var(--main-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
         .page-title h1 {
             font-size: 2rem;
             margin: 0;
         }
-
         .page-sub {
             color: var(--text-secondary-color);
         }
-
         .doc-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 0.5rem;
         }
-
-            .doc-actions a {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 0.45rem 0.8rem;
-                background: var(--button-bg);
-                color: var(--button-text-color);
-                text-decoration: none;
-                border-radius: 4px;
-                border: 1px solid transparent;
-                font-size: 0.9rem;
-            }
-
-                .doc-actions a:hover {
-                    background: var(--button-hover-bg);
-                    border-color: var(--accent-color);
-                }
-
-            .doc-actions img, .doc-actions svg {
-                width: 16px;
-                height: 16px;
-                vertical-align: middle;
-            }
-
+        .doc-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.45rem 0.8rem;
+            background: var(--button-bg);
+            color: var(--button-text-color);
+            text-decoration: none;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+        .doc-actions a:hover {
+            background: var(--button-hover-bg);
+            border-color: var(--accent-color);
+        }
+        .doc-actions img, .doc-actions svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+        }
         .doc-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.25rem;
         }
-
         .doc-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -383,90 +354,52 @@
             box-shadow: 0 2px 8px var(--shadow-color);
             padding: 1.25rem;
         }
-
-            .doc-card h2 {
-                font-size: 1.4rem;
-                margin: 0 0 0.75rem 0;
-                border-bottom: 2px solid var(--border-color);
-                padding-bottom: 0.5rem;
-            }
-
-            .doc-card h3 {
-                font-size: 1.1rem;
-                margin: 1rem 0 0.5rem;
-            }
-
-        .doc-figure {
-            margin: 0.75rem 0 0;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
-            background: #000;
+        .doc-card h2 {
+            font-size: 1.4rem;
+            margin: 0 0 0.75rem 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
         }
-
-            .doc-figure img {
-                width: 100%;
-                height: auto;
-                display: block;
-            }
-
-            .doc-figure figcaption {
-                font-size: 0.9rem;
-                color: var(--text-secondary-color);
-                padding: 0.5rem 0.75rem;
-                background: var(--header-bg);
-                border-top: 1px solid var(--border-color);
-            }
-
-        /* Tables styled like site */
+        .doc-card h3 {
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
         .doc-table-wrapper {
             overflow-x: auto;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 0.5rem;
             border: 1px solid var(--border-color);
         }
-
         th, td {
             padding: 0.75rem;
             text-align: left;
             border-top: 1px solid var(--border-color);
         }
-
         th {
             background: var(--light-bg);
             font-weight: 700;
         }
-
         tr:nth-child(even) td {
             background: rgba(255,255,255,0.02);
         }
-
-        /* <details> */
         details {
             margin-top: 0.75rem;
         }
-
-            details summary {
-                cursor: pointer;
-                font-weight: 600;
-                background: var(--light-bg);
-                padding: 0.6rem 0.75rem;
-                border: 1px solid var(--border-color);
-                border-radius: 6px;
-            }
-
-            details[open] summary {
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-        /* --- Prism + code overrides (fix dark-mode legibility & token backgrounds) --- */
-
-        /* Base code blocks */
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            background: var(--light-bg);
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        details[open] summary {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
         pre[class*="language-"] {
             background: var(--card-bg) !important;
             border: 1px solid var(--border-color);
@@ -475,87 +408,64 @@
             padding: 1rem !important;
             overflow: auto;
         }
-
         code[class*="language-"], pre[class*="language-"] {
             color: var(--prism-plain) !important;
         }
-
-        /* Remove any unwanted backgrounds causing grey rectangles */
         code, pre, kbd, samp {
             background: transparent;
         }
-
-            pre[class*="language-"] > code {
-                background: transparent !important;
-            }
-
+        pre[class*="language-"] > code {
+            background: transparent !important;
+        }
         .token, .namespace {
             background: transparent !important;
         }
-
-        /* Selection inside code */
         pre[class*="language-"] ::selection,
         code[class*="language-"] ::selection {
             background: rgba(255,255,255,0.08);
         }
-
-        /* Token colors (use theme variables) */
         .token.comment, .token.prolog, .token.doctype, .token.cdata {
             color: var(--prism-comment) !important;
         }
-
         .token.punctuation {
             color: var(--prism-plain) !important;
             background: transparent !important;
         }
-
         .token.operator {
             color: var(--prism-plain) !important;
             background: transparent !important;
         }
-
         .token.boolean, .token.number {
             color: var(--prism-orange) !important;
         }
-
         .token.property, .token.tag, .token.constant, .token.symbol, .token.deleted {
             color: var(--prism-red) !important;
         }
-
         .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted {
             color: var(--prism-green) !important;
         }
-
         .token.function, .token.class-name {
             color: var(--prism-blue) !important;
         }
-
         .token.keyword {
             color: var(--prism-purple) !important;
             font-weight: 500;
         }
-
         .token.regex, .token.important, .token.variable {
             color: var(--prism-yellow) !important;
         }
-
         .token.bold {
             font-weight: bold;
         }
-
         .token.italic {
             font-style: italic;
         }
-
-        /* Inline code outside Prism blocks */
         :not(pre) > code:not([class*="language-"]) {
             background: rgba(127,127,127,0.15);
             padding: 0.15em 0.35em;
             border-radius: 4px;
             color: var(--text-color);
         }
-
-        /* Section anchor bar (local TOC) */
         .doc-toc {
             display: flex;
             flex-wrap: wrap;
@@ -565,22 +475,19 @@
             border-radius: 8px;
             padding: 0.6rem;
         }
-
-            .doc-toc a {
-                font-size: 0.9rem;
-                text-decoration: none;
-                color: var(--text-color);
-                padding: 0.35rem 0.6rem;
-                border-radius: 4px;
-                border: 1px solid transparent;
-                background: var(--button-bg);
-            }
-
-                .doc-toc a:hover {
-                    background: var(--button-hover-bg);
-                    border-color: var(--accent-color);
-                }
-
+        .doc-toc a {
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 0.35rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            background: var(--button-bg);
+        }
+        .doc-toc a:hover {
+            background: var(--button-hover-bg);
+            border-color: var(--accent-color);
+        }
         footer {
             text-align: center;
             padding: 1.5rem 0;
@@ -589,8 +496,6 @@
             color: var(--text-secondary-color);
             font-size: 0.9rem;
         }
-
-        /* Responsive (match portfolio breakpoints) */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: row;
@@ -599,7 +504,6 @@
                 gap: 0.5rem 1rem;
                 justify-content: space-between;
             }
-
             header nav {
                 margin-left: 0;
                 margin-right: 0;
@@ -608,32 +512,26 @@
                 order: 3;
                 flex-basis: 100%;
             }
-
-                header nav ul {
-                    justify-content: flex-start;
-                    gap: 0.8rem;
-                    flex-wrap: wrap;
-                    display: flex;
-                }
-
+            header nav ul {
+                justify-content: flex-start;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                display: flex;
+            }
             .theme-toggle {
                 order: 2;
             }
-
             main {
                 padding-top: 120px;
             }
         }
-
         @media (max-width: 600px) {
             .nav-container {
                 gap: 0.5rem;
             }
-
             header nav ul {
                 gap: 0.5rem;
             }
-
             .page-title h1 {
                 font-size: 1.7rem;
             }
@@ -659,7 +557,6 @@
             </div>
             <nav>
                 <ul>
-                    <!-- (optional portfolio anchors) -->
                 </ul>
             </nav>
             <div class="theme-toggle">
@@ -669,27 +566,22 @@
     </header>
 
     <main>
-        <!-- HERO -->
         <section class="page-hero reveal">
             <div class="breadcrumb">
                 <span>←</span>
                 <a href="index.html#solo-projects" title="Back to Portfolio">Back to Portfolio</a>
             </div>
             <div class="page-title">
-                <h1>Minimalists – AI &amp; Node Control</h1>
-                <p class="page-sub">Codebase Breakdown • Unity • ScriptableObjects • FSM AI</p>
+                <h1>Unicellular – Manager-Driven ECS</h1>
+                <p class="page-sub">Codebase Breakdown • Unity • Custom ECS • Simulation</p>
             </div>
             <div class="doc-actions">
-                <a href="https://embitgames.itch.io/minimalists" target="_blank" title="Play in browser" class="itchio">
-                    <img src="itch-icon.webp" alt="Itch icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser
-                </a>
-                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" title="View GitHub" class="github">
+                <a href="https://github.com/OliverNealDev/UnicellularRebuiltECS" target="_blank" title="View GitHub" class="github">
                     <img src="github-icon.webp" alt="GitHub icon" onerror="this.style.display='none'" loading="lazy" /> View on GitHub
                 </a>
             </div>
         </section>
 
-        <!-- Local TOC -->
         <nav class="doc-toc reveal" aria-label="On this page">
             <a href="#overview">Overview</a>
             <a href="#architecture">Architecture</a>
@@ -702,183 +594,158 @@
         </nav>
 
         <div class="doc-grid">
-            <!-- OVERVIEW -->
             <section id="overview" class="doc-card reveal">
                 <h2>Overview</h2>
                 <p>
-                    A minimalist real-time strategy prototype where houses, turrets and helipads collaborate through dynamic node control and streamlined AI.
-                    Built with Unity and data-driven <strong>ScriptableObjects</strong> to stay highly moddable and fast.
+                    A 2D life simulation where colourful unicells roam, fight, and evolve. The project uses a manager-driven ECS-style architecture in Unity to keep systems modular and scalable.
                 </p>
             </section>
 
-            <!-- ARCHITECTURE -->
             <section id="architecture" class="doc-card reveal">
                 <h2>Architecture</h2>
-                <p>Core systems are divided between client input, game loop, and combat/economy services.</p>
-                <figure class="doc-figure">
-                    <img src="docs/diagrams/minimalists-architecture.svg" alt="Architecture diagram" loading="lazy" />
-                    <figcaption>High-level architecture</figcaption>
-                </figure>
-
-                <h3>Unit Command Sequence</h3>
-                <figure class="doc-figure">
-                    <img src="docs/diagrams/minimalists-sequence.svg" alt="Unit command sequence diagram" loading="lazy" />
-                    <figcaption>Sequence from input → validation → spawn/stream → resolve</figcaption>
-                </figure>
+                <p>Gameplay is coordinated by specialised managers handling entities, economy, camera and UI.</p>
             </section>
 
-            <!-- DATA MODEL -->
             <section id="data-model" class="doc-card reveal">
                 <h2>Data Model</h2>
-                <p>The game leans on data-driven ScriptableObjects so designers can tune balance without touching code.</p>
+                <p>Persistent statistics for each unicell are stored in a simple serialisable class.</p>
                 <div class="doc-table-wrapper">
                     <table>
                         <thead>
                             <tr><th>Field</th><th>Type</th><th>Description</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>constructName</td><td>string</td><td>Display name of the structure</td></tr>
-                            <tr><td>upgradeCost</td><td>int</td><td>Units required to upgrade</td></tr>
-                            <tr><td>maxUnitCapacity</td><td>int</td><td>Population provided by this construct</td></tr>
-                            <tr><td>unitsPerSecond</td><td>float</td><td>Passive unit generation rate</td></tr>
+                            <tr><td>Species</td><td>string</td><td>Identifier for the unicell species</td></tr>
+                            <tr><td>Damage</td><td>float</td><td>Base attack damage</td></tr>
+                            <tr><td>MaxHealth</td><td>float</td><td>Maximum health value</td></tr>
+                            <tr><td>Level</td><td>int</td><td>Current evolution level</td></tr>
+                            <tr><td>XP</td><td>float</td><td>Accumulated experience points</td></tr>
+                            <tr><td>XP_Threshold</td><td>int</td><td>XP required for next level</td></tr>
+                            <tr><td>BaseScale</td><td>Vector2</td><td>Default sprite scale</td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- APIs / CONTRACTS -->
             <section id="apis" class="doc-card reveal">
                 <h2>Key APIs / Contracts</h2>
-
-                <h3>Game Manager</h3>
-                <pre><code class="language-csharp">public class GameManager : MonoBehaviour
-{
-    public void registerUnit(UnitController unit);
-    public void unregisterUnit(UnitController unit);
-}</code></pre>
-
-                <h3>Construct Controller</h3>
-                <pre><code class="language-csharp">public class ConstructController : MonoBehaviour
-{
-    public void SendUnits(ConstructController target, float percentage);
-}</code></pre>
+                <h3>Entity Manager</h3>
+                <pre><code class="language-csharp">public void SpawnUnicells(UnicellSpecies species, int amount);</code></pre>
+                <h3>Economy Manager</h3>
+                <pre><code class="language-csharp">public void IncrementUnicellPopulation(string unicellType);</code></pre>
             </section>
 
-            <!-- REPRESENTATIVE SNIPPETS -->
             <section id="snippets" class="doc-card reveal">
                 <h2>Representative Code Snippets</h2>
 
-                <p><strong>Map analysis assigns roles to each node</strong> – uses distance percentages to classify frontline, support and economic nodes.</p>
+                <p><strong>Spawning species-specific cells</strong> – loops through count and initialises each with the correct prefab.</p>
                 <details>
                     <summary>Show code</summary>
-<pre><code class="language-csharp">@AIManager7.cs lines 66-103
-private void AnalyzeMapAndAssignRoles(List&lt;ConstructController&gt; myNodes)
+<pre><code class="language-csharp">@EntityManager.cs lines 1422-1468
+public void SpawnUnicells(UnicellSpecies species, int Amount)
 {
-    nodeRoles.Clear();
-    var enemyNodes = GameManager.Instance.allConstructs
-        .Where(c =&gt; c.Owner != aiFaction &amp;&amp; c.Owner != GameManager.Instance.unclaimedFaction)
-        .ToList();
-
-    // If no enemies exist or we have too few nodes for complex roles, they are all economic.
-    if (!enemyNodes.Any() || myNodes.Count &lt;= 2)
+    for (int x = 0; x &lt; Amount; x++)
     {
-        myNodes.ForEach(n =&gt; nodeRoles[n] = NodeRole.Economic);
-        return;
-    }
-
-    Vector3 enemyCenter = GetFactionCenter(enemyNodes);
-
-    // Sort nodes by their distance to the enemy's center of mass.
-    var sortedNodes = myNodes.OrderBy(n =&gt; Vector3.Distance(n.transform.position, enemyCenter)).ToList();
-
-    int nodeCount = sortedNodes.Count;
-    // Designate roles by percentage: closest 30% are Frontline, next 40% are Support, rest are Economic.
-    int frontlineCount = Mathf.Max(1, Mathf.CeilToInt(nodeCount * 0.3f));
-    int supportCount = Mathf.CeilToInt(nodeCount * 0.4f);
-
-    for (int i = 0; i &lt; nodeCount; i++)
-    {
-        ConstructController currentNode = sortedNodes[i];
-        if (i &lt; frontlineCount)
+        switch (species)
         {
-            nodeRoles[currentNode] = NodeRole.Frontline;
+            case UnicellSpecies.Blue:
+                initialUnicell = Instantiate(blueUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = BlueUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Blue);
+                break;
+            case UnicellSpecies.Pink:
+                initialUnicell = Instantiate(pinkUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = PinkUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Pink);
+                break;
+            case UnicellSpecies.Yellow:
+                initialUnicell = Instantiate(yellowUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = YellowUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Yellow);
+                break;
+            case UnicellSpecies.Green:
+                initialUnicell = Instantiate(greenUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = GreenUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Green);
+                break;
+            case UnicellSpecies.Purple:
+                initialUnicell = Instantiate(purpleUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = PurpleUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Purple);
+                break;
+            case UnicellSpecies.Red:
+                initialUnicell = Instantiate(redUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = RedUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Red);
+                break;
+            case UnicellSpecies.Orange:
+                initialUnicell = Instantiate(orangeUnicellPrefab).GetComponent&lt;Unicell&gt;();
+                initialUnicell.transform.parent = OrangeUnicellsGameObject.transform;
+                Initialise(initialUnicell, Unicell.UnicellSpecies.Orange);
+                break;
         }
-        else if (i &lt; frontlineCount + supportCount)
-        {
-            nodeRoles[currentNode] = NodeRole.Support;
-        }
-        else
-        {
-            nodeRoles[currentNode] = NodeRole.Economic;
-        }
+        initialUnicell.transform.position = new Vector2((Random.value * Amount * 10) - (Amount / 2f), (Random.value * Amount * 10) - (Amount / 2f));
+        initialUnicell.CurrentState = UnicellState.Idle;
+        RegisterUnicell(initialUnicell);
     }
 }</code></pre>
                 </details>
-                <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/AIManager7.cs#L66-L103" target="_blank">View on GitHub (lines 66–103)</a></p>
+                <p><a href="https://github.com/OliverNealDev/UnicellularRebuiltECS/blob/main/Assets/Scripts/Managers/UnicellManager/EntityManager.cs#L1422-L1468" target="_blank">View on GitHub (lines 1422–1468)</a></p>
 
-                <p><strong>Streaming units between nodes</strong> – validates targets and spawns units along the current movement system.</p>
+                <p><strong>Adjusting target populations</strong> – ensures economy goals drive spawning needs.</p>
                 <details>
                     <summary>Show code</summary>
-<pre><code class="language-csharp">@ConstructController.cs lines 415-450
-public void SendUnits(ConstructController target, float percentage)
+<pre><code class="language-csharp">@EconomyManager.cs lines 901-930
+public void IncrementUnicellPopulation(string UnicellType)
 {
-    bool isValidTarget = true;
-    foreach (ConstructController construct in targetConstructs)
+    switch (UnicellType)
     {
-        if (construct == target)
-        {
-            isValidTarget = false;
+        case "Blue":
+            TargetBlueUnicellPopulation++;
             break;
-        }
-    }
-
-    if (!isValidTarget) return;
-
-    int unitsToSend = Mathf.FloorToInt(UnitCount * percentage);
-    if (unitsToSend == 0 &amp;&amp; UnitCount &gt; 0)
-    {
-        unitsToSend = 1;
-    }
-    if (unitsToSend &gt; 0)
-    {
-        if (currentConstructData is HelipadData)
-        {
-            targetConstructs.Add(target);
-            StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
-        }
-        else
-        {
-            if (navmeshIndex == target.navmeshIndex)
-            {
-                targetConstructs.Add(target);
-                StartCoroutine(SpawnUnitsRoutine(unitsToSend, target));
-            }
-        }
+        case "Pink":
+            TargetPinkUnicellPopulation++;
+            break;
+        case "Yellow":
+            TargetYellowUnicellPopulation++;
+            break;
+        case "Green":
+            TargetGreenUnicellPopulation++;
+            break;
+        case "Purple":
+            TargetPurpleUnicellPopulation++;
+            break;
+        case "Red":
+            TargetRedUnicellPopulation++;
+            break;
+        case "Orange":
+            TargetOrangeUnicellPopulation++;
+            break;
+        default:
+            Debug.LogError("EconomyManager IncrementUnicellPopulation() - Unknown UnicellType for target population incrementation");
+            break;
     }
 }</code></pre>
                 </details>
-                <p><a href="https://github.com/OliverNealDev/Minimalists/blob/main/Assets/Scripts/ConstructController.cs#L415-L450" target="_blank">View on GitHub (lines 415–450)</a></p>
+                <p><a href="https://github.com/OliverNealDev/UnicellularRebuiltECS/blob/main/Assets/Scripts/Managers/EconomyManager.cs#L901-L930" target="_blank">View on GitHub (lines 901–930)</a></p>
             </section>
 
-            <!-- PERFORMANCE -->
             <section id="performance" class="doc-card reveal">
                 <h2>Performance Notes</h2>
-                <p>Profiling is ongoing and formal benchmarks are not yet published.</p>
+                <p>Initial profiling focuses on entity spawning and per-frame manager updates; further optimisation is ongoing.</p>
             </section>
 
-            <!-- TESTING -->
             <section id="testing" class="doc-card reveal">
                 <h2>Testing &amp; Validation</h2>
-                <p>Currently verified through manual playtesting; no automated tests are in place.</p>
+                <p>Functionality is verified through manual playtesting; automated unit tests are not yet available.</p>
             </section>
 
-            <!-- TRADEOFFS -->
             <section id="tradeoffs" class="doc-card reveal">
                 <h2>Trade-offs &amp; Next Steps</h2>
                 <ul style="margin-left:1.25rem;">
-                    <li>Finite state AI is easy to reason about; behavior trees could scale variety later.</li>
-                    <li>Current movement/streaming approach is lightweight but has limited dynamic-obstacle handling, only works reliably for static obstacles.</li>
-                    <li>Data-driven design simplifies scalability but can potentially be detrimental for systems that dont necessarily need it.</li>
+                    <li>Custom ECS managers keep code familiar but lack the memory benefits of DOTS.</li>
+                    <li>Heavy reliance on serialised data simplifies tweaking yet increases boilerplate.</li>
+                    <li>Future work includes adding AI behaviours and automated performance tests.</li>
                 </ul>
             </section>
         </div>
@@ -888,12 +755,10 @@ public void SendUnits(ConstructController target, float percentage)
         &copy; 2025 Oliver Neal. All rights reserved.
     </footer>
 
-    <!-- Prism -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js" defer></script>
 
     <script defer>
-        // Small utilities
         function throttle(func, limit) {
             let lastFunc; let lastRan;
             return function (...args) {
@@ -907,8 +772,6 @@ public void SendUnits(ConstructController target, float percentage)
                 }
             }
         }
-
-        // Theme (identical behavior to index)
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
         function applyTheme(theme) {
@@ -924,8 +787,6 @@ public void SendUnits(ConstructController target, float percentage)
             applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
-
-        // Reveal on scroll (match index)
         function revealSections() {
             const reveals = document.querySelectorAll('.reveal');
             const windowHeight = window.innerHeight;
@@ -937,7 +798,6 @@ public void SendUnits(ConstructController target, float percentage)
                 }
             });
         }
-
         document.addEventListener('DOMContentLoaded', () => { revealSections(); });
         window.addEventListener('scroll', throttle(revealSections, 150));
     </script>
