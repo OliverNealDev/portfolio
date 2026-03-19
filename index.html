@@ -1,5 +1,4 @@
-﻿gem
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -17,7 +16,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Styles for the inline header and sort control */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -27,7 +25,6 @@
             gap: 15px;
         }
 
-            /* Remove ALL default margins (top and bottom) to ensure perfect vertical centering */
             .section-header h2 {
                 margin: 0;
             }
@@ -53,7 +50,6 @@
             cursor: pointer;
         }
 
-        /* Dark mode support for the select box */
         @media (prefers-color-scheme: dark) {
             .sort-select {
                 background-color: #333;
@@ -152,6 +148,7 @@
                     </div>
                 </div>
             </section>
+
             <section id="solo-projects" class="reveal">
                 <div class="section-header">
                     <h2>Solo Projects</h2>
@@ -165,7 +162,77 @@
                 </div>
 
                 <div class="project-grid">
-                    <div class="project-card" id="minimalists" data-rank="1" data-date="2025-08">
+
+                    <div class="project-card" id="hue-station" data-rank="1" data-date="2026-03">
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="hueStationSlideshow">
+                                <figure class="active">
+                                    <img src="Project Media/HueStation/HueStation1.png" alt="Close-up of gameplay and thermal facilities" onclick="openLightbox('hueStationSlideshow', 0)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Gameplay & Facilities</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/HueStation/HueStation2.png" alt="Isometric far shot of passengers waiting" onclick="openLightbox('hueStationSlideshow', 1)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Isometric Station Overview</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/HueStation/HueStation3.png" alt="Straight-on far shot of waiting passengers" onclick="openLightbox('hueStationSlideshow', 2)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Station Overview</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/HueStation/HueStation4.png" alt="Single platform far shot with orange train" onclick="openLightbox('hueStationSlideshow', 3)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Platform & Orange Train</figcaption>
+                                </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'hueStationSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Gameplay & Facilities</div> <span class="next" onclick="plusSlides(1,'hueStationSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Hue Station</h3> <span class="project-date">Work In Progress</span> </div>
+                            <p>A slightly dystopian, futuristic station management game where color dictates survival. Passengers materialize with specific physical needs based on the "hue" of their arriving train. You must carefully route these colorful crowds to specialized thermal facilities to keep them stable—failure to meet their hue-based needs results in passengers spontaneously melting before they can board!</p>
+                            <p class="tech">Technologies: Unity 3D, Finite State Machines, AI Navigation, Object Pooling</p>
+                            <div class="project-links">
+                                <span style="font-style: italic; color: #888;">Project currently in active development.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="tile-turfer" data-rank="2" data-date="2026-01">
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="tileTurferSlideshow">
+                                <figure class="active">
+                                    <img src="Project Media/TileTurfer/tile1.png" alt="Painting tiles with single bullets" onclick="openLightbox('tileTurferSlideshow', 0)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Early Game Painting</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/TileTurfer/tile2.png" alt="Fighting an enemy in enemy territory" onclick="openLightbox('tileTurferSlideshow', 1)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Enemy Combat</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/TileTurfer/tile3.png" alt="Painting with triplet shots" onclick="openLightbox('tileTurferSlideshow', 2)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Triplet Shot Painting</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/TileTurfer/tile4.png" alt="Intense fight with two enemies" onclick="openLightbox('tileTurferSlideshow', 3)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Intense Firefight</figcaption>
+                                </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tileTurferSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Early Game Painting</div> <span class="next" onclick="plusSlides(1,'tileTurferSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Tile Turfer</h3> <span class="project-date">Jan 2026</span> </div>
+                            <p>Developed for an Advanced Development Techniques module, this is a top-down shooter where offensive power is calculated by map coverage. I implemented a "Territory-Linked Offensive Scaling" system where the player's fire rate and weapon patterns upgrade dynamically as they traverse and paint the environment.</p>
+                            <p class="tech">Technologies: Unity 2D, Tilemaps, Coroutines, AI Navigation (NavMesh)</p>
+                            <div class="project-links">
+                                <a href="https://github.com/OliverNealDev/TileTurfer" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
+                                <a href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
+                                <a href="TileTurferReport.pdf" download="TileTurferReport.pdf" class="details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
+                                    Read Technical Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="minimalists" data-rank="3" data-date="2025-08">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="minimalistsSlideshow">
                                 <figure class="active">
@@ -206,7 +273,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card" id="unicellular" data-rank="2" data-date="2025-02">
+                    <div class="project-card" id="unicellular" data-rank="4" data-date="2025-02">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="unicellularSlideshow">
                                 <figure class="active">
@@ -247,7 +314,38 @@
                         </div>
                     </div>
 
-                    <div class="project-card" id="pinnable" data-rank="3" data-date="2024-03">
+                    <div class="project-card" id="3d-netcode-tank-game" data-rank="5" data-date="2025-01">
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="tankGameSlideshow">
+                                <figure class="active">
+                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp" onclick="openLightbox('tankGameSlideshow', 0)">
+                                        <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.webp" onclick="openLightbox('tankGameSlideshow', 1)">
+                                        <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption>
+                                </figure>
+                                <figure>
+                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.webp" onclick="openLightbox('tankGameSlideshow', 2)">
+                                        <source src="Project Media/3DNetcodeTankGame/Login.webm" type="video/webm"> Your browser does not support the video tag.
+                                    </video> <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption>
+                                </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Multiplayer Functionality</div> <span class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>3D Netcode Tank Game</h3> <span class="project-date">Jan 2025</span> </div>
+                            <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
+                            <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
+                            <div class="project-links">
+                                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="pinnable" data-rank="6" data-date="2024-03">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="pinnableSlideshow">
                                 <figure class="active">
@@ -283,75 +381,65 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="project-card" id="tile-turfer" data-rank="4" data-date="2026-01">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="tileTurferSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Tile Turfer/GameplayPoster.webp" onclick="openLightbox('tileTurferSlideshow', 0)">
-                                        <source src="Project Media/Tile Turfer/Gameplay.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Dynamic Territory Scaling</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Tile Turfer/MechanicsPoster.webp" onclick="openLightbox('tileTurferSlideshow', 1)">
-                                        <source src="Project Media/Tile Turfer/Mechanics.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video>
-                                    <figcaption class="hidden-caption" style="display:none;">Milestone Upgrades</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tileTurferSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Dynamic Territory Scaling</div> <span class="next" onclick="plusSlides(1,'tileTurferSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Tile Turfer</h3> <span class="project-date">Jan 2026</span> </div>
-                            <p>A top-down shooter where offensive power is calculated by map coverage. I implemented a "Territory-Linked Offensive Scaling" system where the player's fire rate and weapon patterns upgrade dynamically as they traverse and paint the environment.</p>
-                            <p class="tech">Technologies: Unity 2D, Tilemaps, Coroutines, AI Navigation (NavMesh)</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                                <a href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
-                                <a href="[ADT] Dynamic Territory-Linked Fire Rate (4).pdf" download="Tile_Turfer_Report.pdf" class="details">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
-                                    Read Technical Report
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="3d-netcode-tank-game" data-rank="5" data-date="2025-01">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="tankGameSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp" onclick="openLightbox('tankGameSlideshow', 0)">
-                                        <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.webp" onclick="openLightbox('tankGameSlideshow', 1)">
-                                        <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.webp" onclick="openLightbox('tankGameSlideshow', 2)">
-                                        <source src="Project Media/3DNetcodeTankGame/Login.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Multiplayer Functionality</div> <span class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>3D Netcode Tank Game</h3> <span class="project-date">Jan 2025</span> </div>
-                            <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
-                            <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
+
             <section id="team-projects" class="reveal">
                 <h2>Team Projects</h2>
                 <div class="project-grid">
+
+                    <div class="project-card" id="space-bar-simulator">
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow-container" id="spaceBarSlideshow">
+                                <figure class="active">
+                                    <img src="Project Media/SpaceBarSimulator/space1.png" alt="Location of the bar being on an asteroid" onclick="openLightbox('spaceBarSlideshow', 0)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Asteroid Bar Location</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space2.png" alt="View from behind the bar ready to work" onclick="openLightbox('spaceBarSlideshow', 1)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Behind the Bar</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space3.png" alt="An alien approaching the bar" onclick="openLightbox('spaceBarSlideshow', 2)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Approaching Customer</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space4.png" alt="Holding a tray with a snack and drink while an alien waits at a table" onclick="openLightbox('spaceBarSlideshow', 3)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Serving an Order</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space5.png" alt="Grabbing a beer from a filled fridge to put on the tray" onclick="openLightbox('spaceBarSlideshow', 4)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Restocking Drinks</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space6.png" alt="Computer terminal showing customers served and happiness rating" onclick="openLightbox('spaceBarSlideshow', 5)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Status Terminal</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space7.png" alt="Lots of tables with the caption upgrade as you go!" onclick="openLightbox('spaceBarSlideshow', 6)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Upgrade As You Go!</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space8.png" alt="Game credits" onclick="openLightbox('spaceBarSlideshow', 7)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Game Credits</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="Project Media/SpaceBarSimulator/space9.png" alt="Upgrades terminal" onclick="openLightbox('spaceBarSlideshow', 8)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
+                                    <figcaption class="hidden-caption" style="display:none;">Upgrades Terminal</figcaption>
+                                </figure>
+                            </div>
+                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'spaceBarSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Asteroid Bar Location</div> <span class="next" onclick="plusSlides(1,'spaceBarSlideshow',true)">&#10095;</span> </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header"> <h3>Space Bar Simulator</h3> <span class="project-date">2025</span> </div>
+                            <p>A beta arcade module developed for Teesside University. Manage and upgrade your fast-paced, asteroid-based bar by serving food and drinks to alien customers. Balance demand and customer happiness. Developed in a team of 10 alongside 2 other developers.</p>
+                            <p class="tech">Technologies: Unity 3D, Team-Collaboration, Gameplay Programming</p>
+                            <div class="project-links">
+                                <a href="https://github.com/MissyJane33/Beta-Arcade" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="project-card" id="candy-corporate">
                         <div class="slideshow-wrapper">
                             <div class="slideshow-container" id="candySlideshow">
@@ -404,6 +492,7 @@
                     </div>
                 </div>
             </section>
+
             <section id="project-breakdowns" class="reveal">
                 <h2>Project Breakdowns</h2>
                 <div class="project-grid">
@@ -427,6 +516,7 @@
                     </div>
                 </div>
             </section>
+
             <section id="education" class="reveal">
                 <h2>Education</h2>
                 <div class="education-entry">
@@ -437,7 +527,7 @@
                     <p>Transferred to Teesside University to complete a final year for my Bsc. I am advancing and polishing my skills in Games Development to a professional standard.</p>
                 </div>
                 <div class="education-entry">
-                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
+                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
                     <h3>FdSc Games Technologies</h3>
                     <p>Newcastle College University Centre, Newcastle upon Tyne</p>
                     <p class="dates">Completed: May 2025 (2:1)</p>
@@ -488,26 +578,19 @@
     </div>
     <script src="main.js" defer></script>
     <script>
-        // Sorting Logic for Solo Projects
         function sortProjects() {
             const container = document.querySelector('#solo-projects .project-grid');
             const sortBy = document.getElementById('projectSort').value;
-            // Get all project cards as an array
             const cards = Array.from(container.getElementsByClassName('project-card'));
 
             cards.sort((a, b) => {
                 if (sortBy === 'best') {
-                    // Sort by manual rank (lower number = better)
                     return parseInt(a.dataset.rank) - parseInt(b.dataset.rank);
                 } else if (sortBy === 'date') {
-                    // Sort by date string (Newest/descending first)
-                    // String comparison works for ISO format YYYY-MM
                     return b.dataset.date.localeCompare(a.dataset.date);
                 }
             });
 
-            // Re-append cards in the new order
-            // This moves them in the DOM, preserving events/references
             cards.forEach(card => container.appendChild(card));
         }
     </script>
