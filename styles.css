@@ -271,6 +271,16 @@
                 object-fit: contain;
             }
 
+        .skill-icon img[src="unrealenginelogo.webp"],
+        .skill-icon img[src="chatgptlogo.webp"] {
+            filter: invert(1);
+        }
+
+        .light-theme .skill-icon img[src="unrealenginelogo.webp"],
+        .light-theme .skill-icon img[src="chatgptlogo.webp"] {
+            filter: none;
+        }
+
         main {
             width: 90%;
             max-width: 1100px;
