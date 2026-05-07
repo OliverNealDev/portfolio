@@ -2285,3 +2285,52 @@
             }
         }
 
+        /* Breakdown overflow guard: keep wide tables/code inside cards, not the viewport. */
+        .page-hero,
+        .doc-toc,
+        .doc-grid,
+        .doc-card,
+        details {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .doc-card {
+            overflow-wrap: anywhere;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        .doc-card pre,
+        .doc-card pre[class*="language-"],
+        .doc-table-wrapper {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: auto;
+            box-sizing: border-box;
+        }
+
+        .doc-card pre,
+        .doc-card pre[class*="language-"] {
+            white-space: pre;
+        }
+
+        .doc-card pre > code,
+        .doc-card pre[class*="language-"] > code {
+            white-space: pre;
+            overflow-wrap: normal;
+            word-break: normal;
+        }
+
+        .doc-table-wrapper table {
+            table-layout: fixed;
+            min-width: 760px;
+        }
+
+        .doc-table-wrapper th,
+        .doc-table-wrapper td {
+            overflow-wrap: anywhere;
+        }
