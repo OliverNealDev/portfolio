@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>3D Netcode Tank Game · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How the 3D Netcode Tank Game works: a server-authoritative multiplayer tank shooter on Unity Netcode for GameObjects, with a 64-ray hitscan, a decoupled turret aiming rig, Relay-hosted sessions and cloud authentication. Built solo in Unity by Oliver Neal.">
+  <link rel="canonical" href="https://oliverneal.dev/tank-game.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="3D Netcode Tank Game · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="A server-authoritative multiplayer tank shooter on Unity Netcode for GameObjects. Built solo in Unity.">
+  <meta property="og:url" content="https://oliverneal.dev/tank-game.html">
+  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#projects">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          All projects
+        </a>
+
+        <p class="kicker">Case study · Solo project</p>
+        <h1>3D Netcode Tank Game</h1>
+        <p class="cs-meta">Jan 2025 · Unity 6 · C# · Netcode for GameObjects</p>
+        <p class="cs-lead">
+          A multiplayer tank shooter built to learn networking properly: online
+          sessions over Unity Relay, account sign-in with cloud-saved profiles,
+          and a combat model in which the server has the final say on every hit.
+        </p>
+
+        <div class="cs-actions">
+          <a class="btn btn-primary" href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            Source on GitHub
+          </a>
+        </div>
+
+        <div class="cs-hero-media reveal">
+          <video controls preload="none" poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp"
+                 width="1280" height="720"
+                 aria-label="3D Netcode Tank Game demo: two clients connected in a hosted online session">
+            <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm" type="video/webm">
+          </video>
+        </div>
+
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · C#</span></li>
+          <li><span class="fact-k">Netcode</span><span class="fact-v">Netcode for GameObjects</span></li>
+          <li><span class="fact-k">Model</span><span class="fact-v">Server-authoritative</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Overview</p>
+          <h2>A networking-first prototype</h2>
+          <p>
+            This project exists to get the hard parts of online multiplayer right,
+            rather than to be a finished game. It is built on <strong>Unity Netcode
+            for GameObjects</strong> with Relay-backed sessions, so two players can
+            connect over the internet, spawn into the same world, and shoot at each
+            other while the server arbitrates what actually happens.
+          </p>
+          <p>
+            Around the netcode sits the full online-services flow: a login and
+            registration screen backed by Unity Authentication, and a display name
+            persisted through Cloud Save so a profile follows the player between
+            sessions.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="Project Media/3DNetcodeTankGame/LoginPoster.webp"
+                 width="1280" height="720"
+                 aria-label="3D Netcode Tank Game login and registration screen">
+            <source src="Project Media/3DNetcodeTankGame/Login.webm" type="video/webm">
+          </video>
+          <figcaption>Sign-in and registration, backed by Unity Authentication and Cloud Save.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ HITSCAN ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Combat</p>
+          <h2>Server-authoritative hitscan</h2>
+          <p>
+            Firing is resolved on the server rather than the client, the
+            authoritative model that keeps online shooters cheat-resistant. When a
+            player shoots, the server fans out <strong>64 raycasts</strong> stacked
+            vertically toward the aim point, filters them to player hits, and takes
+            the one closest to the muzzle as the real result.
+          </p>
+          <p>
+            That fan is a deliberate piece of hit-forgiveness. A single ray is
+            unforgiving on a moving target, but a spread of them gives the shot a
+            little tolerance while still letting the server, and only the server,
+            decide whether damage was dealt.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.webp"
+                 width="1280" height="720"
+                 aria-label="3D Netcode Tank Game: driving and turret controls demonstration">
+            <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.webm" type="video/webm">
+          </video>
+          <figcaption>Driving and aiming; the shot itself is decided server-side.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ TURRET RIG ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Aiming</p>
+          <h2>A turret that traverses rather than snaps</h2>
+          <p>
+            The turret does not jump straight to the cursor. Mouse input rotates an
+            invisible <strong>"desired" transform</strong>, and the real turret
+            turns toward it each frame at a fixed traverse speed, using a dot
+            product against its own right vector to decide which way to rotate.
+          </p>
+          <p>
+            The effect is a mechanical, rate-limited swing that reads like a real
+            gun barrel coming around, rather than an instant lock-on. Decoupling
+            where the player wants to aim from where the turret currently points is
+            a small rig that adds a lot of weight to the aiming.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VFX LIFECYCLE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">VFX</p>
+          <h2>Networked effects with a clean lifecycle</h2>
+          <p>
+            Muzzle flashes, smoke and explosions are spawned as networked objects
+            on the server so every client sees them, then tidy themselves up with a
+            proper handshake: the effect fades its material out, drifts, and when
+            the fade completes the owner asks the server to despawn it.
+          </p>
+          <p>
+            It is a small detail, but getting the owner-to-server despawn flow right
+            is exactly the kind of thing that separates a networked prototype that
+            leaks objects from one that behaves.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NUMBERS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Under the hood</p>
+          <h2>By the numbers</h2>
+          <ul>
+            <li><strong>Unity Netcode for GameObjects</strong> over Relay-backed online sessions.</li>
+            <li><strong>30 Hz network tick</strong>, with player prefabs auto-spawned on connect.</li>
+            <li><strong>64-ray server-side hitscan</strong> with closest-hit resolution.</li>
+            <li><strong>Unity Authentication and Cloud Save</strong> for accounts and persistent display names.</li>
+            <li><strong>A ten-state menu FSM</strong> that doubles as the play and pause gate for gameplay scripts.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="pinnable.html">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Previous: Pinnable
+      </a>
+      <a href="cyber-station.html">
+        Next: Cyber Station
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

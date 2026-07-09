@@ -1,613 +1,804 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of Oliver Neal, UK-based games programmer specializing in Unity and C#. Showcases solo and team projects, technical skills, and ways to connect." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://oliverneal.dev/oliver.webp" />
-    <meta property="og:title" content="Oliver Neal – Portfolio" />
-    <meta property="og:description" content="From the UK, I'm a games programmer specializing in Unity (C#) with experience in 2D & 3D dev, multiplayer netcode, and performance optimization. I enjoy tackling challenging gameplay systems and delivering polished player experiences." />
-    <meta property="og:url" content="https://oliverneal.dev" />
-    <title>Oliver Neal – Portfolio</title>
-    <link rel="icon" href="oliver.webp" type="image/webp">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            .section-header h2 {
-                margin: 0;
-            }
+  <title>Oliver Neal · Games Developer · Unity (C#)</title>
+  <meta name="description" content="Portfolio of Oliver Neal, a games developer specialising in Unity and C#. First Class BSc (Hons) Games Development graduate from Teesside University, winner of Best Games Programming and Development Artefact at ExpoTees 2026, and currently a Gameplay Programmer at Shiverbug Studios.">
+  <link rel="canonical" href="https://oliverneal.dev/">
 
-        .sort-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+  <!-- Open Graph / social previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Oliver Neal · Games Developer · Unity (C#)">
+  <meta property="og:description" content="Gameplay systems, enemy AI, multiplayer netcode and performance work across eight playable projects. First Class Games Development graduate, currently a Gameplay Programmer at Shiverbug Studios.">
+  <meta property="og:url" content="https://oliverneal.dev/">
+  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/HueStation/LateGameZoomedOutGameplayScreenshot.png">
+  <meta name="twitter:card" content="summary_large_image">
 
-            .sort-controls label {
-                font-weight: 500;
-                color: var(--text-color, #333);
-            }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Oliver Neal",
+    "url": "https://oliverneal.dev/",
+    "email": "mailto:oliverjn04@gmail.com",
+    "jobTitle": "Games Developer",
+    "worksFor": { "@type": "Organization", "name": "Shiverbug Studios" },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "Teesside University" },
+      { "@type": "CollegeOrUniversity", "name": "Newcastle College University Centre" }
+    ],
+    "award": "Best Games Programming and Development Artefact, ExpoTees 2026",
+    "knowsAbout": ["Unity", "C#", "Gameplay programming", "Game AI", "Multiplayer netcode"],
+    "sameAs": [
+      "https://github.com/OliverNealDev",
+      "https://www.linkedin.com/in/oliver-neal-197b74290",
+      "https://olivernealdev.itch.io"
+    ]
+  }
+  </script>
 
-        .sort-select {
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            background-color: var(--bg-color, #fff);
-            color: var(--text-color, #333);
-            font-family: 'Roboto', sans-serif;
-            cursor: pointer;
-        }
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-        @media (prefers-color-scheme: dark) {
-            .sort-select {
-                background-color: #333;
-                color: #fff;
-                border-color: #555;
-            }
-        }
-    </style>
+  <!-- Apply the saved / preferred theme before first paint to avoid a flash -->
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <div class="logo-and-icons">
-                <div class="nav-logo">Oliver Neal</div>
-                <div class="nav-icons">
-                    <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener noreferrer" title="GitHub"> <img src="github-icon.webp" alt="GitHub" onerror="this.style.display='none'" loading="lazy" /> </a>
-                    <a href="https://embitgames.itch.io" target="_blank" rel="noopener noreferrer" title="Itch.io"> <img src="itch-icon.webp" alt="Itch.io" onerror="this.style.display='none'" loading="lazy" /> </a>
-                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" rel="noopener noreferrer" title="LinkedIn"> <img src="linkedin-icon.webp" alt="LinkedIn" onerror="this.style.display='none'" loading="lazy" /> </a>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#about" class="active-nav">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#solo-projects">Solo</a></li>
-                    <li><a href="#team-projects">Team</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="theme-toggle">
-                <input type="checkbox" class="theme-checkbox" id="themeToggle" title="Toggle Theme">
-            </div>
-        </div>
-    </header>
-    <div id="solidContent">
-        <main>
-            <section id="about" class="reveal">
-                <div class="about-container">
-                    <div class="about-img">
-                        <img src="oliver.webp" alt="Oliver Neal Selfie" onerror="this.src='https://placehold.co/200x200/cccccc/333333?text=ON'; this.onerror=null;" loading="lazy" />
-                    </div>
-                    <div class="about-text">
-                        <h1>Hello, I'm Oliver Neal!</h1>
-                        <p>
-                            I'm a UK-based <strong>Games Developer</strong> specializing in Unity (C#), with experience across 2D &amp; 3D gameplay, multiplayer netcode, AI behavior, and performance-focused systems.
-                        </p>
-                        <p>
-                            I enjoy turning technical challenges into polished player experiences, especially in automation, simulation, and mechanically rich games. Explore my work on my <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener noreferrer">GitHub profile</a>.
-                        </p>
-                        <a href="Oliver_Neal_Resume.pdf" download="Oliver_Neal_Resume.pdf" class="download-button">
-                            Download My Resume (PDF)
-                        </a>
-                    </div>
-                </div>
-            </section>
-            <section id="skills" class="reveal">
-                <h2>My Skills</h2>
-                <div class="skills-container">
-                    <div class="skill-category">
-                        <h3>Languages & Engines</h3>
-                        <ul>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C Sharp Icon" loading="lazy"></span>C#</li>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity Icon" loading="lazy"></span>Unity Engine</li>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python Icon" loading="lazy"></span>Python</li>
-                            <li>
-                                <span class="skill-icon"><img src="unrealenginelogo.webp" alt="Unreal Engine Logo" loading="lazy"></span>Unreal Engine 5
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="skill-category">
-                        <h3>Tools & Software</h3>
-                        <ul>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git Icon" loading="lazy"></span>Git / Version Control</li>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code Icon" loading="lazy"></span>Visual Studio / VS Code</li>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rider/rider-original.svg" alt="Rider Icon" loading="lazy"></span>Jetbrains Rider</li>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma Icon" loading="lazy"></span>Figma</li>
-                            <li><span class="skill-icon"><img src="chatgptlogo.webp" alt="ChatGPT Logo" loading="lazy"></span>Codex</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Plastic SCM Icon"><path d="M18.5 14.06a5.49 5.49 0 0 0-7.87 1.17A5.5 5.5 0 1 0 5.5 9.5a5.49 5.49 0 0 0 4.44 5.44 5.5 5.5 0 0 0 8.56-.88Zm-13 1.44a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm4.44-6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Zm8.56 6.88a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Z" /></svg></span>Unity Version Control (Plastic SCM)</li>
-                            <li><span class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/trello/trello-original.svg" alt="Trello Icon" loading="lazy"></span>Trello / Project Management</li>
-                        </ul>
-                    </div>
-                    <div class="skill-category">
-                        <h3>Concepts & Techniques</h3>
-                        <ul>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Gameplay Programming Icon"><path d="M7 8h10a4 4 0 0 1 4 4v1a5 5 0 0 1-5 5h-1v-3h-2v3h-2v-3H9v3H8a5 5 0 0 1-5-5v-1a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v1a3 3 0 0 0 3 3v-3h8v3a3 3 0 0 0 3-3v-1a2 2 0 0 0-2-2H7zm1-4h2v2H8V6zm6 0h2v2h-2V6z" /></svg></span>Gameplay Programming</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Networking Icon"><path d="M16 11s-1.3 2.5-3 2.5-3-2.5-3-2.5S11.3 6 13 6s3 5 3 5zm-3 8.5a8.5 8.5 0 1 1 5.3-15.3A8.5 8.5 0 0 1 13 19.5zm0-15a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM13 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" /></svg></span>Multiplayer (Netcode for GameObjects)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Systems Design Icon"><path d="M10 3H4v6h2V7h2v3h2V3zm10 0h-6v7h2V7h2v2h2V3zM8 14H6v-2H4v6h6v-2H8v-2zm12-2h-2v2h-2v2h2v2h2v-6zM11 8h2v3h3v2h-3v3h-2v-3H8v-2h3V8z" /></svg></span>Systems Design</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Optimization Icon"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm4-9h-3V8a1 1 0 0 0-2 0v3H8a1 1 0 0 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 0 0 0-2z" /></svg></span>Performance Optimization</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="FSM Icon"><path d="M15 21h-2v-2h2zm4-2h-2v-2h2zm-4-4h-2v-2h2zM7 5h2v2H7zm12 0h-2v2h2zm-4 4h-2v2h2zm-4 0H9v2h2zm-4 0H5v2h2zm0 4H5v2h2zm0 4H5v2h2zm4 4H9v-2h2zm8-16h-2V3h2zm-4 0h-2V3h2zm-4 0H9V3h2zM7 3v2H5V3zm12 10h-2v-2h2zm0 4h-2v-2h2z" /></svg></span>Finite State Machines (FSMs)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="OOP Icon"><path d="M17 7H7a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2a4 4 0 0 0-4-4zm-1 6H8v-2h8zM7 9h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" /></svg></span>Object-Oriented Programming (OOP)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="UI Icon"><path d="M20 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-9 18H4V4h7zm9 0h-7V4h7z" /></svg></span>UI Implementation (UGUI)</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Debugging Icon"><path d="M20 8h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2zm-8 8a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm0-6a2 2 0 1 0 2 2 2 2 0 0 0-2-2zM6 14h2.81a6 6 0 0 0 8.38 0H20a1 1 0 0 0 0-2h-2.81a6 6 0 0 0-8.38 0H6a1 1 0 0 0 0 2z" /></svg></span>Debugging & Profiling</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Documentation Icon"><path d="M6 2h8l4 4v16H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 2v4h4l-4-4zM8 11h8v2H8v-2zm0 4h8v2H8v-2zm0-8h3v2H8V7z" /></svg></span>Technical Documentation</li>
-                            <li><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Cloud Services Icon"><path d="M19.35 10.04A8.5 8.5 0 0 0 12 4a8.5 8.5 0 0 0-7.37 4.03 6 6 0 0 0-1.13 11.97h17a5 5 0 0 0 .5-9.96zM12 18a3 3 0 1 1 3-3 3 3 0 0 1-3 3z" /></svg></span>Unity Authentication & Services</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
 
-            <section id="solo-projects" class="reveal">
-                <div class="section-header">
-                    <h2>Solo Projects</h2>
-                    <div class="sort-controls">
-                        <label for="projectSort">Sort by:</label>
-                        <select id="projectSort" class="sort-select" onchange="sortProjects()">
-                            <option value="best" selected>Featured (Best to Worst)</option>
-                            <option value="date">Chronological (Newest First)</option>
-                        </select>
-                    </div>
-                </div>
+  <!-- Inline SVG icon sprite (referenced via <use href="#i-...">) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></symbol>
+    <symbol id="i-itch" viewBox="0 0 24 24"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.137 2.41 2.466 2.41h.024c1.33 0 2.466-1.102 2.466-2.41 0 1.308 1.034 2.41 2.363 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612-3.253-.114-5.508-.134-8.87-.133-3.362 0-7.945.053-8.87.133zm6.376 6.477a2.74 2.74 0 0 1-.468.602c-.5.49-1.19.795-1.947.795a2.786 2.786 0 0 1-1.95-.795c-.182-.178-.32-.37-.443-.59-.122.222-.29.412-.472.59a2.788 2.788 0 0 1-1.947.795c-.093 0-.19-.025-.267-.052-.107 1.113-.152 2.176-.168 2.95v.005l-.006 1.167c.02 2.334-.23 7.564 1.03 8.85 1.952.454 5.545.662 9.15.663 3.605 0 7.198-.21 9.15-.664 1.26-1.284 1.01-6.514 1.03-8.848l-.006-1.167v-.004c-.016-.775-.06-1.838-.168-2.95-.077.026-.175.052-.268.052a2.788 2.788 0 0 1-1.947-.795c-.182-.178-.35-.368-.472-.59-.124.22-.26.412-.442.59a2.787 2.787 0 0 1-1.951.795c-.756 0-1.447-.305-1.947-.795a2.74 2.74 0 0 1-.468-.602 2.738 2.738 0 0 1-.463.602 2.787 2.787 0 0 1-1.95.795h-.16a2.787 2.787 0 0 1-1.95-.795 2.74 2.74 0 0 1-.464-.602zm-2.004 2.608v.002c.795.002 1.5 0 2.373.953.687-.072 1.406-.108 2.125-.107.72 0 1.438.035 2.125.107.873-.953 1.578-.95 2.372-.953.376 0 1.876 0 2.92 2.934l1.123 4.028c.832 2.995-.266 3.068-1.636 3.07-2.03-.075-3.156-1.55-3.156-3.025-1.124.184-2.436.276-3.748.277-1.312 0-2.624-.093-3.748-.277 0 1.475-1.125 2.95-3.156 3.026-1.37-.004-2.468-.077-1.636-3.072l1.122-4.027c1.045-2.934 2.545-2.934 2.92-2.934zM12 12.714c-.002.002-2.14 1.964-2.523 2.662l1.4-.056v1.22c0 .056.56.033 1.123.007.563.026 1.124.05 1.124-.008v-1.22l1.4.055c-.384-.698-2.524-2.662-2.524-2.662z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></g></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></g></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H4v1.5A3.5 3.5 0 0 0 7.5 10"/><path d="M17 5h3v1.5A3.5 3.5 0 0 1 16.5 10"/><path d="M12 14v4"/><path d="M8 18h8v2H8z"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
 
-                <div class="project-grid">
+  <a class="skip-link" href="#top">Skip to content</a>
 
-                    <div class="project-card" id="cyber-station" data-rank="1" data-date="2026-04">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="cyberStationSlideshow">
-                                <figure class="active">
-                                    <img src="Project Media/HueStation/HS1.png" alt="Neon station floor with passengers moving between service points" onclick="openLightbox('cyberStationSlideshow', 0)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Neon Station Floor</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/HueStation/HS2.png" alt="Dense service area with brightly coloured facilities and waiting passengers" onclick="openLightbox('cyberStationSlideshow', 1)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Core Service Hub</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/HueStation/HS3.png" alt="Expanded trainline with passengers moving through multiple connected platforms" onclick="openLightbox('cyberStationSlideshow', 2)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Trainline Expansion</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/HueStation/stationratings.png" alt="Station ratings screen showing service, decoration, and crowd metrics" onclick="openLightbox('cyberStationSlideshow', 3)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Station Ratings System</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'cyberStationSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Neon Station Floor</div> <span class="next" onclick="plusSlides(1,'cyberStationSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Cyber Station</h3> <span class="project-date">Apr 2026</span> </div>
-                            <p>A neon station management game where passengers of different hues have different needs. I built placement, flow, and rating systems that let the player expand facilities, improve service, and keep a growing transport hub running efficiently.</p>
-                            <p class="tech">Technologies: Unity 3D, Finite State Machines, AI Navigation, Object Pooling</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/TSA" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                                <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Itch.io </a>
-                                <a class="details" href="cyber-station.html">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h8l6 6v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm9 0H6v14h12v-9h-5V5zm1 1.5V8h1.5L14 6.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
-                                    Project Breakdown
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="#top">oliverneal<span>.dev</span></a>
 
-                    <div class="project-card" id="tile-turfer" data-rank="2" data-date="2026-01">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="tileTurferSlideshow">
-                                <figure class="active">
-                                    <img src="Project Media/TileTurfer/tile1.png" alt="Painting tiles with single bullets" onclick="openLightbox('tileTurferSlideshow', 0)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Early Game Painting</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/TileTurfer/tile2.png" alt="Fighting an enemy in enemy territory" onclick="openLightbox('tileTurferSlideshow', 1)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Enemy Combat</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/TileTurfer/tile3.png" alt="Painting with triplet shots" onclick="openLightbox('tileTurferSlideshow', 2)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Triplet Shot Painting</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/TileTurfer/tile4.png" alt="Intense fight with two enemies" onclick="openLightbox('tileTurferSlideshow', 3)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Intense Firefight</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tileTurferSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Early Game Painting</div> <span class="next" onclick="plusSlides(1,'tileTurferSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Tile Turfer</h3> <span class="project-date">Jan 2026</span> </div>
-                            <p>Developed for an Advanced Development Techniques module, this is a top-down shooter where offensive power is calculated by map coverage. I implemented a "Territory-Linked Offensive Scaling" system where the player's fire rate and weapon patterns upgrade dynamically as they traverse and paint the environment.</p>
-                            <p class="tech">Technologies: Unity 2D, Tilemaps, Coroutines, AI Navigation (NavMesh)</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/TileTurfer" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                                <a href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
-                                <a href="TileTurferReport.pdf" download="TileTurferReport.pdf" class="details">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
-                                    Read Technical Report
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#shiverbug">Internship</a>
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#education">Education</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
 
-                    <div class="project-card" id="minimalists" data-rank="3" data-date="2025-08">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="minimalistsSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Minimalists/MainMenuPoster.webp" onclick="openLightbox('minimalistsSlideshow', 0)">
-                                        <source src="Project Media/Minimalists/MainMenu.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Minimalists/TutorialPoster.webp" onclick="openLightbox('minimalistsSlideshow', 1)">
-                                        <source src="Project Media/Minimalists/Tutorial.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Tutorial</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Minimalists/1v1Poster.webp" onclick="openLightbox('minimalistsSlideshow', 2)">
-                                        <source src="Project Media/Minimalists/1v1.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">1v1 Match</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Minimalists/4vsPoster.webp" onclick="openLightbox('minimalistsSlideshow', 3)">
-                                        <source src="Project Media/Minimalists/4vs.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Four Player Versus</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'minimalistsSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Main Menu</div> <span class="next" onclick="plusSlides(1,'minimalistsSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Minimalists</h3> <span class="project-date">Aug 2025</span> </div>
-                            <p>A minimalistic RTS game featuring three construct types—house, turret, and helipad that dynamically work together to create strategic gameplay.</p>
-                            <p class="tech">Technologies: Unity 3D, Finite State Machines, AI Behaviour, Level Design</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                                <a href="https://embitgames.itch.io/minimalists" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
-                                <a class="details" href="minimalists.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
-                                    Project Breakdown
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="unicellular" data-rank="4" data-date="2025-02">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="unicellularSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Unicellular/UnicellInteractionPoster.webp" onclick="openLightbox('unicellularSlideshow', 0)">
-                                        <source src="Project Media/Unicellular/UnicellInteraction.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Unicell Interactions</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/BuyingUnicellsPoster.webp" onclick="openLightbox('unicellularSlideshow', 1)">
-                                        <source src="Project Media/Unicellular/BuyingUnicells.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Purchasing Unicells</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.webp" onclick="openLightbox('unicellularSlideshow', 2)">
-                                        <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">1000 Unicells @ 144+ fps</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.webp" onclick="openLightbox('unicellularSlideshow', 3)">
-                                        <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">6000 Unicells @ ~100 fps</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'unicellularSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Unicell Interactions</div> <span class="next" onclick="plusSlides(1,'unicellularSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Unicellular</h3> <span class="project-date">Feb 2025</span> </div>
-                            <p>Idle entity simulation game where the player purchases different Unicells that eat, fight and die to produce currency. This project handles thousands of entities with FSMs and interactions.</p>
-                            <p class="tech">Technologies: Unity 2D, Finite State Machines, Optimisation Techniques</p>
-                            <div class="project-links">
-                                <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                                <a href="https://embitgames.itch.io/unicellular" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
-                                <a class="details" href="unicellular.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" /></svg>
-                                    Project Breakdown
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="3d-netcode-tank-game" data-rank="5" data-date="2025-01">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="tankGameSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp" onclick="openLightbox('tankGameSlideshow', 0)">
-                                        <source src="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Multiplayer Functionality</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.webp" onclick="openLightbox('tankGameSlideshow', 1)">
-                                        <source src="Project Media/3DNetcodeTankGame/TankControlsDemo.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Tank Controls</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/3DNetcodeTankGame/LoginPoster.webp" onclick="openLightbox('tankGameSlideshow', 2)">
-                                        <source src="Project Media/3DNetcodeTankGame/Login.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Login via Authentication</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'tankGameSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Multiplayer Functionality</div> <span class="next" onclick="plusSlides(1,'tankGameSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>3D Netcode Tank Game</h3> <span class="project-date">Jan 2025</span> </div>
-                            <p>A multiplayer tank combat game built with a server–client model using Unity Authentication, Relay, Cloud Save, and Lobbies.</p>
-                            <p class="tech">Technologies: Unity 3D, Server–Client Networking, Unity Authentication, Unity Relay, Cloud Save, Lobbies</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="pinnable" data-rank="6" data-date="2024-03">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="pinnableSlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Pinnable/GameplayPoster.webp" onclick="openLightbox('pinnableSlideshow', 0)">
-                                        <source src="Project Media/Pinnable/Gameplay.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Gameplay</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Pinnable/DyingPoster.webp" onclick="openLightbox('pinnableSlideshow', 1)">
-                                        <source src="Project Media/Pinnable/Dying.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Defeat UX</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Pinnable/HowToPlayPoster.webp" onclick="openLightbox('pinnableSlideshow', 2)">
-                                        <source src="Project Media/Pinnable/HowToPlay.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">How To Play Menu</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Pinnable/OptionsPoster.webp" onclick="openLightbox('pinnableSlideshow', 3)">
-                                        <source src="Project Media/Pinnable/Options.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Options Menu</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'pinnableSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Gameplay</div> <span class="next" onclick="plusSlides(1,'pinnableSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Pinnable</h3> <span class="project-date">March 2024</span> </div>
-                            <p>A 2D platformer where players collect falling marbles bouncing off moving pins, inspired by <em>Peggle</em>.</p>
-                            <p class="tech">Technologies: Unity 2D, Difficulty Scaling Systems</p>
-                            <div class="project-links">
-                                <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                                <a href="https://embitgames.itch.io/pinnable" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="team-projects" class="reveal">
-                <h2>Team Projects</h2>
-                <div class="project-grid">
-
-                    <div class="project-card" id="space-bar-simulator">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="spaceBarSlideshow">
-                                <figure class="active">
-                                    <img src="Project Media/SpaceBarSimulator/space1.png" alt="Location of the bar being on an asteroid" onclick="openLightbox('spaceBarSlideshow', 0)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Asteroid Bar Location</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space2.png" alt="View from behind the bar ready to work" onclick="openLightbox('spaceBarSlideshow', 1)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Behind the Bar</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space3.png" alt="An alien approaching the bar" onclick="openLightbox('spaceBarSlideshow', 2)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Approaching Customer</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space4.png" alt="Holding a tray with a snack and drink while an alien waits at a table" onclick="openLightbox('spaceBarSlideshow', 3)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Serving an Order</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space5.png" alt="Grabbing a beer from a filled fridge to put on the tray" onclick="openLightbox('spaceBarSlideshow', 4)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Restocking Drinks</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space6.png" alt="Computer terminal showing customers served and happiness rating" onclick="openLightbox('spaceBarSlideshow', 5)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Status Terminal</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space7.png" alt="Lots of tables with the caption upgrade as you go!" onclick="openLightbox('spaceBarSlideshow', 6)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Upgrade As You Go!</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space8.png" alt="Game credits" onclick="openLightbox('spaceBarSlideshow', 7)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Game Credits</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="Project Media/SpaceBarSimulator/space9.png" alt="Upgrades terminal" onclick="openLightbox('spaceBarSlideshow', 8)" style="width:100%; object-fit:cover; aspect-ratio: 16/9;" loading="lazy">
-                                    <figcaption class="hidden-caption" style="display:none;">Upgrades Terminal</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'spaceBarSlideshow',true)">&#10094;</span> <div class="slideshow-caption">Asteroid Bar Location</div> <span class="next" onclick="plusSlides(1,'spaceBarSlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Space Bar Simulator</h3> <span class="project-date">2025</span> </div>
-                            <p>A beta arcade module developed for Teesside University. Manage and upgrade your fast-paced, asteroid-based bar by serving food and drinks to alien customers. Balance demand and customer happiness. Developed in a team of 10 alongside 2 other developers.</p>
-                            <p class="tech">Technologies: Unity 3D, Team-Collaboration, Gameplay Programming</p>
-                            <div class="project-links">
-                                <a href="https://github.com/MissyJane33/Beta-Arcade" target="_blank" rel="noopener noreferrer" class="github"> <img src="github-icon.webp" alt="GitHub Icon" onerror="this.style.display='none'" loading="lazy" /> Github </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="candy-corporate">
-                        <div class="slideshow-wrapper">
-                            <div class="slideshow-container" id="candySlideshow">
-                                <figure class="active">
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/BasementPoster.webp" onclick="openLightbox('candySlideshow',0)">
-                                        <source src="Project Media/Candy Corporate/Basement.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Map Exploration</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/FrontOfMapPoster.webp" onclick="openLightbox('candySlideshow',1)">
-                                        <source src="Project Media/Candy Corporate/FrontOfMap.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Entrance</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/BuyingLeavingPoster.webp" onclick="openLightbox('candySlideshow',2)">
-                                        <source src="Project Media/Candy Corporate/BuyingLeaving.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Cashing Out</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/MenuPoster.webp" onclick="openLightbox('candySlideshow',3)">
-                                        <source src="Project Media/Candy Corporate/Menu.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Main Menu</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/ObjectivesPoster.webp" onclick="openLightbox('candySlideshow',4)">
-                                        <source src="Project Media/Candy Corporate/Objectives.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Objectives</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/CodexPoster.webp" onclick="openLightbox('candySlideshow',5)">
-                                        <source src="Project Media/Candy Corporate/Codex.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Codex</figcaption>
-                                </figure>
-                                <figure>
-                                    <video muted playsinline loop poster="Project Media/Candy Corporate/CreditsPoster.webp" onclick="openLightbox('candySlideshow',6)">
-                                        <source src="Project Media/Candy Corporate/Credits.webm" type="video/webm"> Your browser does not support the video tag.
-                                    </video> <figcaption class="hidden-caption" style="display:none;">Credits</figcaption>
-                                </figure>
-                            </div>
-                            <div class="slideshow-info"> <span class="prev" onclick="plusSlides(-1,'candySlideshow',true)">&#10094;</span> <div class="slideshow-caption">Map Exploration</div> <span class="next" onclick="plusSlides(1,'candySlideshow',true)">&#10095;</span> </div>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header"> <h3>Candy Corporate</h3> <span class="project-date">April 2024</span> </div>
-                            <p>A game inspired by Lethal Company focused on level design and tile creation. <strong>My Role: Tile Artist, Level Designer &Aacute; Game Designer</strong></p>
-                            <p class="tech">Skills: Unity 2D, Pixel Art, Tilemaps, Team-Collaboration</p>
-                            <div class="project-links">
-                                <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener noreferrer" class="itchio"> <img src="itch-icon.webp" alt="Itch.io Icon" onerror="this.style.display='none'" loading="lazy" /> Itch.io </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="project-breakdowns" class="reveal">
-                <h2>Project Breakdowns</h2>
-                <div class="project-grid">
-                    <div class="featured-card">
-                        <a href="cyber-station.html">
-                            <img src="Project Media/HueStation/HS1.png" alt="Cyber Station screenshot" loading="lazy" />
-                            <div class="featured-info">
-                                <h3>Cyber Station &ndash; Passenger Flow</h3>
-                                <p>Project Breakdown</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="featured-card">
-                        <a href="minimalists.html">
-                            <img src="Project Media/Minimalists/Thumbnail4.png" alt="Minimalists screenshot" loading="lazy" />
-                            <div class="featured-info">
-                                <h3>Minimalists – AI &amp; Node Control</h3>
-                                <p>Project Breakdown</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="featured-card">
-                        <a href="unicellular.html">
-                            <img src="Project Media/Unicellular/UnicellInteractionPoster.webp" alt="Unicellular screenshot" loading="lazy" />
-                            <div class="featured-info">
-                                <h3>Unicellular – Entity Simulation</h3>
-                                <p>Project Breakdown</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="education" class="reveal">
-                <h2>Education</h2>
-                <div class="education-entry">
-                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
-                    <h3>BSc (Hons) Games Development</h3>
-                    <p>Teesside University</p>
-                    <p class="dates">Planned Graduation: July 2026 (First-Class Expected)</p>
-                    <p>Transferred to Teesside University to complete a final year for my Bsc. I am advancing and polishing my skills in Games Development to a professional standard.</p>
-                </div>
-                <div class="education-entry">
-                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
-                    <h3>FdSc Games Technologies</h3>
-                    <p>Newcastle College University Centre, Newcastle upon Tyne</p>
-                    <p class="dates">Completed: May 2025 (2:1)</p>
-                    <p>Completed my Foundation Degree covering core principles of game development, including programming with C# in Unity, game design fundamentals, 2D/3D asset pipelines, and collaborative project work.</p>
-                </div>
-                <div class="education-entry">
-                    <span class="uni-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.82l4-2.18zm-6 9.18V10.09l4 2.18 4-2.18v1.09L12 13.45zM18 16H6v-1.18l6-3.27 6 3.27z" /></svg> </span>
-                    <h3>BTEC Level 3 National Foundation Diploma in Creative Digital Media Production</h3>
-                    <p>Newcastle College, Newcastle upon Tyne</p>
-                    <p class="dates">Completed: June 2023 (Distinction)</p>
-                    <p>Covered key aspects of digital media creation, including pre-production, media representation, campaigns, and practical production skills in web and digital games.</p>
-                    <a href="Oliver_Neal_LV3_Certificate.pdf" download="Oliver_Neal_LV3_Certificate.pdf" class="download-button">
-                        Download Certificate (PDF)
-                    </a>
-                </div>
-            </section>
-            <section id="contact" class="reveal">
-                <h2>Contact Me</h2>
-                <ul class="contact-list">
-                    <li> <img src="email-icon.webp" alt="Email Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a> </li>
-                    <li> <img src="linkedin-icon.webp" alt="LinkedIn Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a> </li>
-                    <li> <img src="github-icon.webp" alt="GitHub Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener noreferrer">GitHub Profile</a> </li>
-                    <li> <img src="itch-icon.webp" alt="Itch.io Icon" class="contact-icon" onerror="this.style.display='none'" loading="lazy" /> <a href="https://embitgames.itch.io" target="_blank" rel="noopener noreferrer">Itch.io Profile</a> </li>
-                </ul>
-            </section>
-        </main>
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
     </div>
-    <footer>
-        &copy; 2025 Oliver Neal. All rights reserved.
-    </footer>
-    <div id="lightboxOverlay" onclick="closeLightboxOutside(event)">
-        <div id="lightboxContent" onclick="event.stopPropagation()">
-            <span id="lightboxClose" onclick="closeLightbox()">&times;</span>
-            <span id="lightboxPrev" onclick="changeLightboxSlide(-1)">&#10094;</span>
-            <span id="lightboxNext" onclick="changeLightboxSlide(1)">&#10095;</span>
-            <div id="lightboxMediaContainer">
-                <video id="lightboxVideo" controls controlslist="nodownload" muted loop playsinline></video>
-                <img id="lightboxImage" loading="lazy" alt="Lightbox Image" style="display: none;">
+  </header>
+
+  <main id="top" tabindex="-1">
+
+    <!-- ===================== 1 · HERO ===================== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <a class="now-pill" href="#shiverbug">
+            <span class="now-dot" aria-hidden="true"></span>
+            <span>Gameplay Programmer at <strong>Shiverbug Studios</strong></span>
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <h1>Oliver Neal</h1>
+          <p class="hero-role">Games Developer · Unity (C#)</p>
+          <p class="hero-pitch">
+            I graduated from Teesside University with First Class Honours in
+            Games Development, and my final year project won Best Games
+            Programming and Development Artefact at ExpoTees 2026. I build
+            gameplay systems in Unity: enemy AI, multiplayer netcode and
+            simulations that stay fast under load.
+          </p>
+
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#projects">
+              View work
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="btn btn-outline" href="Oliver_Neal_Resume.pdf" download>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
+              Download CV
+            </a>
+            <a class="btn btn-ghost" href="#contact">Contact</a>
+          </div>
+
+          <div class="social-row">
+            <a class="icon-btn" href="https://github.com/OliverNealDev" target="_blank" rel="noopener" aria-label="GitHub: OliverNealDev">
+              <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            </a>
+            <a class="icon-btn" href="https://www.linkedin.com/in/oliver-neal-197b74290" target="_blank" rel="noopener" aria-label="LinkedIn: Oliver Neal">
+              <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+            </a>
+            <a class="icon-btn" href="https://olivernealdev.itch.io" target="_blank" rel="noopener" aria-label="itch.io: olivernealdev">
+              <svg class="icon" aria-hidden="true"><use href="#i-itch"/></svg>
+            </a>
+            <a class="icon-btn" href="mailto:oliverjn04@gmail.com" aria-label="Email oliverjn04@gmail.com">
+              <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-portrait">
+          <img src="oliver.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high">
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2 · ABOUT ===================== -->
+    <section class="section" id="about">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">About</p>
+          <h2>A bit about me</h2>
+        </header>
+
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <p>
+              I'm Oliver, a games developer working in <strong>Unity and C#</strong>.
+              I graduated from Teesside University in July 2026 with
+              <strong>First Class Honours</strong> in BSc (Hons) Games Development,
+              and I've just started as a gameplay programmer at Shiverbug Studios.
+            </p>
+            <p>
+              The part of games I enjoy most is the systems layer:
+              <strong>state machines driving enemy AI</strong>, multiplayer
+              netcode, and the optimisation that lets thousands of entities
+              simulate without dropping frames. My final year project,
+              <a href="cyber-station.html">Cyber Station</a>, scored 90 and won
+              <strong>Best Games Programming and Development Artefact</strong>
+              at ExpoTees 2026.
+            </p>
+            <p>
+              Everything below is playable, most of it on itch.io with source on
+              GitHub. If you'd rather read about the engineering, the
+              <a href="#breakdowns">project breakdowns</a> go deeper on six of them.
+            </p>
+          </div>
+
+          <ul class="fact-list reveal">
+            <li><span class="fact-num">1st</span><span class="fact-label">BSc (Hons) Games Development</span></li>
+            <li><span class="fact-num">90</span><span class="fact-label">final year project grade</span></li>
+            <li><span class="fact-num">8</span><span class="fact-label">playable projects</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3 · SHIVERBUG / OUT OF WATER ===================== -->
+    <section class="section" id="shiverbug">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Now</p>
+          <h2>Gameplay Programmer at Shiverbug Studios</h2>
+          <p class="section-lead">A ten week internship on an original IP, working in engine every day.</p>
+        </header>
+
+        <article class="feature reveal">
+          <div class="feature-cover">
+            <img src="OOW-in-game-image-1.jpg"
+                 alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
+                 width="1920" height="1080">
+          </div>
+
+          <div class="feature-body">
+            <div>
+              <!-- Same logo, two crops: black background for dark theme, light-blue for light -->
+              <a class="feature-logo-link" href="https://www.linkedin.com/company/shiverbug-studios/" target="_blank" rel="noopener" aria-label="Shiverbug Studios on LinkedIn">
+                <img class="feature-logo dark" src="shiverbug_studios_logo-blackBG.jpg" alt="Shiverbug Studios logo" width="120" height="120" loading="lazy">
+                <img class="feature-logo light" src="shiverbug_studios_logo-ligthtBlueBG.jpg" alt="Shiverbug Studios logo" width="120" height="120" loading="lazy">
+              </a>
+
+              <p class="feature-meta">Internship · 6 Jul to 11 Sep 2026 · 10 weeks</p>
+              <h3>Out of Water, an original IP</h3>
+              <p>
+                A 3D platformer collectathon built for two players on one sofa,
+                in splitscreen. As a gameplay programmer on the team, I work in
+                engine across:
+              </p>
+              <ul class="feature-list">
+                <li><strong>State machines</strong> for gameplay behaviour</li>
+                <li>Refining and creating <strong>gameplay mechanics</strong></li>
+                <li>Authoring and working with <strong>shaders in Shader Graph</strong></li>
+                <li>Implementing <strong>visual effects (VFX)</strong></li>
+              </ul>
+              <ul class="tags">
+                <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Shader Graph</li><li>VFX</li>
+              </ul>
             </div>
-            <div id="lightboxCaption"></div>
-        </div>
-    </div>
-    <div id="customMessageOverlay" class="custom-message-overlay">
-        <div id="customMessageBox" class="custom-message-box">
-            <p id="customMessageText"></p>
-            <button id="customMessageCloseBtn">OK</button>
-        </div>
-    </div>
-    <script src="main.js" defer></script>
-    <script>
-        function sortProjects() {
-            const container = document.querySelector('#solo-projects .project-grid');
-            const sortBy = document.getElementById('projectSort').value;
-            const cards = Array.from(container.getElementsByClassName('project-card'));
+          </div>
+        </article>
+      </div>
+    </section>
 
-            cards.sort((a, b) => {
-                if (sortBy === 'best') {
-                    return parseInt(a.dataset.rank) - parseInt(b.dataset.rank);
-                } else if (sortBy === 'date') {
-                    return b.dataset.date.localeCompare(a.dataset.date);
-                }
-            });
+    <!-- ===================== 4 · SKILLS ===================== -->
+    <section class="section" id="skills">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Skills</p>
+          <h2>What I work with</h2>
+        </header>
 
-            cards.forEach(card => container.appendChild(card));
-        }
-    </script>
+        <dl class="skills-list reveal">
+          <div class="skills-row">
+            <dt>Languages &amp; engines</dt>
+            <dd><strong>C#</strong>, <strong>Unity 2D / 3D</strong>, Shader Graph, Unreal Engine 5, Python</dd>
+          </div>
+          <div class="skills-row">
+            <dt>Gameplay &amp; AI</dt>
+            <dd>Gameplay programming, systems design, <strong>finite &amp; hierarchical state machines</strong>, AI navigation, Unity UI</dd>
+          </div>
+          <div class="skills-row">
+            <dt>Performance</dt>
+            <dd>Performance optimisation, <strong>time-sliced &amp; multi-rate simulation</strong>, runtime NavMesh baking, profiling large entity counts</dd>
+          </div>
+          <div class="skills-row">
+            <dt>Multiplayer &amp; services</dt>
+            <dd><strong>Netcode for GameObjects</strong>, Unity Authentication, Relay, Lobbies, Cloud Save</dd>
+          </div>
+          <div class="skills-row">
+            <dt>Tools &amp; workflow</dt>
+            <dd>Git, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===================== 5 · SOLO PROJECTS ===================== -->
+    <section class="section" id="projects">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Projects</p>
+          <h2>Solo projects</h2>
+          <p class="section-lead">Newest first. Click a thumbnail to play the game; hover to see it in motion.</p>
+        </header>
+
+        <!--
+          To add a project: copy one <article class="card project reveal"> block.
+          - Thumbnail: put an <img> inside .card-media (poster .webp preferred).
+            The thumbnail always links to where the game can be played.
+          - Optional hover video: add data-video="path.webm" to .card-media
+            and keep the .media-badge; main.js does the rest.
+        -->
+
+        <!-- Cyber Station: featured (final year project, ExpoTees 2026 winner) -->
+        <article class="card project project-featured reveal">
+          <a class="card-media" href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener"
+             data-video="Project Media/HueStation/CyberStationHover.webm"
+             aria-label="Play Cyber Station on itch.io">
+            <img src="Project Media/HueStation/LateGameZoomedOutGameplayScreenshot.png"
+                 alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
+                 width="1569" height="878" loading="lazy">
+            <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+          </a>
+          <div class="card-body">
+            <p class="award-badge">
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
+              Best Games Programming &amp; Development Artefact · ExpoTees 2026
+            </p>
+            <div class="card-top">
+              <h3>Cyber Station</h3>
+              <span class="card-date">Apr 2026</span>
+            </div>
+            <p>
+              My final year project: a neon station management game where placement,
+              passenger flow, ratings and progression all feed into each other.
+              Passenger AI, train scheduling, staff, economy and save systems run
+              together in one simulation. It scored 90 and won the games programming
+              award at ExpoTees 2026.
+            </p>
+            <ul class="tags">
+              <li>Unity 3D</li><li>C#</li><li>AI Navigation</li><li>Simulation</li>
+            </ul>
+            <div class="card-links">
+              <a class="link-primary" href="cyber-station.html">
+                Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
+                itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <div class="project-grid" id="solo-grid">
+
+          <!-- Tile Turfer (behind "show all") -->
+          <article class="card project project-extra reveal">
+            <a class="card-media" href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener" aria-label="Tile Turfer on itch.io">
+              <img src="Project Media/TileTurfer/tile1.png"
+                   alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
+                   width="1919" height="1079" loading="lazy">
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Tile Turfer</h3>
+                <span class="card-date">Jan 2026</span>
+              </div>
+              <p>
+                A turf-war arena shooter where one territory percentage drives the
+                difficulty, your fire rate and your attacks at once, across
+                procedurally generated caves with runtime 2D navigation.
+              </p>
+              <ul class="tags">
+                <li>Unity 2D</li><li>C#</li><li>Procedural</li><li>Enemy AI</li>
+              </ul>
+              <div class="card-links">
+                <a class="link-primary" href="tile-turfer.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener">
+                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/TileTurfer" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+                </a>
+                <a href="TileTurferReport.pdf" target="_blank" rel="noopener">
+                  <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg> Report
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Minimalists -->
+          <article class="card project reveal">
+            <a class="card-media" href="https://embitgames.itch.io/minimalists" target="_blank" rel="noopener"
+               data-video="Project Media/Minimalists/1v1.webm"
+               aria-label="Play Minimalists on itch.io">
+              <img src="Project Media/Minimalists/1v1Poster.webp"
+                   alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
+                   width="1040" height="582" loading="lazy">
+              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Minimalists</h3>
+                <span class="card-date">Aug 2025</span>
+              </div>
+              <p>
+                Minimalist 3D RTS with advanced enemy AI. Capture structures,
+                commit forces by percentage and outthink opponents in anything
+                from a duel to a four way free for all.
+              </p>
+              <ul class="tags">
+                <li>Unity 3D</li><li>C#</li><li>Enemy AI</li><li>RTS</li>
+              </ul>
+              <div class="card-links">
+                <a class="link-primary" href="minimalists.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://embitgames.itch.io/minimalists" target="_blank" rel="noopener">
+                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Unicellular -->
+          <article class="card project reveal">
+            <a class="card-media" href="https://embitgames.itch.io/unicellular" target="_blank" rel="noopener"
+               data-video="Project Media/Unicellular/10KEntities.webm"
+               aria-label="Play Unicellular on itch.io">
+              <img src="Project Media/Unicellular/10kEntitiesPoster.webp"
+                   alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
+                   width="1280" height="720" loading="lazy">
+              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Unicellular</h3>
+                <span class="card-date">Feb 2025</span>
+              </div>
+              <p>
+                Idle simulation stress-tested to 10,000 entities at once, kept
+                smooth by finite state machines, a multi-rate tick and time-sliced
+                proximity AI inside Unity's GameObject workflow.
+              </p>
+              <ul class="tags">
+                <li>Unity</li><li>C#</li><li>FSM</li><li>Optimisation</li>
+              </ul>
+              <div class="card-links">
+                <a class="link-primary" href="unicellular.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://embitgames.itch.io/unicellular" target="_blank" rel="noopener">
+                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3D Netcode Tank Game (behind "show all") -->
+          <article class="card project project-extra reveal">
+            <a class="card-media" href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener"
+               data-video="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm"
+               aria-label="3D Netcode Tank Game on GitHub">
+              <img src="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp"
+                   alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
+                   width="1280" height="720" loading="lazy">
+              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>3D Netcode Tank Game</h3>
+                <span class="card-date">Jan 2025</span>
+              </div>
+              <p>
+                Server-authoritative multiplayer tank shooter on Unity Netcode for
+                GameObjects: Relay-hosted sessions, cloud authentication and a
+                64-ray hitscan resolved on the server.
+              </p>
+              <ul class="tags">
+                <li>Unity 3D</li><li>C#</li><li>Netcode</li><li>Multiplayer</li>
+              </ul>
+              <div class="card-links">
+                <a class="link-primary" href="tank-game.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pinnable -->
+          <article class="card project reveal">
+            <a class="card-media" href="https://embitgames.itch.io/pinnable" target="_blank" rel="noopener"
+               data-video="Project Media/Pinnable/Gameplay.webm"
+               aria-label="Pinnable on itch.io">
+              <img src="Project Media/Pinnable/GameplayPoster.webp"
+                   alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
+                   width="1280" height="720" loading="lazy">
+              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Pinnable</h3>
+                <span class="card-date">Mar 2024</span>
+              </div>
+              <p>
+                A 2D arcade score-attack game: catch marbles from a moving cannon,
+                dodge the pins, and survive a spawn director that ramps up the
+                harder you play.
+              </p>
+              <ul class="tags">
+                <li>Unity 2D</li><li>C#</li><li>Arcade</li><li>Physics</li>
+              </ul>
+              <div class="card-links">
+                <a class="link-primary" href="pinnable.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://embitgames.itch.io/pinnable" target="_blank" rel="noopener">
+                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="show-more-wrap">
+          <button class="btn btn-outline" type="button"
+                  data-show-more="solo-grid" aria-controls="solo-grid" aria-expanded="false"
+                  data-more="Show all 6 solo projects" data-less="Show fewer">
+            Show all 6 solo projects
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6 · TEAM PROJECTS ===================== -->
+    <section class="section" id="team">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Projects</p>
+          <h2>Team projects</h2>
+          <p class="section-lead">Group builds, with my individual contribution called out on each.</p>
+        </header>
+
+        <div class="project-grid">
+
+          <!-- Space Bar Simulator -->
+          <article class="card project reveal">
+            <div class="card-media">
+              <img src="Project Media/SpaceBarSimulator/space1.png"
+                   alt="Space Bar Simulator: a retro futurist diner interior with checkerboard floors, red booths and neon strips"
+                   width="1826" height="781" loading="lazy">
+            </div>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Space Bar Simulator</h3>
+                <span class="card-date">2025</span>
+              </div>
+              <p>
+                A retro futurist bar simulator set on its own asteroid, a
+                1950s diner drifting through space.
+              </p>
+              <p class="card-role"><span class="team-badge">Team project</span></p>
+              <ul class="tags">
+                <li>University group build</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Candy Corporate -->
+          <article class="card project reveal">
+            <a class="card-media" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener"
+               data-video="Project Media/Candy Corporate/FrontOfMap.webm"
+               aria-label="Candy Corporate on itch.io">
+              <img src="Project Media/Candy Corporate/FrontOfMapPoster.webp"
+                   alt="Candy Corporate: pixel art top down view of the candy company storefront"
+                   width="1280" height="720" loading="lazy">
+              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Candy Corporate</h3>
+                <span class="card-date">Apr 2024</span>
+              </div>
+              <p>
+                Pixel art candy company game built by a small team.
+              </p>
+              <p class="card-role">
+                <span class="team-badge">Team project</span><br>
+                <strong>My role:</strong> level design, tile creation and pixel art integration.
+              </p>
+              <div class="card-links">
+                <a class="link-primary" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
+                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7 · PROJECT BREAKDOWNS ===================== -->
+    <section class="section" id="breakdowns">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Case studies</p>
+          <h2>Project breakdowns</h2>
+          <p class="section-lead">Deeper technical write-ups of how six of these games actually work.</p>
+        </header>
+
+        <div class="bd-list">
+          <a class="bd-card reveal" href="cyber-station.html">
+            <img src="Project Media/HueStation/LateGameGameplayScreenshot.png"
+                 alt="Cyber Station: a packed late game concourse with crowds of passengers moving between shops and platforms" loading="lazy">
+            <div>
+              <h3>Cyber Station</h3>
+              <p>Placement, passenger flow and a six factor station rating system. Winner of Best Games Programming and Development Artefact at ExpoTees 2026.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <a class="bd-card reveal" href="minimalists.html">
+            <img src="Project Media/Minimalists/4vsPoster.webp"
+                 alt="Minimalists: the Gridlock map with rows of capturable structures" loading="lazy">
+            <div>
+              <h3>Minimalists</h3>
+              <p>A node conquest RTS pared back to essentials, and the enemy AI that plays it.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <a class="bd-card reveal" href="unicellular.html">
+            <img src="Project Media/Unicellular/10kEntitiesPoster.webp"
+                 alt="Unicellular: a field of thousands of glowing cells" loading="lazy">
+            <div>
+              <h3>Unicellular</h3>
+              <p>Keeping thousands of FSM driven organisms simulating smoothly in a single scene.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <a class="bd-card reveal" href="tile-turfer.html">
+            <img src="Project Media/TileTurfer/tile1.png"
+                 alt="Tile Turfer: blue and red teams fighting to claim tiles across a procedurally generated cave" loading="lazy">
+            <div>
+              <h3>Tile Turfer</h3>
+              <p>A turf-war shooter where one territory percentage drives difficulty, fire rate and AI, over procedurally generated caves.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <a class="bd-card reveal" href="pinnable.html">
+            <img src="Project Media/Pinnable/GameplayPoster.webp"
+                 alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging pins" loading="lazy">
+            <div>
+              <h3>Pinnable</h3>
+              <p>A 2D arcade catch game and the weighted spawn director, pin AI and physics loop underneath it.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <a class="bd-card reveal" href="tank-game.html">
+            <img src="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp"
+                 alt="3D Netcode Tank Game: two clients connected in a hosted online session" loading="lazy">
+            <div>
+              <h3>3D Netcode Tank Game</h3>
+              <p>Server-authoritative multiplayer on Unity Netcode for GameObjects, with a 64-ray hitscan and Relay sessions.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 8 · EDUCATION ===================== -->
+    <section class="section" id="education">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Education</p>
+          <h2>Where I studied</h2>
+        </header>
+
+        <ol class="timeline">
+          <li class="reveal">
+            <img class="edu-logo" src="800x_TU_Logo.png" alt="Teesside University logo" width="56" height="56" loading="lazy">
+            <div>
+              <h3>BSc (Hons) Games Development</h3>
+              <p class="edu-org">Teesside University</p>
+              <p class="edu-meta">Graduated July 2026 · <strong>First Class Honours</strong></p>
+              <p class="edu-note">
+                My final year project scored 90 and won Best Games Programming
+                and Development Artefact at ExpoTees 2026.
+              </p>
+            </div>
+          </li>
+          <li class="reveal">
+            <img class="edu-logo" src="800x_NCUC_Logo.png" alt="Newcastle College University Centre logo" width="56" height="56" loading="lazy">
+            <div>
+              <h3>FdSc Games Technologies</h3>
+              <p class="edu-org">Newcastle College University Centre</p>
+              <p class="edu-meta">Graduated July 2025 · <strong>2:1</strong> (Year 1 Distinction, Year 2 Merit)</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <img class="edu-logo" src="NewcastleCollege_Logo.png" alt="Newcastle College logo" width="56" height="56" loading="lazy">
+            <div>
+              <h3>BTEC Level 3 National Diploma in Creative Digital Media</h3>
+              <p class="edu-org">Newcastle College</p>
+              <p class="edu-meta"><strong>Distinction</strong> · <a href="Oliver_Neal_LV3_Certificate.pdf" target="_blank" rel="noopener">View certificate (PDF)</a></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== 9 · CONTACT ===================== -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Contact</p>
+          <h2>Get in touch</h2>
+          <p class="section-lead">
+            I am open to gameplay and systems programming roles.
+            If you think I would be a good fit for your team, I would be glad to hear from you.
+          </p>
+        </header>
+
+        <div class="contact-ctas reveal">
+          <a class="btn btn-primary" href="mailto:oliverjn04@gmail.com">
+            <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
+            Email me
+          </a>
+          <a class="btn btn-outline" href="Oliver_Neal_Resume.pdf" download>
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
+            Download CV
+          </a>
+          <a class="btn btn-outline" href="https://github.com/OliverNealDev" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            GitHub
+          </a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/oliver-neal-197b74290" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+            LinkedIn
+          </a>
+          <a class="btn btn-outline" href="https://olivernealdev.itch.io" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-itch"/></svg>
+            itch.io
+          </a>
+        </div>
+
+        <p class="contact-email reveal">oliverjn04@gmail.com</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== 10 · FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="#top">oliverneal<span>.dev</span></a>
+          <p class="footer-blurb">
+            Games developer specialising in Unity and C#. First Class Games
+            Development graduate, currently a Gameplay Programmer at
+            Shiverbug Studios.
+          </p>
+        </div>
+        <div>
+          <h4>Site</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#shiverbug">Internship</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#breakdowns">Breakdowns</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Elsewhere</h4>
+          <ul>
+            <li><a href="https://github.com/OliverNealDev" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/oliver-neal-197b74290" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://olivernealdev.itch.io" target="_blank" rel="noopener">itch.io</a></li>
+            <li><a href="mailto:oliverjn04@gmail.com">Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>

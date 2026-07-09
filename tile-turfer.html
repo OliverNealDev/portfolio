@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tile Turfer · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How Tile Turfer works: a Splatoon-style 2D turf-war shooter where procedural cave generation, runtime 2D NavMesh baking and a single territory percentage drive difficulty, fire rate and enemy AI together. Built solo in Unity by Oliver Neal.">
+  <link rel="canonical" href="https://oliverneal.dev/tile-turfer.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Tile Turfer · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="A 2D turf-war shooter driven by procedural generation and one unified territory metric. Built solo in Unity.">
+  <meta property="og:url" content="https://oliverneal.dev/tile-turfer.html">
+  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/TileTurfer/tile1.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#projects">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          All projects
+        </a>
+
+        <p class="kicker">Case study · Solo project</p>
+        <h1>Tile Turfer</h1>
+        <p class="cs-meta">Jan 2026 · Unity 6 · URP 2D · C#</p>
+        <p class="cs-lead">
+          A top-down turf-war arena shooter in the Splatoon mould. You and the AI
+          paint the floor your colour, and the share of the map you hold is the
+          single number that governs everything: the difficulty, your own fire
+          rate, and the attacks you unlock.
+        </p>
+
+        <div class="cs-actions">
+          <a class="btn btn-primary" href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener">
+            Play on itch.io
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+          <a class="btn btn-outline" href="https://github.com/OliverNealDev/TileTurfer" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            Source on GitHub
+          </a>
+          <a class="btn btn-outline" href="TileTurferReport.pdf" target="_blank" rel="noopener">
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
+            Technical report
+          </a>
+        </div>
+
+        <div class="cs-hero-media reveal">
+          <img src="Project Media/TileTurfer/tile1.png"
+               alt="Tile Turfer: blue and red teams battling to claim tiles across a procedurally generated cave map, with a minimap and a fire rate power up"
+               width="1919" height="1079">
+        </div>
+
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · URP 2D</span></li>
+          <li><span class="fact-k">Genre</span><span class="fact-v">Turf-war shooter</span></li>
+          <li><span class="fact-k">Nav</span><span class="fact-v">Runtime 2D NavMesh</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Overview</p>
+          <h2>Territory is the whole game</h2>
+          <p>
+            Tile Turfer takes the central idea of Splatoon, that winning is about
+            ground covered rather than kills, and builds a tight single-player
+            arena around it. Every floor tile can be painted your colour or an
+            enemy's, and the game constantly measures what fraction of the map each
+            side controls.
+          </p>
+          <p>
+            What makes it hang together is where that measurement is wired.
+            Instead of a difficulty slider or a wave timer, <strong>one
+            turf-percentage value feeds the entire game at once</strong>: it sets
+            how fast you fire, which attack patterns you have unlocked, how many
+            enemies spawn, and how hard those enemies push. Winning territory
+            literally raises the stakes.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/TileTurfer/tile2.png"
+               alt="Tile Turfer mid-match: painted floor tiles across a cave arena with the player and enemies fighting for control"
+               width="1919" height="1079" loading="lazy">
+          <figcaption>Ownership is stored as the tint of each floor tile, so painting the map is writing to that grid.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ PROCEDURAL GENERATION ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Generation</p>
+          <h2>Procedural caves with a runtime NavMesh</h2>
+          <p>
+            Every arena is generated from scratch. A cellular-automata pass fills
+            the grid at random, then smooths it into cave-like walls; a
+            <strong>flood fill</strong> finds the largest connected floor region
+            and fills in every disconnected pocket, so the playable space is
+            guaranteed to be a single reachable area. A safe zone is cleared at the
+            centre for the spawn.
+          </p>
+          <p>
+            The demanding part is that enemies still need to path through this
+            freshly invented geometry. Once the map is drawn, the game
+            <strong>bakes a 2D NavMesh at runtime</strong> over the new layout, so
+            the AI can navigate a level that did not exist a frame earlier. That
+            runtime bake on procedural 2D terrain is the piece I am most pleased
+            with.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/TileTurfer/tile3.png"
+               alt="Tile Turfer: a different procedurally generated cave layout showing how each arena is uniquely shaped"
+               width="1919" height="1079" loading="lazy">
+          <figcaption>No two arenas share a shape. The walls, pockets and open space are generated per run.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ ENEMY AI ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Enemy AI</p>
+          <h2>Enemies that see, remember and hunt your turf</h2>
+          <p>
+            The enemy AI runs a finite state machine, moving between spawning,
+            roaming, chasing a remembered position and chasing a visible target,
+            with real line-of-sight checks against the walls. It also has
+            <strong>memory</strong>: after losing sight of you it keeps hunting your
+            last known position for a few seconds before giving up, so breaking line
+            of sight buys time rather than instant safety.
+          </p>
+          <p>
+            When roaming, enemies do not wander at random. They <strong>score
+            nearby tiles</strong> and prefer to move toward ground you own, actively
+            seeking out and overwriting your territory rather than drifting. That
+            turns the paint mechanic into a two-way fight instead of a passive
+            objective.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DIFFICULTY LOOP ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Difficulty</p>
+          <h2>One metric, wired into everything</h2>
+          <p>
+            The turf percentage is the spine of the whole design. As you gain
+            ground, your fire rate speeds up and you unlock wider attack patterns at
+            25%, 50% and 75%. So do the enemies, and the spawn cap climbs from a
+            handful toward the low dozens while the spawn interval tightens.
+          </p>
+          <p>
+            The result is a self-balancing curve expressed through a single number:
+            the better you do, the harder the game pushes back, with no
+            hand-authored difficulty stages. It is the kind of system where one
+            value doing a lot of work keeps the whole game coherent.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/TileTurfer/tile4.png"
+               alt="Tile Turfer late in a match: heavy territory control with dense enemy presence and upgraded attack patterns"
+               width="1919" height="1079" loading="lazy">
+          <figcaption>Dominate the map and the game answers with more enemies and heavier fire.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ NUMBERS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Under the hood</p>
+          <h2>By the numbers</h2>
+          <ul>
+            <li><strong>Unity 6, URP 2D</strong>, with a 2D NavMesh integration for pathfinding on generated maps.</li>
+            <li><strong>60 x 60 tile arenas</strong>, generated with cellular automata plus flood-fill region cleanup.</li>
+            <li><strong>Enemy cap scales 3 to 40</strong>, and the spawn interval tightens from 4s to 0.5s as territory shifts.</li>
+            <li><strong>Attack patterns unlock at 25, 50 and 75%</strong> territory, for the player and the AI alike.</li>
+            <li><strong>Documented in a full technical report</strong> covering the generation and AI systems.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="unicellular.html">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Previous: Unicellular
+      </a>
+      <a href="pinnable.html">
+        Next: Pinnable
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

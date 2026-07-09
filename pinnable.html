@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pinnable · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How Pinnable works: a 2D arcade catch game where a weighted spawn director, homing and drilling pin behaviours and a physics-driven catch loop raise the difficulty the longer you survive. Built solo in Unity by Oliver Neal.">
+  <link rel="canonical" href="https://oliverneal.dev/pinnable.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Pinnable · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="A 2D arcade catch game, and the spawn director, pin behaviours and physics catch loop beneath it. Built solo in Unity.">
+  <meta property="og:url" content="https://oliverneal.dev/pinnable.html">
+  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/Pinnable/GameplayPoster.webp">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#projects">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          All projects
+        </a>
+
+        <p class="kicker">Case study · Solo project</p>
+        <h1>Pinnable</h1>
+        <p class="cs-meta">Mar 2024 · Unity 2D · C# · Released on itch.io</p>
+        <p class="cs-lead">
+          A 2D arcade score-attack game. You steer a metal bucket along the base
+          of the screen with the mouse, catch the marbles fired from a moving
+          cannon, dodge the pins raining down, and push for a high score as the
+          game steadily raises the pressure the longer you last.
+        </p>
+
+        <div class="cs-actions">
+          <a class="btn btn-primary" href="https://embitgames.itch.io/pinnable" target="_blank" rel="noopener">
+            Play on itch.io
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+          <a class="btn btn-outline" href="https://github.com/OliverNealDev/Pinnable" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            Source on GitHub
+          </a>
+        </div>
+
+        <div class="cs-hero-media reveal">
+          <video controls preload="none" poster="Project Media/Pinnable/GameplayPoster.webp"
+                 width="1280" height="720"
+                 aria-label="Pinnable gameplay video: catching marbles from the cannon while dodging pins">
+            <source src="Project Media/Pinnable/Gameplay.webm" type="video/webm">
+          </video>
+        </div>
+
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 2D · C#</span></li>
+          <li><span class="fact-k">Genre</span><span class="fact-v">Arcade score-attack</span></li>
+          <li><span class="fact-k">Physics</span><span class="fact-v">Rigidbody2D catch loop</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Overview</p>
+          <h2>A tight arcade loop that pushes back</h2>
+          <p>
+            Pinnable is a single-screen arcade game with one goal: survive and
+            score for as long as you can. A cannon at the top of the screen fires
+            marbles, you catch them in the bucket to bank points, and a board of
+            pins supplies both the hazards and the opportunities. There is no level
+            select and no story. The whole game is the loop, and the loop is built
+            to grow harder in step with how well you are doing.
+          </p>
+          <p>
+            Underneath, it is a study in a handful of small systems that each do
+            one job well: a spawn director that decides <em>what</em> the game
+            throws at you, per-pin behaviour that decides <em>how</em> those hazards
+            move, and a physics catch loop that carries the moment-to-moment feel.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="Project Media/Pinnable/HowToPlayPoster.webp"
+                 width="1280" height="720"
+                 aria-label="Pinnable how to play video">
+            <source src="Project Media/Pinnable/HowToPlay.webm" type="video/webm">
+          </video>
+          <figcaption>The how-to-play screen: catch marbles, avoid pins, keep the run alive.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ SPAWN DIRECTOR ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Difficulty</p>
+          <h2>A weighted, self-escalating spawn director</h2>
+          <p>
+            Difficulty is not a single global multiplier. It is decided per pin.
+            Each pin rolls its own type from a <strong>weighted random pool</strong>,
+            and those weights are gated two ways: hazardous types stay locked until
+            you pass a survival-time threshold, after which their weight
+            <strong>scales with your score</strong>. Play well, and the board
+            quietly stacks itself against you.
+          </p>
+          <p>
+            There is a deliberate piece of stagecraft in there too. The first time
+            a newly unlocked type is due to appear, its weight is spiked so the
+            introduction is guaranteed, then it settles back to normal scaling. A
+            new threat always announces itself cleanly rather than hiding inside a
+            random roll.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="Project Media/Pinnable/GameplayPoster.webp"
+                 width="1280" height="720"
+                 aria-label="Pinnable gameplay video showing escalating difficulty">
+            <source src="Project Media/Pinnable/Gameplay.webm" type="video/webm">
+          </video>
+          <figcaption>The board seeds with 64 pins, then the director keeps feeding in tougher types as the run goes on.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ PIN AI ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Hazards</p>
+          <h2>Pins with behaviour of their own</h2>
+          <p>
+            The hazards are not static. Once bumped, <strong>homing pins</strong>
+            turn continuously to face the player and accelerate as they close, so
+            ignoring one becomes a slowly tightening trap. <strong>Drill pins</strong>
+            watch the player's position, charge up when you line up beneath them,
+            then bore downward with an accelerating fall and a slowdown zone that
+            sells the sense of grinding through the floor.
+          </p>
+          <p>
+            Each behaviour is a compact, self-contained routine tied to its own
+            animation state: small enough to reason about, distinct enough that the
+            player can learn to read and counter every type.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATCH LOOP ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Game feel</p>
+          <h2>A physics catch loop, and the feel around it</h2>
+          <p>
+            Marbles are genuine <strong>Rigidbody2D</strong> objects. They launch
+            from the cannon with a velocity biased by both the player's position
+            and the cannon's own lateral movement, arc across the screen, and
+            bounce off the bucket. The fire rate tightens over time, so the screen
+            grows busier the longer you survive.
+          </p>
+          <p>
+            The bucket itself is layered from small effects that each add feel:
+            velocity-proportional <strong>sway and tilt</strong>, clamped so it
+            never flips; a wheel that rotates with movement; a hull sprite that
+            swaps with the tilt angle; and a cursor-follow drive that scales speed
+            with distance to the pointer. Sitting over all of that are three
+            ten-second <strong>power-ups</strong>, including a zero-gravity mode
+            that rewrites the world's gravity for its duration.
+          </p>
+        </div>
+        <div class="media-pair">
+          <figure class="media-figure reveal">
+            <video controls preload="none" poster="Project Media/Pinnable/OptionsPoster.webp"
+                   width="1280" height="720"
+                   aria-label="Pinnable options menu video">
+              <source src="Project Media/Pinnable/Options.webm" type="video/webm">
+            </video>
+            <figcaption>Options and presentation, kept in the same clean arcade style.</figcaption>
+          </figure>
+          <figure class="media-figure reveal">
+            <video controls preload="none" poster="Project Media/Pinnable/DyingPoster.webp"
+                   width="1280" height="720"
+                   aria-label="Pinnable video: losing a run">
+              <source src="Project Media/Pinnable/Dying.webm" type="video/webm">
+            </video>
+            <figcaption>Three lives, then the run ends and the score is what's left.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NUMBERS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Under the hood</p>
+          <h2>By the numbers</h2>
+          <ul>
+            <li><strong>Built in Unity 2022.3 LTS</strong>, roughly 2,400 lines of C# across 33 gameplay scripts.</li>
+            <li><strong>64 pins</strong> seeded on a fixed grid at the start of every run.</li>
+            <li><strong>Hazard types unlock on a timer</strong> (10s to 100s survived), then scale their spawn weight with score.</li>
+            <li><strong>Fire rate ramps</strong> from a three-second base toward a one-second floor as the run continues.</li>
+            <li><strong>Three power-ups</strong>: ground value, zero-gravity and double-points, each on a ten-second timer.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="tile-turfer.html">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Previous: Tile Turfer
+      </a>
+      <a href="tank-game.html">
+        Next: 3D Netcode Tank Game
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

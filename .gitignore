@@ -1,0 +1,6 @@
+# Source video exports — too large for GitHub (100 MB file limit).
+# Web-ready encodes live in "Project Media/HueStation/".
+CyberStationLinkedIn.mp4
+
+# Visual Studio / tooling
+.vs/
