@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Page not found · Oliver Neal</title>
+  <meta name="robots" content="noindex">
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/">oliverneal<span>.dev</span></a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="section contact">
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">404</p>
+          <h1>This page doesn't exist</h1>
+          <p class="section-lead">
+            The page you're after may have moved. Everything worth seeing is
+            back on the home page.
+          </p>
+        </header>
+        <div class="contact-ctas">
+          <a class="btn btn-primary" href="/">Back to the portfolio</a>
+          <a class="btn btn-outline" href="/#projects">See the projects</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>

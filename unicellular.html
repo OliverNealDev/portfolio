@@ -1,256 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Technical breakdown of Unicellular ECS project by Oliver Neal, explaining architecture, entity systems and performance-focused Unity C# techniques for emergent gameplay." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://example.com/unicellular.png" />
-    <meta property="og:title" content="Unicellular – Codebase Breakdown" />
-    <meta property="og:description" content="A cohesive, portfolio-styled breakdown of the Unicellular ECS codebase: architecture, data model, key APIs, representative snippets, and technical notes." />
-    <meta property="og:url" content="https://example.com/unicellular.html" />
-    <title>Unicellular – Codebase Breakdown</title>
-    <link rel="icon" href="oliver.webp" type="image/webp">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Fonts & Prism (match portfolio) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Keep default Prism, we'll override it below -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
-    <link rel="stylesheet" href="styles.css">
+  <title>Unicellular · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How Unicellular keeps thousands of FSM driven organisms simulating smoothly in Unity: a decoupled multi-rate tick, time-sliced proximity AI and careful performance work, with stress tests at 1,000 and 10,000 entities. Built solo by Oliver Neal.">
+  <link rel="canonical" href="https://oliverneal.dev/unicellular.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Unicellular · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="Keeping thousands of FSM driven organisms simulating smoothly in a single Unity scene, in an idle sim built solo by Oliver Neal.">
+  <meta property="og:url" content="https://oliverneal.dev/unicellular.html">
+  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/Unicellular/10kEntitiesPoster.webp">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <div class="logo-and-icons">
-                <div class="nav-logo">Oliver Neal</div>
-                <div class="nav-icons">
-                    <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener noreferrer" title="GitHub">
-                        <img src="github-icon.webp" alt="GitHub" onerror="this.style.display='none'" loading="lazy" />
-                    </a>
-                    <a href="https://embitgames.itch.io" target="_blank" rel="noopener noreferrer" title="Itch.io">
-                        <img src="itch-icon.webp" alt="Itch.io" onerror="this.style.display='none'" loading="lazy" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                        <img src="linkedin-icon.webp" alt="LinkedIn" onerror="this.style.display='none'" loading="lazy" />
-                    </a>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                </ul>
-            </nav>
-            <div class="theme-toggle">
-                <input type="checkbox" class="theme-checkbox" id="themeToggle" title="Toggle Theme">
-            </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#projects">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          All projects
+        </a>
+
+        <p class="kicker">Case study · Solo project</p>
+        <h1>Unicellular</h1>
+        <p class="cs-meta">Feb 2025 · Unity · C# · Released on itch.io</p>
+        <p class="cs-lead">
+          An idle simulation built around sheer entity count: thousands of
+          single celled organisms wandering, interacting and multiplying,
+          kept smooth by finite state machines and careful performance work.
+        </p>
+
+        <div class="cs-actions">
+          <a class="btn btn-primary" href="https://embitgames.itch.io/unicellular" target="_blank" rel="noopener">
+            Play on itch.io
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+          <a class="btn btn-outline" href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            Source on GitHub
+          </a>
         </div>
-    </header>
 
-    <main>
-        <section class="page-hero reveal">
-            <div class="breadcrumb">
-                <span>←</span>
-                <a href="index.html#solo-projects" title="Back to Portfolio">Back to Portfolio</a>
-            </div>
-            <div class="page-title">
-                <h1>Unicellular – Manager-Driven ECS</h1>
-                <p class="page-sub">Codebase Breakdown • Unity • Custom ECS • Simulation</p>
-            </div>
-            <div class="doc-actions">
-                <a href="https://github.com/OliverNealDev/UnicellularRebuiltECS" target="_blank" rel="noopener noreferrer" title="View GitHub" class="github">
-                    <img src="github-icon.webp" alt="GitHub icon" onerror="this.style.display='none'" loading="lazy" /> View on GitHub
-                </a>
-            </div>
-        </section>
-
-        <nav class="doc-toc reveal" aria-label="On this page">
-            <a href="#overview">Overview</a>
-            <a href="#architecture">Architecture</a>
-            <a href="#data-model">Data Model</a>
-            <a href="#apis">Key APIs</a>
-            <a href="#snippets">Code Snippets</a>
-            <a href="#performance">Performance</a>
-            <a href="#testing">Testing</a>
-            <a href="#tradeoffs">Trade-offs</a>
-        </nav>
-
-        <div class="doc-grid">
-            <section id="overview" class="doc-card reveal">
-                <h2>Overview</h2>
-                <p>
-                    A 2D life simulation where colourful unicells roam, fight, and evolve. The project uses a manager-driven ECS-style architecture in Unity to keep systems modular and scalable.
-                </p>
-            </section>
-
-            <section id="architecture" class="doc-card reveal">
-                <h2>Architecture</h2>
-                <p>Gameplay is coordinated by specialised managers handling entities, economy, camera and UI.</p>
-            </section>
-
-            <section id="data-model" class="doc-card reveal">
-                <h2>Data Model</h2>
-                <p>Persistent statistics for each unicell are stored in a simple serialisable class.</p>
-                <div class="doc-table-wrapper">
-                    <table>
-                        <thead>
-                            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Species</td><td>string</td><td>Identifier for the unicell species</td></tr>
-                            <tr><td>Damage</td><td>float</td><td>Base attack damage</td></tr>
-                            <tr><td>MaxHealth</td><td>float</td><td>Maximum health value</td></tr>
-                            <tr><td>Level</td><td>int</td><td>Current evolution level</td></tr>
-                            <tr><td>XP</td><td>float</td><td>Accumulated experience points</td></tr>
-                            <tr><td>XP_Threshold</td><td>int</td><td>XP required for next level</td></tr>
-                            <tr><td>BaseScale</td><td>Vector2</td><td>Default sprite scale</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="apis" class="doc-card reveal">
-                <h2>Key APIs / Contracts</h2>
-                <h3>Entity Manager</h3>
-                <pre><code class="language-csharp">public void SpawnUnicells(UnicellSpecies species, int amount);</code></pre>
-                <h3>Economy Manager</h3>
-                <pre><code class="language-csharp">public void IncrementUnicellPopulation(string unicellType);</code></pre>
-            </section>
-
-            <section id="snippets" class="doc-card reveal">
-                <h2>Representative Code Snippets</h2>
-
-                <p><strong>Spawning species-specific cells</strong> – loops through count and initialises each with the correct prefab.</p>
-                <details>
-                    <summary>Show code</summary>
-<pre><code class="language-csharp">@EntityManager.cs lines 1422-1468
-public void SpawnUnicells(UnicellSpecies species, int Amount)
-{
-    for (int x = 0; x &lt; Amount; x++)
-    {
-        switch (species)
-        {
-            case UnicellSpecies.Blue:
-                initialUnicell = Instantiate(blueUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = BlueUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Blue);
-                break;
-            case UnicellSpecies.Pink:
-                initialUnicell = Instantiate(pinkUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = PinkUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Pink);
-                break;
-            case UnicellSpecies.Yellow:
-                initialUnicell = Instantiate(yellowUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = YellowUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Yellow);
-                break;
-            case UnicellSpecies.Green:
-                initialUnicell = Instantiate(greenUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = GreenUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Green);
-                break;
-            case UnicellSpecies.Purple:
-                initialUnicell = Instantiate(purpleUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = PurpleUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Purple);
-                break;
-            case UnicellSpecies.Red:
-                initialUnicell = Instantiate(redUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = RedUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Red);
-                break;
-            case UnicellSpecies.Orange:
-                initialUnicell = Instantiate(orangeUnicellPrefab).GetComponent&lt;Unicell&gt;();
-                initialUnicell.transform.parent = OrangeUnicellsGameObject.transform;
-                Initialise(initialUnicell, Unicell.UnicellSpecies.Orange);
-                break;
-        }
-        initialUnicell.transform.position = new Vector2((Random.value * Amount * 10) - (Amount / 2f), (Random.value * Amount * 10) - (Amount / 2f));
-        initialUnicell.CurrentState = UnicellState.Idle;
-        RegisterUnicell(initialUnicell);
-    }
-}</code></pre>
-                </details>
-                <p><a href="https://github.com/OliverNealDev/UnicellularRebuiltECS/blob/main/Assets/Scripts/Managers/UnicellManager/EntityManager.cs#L1422-L1468" target="_blank" rel="noopener noreferrer">View on GitHub (lines 1422–1468)</a></p>
-
-                <p><strong>Adjusting target populations</strong> – ensures economy goals drive spawning needs.</p>
-                <details>
-                    <summary>Show code</summary>
-<pre><code class="language-csharp">@EconomyManager.cs lines 901-930
-public void IncrementUnicellPopulation(string UnicellType)
-{
-    switch (UnicellType)
-    {
-        case "Blue":
-            TargetBlueUnicellPopulation++;
-            break;
-        case "Pink":
-            TargetPinkUnicellPopulation++;
-            break;
-        case "Yellow":
-            TargetYellowUnicellPopulation++;
-            break;
-        case "Green":
-            TargetGreenUnicellPopulation++;
-            break;
-        case "Purple":
-            TargetPurpleUnicellPopulation++;
-            break;
-        case "Red":
-            TargetRedUnicellPopulation++;
-            break;
-        case "Orange":
-            TargetOrangeUnicellPopulation++;
-            break;
-        default:
-            Debug.LogError("EconomyManager IncrementUnicellPopulation() - Unknown UnicellType for target population incrementation");
-            break;
-    }
-}</code></pre>
-                </details>
-                <p><a href="https://github.com/OliverNealDev/UnicellularRebuiltECS/blob/main/Assets/Scripts/Managers/EconomyManager.cs#L901-L930" target="_blank" rel="noopener noreferrer">View on GitHub (lines 901–930)</a></p>
-            </section>
-
-            <section id="performance" class="doc-card reveal">
-                <h2>Performance Notes</h2>
-                <p>Initial profiling focuses on entity spawning and per-frame manager updates; further optimisation is ongoing.</p>
-                <p>All profiling was recorded in-editor on a Ryzen&nbsp;7&nbsp;7800X3D. Demo clips on the main portfolio page show:</p>
-                <ul style="margin-left:1.25rem;">
-                    <li>1000&nbsp;Unicells sustaining 144+&nbsp;fps.</li>
-                    <li>6000&nbsp;Unicells maintaining roughly 100&nbsp;fps.</li>
-                </ul>
-                <figure class="doc-figure">
-                    <video controls muted playsinline loop poster="Project Media/Unicellular/1000EntitiesPoster.webp">
-                        <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm"> Your browser does not support the video tag.
-                    </video>
-                    <figcaption>1000 Unicells @ 144+ fps</figcaption>
-                </figure>
-                <figure class="doc-figure">
-                    <video controls muted playsinline loop poster="Project Media/Unicellular/10kEntitiesPoster.webp">
-                        <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm"> Your browser does not support the video tag.
-                    </video>
-                    <figcaption>6000 Unicells @ ~100 fps</figcaption>
-                </figure>
-            </section>
-
-            <section id="testing" class="doc-card reveal">
-                <h2>Testing &amp; Validation</h2>
-                <p>Functionality is verified through manual playtesting; automated unit tests are not yet available.</p>
-                <p>Manual playtests were carried out with multiple people. One tester discovered a bug where 64-bit <code>long</code> values were truncated to 32-bit <code>int</code>s; explicit conversions have been added to prevent this from recurring. Automated unit tests are not yet available.</p>
-            </section>
+        <div class="cs-hero-media reveal">
+          <video controls preload="none" poster="Project Media/Unicellular/10kEntitiesPoster.webp"
+                 width="1280" height="720"
+                 aria-label="Unicellular stress test video: ten thousand entities simulating at once">
+            <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm">
+          </video>
         </div>
-    </main>
 
-    <footer>
-        &copy; 2025 Oliver Neal. All rights reserved.
-    </footer>
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity</span></li>
+          <li><span class="fact-k">Entities</span><span class="fact-v">10,000 stress-tested</span></li>
+          <li><span class="fact-k">Core tech</span><span class="fact-v">FSM + time-slicing</span></li>
+        </ul>
+      </div>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js" defer></script>
+    <!-- ============ OVERVIEW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Overview</p>
+          <h2>An idle game built to scale</h2>
+          <p>
+            Unicellular is an idle sim: you spend currency to buy unicells, they
+            drift around a petri dish living their tiny lives, and the colony's
+            activity feeds the economy back to you. The design means the player
+            is <strong>directly incentivised to push the entity count up</strong>,
+            so each cell has to stay cheap to simulate or the game's own core
+            loop kills its framerate.
+          </p>
+          <p>
+            That constraint shaped everything. Behaviour is driven by lightweight
+            finite state machines, but the real trick is <em>when</em> work runs:
+            instead of every cell thinking every frame, the simulation is split
+            across several tick rates and the expensive proximity checks are spread
+            out a batch at a time, all inside Unity's standard GameObject workflow.
+          </p>
+          <p>
+            On top of the simulation sits a full idle-game economy: seven species
+            of cell, layered upgrades, rare Elder and Shiny variants, a per-species
+            "Souls" prestige currency, and JSON saves so a colony survives between
+            sessions.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="Project Media/Unicellular/BuyingUnicellsPoster.webp"
+                 width="1280" height="720"
+                 aria-label="Unicellular gameplay video: purchasing unicells and adding them to the colony">
+            <source src="Project Media/Unicellular/BuyingUnicells.webm" type="video/webm">
+          </video>
+          <figcaption>The core loop: buy cells, grow the colony, earn faster.</figcaption>
+        </figure>
+      </div>
+    </section>
 
-    <script src="main.js" defer></script>
+    <!-- ============ FSM ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Behaviour</p>
+          <h2>One FSM per cell</h2>
+          <p>
+            Every unicell runs a small <strong>finite state machine</strong> that
+            decides what it's doing from moment to moment: drifting, seeking,
+            interacting with neighbours. Keeping each state tiny and the
+            transitions explicit does two jobs at once. Behaviour stays easy to
+            reason about and extend, and the cost of "thinking" each frame stays
+            roughly constant no matter how big the colony gets.
+          </p>
+          <p>
+            Emergence does the rest. With thousands of simple machines running
+            side by side, the dish reads as alive without any cell doing anything
+            complicated.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="Project Media/Unicellular/UnicellInteractionPoster.webp"
+                 width="1280" height="720"
+                 aria-label="Unicellular video: two unicells meeting and interacting">
+            <source src="Project Media/Unicellular/UnicellInteraction.webm" type="video/webm">
+          </video>
+          <figcaption>Cells interacting; each side of the exchange is a state transition.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ PERFORMANCE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Performance</p>
+          <h2>Stress tested at 1,000 and 10,000</h2>
+          <p>
+            The recordings below are the two benchmark scenes: a thousand cells,
+            then <strong>ten thousand at once</strong>, where the counter in the
+            second clip is still reading around <strong>90 FPS</strong>. That
+            headroom is what lets the idle economy keep rewarding a bigger colony
+            without the framerate collapsing.
+          </p>
+          <p>The main levers:</p>
+          <ul>
+            <li><strong>A decoupled, multi-rate loop.</strong> Core behaviour ticks at 20&nbsp;Hz, slower bookkeeping like population and levelling runs at 0.5&nbsp;Hz, and physics work sits in its own pass, so nothing runs more often than it needs to.</li>
+            <li><strong>Time-sliced proximity AI.</strong> The expensive "what is near me" queries are the bottleneck, so they are amortised across frames: roughly 150 cells are processed per pass, carrying an index forward until the whole colony has been swept.</li>
+            <li><strong>One manager, not thousands of updates.</strong> A single simulation manager iterates the cell and food lists directly instead of every cell running its own per-frame update.</li>
+          </ul>
+        </div>
+        <div class="media-pair">
+          <figure class="media-figure reveal">
+            <video controls preload="none" poster="Project Media/Unicellular/1000EntitiesPoster.webp"
+                   width="1280" height="720"
+                   aria-label="Unicellular stress test video with one thousand entities">
+              <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm">
+            </video>
+            <figcaption>Benchmark one: 1,000 entities.</figcaption>
+          </figure>
+          <figure class="media-figure reveal">
+            <video controls preload="none" poster="Project Media/Unicellular/10kEntitiesPoster.webp"
+                   width="1280" height="720"
+                   aria-label="Unicellular stress test video with ten thousand entities">
+              <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm">
+            </video>
+            <figcaption>Benchmark two: 10,000 entities, ~90 FPS on screen.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="minimalists.html">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Previous: Minimalists
+      </a>
+      <a href="tile-turfer.html">
+        Next: Tile Turfer
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>

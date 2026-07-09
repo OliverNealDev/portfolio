@@ -1,501 +1,355 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Technical breakdown of Cyber Station by Oliver Neal, covering Unity station-management systems, passenger AI, facility placement, train flow, ratings, data models and engineering trade-offs." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://oliverneal.dev/Project%20Media/HueStation/HS1.png" />
-    <meta property="og:title" content="Cyber Station &ndash; Codebase Breakdown" />
-    <meta property="og:description" content="A portfolio-styled breakdown of Cyber Station: architecture, passenger FSMs, facility placement, train services, data models, ratings, and performance notes." />
-    <meta property="og:url" content="https://oliverneal.dev/cyber-station.html" />
-    <title>Cyber Station &ndash; Codebase Breakdown</title>
-    <link rel="icon" href="oliver.webp" type="image/webp">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Fonts & Prism (match portfolio) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
-    <link rel="stylesheet" href="styles.css">
+  <title>Cyber Station · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How Cyber Station works: placement and construction, a central fixed-tick passenger simulation with cost-based navigation, coordinated staff AI, and a six factor station rating system. Built solo in Unity 3D by Oliver Neal; winner of Best Games Programming and Development Artefact at ExpoTees 2026.">
+  <link rel="canonical" href="https://oliverneal.dev/cyber-station.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cyber Station · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="Placement, passenger flow and a six factor station rating system in a neon station management game built solo in Unity 3D.">
+  <meta property="og:url" content="https://oliverneal.dev/cyber-station.html">
+  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/HueStation/LateGameZoomedOutGameplayScreenshot.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <div class="logo-and-icons">
-                <div class="nav-logo">Oliver Neal</div>
-                <div class="nav-icons">
-                    <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener noreferrer" title="GitHub">
-                        <img src="github-icon.webp" alt="GitHub" onerror="this.style.display='none'" loading="lazy" />
-                    </a>
-                    <a href="https://embitgames.itch.io" target="_blank" rel="noopener noreferrer" title="Itch.io">
-                        <img src="itch-icon.webp" alt="Itch.io" onerror="this.style.display='none'" loading="lazy" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/oliver-neal-197b74290/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                        <img src="linkedin-icon.webp" alt="LinkedIn" onerror="this.style.display='none'" loading="lazy" />
-                    </a>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                </ul>
-            </nav>
-            <div class="theme-toggle">
-                <input type="checkbox" class="theme-checkbox" id="themeToggle" title="Toggle Theme">
-            </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H4v1.5A3.5 3.5 0 0 0 7.5 10"/><path d="M17 5h3v1.5A3.5 3.5 0 0 1 16.5 10"/><path d="M12 14v4"/><path d="M8 18h8v2H8z"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#projects">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          All projects
+        </a>
+
+        <p class="kicker">Case study · Final year project</p>
+        <h1>Cyber Station</h1>
+        <p class="cs-meta">Apr 2026 · Unity 3D · C# · Released on itch.io</p>
+        <p class="award-badge">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
+          Best Games Programming &amp; Development Artefact · ExpoTees 2026
+        </p>
+        <p class="cs-lead">
+          A neon station management game about building a transport hub that can
+          take the pressure: placement, passenger flow, ratings and progression
+          all pulling against each other. I built it solo as my final year
+          project at Teesside University, where it scored 90.
+        </p>
+
+        <div class="cs-actions">
+          <a class="btn btn-primary" href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
+            Play on itch.io
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
         </div>
-    </header>
 
-    <main>
-        <section class="page-hero reveal">
-            <div class="breadcrumb">
-                <span>&larr;</span>
-                <a href="index.html#solo-projects" title="Back to Portfolio">Back to Portfolio</a>
-            </div>
-            <div class="page-title">
-                <h1>Cyber Station &ndash; Passenger Flow &amp; Station Systems</h1>
-                <p class="page-sub">Codebase Breakdown &bull; Unity 3D &bull; FSM AI &bull; AI Navigation</p>
-            </div>
-            <div class="doc-actions">
-                <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener noreferrer" title="Play Cyber Station" class="itchio">
-                    <img src="itch-icon.webp" alt="Itch icon" onerror="this.style.display='none'" loading="lazy" /> Play in browser
-                </a>
-                <a href="https://github.com/OliverNealDev/TSA" target="_blank" rel="noopener noreferrer" title="View GitHub" class="github">
-                    <img src="github-icon.webp" alt="GitHub icon" onerror="this.style.display='none'" loading="lazy" /> View on GitHub
-                </a>
-            </div>
-        </section>
-
-        <nav class="doc-toc reveal" aria-label="On this page">
-            <a href="#overview">Overview</a>
-            <a href="#systems">Systems</a>
-            <a href="#architecture">Architecture</a>
-            <a href="#data-model">Data Model</a>
-            <a href="#apis">Key APIs</a>
-            <a href="#snippets">Code Snippets</a>
-            <a href="#performance">Performance</a>
-            <a href="#testing">Testing</a>
-            <a href="#tradeoffs">Trade-offs</a>
-        </nav>
-
-        <div class="doc-grid">
-            <section id="overview" class="doc-card reveal">
-                <h2>Overview</h2>
-                <p>
-                    <strong>Cyber Station</strong> is a solo Unity 3D station-management game built around a simple but expandable loop: the player grows a neon transport hub, places facilities, unlocks train lines, and keeps passengers moving before service delays drag ratings down.
-                </p>
-                <p>
-                    Passenger hue is tied to train-line data. For example, the inspected <code>Train</code> ScriptableObjects include Cyan and Orange starter lines, plus later Yellow, Pink, Green, Red, Blue and Purple lines. Each line defines its passenger need profile through fields such as <code>hungerNeedChance</code>, <code>thirstNeedChance</code>, <code>energyNeedChance</code> and <code>hygieneNeedChance</code>. That lets the game introduce different service pressures as the station expands.
-                </p>
-                <p>
-                    The rating model measures whether the station is serving passengers efficiently across cleanliness, crowding, queues, need coverage, facility choice and decoration. Those ratings then feed demand: higher station ratings raise target train occupancy, creating a feedback loop between good service and busier stations.
-                </p>
-            </section>
-
-            <section id="systems" class="doc-card reveal">
-                <h2>Core Gameplay Systems</h2>
-                <h3>Facility Placement</h3>
-                <p>
-                    Placement is coordinated by <code>BuildController</code> and <code>GridManager</code>. The preview snaps to a grid, checks build-surface raycasts, validates footprint bounds, checks occupancy with <code>IsAreaFree</code>, then commits by spending money, instantiating the selected prefab, attaching <code>PlacedBuildable</code>, and occupying the grid cells.
-                </p>
-
-                <h3>Station Expansion</h3>
-                <p>
-                    <code>ExpansionManager</code> loads <code>Expansion</code> assets from <code>Resources/Expansions</code>, gates purchases by progression tier, money and platform order, then instantiates the expansion prefab under <code>levelParent</code>. After expansion, it rebuilds the NavMesh through <code>NavMeshManager.BuildNavMesh()</code>.
-                </p>
-
-                <h3>Passenger Flow</h3>
-                <p>
-                    <code>PassengerSpawner</code> runs at a fixed tick interval and spawns passengers per active <code>TrainService</code>. Spawn demand is based on train capacity and current station rating. <code>PassengerManager</code> owns the passenger list, assigns train services, rolls needs, routes passengers to facilities, redirects platform passengers when services move, and destroys passengers when they board or leave.
-                </p>
-
-                <h3>Hue/Type Needs</h3>
-                <p>
-                    Passenger needs are represented as booleans on <code>Passenger</code> and exposed through <code>NeedType</code>: <code>Ticket</code>, <code>Hunger</code>, <code>Thirst</code>, <code>Energy</code> and <code>Hygiene</code>. Train-line assets tune which needs appear for each hue/type. The visual hue comes from <code>Train.trainColor</code> and is applied to passenger visor materials.
-                </p>
-
-                <h3>Service Interactions</h3>
-                <p>
-                    Facilities derive from <code>StationFacility</code>, which itself derives from <code>QueuableObject</code>. The base class manages queue capacity, processing state, service-duration scaling, queue reshuffling and completion hooks; concrete controllers such as <code>TicketMachineController</code>, <code>SnackPrinterController</code>, <code>HydratingObeliskController</code> and <code>PrivateLavatoryController</code> deliver specific services.
-                </p>
-
-                <h3>Trainline Flow</h3>
-                <p>
-                    <code>TrainManager</code> tracks unlocked trains, active <code>TrainService</code> objects and registered <code>PlatformController</code>s. <code>TrainController</code> moves physical trains through approaching, stationary and departing states. <code>TrainDoorController</code> handles disembarking passengers first, then switches doors into boarding mode and notifies <code>PassengerManager</code> when waiting passengers can be called to the train.
-                </p>
-
-                <h3>Economy &amp; Progression</h3>
-                <p>
-                    <code>EconomyManager</code> tracks money, income-per-minute samples, ticket refunds, staff salary billing and train service costs. <code>ProgressionManager</code> awards XP for builds, ticket sales, boarding, fulfilled needs, staff hires, train unlocks and expansions, then unlocks content by tier.
-                </p>
-            </section>
-
-            <section id="architecture" class="doc-card reveal">
-                <h2>Architecture</h2>
-                <p>The project uses scene-level singleton managers and ScriptableObject data. The inspected code uses these real classes:</p>
-                <ul style="margin-left:1.25rem;">
-                    <li><code>BuildController</code> + <code>GridManager</code> handle placement, demolition, grid occupancy and build cost.</li>
-                    <li><code>PassengerSpawner</code> creates demand from active train services and station rating.</li>
-                    <li><code>PassengerManager</code> is the passenger session coordinator: spawning, FSM updates, need routing, queues, litter, boarding and cleanup.</li>
-                    <li><code>Passenger</code> stores ticket state, need state, current master/sub-state and current queue target.</li>
-                    <li><code>FacilityManager</code> maps <code>FacilityType</code> to live <code>StationFacility</code> instances and maps passenger needs to valid facility types.</li>
-                    <li><code>StationFacility</code> + <code>QueuableObject</code> define the shared queue/service contract used by buildable service hubs.</li>
-                    <li><code>TrainManager</code>, <code>TrainService</code>, <code>TrainController</code>, <code>TrainDoorController</code> and <code>PlatformController</code> coordinate lines, slots, physical trains and boarding.</li>
-                    <li><code>RatingManager</code> samples passenger/facility/buildable state and smooths the live station rating.</li>
-                    <li><code>EconomyManager</code>, <code>ProgressionManager</code>, <code>ExpansionManager</code> and <code>StaffManager</code> handle money, tiers, map growth and hireable staff.</li>
-                    <li><code>UIController</code> and menu controllers such as <code>BuildMenuController</code>, <code>TrainMenuController</code>, <code>RatingMenuController</code>, <code>ExpansionMenuController</code> and <code>ProgressionMenuController</code> present those systems to the player.</li>
-                </ul>
-                <p>
-                    The main communication pattern is manager-to-manager orchestration: build and expansion systems update the grid/NavMesh, facilities register with <code>FacilityManager</code>, train services create passenger demand, <code>PassengerManager</code> chooses destinations and service queues, service completion clears needs and awards XP, and <code>RatingManager</code> reads the resulting station state.
-                </p>
-                <figure class="doc-figure">
-                    <img src="Project Media/HueStation/HS3.png" alt="Expanded Cyber Station trainline and platform area" loading="lazy" />
-                    <figcaption>Expanded trainline and passenger-flow view</figcaption>
-                </figure>
-            </section>
-
-            <section id="data-model" class="doc-card reveal">
-                <h2>Data Model</h2>
-                <p>The project is data-driven where content benefits from tuning: buildables, trains, staff and expansions are ScriptableObjects loaded from <code>Resources</code>.</p>
-                <div class="doc-table-wrapper">
-                    <table>
-                        <thead>
-                            <tr><th>Source</th><th>Field</th><th>Type</th><th>Description</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><code>Passenger</code></td><td><code>assignedTrainService</code></td><td><code>TrainService</code></td><td>Current route/platform target for the passenger.</td></tr>
-                            <tr><td><code>Passenger</code></td><td><code>needsHunger</code>, <code>needsThirst</code>, <code>needsEnergy</code>, <code>needsHygiene</code></td><td><code>bool</code></td><td>Active service needs rolled from passenger manager defaults or train-line profile.</td></tr>
-                            <tr><td><code>Passenger</code></td><td><code>hasTicket</code>, <code>isTicketEvader</code>, <code>hasFailedNeed</code>, <code>hasGivenUpNeed</code></td><td><code>bool</code></td><td>State flags used by ticketing, security, satisfaction and fallback behaviour.</td></tr>
-                            <tr><td><code>Passenger</code></td><td><code>currentMasterState</code>, <code>currentSubState</code>, <code>currentSpecialTarget</code></td><td><code>enum</code></td><td>FSM state split between station/platform/train, movement/interaction, and special targets.</td></tr>
-                            <tr><td><code>Train</code></td><td><code>trainName</code>, <code>trainColor</code></td><td><code>string</code>, <code>Color</code></td><td>Line identity and passenger hue, including Cyan, Orange, Yellow, Pink, Green, Red, Blue and Purple assets.</td></tr>
-                            <tr><td><code>Train</code></td><td><code>hungerNeedChance</code>, <code>thirstNeedChance</code>, <code>energyNeedChance</code>, <code>hygieneNeedChance</code></td><td><code>float</code></td><td>Per-line need profile; e.g. Orange introduces hunger, Cyan introduces thirst, Blue can generate all core needs.</td></tr>
-                            <tr><td><code>Train</code></td><td><code>carriageCount</code>, <code>capacityPerCarriage</code>, <code>secondsStationary</code></td><td><code>int</code>, <code>int</code>, <code>float</code></td><td>Capacity and dwell time used by train services, doors and spawn demand.</td></tr>
-                            <tr><td><code>Train</code></td><td><code>costPerRide</code>, <code>upfrontCost</code>, <code>costPerMinute</code>, <code>requiredTier</code></td><td><code>int</code></td><td>Economy and progression fields for ticket income and active service costs.</td></tr>
-                            <tr><td><code>ObjectBuildable</code></td><td><code>objectName</code>, <code>requiredTier</code>, <code>cost</code>, <code>size</code>, <code>decorationStrength</code></td><td><code>string</code>, <code>int</code>, <code>Vector2Int</code>, <code>float</code></td><td>Build menu, placement footprint, unlock tier, price and local decoration effect.</td></tr>
-                            <tr><td><code>StationFacility</code></td><td><code>facilityType</code>, <code>passengerQueueCapacity</code>, <code>potentialLitterPrefabs</code></td><td><code>enum</code>, <code>int</code>, <code>List&lt;GameObject&gt;</code></td><td>Facility category, queue limit and litter side-effects after completed service.</td></tr>
-                            <tr><td><code>QueuableObject</code></td><td><code>PeopleOnWay</code>, <code>queueLineMode</code>, <code>queueStyle</code>, <code>baseDistance</code>, <code>queueSpacing</code></td><td><code>List&lt;Person&gt;</code>, <code>enum</code>, <code>float</code></td><td>Shared queue data for facilities and train doors.</td></tr>
-                            <tr><td><code>Expansion</code></td><td><code>platformNumber</code>, <code>upfrontCost</code>, <code>requiredTier</code>, <code>expansionPrefab</code></td><td><code>int</code>, <code>GameObject</code></td><td>Station-area and platform unlock data, including ordered platform requirements.</td></tr>
-                            <tr><td><code>GridManager</code></td><td><code>width</code>, <code>height</code>, <code>cellSize</code>, <code>occupancyCount</code></td><td><code>int</code>, <code>float</code></td><td>Placement grid dimensions and tile occupancy tracking.</td></tr>
-                            <tr><td><code>RatingManager</code></td><td><code>stationRating</code>, <code>cleanlinessRating</code>, <code>crowdednessRating</code>, <code>queueTimesRating</code>, <code>passengerNeedsRating</code>, <code>choiceRating</code>, <code>decorationRating</code></td><td><code>float</code></td><td>Live station score and sub-scores shown in the rating UI.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="apis" class="doc-card reveal">
-                <h2>Key APIs / Contracts</h2>
-
-                <h3>Placement &amp; Grid</h3>
-                <pre><code class="language-csharp">public class BuildController : MonoBehaviour
-{
-    public void ChangePreviewObject(ObjectBuildable objectBuildable);
-    public void ExitBuildModes();
-    public void ToggleDecorationOverlay();
-    public static int GetBuildCost(ObjectBuildable buildable);
-}
-
-public class GridManager : MonoBehaviour
-{
-    public Vector2Int GetGridPosition(Vector3 worldPosition);
-    public bool IsAreaFree(int startX, int startZ, int areaWidth, int areaHeight);
-    public void OccupyArea(int startX, int startZ, int areaWidth, int areaHeight);
-    public void VacateArea(int startX, int startZ, int areaWidth, int areaHeight);
-}</code></pre>
-
-                <h3>Passenger Flow</h3>
-                <pre><code class="language-csharp">public class PassengerManager : MonoBehaviour
-{
-    public void SpawnPassengerForService(TrainService service);
-    public Passenger SpawnExitingPassenger(Vector3 spawnPos, Quaternion spawnRot, TrainService service);
-    public void ReceiveTicket(Passenger passenger);
-    public void MeetNeedFromTarget(Passenger.NeedType needType, Passenger passenger);
-    public void SendPassengerToTrainDoor(Passenger passenger, TrainService service);
-    public void BoardTrain(Passenger passenger);
-}
-
-public class Passenger : Person
-{
-    public void RollNeeds(bool hungerUnlocked, bool thirstUnlocked, bool energyUnlocked, bool hygieneUnlocked, bool requireAtLeastOne = false, Train trainProfile = null);
-    public NeedType GetNextNeed();
-    public void ClearNeed(NeedType need);
-}</code></pre>
-
-                <h3>Facilities &amp; Services</h3>
-                <pre><code class="language-csharp">public class FacilityManager : MonoBehaviour
-{
-    public void RegisterFacility(StationFacility facility);
-    public List&lt;FacilityType&gt; GetFacilitiesForNeed(Passenger.NeedType need);
-    public List&lt;FacilityType&gt; GetUnlockedFacilitiesForNeed(Passenger.NeedType need);
-    public bool HasFacility(FacilityType type);
-}
-
-public abstract class StationFacility : QueuableObject
-{
-    public override bool CanAcceptPerson(Person person);
-    public override void ProcessInteraction(Person person);
-    public float GetEstimatedQueueWaitTime();
-    protected abstract void DeliverService(Passenger passenger);
-}</code></pre>
-
-                <h3>Trainlines, Economy &amp; Expansion</h3>
-                <pre><code class="language-csharp">public class TrainManager : MonoBehaviour
-{
-    public void UnlockTrain(Train train);
-    public TrainService AssignTrainServiceToPassenger();
-    public bool SpawnTrainService(TrainService service);
-    public void AssignTrainToPlatformSlot(Train train, PlatformController platform, int slotIndex);
-    public void RemoveTrainFromService(Train train);
-}
-
-public class ExpansionManager : MonoBehaviour
-{
-    public bool TryBuyExpansion(Expansion expansion);
-    public bool CanBuyExpansion(Expansion expansion);
-}
-
-public class EconomyManager : MonoBehaviour
-{
-    public void AddMoney(int amount, bool includeInIncomeAverage = true);
-    public void SpendMoney(int amount, bool includeInIncomeAverage = false);
-}</code></pre>
-
-                <p>
-                    I did not find a dedicated public object-pool API in the inspected scripts. Passenger and train spawn/despawn paths currently use <code>Instantiate</code> and <code>Destroy</code>, so object pooling is best described as an important optimisation target for the spawn-heavy parts of the project rather than a verified class-level contract in this checkout.
-                </p>
-            </section>
-
-            <section id="snippets" class="doc-card reveal">
-                <h2>Representative Code Snippets</h2>
-
-                <p><strong>Passenger decision FSM</strong> &ndash; resets stale targets, prioritises ticketing, resolves passenger needs, handles blocked needs, and finally routes the passenger to platform boarding when service work is complete.</p>
-                <details>
-                    <summary>Show code</summary>
-<pre><code class="language-csharp">@PassengerManager.cs lines 404-507
-void DecideNextAction(Passenger passenger)
-{
-    if (passenger.currentTarget != null)
-    {
-        passenger.currentTarget.RemovePerson(passenger);
-        passenger.currentTarget = null;
-    }
-    passenger.currentSpecialTarget = Passenger.passengerSpecialTargets.None;
-
-    passenger.currentSubState = Passenger.passengerSubStates.Idle;
-    if (passenger.navAgent != null &amp;&amp; passenger.navAgent.isOnNavMesh)
-    {
-        passenger.navAgent.ResetPath();
-    }
-
-    if (passenger.assignedTrainService == null || !TrainManager.Instance.activeTrainServices.Contains(passenger.assignedTrainService))
-    {
-        if (passenger.shouldUseFacilitiesBeforeExit)
-        {
-            HandleDisembarkingPassengerNeeds(passenger);
-            return;
-        }
-
-        ClearBlockedNeed(passenger);
-        passenger.assignedTrainService = null;
-        LeaveStation(passenger);
-        return;
-    }
-
-    if (passenger.currentMasterState == Passenger.passengerMasterStates.InStation)
-    {
-        if (!passenger.hasTicket &amp;&amp; !passenger.isTicketEvader)
-        {
-            Passenger.NeedType ticketNeed = Passenger.NeedType.Ticket;
-
-            if (passenger.blockedNeed == ticketNeed &amp;&amp;
-                passenger.blockedNeedFailureStage &gt; 0 &amp;&amp;
-                Time.time &lt; passenger.nextBlockedNeedCheckTime)
-            {
-                TryWanderWhileBlocked(passenger);
-                return;
-            }
-
-            if (TrySendPassengerToNeedFacility(passenger, ticketNeed))
-            {
-                ClearBlockedNeed(passenger, true);
-                return;
-            }
-
-            HandleBlockedNeed(passenger, ticketNeed);
-            return;
-        }
-
-        if (!passenger.hasTicket &amp;&amp; passenger.isTicketEvader)
-        {
-            MoveToPlatformPosition(passenger);
-            return;
-        }
-
-        if (passenger.hasGivenUpNeed)
-        {
-            MoveToPlatformPosition(passenger, true);
-            return;
-        }
-
-        while (true)
-        {
-            Passenger.NeedType nextNeed = passenger.GetNextNeed();
-
-            if (nextNeed == Passenger.NeedType.None)
-            {
-                ClearBlockedNeed(passenger);
-                break;
-            }
-
-            if (passenger.blockedNeed == nextNeed &amp;&amp;
-                passenger.blockedNeedFailureStage &gt; 0 &amp;&amp;
-                Time.time &lt; passenger.nextBlockedNeedCheckTime)
-            {
-                TryWanderWhileBlocked(passenger);
-                return;
-            }
-
-            if (TrySendPassengerToNeedFacility(passenger, nextNeed))
-            {
-                ClearBlockedNeed(passenger, true);
-                return;
-            }
-
-            HandleBlockedNeed(passenger, nextNeed);
-            return;
-        }
-
-        MoveToPlatformPosition(passenger);
-    }
-    else if (passenger.currentMasterState == Passenger.passengerMasterStates.OnPlatform)
-    {
-        if (passenger.assignedTrainService.physicalTrainInstance != null &amp;&amp;
-            passenger.assignedTrainService.physicalTrainInstance.IsAtStation())
-        {
-            SendPassengerToTrainDoor(passenger, passenger.assignedTrainService);
-        }
-    }
-}</code></pre>
-                </details>
-                <p><a href="https://github.com/OliverNealDev/TSA/blob/main/Assets/Scripts/Managers/PassengerManager.cs#L404-L507" target="_blank" rel="noopener noreferrer">View on GitHub (lines 404-507)</a></p>
-
-                <p><strong>Placement footprint validation</strong> &ndash; converts the cursor hit to grid space, validates bounds, samples the build surface under every occupied tile, and returns whether the footprint is free before the build commit spends money and occupies cells.</p>
-                <details>
-                    <summary>Show code</summary>
-<pre><code class="language-csharp">@BuildController.cs lines 530-560
-private bool TryGetBuildPreviewPlacement(out BuildPreviewPlacement placement)
-{
-    placement = default;
-
-    if (!TryGetBuildSurfaceHit(out RaycastHit cursorHit))
-    {
-        return false;
-    }
-
-    Vector2Int size = GetRotatedSize();
-    Vector2Int gridPos = GridManager.Instance.GetGridPosition(cursorHit.point);
-
-    if (!GridManager.Instance.IsAreaWithinBounds(gridPos.x, gridPos.y, size.x, size.y))
-    {
-        return false;
-    }
-
-    if (!TryGetFootprintSurfaceY(gridPos, size, cursorHit.point.y, out float surfaceY))
-    {
-        return false;
-    }
-
-    placement = new BuildPreviewPlacement
-    {
-        gridPos = gridPos,
-        size = size,
-        surfaceY = surfaceY,
-        isValid = GridManager.Instance.IsAreaFree(gridPos.x, gridPos.y, size.x, size.y)
-    };
-
-    return true;
-}</code></pre>
-                </details>
-                <p><a href="https://github.com/OliverNealDev/TSA/blob/main/Assets/Scripts/Controllers/BuildController.cs#L530-L560" target="_blank" rel="noopener noreferrer">View on GitHub (lines 530-560)</a></p>
-
-                <p><strong>Station rating aggregation</strong> &ndash; samples independent service dimensions, smooths each target score, then averages them into the station rating used by the UI and demand model.</p>
-                <details>
-                    <summary>Show code</summary>
-<pre><code class="language-csharp">@RatingManager.cs lines 60-78
-void CalculateTargetsAndApply()
-{
-    List&lt;Passenger&gt; floorEligiblePassengers = GetFloorEligiblePassengers();
-    float targetCleanliness = GetCleanlinessTarget();
-    float targetCrowdedness = GetCrowdednessTarget(floorEligiblePassengers);
-    float targetQueueTimes = GetQueueTimesTarget();
-    float targetChoice = GetChoiceTarget();
-    float targetPassengerNeeds = GetPassengerNeedsTarget();
-    float targetDecoration = GetDecorationTarget(floorEligiblePassengers);
-
-    cleanlinessRating = Mathf.Lerp(cleanlinessRating, targetCleanliness, 0.2f);
-    crowdednessRating = Mathf.Lerp(crowdednessRating, targetCrowdedness, 0.2f);
-    queueTimesRating = Mathf.Lerp(queueTimesRating, targetQueueTimes, 0.2f);
-    choiceRating = Mathf.Lerp(choiceRating, targetChoice, 0.2f);
-    passengerNeedsRating = Mathf.Lerp(passengerNeedsRating, targetPassengerNeeds, 0.2f);
-    decorationRating = Mathf.Lerp(decorationRating, targetDecoration, 0.2f);
-
-    stationRating = (cleanlinessRating + crowdednessRating + queueTimesRating + passengerNeedsRating + choiceRating + decorationRating) / 6f;
-}</code></pre>
-                </details>
-                <p><a href="https://github.com/OliverNealDev/TSA/blob/main/Assets/Scripts/Managers/RatingManager.cs#L60-L78" target="_blank" rel="noopener noreferrer">View on GitHub (lines 60-78)</a></p>
-            </section>
-
-            <section id="performance" class="doc-card reveal">
-                <h2>Performance Notes</h2>
-                <p>
-                    Passenger spawning is rating-driven rather than frame-spammy: <code>PassengerSpawner</code> ticks at a fixed interval and derives spawn probability from active train capacity, a 240-second service cycle, and <code>RatingManager.stationRating</code>. This keeps demand tunable as the station grows.
-                </p>
-                <p>
-                    The codebase already shows performance-conscious patterns in places such as <code>NavMeshManager.BuildNavMesh()</code>, which temporarily disables person and litter colliders/renderers during NavMesh baking, and <code>PrefabIconRenderer</code>, which caches generated runtime icons for buildables, trains and staff.
-                </p>
-                <p>
-                    Object pooling matters most for short-lived, high-frequency objects such as passengers, litter, UI prompts, bottles, snacks and effects because repeated <code>Instantiate</code>/<code>Destroy</code> calls can create garbage collection spikes. The inspected scripts do not contain a dedicated object-pool manager or reusable despawn API, so I have not claimed concrete pooling metrics. Profiling and pool integration for spawn-heavy paths are ongoing optimisation work.
-                </p>
-            </section>
-
-            <section id="testing" class="doc-card reveal">
-                <h2>Testing &amp; Validation</h2>
-                <p>
-                    Validation is currently manual rather than automated. The local project includes Unity's test framework package, but I did not find checked-in NUnit or Unity Test Runner scripts in the inspected source.
-                </p>
-                <p>Manual playtesting has focused on:</p>
-                <ul style="margin-left:1.25rem;">
-                    <li>Passenger routes from materializers to ticketing, service facilities, platforms, train doors and exits.</li>
-                    <li>Placement rules, including invalid surfaces, occupied grid cells, rotated footprint sizes and build cost checks.</li>
-                    <li>Service interactions for ticketing, hunger, thirst, energy and hygiene needs.</li>
-                    <li>Rating changes when queues grow, litter appears, decoration coverage changes and passengers fail needs.</li>
-                    <li>Expansion progression, especially tier locks, money checks and ordered platform unlocks.</li>
-                    <li>Edge cases such as destroyed queue targets, blocked needs, full facilities, train reassignment and passengers waiting for moved services.</li>
-                </ul>
-            </section>
-
-            <section id="tradeoffs" class="doc-card reveal">
-                <h2>Trade-offs &amp; Next Steps</h2>
-                <ul style="margin-left:1.25rem;">
-                    <li>FSMs are simple and readable, but behavior trees or utility AI could scale more complex passenger behaviour.</li>
-                    <li>The manager-based architecture is quick to navigate for a solo project, but more explicit service boundaries would help if the project grew.</li>
-                    <li>Queue-aware routing makes facilities feel practical, while deeper analytics would make balancing service times and capacities easier.</li>
-                    <li>Object pooling would improve runtime stability for spawn-heavy objects, but it adds lifecycle-management complexity around reset state and ownership.</li>
-                    <li>The current rating logic is readable and tunable, but automated simulation tests would make balancing safer.</li>
-                    <li>Future work could include richer passenger archetypes, stronger visual feedback for blocked routes, automated tests around placement and routing, and more profiling on larger stations.</li>
-                </ul>
-            </section>
+        <div class="cs-hero-media reveal">
+          <video controls preload="none" poster="Project Media/HueStation/LateGameZoomedOutGameplayScreenshot.png"
+                 width="1920" height="1080"
+                 aria-label="Cyber Station gameplay video: a minute of building, passenger flow and trains arriving in a late game station">
+            <source src="Project Media/HueStation/CyberStationGameplay.mp4" type="video/mp4">
+          </video>
         </div>
-    </main>
 
-    <footer>
-        &copy; 2025 Oliver Neal. All rights reserved.
-    </footer>
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 3D · C#</span></li>
+          <li><span class="fact-k">Grade</span><span class="fact-v">90 / 100</span></li>
+          <li><span class="fact-k">Award</span><span class="fact-v">ExpoTees 2026 winner</span></li>
+        </ul>
+      </div>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js" defer></script>
+    <!-- ============ OVERVIEW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Overview</p>
+          <h2>One station, four systems in tension</h2>
+          <p>
+            In Cyber Station you design and operate a growing neon transport hub:
+            lay out the concourse, keep crowds of passengers moving, and keep your
+            star rating high enough to unlock the next tier. The game is built
+            around four systems that constantly push against each other:
+            <strong>placement</strong>, <strong>passenger flow</strong>,
+            <strong>station ratings</strong> and <strong>progression</strong>.
+            Every layout decision changes how passengers path through the space,
+            which changes the ratings, which gates what you can build next.
+          </p>
+          <p>
+            Around that core sit the supporting systems that make it a complete
+            game: train scheduling, staff coordination, an economy to balance,
+            and saving and loading so a station survives between sessions.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <script src="main.js" defer></script>
+    <!-- ============ PLACEMENT ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Building</p>
+          <h2>Placement &amp; construction</h2>
+          <p>
+            Everything in the station is placed by the player. The build menu
+            offers a catalogue of infrastructure and decoration, from ticket
+            machines, barriers, platforms and trains to staff and cosmetic
+            items, each with a cost and a stat effect on the station. Items can
+            be rotated with a live preview before committing, so tight layouts
+            stay readable.
+          </p>
+          <p>
+            Decorations aren't just cosmetic: each carries a
+            <strong>decoration strength</strong> value that feeds directly into the
+            station's Decoration rating, turning beautification into an economic
+            decision like everything else.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/HueStation/buildnenu.png"
+               alt="Cyber Station build menu: a Trainline Globe decoration selected, showing its price, decoration strength and a rotate preview hint, above a scrollable item catalogue"
+               width="1572" height="877" loading="lazy">
+          <figcaption>The build catalogue: every item shows its cost and stat effect, with a rotating preview before placing.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ PASSENGER FLOW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Passengers</p>
+          <h2>Passenger flow &amp; AI navigation</h2>
+          <p>
+            Passengers are autonomous agents. They enter the station, navigate to
+            ticket machines, queue, pass barriers and reach their platform in time
+            for the next train, hundreds of them at once. Their routing reacts to
+            the layout the player builds: a badly placed barrier or an undersized
+            bank of ticket machines shows up immediately as bunching crowds and
+            growing queues.
+          </p>
+          <p>
+            Rather than every passenger running its own per-frame update, the whole
+            crowd is driven from a single manager on a <strong>fixed 10&nbsp;Hz
+            logic tick</strong>. Each passenger runs a small hierarchical state
+            machine, and when it needs a facility it does not simply walk to the
+            nearest one. It picks the option with the <strong>lowest total
+            cost</strong>, weighing the real NavMesh path length against the queue
+            it would have to wait in, and re-targets if something better is built
+            nearby.
+          </p>
+          <p>
+            Because the station is rebuilt every time you place or demolish
+            something, the navigation mesh is <strong>baked at runtime</strong>. The
+            tricky part is that the passengers and litter already in the world would
+            otherwise be baked in as obstacles, so their colliders are temporarily
+            hidden during each bake and restored afterwards, leaving a clean mesh
+            for everyone to path on.
+          </p>
+        </div>
+        <div class="media-pair">
+          <figure class="media-figure reveal">
+            <img src="Project Media/HueStation/LateGameGameplayScreenshot.png"
+                 alt="Cyber Station: a packed tier 8 concourse with crowds of passengers pathing between shops, ticket machines and platforms"
+                 width="1919" height="1079" loading="lazy">
+            <figcaption>A maxed out tier 8 station: agents pathing between entrances, machines and platforms.</figcaption>
+          </figure>
+          <figure class="media-figure reveal">
+            <img src="Project Media/HueStation/LateGameZoomedInGameplayScreenshot.png"
+                 alt="Cyber Station up close: passengers queueing at neon yellow, cyan and pink platforms and ticket machines"
+                 width="1573" height="878" loading="lazy">
+            <figcaption>Up close, every passenger is queueing, boarding or heading somewhere specific.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RATINGS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Ratings</p>
+          <h2>The station-rating system</h2>
+          <p>
+            The whole station is graded live. An overall star rating is derived
+            from six separate ratings (<strong>Cleanliness, Crowdedness, Queue
+            Lengths, Service, Decoration and Choice</strong>) alongside a
+            passenger throughput percentage. Each one watches a different
+            behaviour: Crowdedness, for example, measures how tightly packed
+            passengers get, so a station can be profitable and still bleed
+            stars because people are bunching at a pinch point.
+          </p>
+          <p>
+            This is the system that ties the game together, and it closes a loop:
+            the six ratings are smoothed and rolled into an overall score, and that
+            score <strong>feeds back into how many passengers spawn</strong>. A
+            better station pulls in bigger crowds, which puts more pressure on the
+            very layout that earned the rating in the first place.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/HueStation/stationratings.png"
+               alt="Cyber Station ratings screen: 99% passenger throughput efficiency, a five star overall station rating, and six ratings for cleanliness, crowdedness, queue lengths, service, decoration and choice"
+               width="1567" height="876" loading="lazy">
+          <figcaption>Six ratings and a throughput score roll up into the overall stars.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ PROGRESSION ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Progression</p>
+          <h2>Progression &amp; expansion</h2>
+          <p>
+            Income and ratings feed a <strong>tier system</strong> that paces the
+            game. Higher tiers unlock station expansions, extra platforms, new
+            train lines and staff, each one raising passenger volume and putting
+            fresh pressure back on the layout you've built.
+          </p>
+        </div>
+        <div class="gallery">
+          <figure class="reveal">
+            <img src="Project Media/HueStation/expansions menu.png"
+                 alt="Cyber Station expansions menu listing purchasable station expansions" loading="lazy">
+            <figcaption>Expansions: buying more physical space.</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img src="Project Media/HueStation/platformmenu.png"
+                 alt="Cyber Station platform menu for adding and managing platforms" loading="lazy">
+            <figcaption>Platforms: capacity for more lines.</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img src="Project Media/HueStation/trainsmenu.png"
+                 alt="Cyber Station trains menu for purchasing and assigning trains" loading="lazy">
+            <figcaption>Trains: scheduling the actual service.</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img src="Project Media/HueStation/staffmenu.png"
+                 alt="Cyber Station staff menu for hiring station staff" loading="lazy">
+            <figcaption>Staff: service and cleanliness pressure valves.</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img src="Project Media/HueStation/progressionmenu.png"
+                 alt="Cyber Station progression menu showing tier advancement" loading="lazy">
+            <figcaption>Progression: tiers gate the whole catalogue.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STAFF AI ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Staff AI</p>
+          <h2>Staff that dispatch themselves</h2>
+          <p>
+            Janitors and security drones do not each hunt for work independently,
+            which would leave two janitors racing to the same piece of litter.
+            Instead, each type has a <strong>coordinator</strong>. The workers ask
+            it for a job, and the coordinator hands out the nearest unclaimed task
+            and locks it, so nothing is ever double-assigned.
+          </p>
+          <p>
+            It keeps the behaviour clean and extensible: the coordinator owns the
+            "who does what" decision while each worker just runs its own small state
+            machine. Security even prioritises chasing down fare evaders over
+            routine patrols, all through the same dispatch model.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="index.html#breakdowns">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        All breakdowns
+      </a>
+      <a href="minimalists.html">
+        Next: Minimalists
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
