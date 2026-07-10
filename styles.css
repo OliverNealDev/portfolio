@@ -308,6 +308,26 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .nav-link:hover { color: var(--text); background: var(--surface-2); }
 .nav-link.active { color: var(--accent); }
 
+/* CV sits last in the nav as a pill: it's a separate page (the document),
+   not one of the scrollable sections. */
+.nav-link.nav-cv {
+  margin-left: 0.4rem;
+  padding: 0.42rem 0.95rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text);
+}
+.nav-link.nav-cv:hover {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.nav-link.nav-cv.active {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 .header-actions { display: flex; align-items: center; gap: 0.35rem; }
 
 .icon-btn {
@@ -351,6 +371,19 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   }
   .site-nav.open { display: flex; }
   .nav-link { padding: 0.7rem 0.75rem; font-size: 1rem; }
+
+  /* In the dropdown the pill becomes a normal row with a separator above,
+     so the list stays aligned. */
+  .nav-link.nav-cv {
+    margin-left: 0;
+    margin-top: 0.35rem;
+    padding: 0.7rem 0.75rem;
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 0 0 7px 7px;
+  }
+  .nav-link.nav-cv:hover { background: var(--surface-2); }
+  .nav-link.nav-cv.active { background: transparent; }
 }
 
 /* --------------------------------------------------------------------------
@@ -546,7 +579,13 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   overflow: hidden;
 }
 
-/* Institution logos fill their tile edge to edge */
+/* Institution logos fill their tile edge to edge; each links out to the
+   institution's website. */
+.edu-logo-link {
+  flex: none;
+  display: block;
+  border-radius: 12px;
+}
 .edu-logo {
   flex: none;
   width: 96px;
@@ -554,6 +593,11 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--border);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.edu-logo-link:hover .edu-logo {
+  border-color: var(--accent-border);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 640px) {
@@ -830,6 +874,14 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .card-role strong { color: var(--text); font-weight: 600; }
 
+.card-body > .team-badge { align-self: flex-start; }
+
+/* Team cards: don't stretch paragraphs apart to fill the card — let content
+   flow from the top and collect any spare height just above the links row,
+   so a short card doesn't get odd gaps in the middle. */
+#team .card-body > p { flex: initial; }
+#team .card-links { margin-top: auto; }
+
 .team-badge {
   display: inline-block;
   font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
@@ -846,8 +898,9 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .card-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 1.1rem;
-  padding-top: 0.35rem;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+  padding-top: 0.6rem;
   border-top: 1px solid var(--border);
 }
 .card-links a {
@@ -860,8 +913,23 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   padding-block: 0.35rem;
 }
 .card-links a:hover { color: var(--accent); }
-.card-links .link-primary { color: var(--accent); }
-.card-links .link-primary:hover { color: var(--accent-hover); }
+
+/* Breakdown CTA — the one filled button on each card, so the case study
+   is unmissable next to the quieter external links. */
+.card-links .card-cta {
+  padding: 0.5rem 1rem;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.card-links .card-cta:hover {
+  background: var(--accent-hover);
+  color: var(--accent-contrast);
+  transform: translateY(-1px);
+}
+.card-links .card-cta .icon { transition: transform 0.2s ease; }
+.card-links .card-cta:hover .icon { transform: translateX(3px); }
 
 /* Case-study link rows (index, section 06) */
 .bd-list { display: grid; gap: 1rem; }
@@ -892,7 +960,13 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .bd-card h3 { margin-bottom: 0.2rem; font-size: 1.05rem; }
 .bd-card p { margin: 0; color: var(--text-2); font-size: 0.9rem; }
-.bd-arrow { color: var(--text-3); transition: transform 0.25s ease, color 0.25s ease; padding-right: 0.6rem; }
+.bd-arrow {
+  width: 2rem;
+  height: 2rem;
+  color: var(--text-3);
+  transition: transform 0.25s ease, color 0.25s ease;
+  margin-right: 0.6rem;
+}
 .bd-card:hover .bd-arrow { transform: translateX(4px); color: var(--accent); }
 
 @media (max-width: 640px) {
@@ -1021,23 +1095,148 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .gallery figcaption { font-size: 0.8rem; color: var(--text-3); margin-top: 0.45rem; }
 
-/* Prev/next navigation at the bottom of case studies */
+/* Prev/next navigation at the bottom of case studies — the back link is a
+   quiet outline button, the onward link the filled primary action. */
 .next-nav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   padding-block: 2.5rem;
   border-top: 1px solid var(--border);
 }
 .next-nav a {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 9px;
+  border: 1px solid var(--border-strong);
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-2);
+  color: var(--text);
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+              color 0.2s ease, transform 0.2s ease;
 }
-.next-nav a:hover { color: var(--accent); }
+.next-nav a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+.next-nav a:not(.prev) {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--accent-contrast);
+}
+.next-nav a:not(.prev):hover {
+  background: var(--accent-hover);
+  color: var(--accent-contrast);
+}
+.next-nav a .icon { transition: transform 0.2s ease; }
+.next-nav a:not(.prev):hover .icon { transform: translateX(3px); }
 .next-nav .prev .icon { transform: rotate(180deg); }
+.next-nav .prev:hover .icon { transform: rotate(180deg) translateX(3px); }
+
+/* --------------------------------------------------------------------------
+   10b. LIGHTBOX — click-to-enlarge for case-study figures & feature covers
+   Overlay is built once by main.js; images that open it get .lightboxable.
+   Deliberately dark in both themes, like a photo viewer.
+   -------------------------------------------------------------------------- */
+.lightboxable { cursor: zoom-in; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 3.5rem);
+  background: rgba(8, 8, 11, 0.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.open { opacity: 1; }
+
+.lightbox-stage {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 100%;
+  max-height: 100%;
+  transform: scale(0.965);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.lightbox.open .lightbox-stage { transform: none; }
+
+.lightbox-img {
+  max-width: min(1400px, 100%);
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.65);
+  background: #101014;
+  transition: opacity 0.18s ease;
+}
+.lightbox-img.loading { opacity: 0.35; }
+
+.lightbox-caption {
+  max-width: 62em;
+  color: #c7c7d1;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.5;
+}
+.lightbox-caption:empty { display: none; }
+
+.lightbox-count {
+  position: absolute;
+  top: 1.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #8b8b97;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+}
+
+.lightbox .icon-btn {
+  position: absolute;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(22, 22, 28, 0.72);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #f0f0f3;
+}
+.lightbox .icon-btn:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+.lightbox-close { top: 1rem; right: 1rem; }
+.lightbox-prev,
+.lightbox-next { top: 50%; margin-top: -1.375rem; }
+.lightbox-prev { left: max(0.75rem, env(safe-area-inset-left)); }
+.lightbox-next { right: max(0.75rem, env(safe-area-inset-right)); }
+.lightbox-prev .icon { transform: rotate(180deg); }
+.lightbox.single .lightbox-prev,
+.lightbox.single .lightbox-next,
+.lightbox.single .lightbox-count { display: none; }
+
+/* Lock page scroll while the viewer is open */
+html.lightbox-open,
+html.lightbox-open body { overflow: hidden; }
+
+@media (max-width: 640px) {
+  .lightbox { padding: 0.85rem 3.4rem; }
+  .lightbox-img { max-height: 72vh; }
+}
 
 /* --------------------------------------------------------------------------
    11. FOOTER
@@ -1080,6 +1279,117 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 
 @media (max-width: 640px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* --------------------------------------------------------------------------
+   11b. CV PAGE
+   The CV renders as the document itself: a white A4-style sheet on the page,
+   fixed light "ink" colours in both themes so it always reads as paper.
+   A toolbar above it offers the PDF download and printing; the print styles
+   at the bottom output just the sheet.
+   -------------------------------------------------------------------------- */
+.cv-page { padding-block: clamp(2.5rem, 6vh, 4rem) clamp(3.5rem, 8vh, 5.5rem); }
+
+.cv-toolbar {
+  max-width: 850px;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.cv-toolbar .kicker { margin: 0; }
+.cv-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* The sheet — deliberately not theme-driven: it is a document. */
+.cv-sheet {
+  --paper: #ffffff;
+  --ink: #1a1a1f;
+  --ink-2: #40404a;
+  --ink-3: #6d6d78;
+  --rule: #e2e2e8;
+  --accent-ink: #c2410c;
+
+  max-width: 850px;
+  margin-inline: auto;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: clamp(1.75rem, 5vw, 3.25rem) clamp(1.5rem, 5vw, 3.5rem);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.cv-sheet a { color: var(--accent-ink); }
+.cv-sheet a:hover { color: var(--accent-ink); text-decoration: underline; }
+.cv-sheet strong { color: var(--ink); font-weight: 600; }
+
+/* Document header — name, role, links, email, exactly as the original CV */
+.cv-sheet-head { margin-bottom: 1.5rem; }
+.cv-sheet-head h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--ink);
+  margin-bottom: 0.1rem;
+}
+.cv-sheet-role {
+  font-style: italic;
+  color: var(--ink-2);
+  margin: 0 0 0.45rem;
+}
+.cv-sheet-contact { margin: 0; font-size: 0.92rem; color: var(--ink-2); }
+.cv-sheet-contact + .cv-sheet-contact { margin-top: 0.1rem; }
+
+.cv-sheet section + section { margin-top: 1.4rem; }
+.cv-sheet h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.55rem;
+}
+.cv-sheet p { color: var(--ink-2); margin: 0 0 0.45em; }
+.cv-sheet p:last-child { margin-bottom: 0; }
+
+.cv-sheet ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: var(--ink-2);
+}
+.cv-sheet ul li { margin-bottom: 0.4rem; }
+.cv-sheet ul li:last-child { margin-bottom: 0; }
+.cv-sheet ul ul {
+  list-style: circle;
+  margin-top: 0.35rem;
+}
+.cv-sheet ul ul li { margin-bottom: 0.25rem; }
+
+/* ---- Print: just the sheet, as a plain paper document -------------------- */
+@media print {
+  .site-header, .site-footer, .skip-link, .cv-toolbar,
+  .theme-toggle, .nav-toggle { display: none !important; }
+  body { background: #fff !important; }
+  .cv-page { padding: 0; }
+  .cv-page .container { max-width: none; padding: 0; }
+  .cv-sheet {
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    font-size: 10.5pt;
+  }
+  .cv-sheet li { break-inside: avoid; }
+  .cv-sheet a { color: inherit; text-decoration: none; }
+  html.js .reveal { opacity: 1 !important; transform: none !important; }
 }
 
 /* --------------------------------------------------------------------------
