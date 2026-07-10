@@ -122,6 +122,147 @@
     });
   });
 
+  /* 4c. LIGHTBOX ------------------------------------------------------------
+     Case-study figures, galleries and feature covers enlarge on click into a
+     shared overlay: Esc / backdrop / × to close, arrow keys or edge buttons
+     to move through every image on the page. Built lazily on first open,
+     keyboard-operable, and it hands focus back where it came from. */
+  (function () {
+    var triggers = Array.prototype.slice.call(
+      document.querySelectorAll(".media-figure img, .gallery img, .feature-cover img")
+    );
+    if (!triggers.length) return;
+
+    var overlay = null;
+    var stageImg, captionEl, countEl, closeBtn, prevBtn, nextBtn;
+    var current = 0;
+    var lastFocused = null;
+
+    function captionFor(img) {
+      var fig = img.closest("figure");
+      var cap = fig && fig.querySelector("figcaption");
+      return cap ? cap.textContent.trim() : "";
+    }
+
+    function build() {
+      overlay = document.createElement("div");
+      overlay.className = "lightbox" + (triggers.length < 2 ? " single" : "");
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-label", "Image viewer");
+      overlay.hidden = true;
+      overlay.innerHTML =
+        '<span class="lightbox-count" aria-hidden="true"></span>' +
+        '<figure class="lightbox-stage">' +
+        '  <img class="lightbox-img" alt="">' +
+        '  <figcaption class="lightbox-caption"></figcaption>' +
+        "</figure>" +
+        '<button class="icon-btn lightbox-prev" type="button" aria-label="Previous image">' +
+        '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
+        "</button>" +
+        '<button class="icon-btn lightbox-next" type="button" aria-label="Next image">' +
+        '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
+        "</button>" +
+        '<button class="icon-btn lightbox-close" type="button" aria-label="Close image viewer">' +
+        '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>' +
+        "</button>";
+      document.body.appendChild(overlay);
+
+      stageImg = overlay.querySelector(".lightbox-img");
+      captionEl = overlay.querySelector(".lightbox-caption");
+      countEl = overlay.querySelector(".lightbox-count");
+      closeBtn = overlay.querySelector(".lightbox-close");
+      prevBtn = overlay.querySelector(".lightbox-prev");
+      nextBtn = overlay.querySelector(".lightbox-next");
+
+      closeBtn.addEventListener("click", close);
+      prevBtn.addEventListener("click", function () { show(current - 1); });
+      nextBtn.addEventListener("click", function () { show(current + 1); });
+
+      // Backdrop click closes; clicks on the image / buttons don't.
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay || e.target.classList.contains("lightbox-stage")) close();
+      });
+
+      stageImg.addEventListener("load", function () {
+        stageImg.classList.remove("loading");
+      });
+
+      overlay.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { close(); return; }
+        if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); return; }
+        if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); return; }
+        // Keep Tab inside the dialog while it is open.
+        if (e.key === "Tab") {
+          var focusables = [prevBtn, nextBtn, closeBtn].filter(function (b) {
+            return b.offsetParent !== null;
+          });
+          if (!focusables.length) return;
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault(); last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault(); first.focus();
+          }
+        }
+      });
+    }
+
+    function show(index) {
+      current = (index + triggers.length) % triggers.length;
+      var src = triggers[current];
+      if (stageImg.getAttribute("src") !== src.currentSrc && stageImg.getAttribute("src") !== src.src) {
+        stageImg.classList.add("loading");
+      }
+      stageImg.src = src.currentSrc || src.src;
+      stageImg.alt = src.alt || "";
+      captionEl.textContent = captionFor(src);
+      countEl.textContent = (current + 1) + " / " + triggers.length;
+    }
+
+    function open(index) {
+      if (!overlay) build();
+      lastFocused = document.activeElement;
+      show(index);
+      overlay.hidden = false;
+      root.classList.add("lightbox-open");
+      // Force a reflow so the opacity/scale transition actually runs.
+      void overlay.offsetWidth;
+      overlay.classList.add("open");
+      closeBtn.focus();
+    }
+
+    function close() {
+      overlay.classList.remove("open");
+      root.classList.remove("lightbox-open");
+      var done = function () { overlay.hidden = true; };
+      if (reducedMotion) { done(); } else { setTimeout(done, 300); }
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    triggers.forEach(function (img, i) {
+      img.classList.add("lightboxable");
+      img.setAttribute("tabindex", "0");
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", "Enlarge image" + (img.alt ? ": " + img.alt : ""));
+      img.addEventListener("click", function () { open(i); });
+      img.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(i);
+        }
+      });
+    });
+  })();
+
+  /* 4d. PRINT BUTTONS -------------------------------------------------------
+     Any element with [data-print] (the CV page's "Print" action) triggers
+     the browser's print dialog. */
+  document.querySelectorAll("[data-print]").forEach(function (btn) {
+    btn.addEventListener("click", function () { window.print(); });
+  });
+
   /* 5. ACTIVE NAV LINK ------------------------------------------------------
      On the single-page index, highlight the nav item for the section
      currently in view. No-op on case-study pages (no same-page anchors). */

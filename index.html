@@ -97,6 +97,7 @@
         <a class="nav-link" href="#projects">Projects</a>
         <a class="nav-link" href="#education">Education</a>
         <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
 
       <div class="header-actions">
@@ -138,9 +139,9 @@
               View work
               <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
             </a>
-            <a class="btn btn-outline" href="Oliver_Neal_Resume.pdf" download>
-              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
-              Download CV
+            <a class="btn btn-outline" href="cv.html">
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
+              View CV
             </a>
             <a class="btn btn-ghost" href="#contact">Contact</a>
           </div>
@@ -195,14 +196,14 @@
             <p>
               Everything below is playable, most of it on itch.io with source on
               GitHub. If you'd rather read about the engineering, the
-              <a href="#breakdowns">project breakdowns</a> go deeper on six of them.
+              <a href="#breakdowns">project breakdowns</a> go deeper on seven of them.
             </p>
           </div>
 
           <ul class="fact-list reveal">
             <li><span class="fact-num">1st</span><span class="fact-label">BSc (Hons) Games Development</span></li>
+            <li><span class="fact-num">80%</span><span class="fact-label">overall degree average</span></li>
             <li><span class="fact-num">90</span><span class="fact-label">final year project grade</span></li>
-            <li><span class="fact-num">8</span><span class="fact-label">playable projects</span></li>
           </ul>
         </div>
       </div>
@@ -335,7 +336,7 @@
               <li>Unity 3D</li><li>C#</li><li>AI Navigation</li><li>Simulation</li>
             </ul>
             <div class="card-links">
-              <a class="link-primary" href="cyber-station.html">
+              <a class="card-cta" href="cyber-station.html">
                 Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
               </a>
               <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
@@ -368,7 +369,7 @@
                 <li>Unity 2D</li><li>C#</li><li>Procedural</li><li>Enemy AI</li>
               </ul>
               <div class="card-links">
-                <a class="link-primary" href="tile-turfer.html">
+                <a class="card-cta" href="tile-turfer.html">
                   Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
                 </a>
                 <a href="https://embitgames.itch.io/tile-turfer" target="_blank" rel="noopener">
@@ -408,7 +409,7 @@
                 <li>Unity 3D</li><li>C#</li><li>Enemy AI</li><li>RTS</li>
               </ul>
               <div class="card-links">
-                <a class="link-primary" href="minimalists.html">
+                <a class="card-cta" href="minimalists.html">
                   Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
                 </a>
                 <a href="https://embitgames.itch.io/minimalists" target="_blank" rel="noopener">
@@ -445,7 +446,7 @@
                 <li>Unity</li><li>C#</li><li>FSM</li><li>Optimisation</li>
               </ul>
               <div class="card-links">
-                <a class="link-primary" href="unicellular.html">
+                <a class="card-cta" href="unicellular.html">
                   Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
                 </a>
                 <a href="https://embitgames.itch.io/unicellular" target="_blank" rel="noopener">
@@ -482,7 +483,7 @@
                 <li>Unity 3D</li><li>C#</li><li>Netcode</li><li>Multiplayer</li>
               </ul>
               <div class="card-links">
-                <a class="link-primary" href="tank-game.html">
+                <a class="card-cta" href="tank-game.html">
                   Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
                 </a>
                 <a href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener">
@@ -516,7 +517,7 @@
                 <li>Unity 2D</li><li>C#</li><li>Arcade</li><li>Physics</li>
               </ul>
               <div class="card-links">
-                <a class="link-primary" href="pinnable.html">
+                <a class="card-cta" href="pinnable.html">
                   Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
                 </a>
                 <a href="https://embitgames.itch.io/pinnable" target="_blank" rel="noopener">
@@ -553,24 +554,34 @@
 
           <!-- Space Bar Simulator -->
           <article class="card project reveal">
-            <div class="card-media">
+            <a class="card-media" href="space-bar.html" aria-label="Space Bar Simulator breakdown">
               <img src="Project Media/SpaceBarSimulator/space1.png"
                    alt="Space Bar Simulator: a retro futurist diner interior with checkerboard floors, red booths and neon strips"
                    width="1826" height="781" loading="lazy">
-            </div>
+            </a>
             <div class="card-body">
+              <span class="team-badge">Team project · 10 people</span>
               <div class="card-top">
                 <h3>Space Bar Simulator</h3>
-                <span class="card-date">2025</span>
+                <span class="card-date">Jan 2026</span>
               </div>
               <p>
                 A retro futurist bar simulator set on its own asteroid, a
-                1950s diner drifting through space.
+                1950s diner drifting through space. Built in Unreal Engine 5
+                for Beta Arcade, Teesside's studio simulation module.
               </p>
-              <p class="card-role"><span class="team-badge">Team project</span></p>
+              <p class="card-role">
+                <strong>My role:</strong> player controller, interaction
+                architecture and the camera-blended station systems.
+              </p>
               <ul class="tags">
-                <li>University group build</li>
+                <li>Unreal Engine 5</li><li>Blueprints</li><li>Interaction</li><li>UI</li>
               </ul>
+              <div class="card-links">
+                <a class="card-cta" href="space-bar.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
             </div>
           </article>
 
@@ -585,6 +596,7 @@
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
             </a>
             <div class="card-body">
+              <span class="team-badge">Team project</span>
               <div class="card-top">
                 <h3>Candy Corporate</h3>
                 <span class="card-date">Apr 2024</span>
@@ -593,11 +605,13 @@
                 Pixel art candy company game built by a small team.
               </p>
               <p class="card-role">
-                <span class="team-badge">Team project</span><br>
                 <strong>My role:</strong> level design, tile creation and pixel art integration.
               </p>
+              <ul class="tags">
+                <li>Pixel art</li><li>Level design</li><li>Tilesets</li>
+              </ul>
               <div class="card-links">
-                <a class="link-primary" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
+                <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
                   itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
                 </a>
               </div>
@@ -613,7 +627,7 @@
         <header class="section-head reveal">
           <p class="kicker">Case studies</p>
           <h2>Project breakdowns</h2>
-          <p class="section-lead">Deeper technical write-ups of how six of these games actually work.</p>
+          <p class="section-lead">Deeper technical write-ups of how seven of these games actually work.</p>
         </header>
 
         <div class="bd-list">
@@ -676,6 +690,16 @@
             </div>
             <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
+
+          <a class="bd-card reveal" href="space-bar.html">
+            <img src="Project Media/SpaceBarSimulator/space2.png"
+                 alt="Space Bar Simulator: beer taps behind the bar of a retro futurist diner" loading="lazy">
+            <div>
+              <h3>Space Bar Simulator</h3>
+              <p>A ten-person UE5 team build: my player controller, interface-driven interaction system and camera-blended stations.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -690,11 +714,13 @@
 
         <ol class="timeline">
           <li class="reveal">
-            <img class="edu-logo" src="800x_TU_Logo.png" alt="Teesside University logo" width="56" height="56" loading="lazy">
+            <a class="edu-logo-link" href="https://www.tees.ac.uk/" target="_blank" rel="noopener" aria-label="Teesside University website">
+              <img class="edu-logo" src="800x_TU_Logo.png" alt="Teesside University logo" width="56" height="56" loading="lazy">
+            </a>
             <div>
               <h3>BSc (Hons) Games Development</h3>
               <p class="edu-org">Teesside University</p>
-              <p class="edu-meta">Graduated July 2026 · <strong>First Class Honours</strong></p>
+              <p class="edu-meta">Graduated July 2026 · <strong>First Class Honours</strong> · 80% overall</p>
               <p class="edu-note">
                 My final year project scored 90 and won Best Games Programming
                 and Development Artefact at ExpoTees 2026.
@@ -702,7 +728,9 @@
             </div>
           </li>
           <li class="reveal">
-            <img class="edu-logo" src="800x_NCUC_Logo.png" alt="Newcastle College University Centre logo" width="56" height="56" loading="lazy">
+            <a class="edu-logo-link" href="https://ncuc.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College University Centre website">
+              <img class="edu-logo" src="800x_NCUC_Logo.png" alt="Newcastle College University Centre logo" width="56" height="56" loading="lazy">
+            </a>
             <div>
               <h3>FdSc Games Technologies</h3>
               <p class="edu-org">Newcastle College University Centre</p>
@@ -710,11 +738,13 @@
             </div>
           </li>
           <li class="reveal">
-            <img class="edu-logo" src="NewcastleCollege_Logo.png" alt="Newcastle College logo" width="56" height="56" loading="lazy">
+            <a class="edu-logo-link" href="https://www.ncl-coll.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College website">
+              <img class="edu-logo" src="NewcastleCollege_Logo.png" alt="Newcastle College logo" width="56" height="56" loading="lazy">
+            </a>
             <div>
               <h3>BTEC Level 3 National Diploma in Creative Digital Media</h3>
               <p class="edu-org">Newcastle College</p>
-              <p class="edu-meta"><strong>Distinction</strong> · <a href="Oliver_Neal_LV3_Certificate.pdf" target="_blank" rel="noopener">View certificate (PDF)</a></p>
+              <p class="edu-meta"><strong>Distinction</strong></p>
             </div>
           </li>
         </ol>
@@ -728,8 +758,9 @@
           <p class="kicker">Contact</p>
           <h2>Get in touch</h2>
           <p class="section-lead">
-            I am open to gameplay and systems programming roles.
-            If you think I would be a good fit for your team, I would be glad to hear from you.
+            I'm currently a gameplay programmer at Shiverbug Studios.
+            Whether it's about my work, a project or a future opportunity,
+            I'd be glad to hear from you.
           </p>
         </header>
 
@@ -738,9 +769,9 @@
             <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
             Email me
           </a>
-          <a class="btn btn-outline" href="Oliver_Neal_Resume.pdf" download>
-            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
-            Download CV
+          <a class="btn btn-outline" href="cv.html">
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
+            View CV
           </a>
           <a class="btn btn-outline" href="https://github.com/OliverNealDev" target="_blank" rel="noopener">
             <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
@@ -781,6 +812,7 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#breakdowns">Breakdowns</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="cv.html">CV</a></li>
           </ul>
         </div>
         <div>
