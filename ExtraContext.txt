@@ -1,2 +1,0 @@
-I am a Gameplay Programmer for Shiverbug Studios. I work in engine, I program and modify scripts, and design the game itself. I am working on an original IP called "Out of Water", a 2-player splitscreen couch co op 3d platformer collectathon game. I have worked on enemy AI using FSM architecture, refining HSM driven players. Designing mechanics, implementing mechanics, collaborating with people in other fields. The internship goes from 13th July 2026 to 18th September 2026 (but this can be abstracted as 10 weeks).
-
