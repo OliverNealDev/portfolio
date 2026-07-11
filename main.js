@@ -127,9 +127,9 @@
      shared overlay: Esc / backdrop / × to close, arrow keys or edge buttons
      to move through every image on the page. Built lazily on first open,
      keyboard-operable, and it hands focus back where it came from. */
-  (function () {
+  function initLightbox(selector) {
     var triggers = Array.prototype.slice.call(
-      document.querySelectorAll(".media-figure img, .gallery img, .feature-cover img")
+      document.querySelectorAll(selector)
     );
     if (!triggers.length) return;
 
@@ -139,6 +139,7 @@
     var lastFocused = null;
 
     function captionFor(img) {
+      if (img.getAttribute("data-caption")) return img.getAttribute("data-caption");
       var fig = img.closest("figure");
       var cap = fig && fig.querySelector("figcaption");
       return cap ? cap.textContent.trim() : "";
@@ -212,10 +213,11 @@
     function show(index) {
       current = (index + triggers.length) % triggers.length;
       var src = triggers[current];
-      if (stageImg.getAttribute("src") !== src.currentSrc && stageImg.getAttribute("src") !== src.src) {
+      var full = src.getAttribute("data-full") || src.currentSrc || src.src;
+      if (stageImg.getAttribute("src") !== full) {
         stageImg.classList.add("loading");
       }
-      stageImg.src = src.currentSrc || src.src;
+      stageImg.src = full;
       stageImg.alt = src.alt || "";
       captionEl.textContent = captionFor(src);
       countEl.textContent = (current + 1) + " / " + triggers.length;
@@ -254,7 +256,12 @@
         }
       });
     });
-  })();
+  }
+
+  // Case-study figures & feature covers share one navigable viewer;
+  // the hero portrait is its own single-image viewer (opens data-full).
+  initLightbox(".media-figure img, .gallery img, .feature-cover img");
+  initLightbox(".hero-portrait img");
 
   /* 4d. PRINT BUTTONS -------------------------------------------------------
      Any element with [data-print] (the CV page's "Print" action) triggers
