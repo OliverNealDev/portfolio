@@ -12,6 +12,9 @@
 
   var root = document.documentElement;
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Touch devices fire pointerenter on tap, which would pull a video down
+  // just to navigate away. Previews are for real pointers only.
+  var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   /* 1. THEME TOGGLE -------------------------------------------------------
      The inline head script has already set html[data-theme] from
@@ -35,17 +38,43 @@
   var nav = document.querySelector(".site-nav");
 
   if (navToggle && nav) {
-    navToggle.addEventListener("click", function () {
-      var open = nav.classList.toggle("open");
+    var desktop = window.matchMedia("(min-width: 761px)");
+
+    function setNav(open) {
+      nav.classList.toggle("open", open);
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+
+    navToggle.addEventListener("click", function () {
+      setNav(!nav.classList.contains("open"));
     });
+
     // Close the panel once a destination is chosen.
     nav.addEventListener("click", function (e) {
-      if (e.target.closest("a")) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
+      if (e.target.closest("a")) setNav(false);
+    });
+
+    // Escape closes and hands focus back to the button that opened it.
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("open")) {
+        setNav(false);
+        navToggle.focus();
       }
     });
+
+    // Tapping anywhere outside the panel closes it.
+    document.addEventListener("click", function (e) {
+      if (!nav.classList.contains("open")) return;
+      if (nav.contains(e.target) || navToggle.contains(e.target)) return;
+      setNav(false);
+    });
+
+    // Widening past the breakpoint reveals the desktop nav, so drop the
+    // open state rather than leaving aria-expanded="true" behind.
+    var onDesktop = function (e) { if (e.matches) setNav(false); };
+    if (desktop.addEventListener) desktop.addEventListener("change", onDesktop);
+    else if (desktop.addListener) desktop.addListener(onDesktop);
   }
 
   /* 3. SCROLL-REVEAL -------------------------------------------------------
@@ -73,28 +102,38 @@
      Card media with data-video shows its poster image by default and lazily
      creates a muted looping <video> on first hover/focus, so no video data
      is downloaded until the visitor shows intent. Skipped entirely under
-     prefers-reduced-motion. */
-  if (!reducedMotion) {
+     prefers-reduced-motion or on touch-only devices. */
+  if (!reducedMotion && canHover) {
     document.querySelectorAll(".card-media[data-video]").forEach(function (media) {
       var video = null;
+      var wanted = false;
 
       function play() {
+        wanted = true;
         if (!video) {
           video = document.createElement("video");
           video.className = "card-video";
           video.muted = true;
           video.loop = true;
           video.playsInline = true;
+          video.preload = "auto";
           video.setAttribute("aria-hidden", "true");
+          // Only cross-fade once there are frames to show, otherwise a slow
+          // connection flashes a black box over the poster.
+          video.addEventListener("loadeddata", function () {
+            if (wanted) media.classList.add("playing");
+          });
           video.src = media.dataset.video;
           media.appendChild(video);
+        } else if (video.readyState >= 2) {
+          media.classList.add("playing");
         }
-        media.classList.add("playing");
         var p = video.play();
         if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stays */ });
       }
 
       function stop() {
+        wanted = false;
         if (video) video.pause();
         media.classList.remove("playing");
       }
@@ -303,4 +342,92 @@
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
   });
+
+  /* 7. CONTACT FORM ---------------------------------------------------------
+     Progressive enhancement over a plain Formspree POST: without JS the form
+     submits normally and Formspree shows its own confirmation page. With JS
+     it posts in the background and reports back in place, so the visitor
+     never leaves the site. */
+  document.querySelectorAll(".contact-form").forEach(function (form) {
+    var status = form.querySelector(".form-status");
+    if (!status || !window.fetch) return;
+
+    var FALLBACK = "That didn't send. Please email me directly.";
+
+    function say(message, state) {
+      status.textContent = message;
+      status.className = "form-status" + (state ? " " + state : "");
+    }
+
+    function clearInvalid() {
+      form.querySelectorAll("[aria-invalid]").forEach(function (el) {
+        el.removeAttribute("aria-invalid");
+      });
+    }
+
+    // Formspree replies with { errors: [{ field, message }] } on a rejected
+    // submission, so surface what it actually objected to rather than a
+    // generic failure, and flag the field it named.
+    function reportErrors(data) {
+      if (!data || !data.errors || !data.errors.length) return say(FALLBACK, "error");
+
+      data.errors.forEach(function (err) {
+        if (!err.field) return;
+        var input = form.querySelector('[name="' + err.field + '"]');
+        if (input) input.setAttribute("aria-invalid", "true");
+      });
+
+      say(data.errors.map(function (err) { return err.message; }).join(". "), "error");
+    }
+
+    form.addEventListener("submit", function (e) {
+      if (form.action.indexOf("YOUR_FORM_ID") !== -1) {
+        e.preventDefault();
+        say("This form is not connected yet. Email me instead.", "error");
+        return;
+      }
+
+      e.preventDefault();
+      clearInvalid();
+      form.classList.add("sending");
+      say("Sending…");
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      }).then(function (res) {
+        form.classList.remove("sending");
+        if (res.ok) {
+          form.reset();
+          say("Thanks, that's sent. I'll get back to you.", "ok");
+          return;
+        }
+        return res.json().then(reportErrors, function () { say(FALLBACK, "error"); });
+      }).catch(function () {
+        form.classList.remove("sending");
+        say(FALLBACK, "error");
+      });
+    });
+  });
+
+  /* 8. ANALYTICS ------------------------------------------------------------
+     GoatCounter: no cookies, no personal data, nothing to consent to.
+     GOATCOUNTER_CODE is the subdomain of the GoatCounter site (the "myname"
+     in myname.goatcounter.com). Blank it to switch analytics off entirely:
+     while it is empty nothing loads and no third-party request is made.
+     Note that count.js ignores localhost, so local runs never show up in
+     the stats. */
+  var GOATCOUNTER_CODE = "oliverneal04";
+
+  if (GOATCOUNTER_CODE) {
+    var gc = document.createElement("script");
+    gc.async = true;
+    gc.src = "https://gc.zgo.at/count.js";
+    gc.setAttribute(
+      "data-goatcounter",
+      "https://" + GOATCOUNTER_CODE + ".goatcounter.com/count"
+    );
+    document.head.appendChild(gc);
+  }
 })();

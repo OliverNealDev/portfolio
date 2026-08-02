@@ -13,7 +13,12 @@
   <meta property="og:title" content="Oliver Neal · Games Developer · Unity (C#)">
   <meta property="og:description" content="Gameplay systems, enemy AI, multiplayer netcode and performance work across eight playable projects. First Class Games Development graduate, currently a Gameplay Programmer at Shiverbug Studios.">
   <meta property="og:url" content="https://oliverneal.dev/">
-  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/HueStation/LateGameZoomedOutGameplayScreenshot.png">
+  <meta property="og:image" content="https://oliverneal.dev/og/home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cyber Station late game: cyan trains stretched along the platforms of a large neon station">
+  <meta property="og:site_name" content="oliverneal.dev">
+  <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
 
   <script type="application/ld+json">
@@ -25,6 +30,11 @@
     "email": "mailto:oliverjn04@gmail.com",
     "jobTitle": "Games Developer",
     "worksFor": { "@type": "Organization", "name": "Shiverbug Studios" },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Middlesbrough",
+      "addressCountry": "GB"
+    },
     "alumniOf": [
       { "@type": "CollegeOrUniversity", "name": "Teesside University" },
       { "@type": "CollegeOrUniversity", "name": "Newcastle College University Centre" }
@@ -164,7 +174,7 @@
 
         <div class="hero-portrait">
           <img src="oliver.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high"
-               data-full="oliverFullImage.png" data-caption="Oliver Neal · ExpoTees 2026">
+               data-full="oliverFullImage.webp" data-caption="Oliver Neal · ExpoTees 2026">
         </div>
       </div>
     </section>
@@ -219,17 +229,17 @@
 
         <article class="feature reveal">
           <div class="feature-cover">
-            <img src="OOW-in-game-image-1.jpg"
+            <img src="OOW-in-game-image-1.webp"
                  alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
-                 width="1920" height="1080">
+                 width="1600" height="902">
           </div>
 
           <div class="feature-body">
             <div>
               <!-- Same logo, two crops: black background for dark theme, light-blue for light -->
               <a class="feature-logo-link" href="https://www.linkedin.com/company/shiverbug-studios/" target="_blank" rel="noopener" aria-label="Shiverbug Studios on LinkedIn">
-                <img class="feature-logo dark" src="shiverbug_studios_logo-blackBG.jpg" alt="Shiverbug Studios logo" width="120" height="120" loading="lazy">
-                <img class="feature-logo light" src="shiverbug_studios_logo-ligthtBlueBG.jpg" alt="Shiverbug Studios logo" width="120" height="120" loading="lazy">
+                <img class="feature-logo dark" src="shiverbug_studios_logo-blackBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
+                <img class="feature-logo light" src="shiverbug_studios_logo-ligthtBlueBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
               </a>
 
               <p class="feature-meta">Internship · 13 Jul to 18 Sep 2026 · 10 weeks</p>
@@ -294,25 +304,27 @@
         <header class="section-head reveal">
           <p class="kicker">Projects</p>
           <h2>Solo projects</h2>
-          <p class="section-lead">Newest first. Click a thumbnail to play the game; hover to see it in motion.</p>
+          <p class="section-lead">Newest first. Click a thumbnail for the technical breakdown; hover to see it in motion.</p>
         </header>
 
         <!--
           To add a project: copy one <article class="card project reveal"> block.
           - Thumbnail: put an <img> inside .card-media (poster .webp preferred).
-            The thumbnail always links to where the game can be played.
+            The thumbnail links to the project's breakdown page. Only when a
+            project has no breakdown does it fall back to where the game can
+            be played, and then it needs target="_blank" rel="noopener".
           - Optional hover video: add data-video="path.webm" to .card-media
             and keep the .media-badge; main.js does the rest.
         -->
 
         <!-- Cyber Station: featured (final year project, ExpoTees 2026 winner) -->
         <article class="card project project-featured reveal">
-          <a class="card-media" href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener"
-             data-video="Project Media/HueStation/CyberStationHover.webm"
-             aria-label="Play Cyber Station on itch.io">
-            <img src="Project Media/HueStation/LateGameZoomedOutGameplayScreenshot.png"
+          <a class="card-media" href="cyber-station.html"
+             data-video="Project Media/hover/cyber-station.webm"
+             aria-label="Cyber Station breakdown">
+            <img src="Project Media/HueStation/LateGameZoomedOutGameplayScreenshot.webp"
                  alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
-                 width="1569" height="878" loading="lazy">
+                 width="1400" height="784" loading="lazy">
             <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
           </a>
           <div class="card-body">
@@ -348,10 +360,10 @@
 
           <!-- Tile Turfer (behind "show all") -->
           <article class="card project project-extra reveal">
-            <a class="card-media" href="https://olivernealdev.itch.io/tile-turfer" target="_blank" rel="noopener" aria-label="Tile Turfer on itch.io">
-              <img src="Project Media/TileTurfer/tile1.png"
+            <a class="card-media" href="tile-turfer.html" aria-label="Tile Turfer breakdown">
+              <img src="Project Media/TileTurfer/tile1.webp"
                    alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
-                   width="1919" height="1079" loading="lazy">
+                   width="1200" height="674" loading="lazy">
             </a>
             <div class="card-body">
               <div class="card-top">
@@ -385,9 +397,9 @@
 
           <!-- Minimalists -->
           <article class="card project reveal">
-            <a class="card-media" href="https://olivernealdev.itch.io/minimalists" target="_blank" rel="noopener"
-               data-video="Project Media/Minimalists/1v1.webm"
-               aria-label="Play Minimalists on itch.io">
+            <a class="card-media" href="minimalists.html"
+               data-video="Project Media/hover/minimalists.webm"
+               aria-label="Minimalists breakdown">
               <img src="Project Media/Minimalists/1v1Poster.webp"
                    alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
                    width="1040" height="582" loading="lazy">
@@ -422,9 +434,9 @@
 
           <!-- Unicellular -->
           <article class="card project reveal">
-            <a class="card-media" href="https://olivernealdev.itch.io/unicellular" target="_blank" rel="noopener"
-               data-video="Project Media/Unicellular/10KEntities.webm"
-               aria-label="Play Unicellular on itch.io">
+            <a class="card-media" href="unicellular.html"
+               data-video="Project Media/hover/unicellular.webm"
+               aria-label="Unicellular breakdown">
               <img src="Project Media/Unicellular/10kEntitiesPoster.webp"
                    alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
                    width="1280" height="720" loading="lazy">
@@ -459,9 +471,9 @@
 
           <!-- 3D Netcode Tank Game (behind "show all") -->
           <article class="card project project-extra reveal">
-            <a class="card-media" href="https://github.com/OliverNealDev/3DNetcodeTankGame" target="_blank" rel="noopener"
-               data-video="Project Media/3DNetcodeTankGame/MultiplayerDemo.webm"
-               aria-label="3D Netcode Tank Game on GitHub">
+            <a class="card-media" href="tank-game.html"
+               data-video="Project Media/hover/tank-game.webm"
+               aria-label="3D Netcode Tank Game breakdown">
               <img src="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp"
                    alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
                    width="1280" height="720" loading="lazy">
@@ -493,9 +505,9 @@
 
           <!-- Pinnable -->
           <article class="card project reveal">
-            <a class="card-media" href="https://olivernealdev.itch.io/pinnable" target="_blank" rel="noopener"
-               data-video="Project Media/Pinnable/Gameplay.webm"
-               aria-label="Pinnable on itch.io">
+            <a class="card-media" href="pinnable.html"
+               data-video="Project Media/hover/pinnable.webm"
+               aria-label="Pinnable breakdown">
               <img src="Project Media/Pinnable/GameplayPoster.webp"
                    alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
                    width="1280" height="720" loading="lazy">
@@ -553,9 +565,9 @@
           <!-- Space Bar Simulator -->
           <article class="card project reveal">
             <a class="card-media" href="space-bar.html" aria-label="Space Bar Simulator breakdown">
-              <img src="Project Media/SpaceBarSimulator/space5.png"
+              <img src="Project Media/SpaceBarSimulator/space5.webp"
                    alt="Space Bar Simulator gameplay: carrying a tray in first person while collecting Space Beer bottles from a fridge, with table orders and the day timer on the HUD"
-                   width="1812" height="933" loading="lazy">
+                   width="1200" height="618" loading="lazy">
             </a>
             <div class="card-body">
               <span class="team-badge">Team project · 10 people</span>
@@ -586,8 +598,8 @@
           <!-- Candy Corporate -->
           <article class="card project reveal">
             <a class="card-media" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener"
-               data-video="Project Media/Candy Corporate/FrontOfMap.webm"
-               aria-label="Candy Corporate on itch.io">
+               data-video="Project Media/hover/candy-corporate.webm"
+               aria-label="Candy Corporate on itch.io (opens in a new tab)">
               <img src="Project Media/Candy Corporate/FrontOfMapPoster.webp"
                    alt="Candy Corporate: pixel art top down view of the candy company storefront"
                    width="1280" height="720" loading="lazy">
@@ -612,7 +624,8 @@
                 <li>Pixel art</li><li>Level design</li><li>Tilesets</li><li>Extraction</li>
               </ul>
               <div class="card-links">
-                <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
+                <!-- No breakdown page for this one, so the play link is the card's primary action. -->
+                <a class="card-cta" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
                   itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
                 </a>
               </div>
@@ -633,7 +646,7 @@
 
         <div class="bd-list">
           <a class="bd-card reveal" href="cyber-station.html">
-            <img src="Project Media/HueStation/LateGameGameplayScreenshot.png"
+            <img src="Project Media/HueStation/LateGameGameplayScreenshot.webp"
                  alt="Cyber Station: a packed late game concourse with crowds of passengers moving between shops and platforms" loading="lazy">
             <div>
               <h3>Cyber Station</h3>
@@ -663,7 +676,7 @@
           </a>
 
           <a class="bd-card reveal" href="tile-turfer.html">
-            <img src="Project Media/TileTurfer/tile1.png"
+            <img src="Project Media/TileTurfer/tile1.webp"
                  alt="Tile Turfer: blue and red teams fighting to claim tiles across a procedurally generated cave" loading="lazy">
             <div>
               <h3>Tile Turfer</h3>
@@ -693,7 +706,7 @@
           </a>
 
           <a class="bd-card reveal" href="space-bar.html">
-            <img src="Project Media/SpaceBarSimulator/space2.png"
+            <img src="Project Media/SpaceBarSimulator/space2.webp"
                  alt="Space Bar Simulator: beer taps behind the bar of a retro futurist diner" loading="lazy">
             <div>
               <h3>Space Bar Simulator</h3>
@@ -716,7 +729,7 @@
         <ol class="timeline">
           <li class="reveal">
             <a class="edu-logo-link" href="https://www.tees.ac.uk/" target="_blank" rel="noopener" aria-label="Teesside University website">
-              <img class="edu-logo" src="800x_TU_Logo.png" alt="Teesside University logo" width="56" height="56" loading="lazy">
+              <img class="edu-logo" src="800x_TU_Logo.webp" alt="Teesside University logo" width="192" height="192" loading="lazy">
             </a>
             <div>
               <h3>BSc (Hons) Games Development</h3>
@@ -731,7 +744,7 @@
           </li>
           <li class="reveal">
             <a class="edu-logo-link" href="https://ncuc.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College University Centre website">
-              <img class="edu-logo" src="800x_NCUC_Logo.png" alt="Newcastle College University Centre logo" width="56" height="56" loading="lazy">
+              <img class="edu-logo" src="800x_NCUC_Logo.webp" alt="Newcastle College University Centre logo" width="192" height="192" loading="lazy">
             </a>
             <div>
               <h3>FdSc Games Technologies</h3>
@@ -741,7 +754,7 @@
           </li>
           <li class="reveal">
             <a class="edu-logo-link" href="https://www.ncl-coll.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College website">
-              <img class="edu-logo" src="NewcastleCollege_Logo.png" alt="Newcastle College logo" width="56" height="56" loading="lazy">
+              <img class="edu-logo" src="NewcastleCollege_Logo.webp" alt="Newcastle College logo" width="192" height="192" loading="lazy">
             </a>
             <div>
               <h3>BTEC Level 3 National Diploma in Creative Digital Media</h3>
@@ -764,13 +777,56 @@
             Whether it's about my work, a project or a future opportunity,
             I'd be glad to hear from you.
           </p>
+          <p class="contact-availability">
+            Based in Middlesbrough in the UK, with the right to work here.
+            Always open to opportunities, and happy to relocate or work remotely.
+          </p>
         </header>
 
+        <!--
+          Posts to Formspree. Without JavaScript this submits normally and
+          Formspree renders its own thank you page; main.js upgrades it to
+          submit in place and report Formspree's own validation errors.
+        -->
+        <form class="contact-form reveal"
+              action="https://formspree.io/f/mbdnndwl" method="POST">
+          <h3 class="contact-form-title">Send me a message</h3>
+
+          <p class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required>
+          </p>
+          <p class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required>
+          </p>
+          <p class="field field-wide">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" required></textarea>
+          </p>
+
+          <input type="hidden" name="_subject" value="Enquiry from oliverneal.dev">
+          <!-- Spam trap: a real person never fills this in, bots usually do. -->
+          <p class="hp"><label>Leave this field empty
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">
+              Send message
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <!-- The form is the main path, so the mailto is framed as the
+             alternative for anyone who would rather use their own client. -->
+        <p class="contact-email reveal">
+          Rather use your own email client?
+          <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a>
+        </p>
+
         <div class="contact-ctas reveal">
-          <a class="btn btn-primary" href="mailto:oliverjn04@gmail.com">
-            <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
-            Email me
-          </a>
           <a class="btn btn-outline" href="cv.html">
             <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
             View CV
@@ -788,8 +844,6 @@
             itch.io
           </a>
         </div>
-
-        <p class="contact-email reveal">oliverjn04@gmail.com</p>
       </div>
     </section>
   </main>

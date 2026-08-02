@@ -12,7 +12,12 @@
   <meta property="og:title" content="Unicellular · Project Breakdown · Oliver Neal">
   <meta property="og:description" content="Keeping thousands of FSM driven organisms simulating smoothly in a single Unity scene, in an idle sim built solo by Oliver Neal.">
   <meta property="og:url" content="https://oliverneal.dev/unicellular.html">
-  <meta property="og:image" content="https://oliverneal.dev/Project%20Media/Unicellular/10kEntitiesPoster.webp">
+  <meta property="og:image" content="https://oliverneal.dev/og/unicellular.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Unicellular: thousands of glowing single celled organisms drifting across a dark field">
+  <meta property="og:site_name" content="oliverneal.dev">
+  <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
 
   <meta name="theme-color" content="#0e0e11">
@@ -231,6 +236,32 @@
             </video>
             <figcaption>Benchmark two: 10,000 entities, ~90 FPS on screen.</figcaption>
           </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT I'D REBUILD ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd rebuild</h2>
+          <p>
+            Everything above keeps a GameObject workflow fast by working around
+            its costs: batching the ticks, slicing the proximity queries,
+            collapsing thousands of updates into one manager. Those are the right
+            moves inside that architecture, but they are still workarounds.
+          </p>
+          <p>
+            If I built this again I would use
+            <strong>Unity's Entity Component System</strong> instead. Laying the
+            data out contiguously and letting jobs run over it is the thing this
+            simulation actually wants, and it should take the entity ceiling
+            well past ten thousand rather than making ten thousand survivable.
+            I would learn ECS properly rather than reaching for it as a label,
+            and I would lean on <strong>AI driven technical development</strong>
+            to move faster through the parts I have not written before.
+          </p>
         </div>
       </div>
     </section>
