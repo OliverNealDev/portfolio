@@ -635,13 +635,102 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
 }
+/* Sits between the form and the links row, so it reads as the fallback
+   route rather than a stray address. Only the address itself is mono. */
 .contact-email {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.9rem;
   color: var(--text-3);
+  margin: 0 0 2rem;
 }
+.contact-email a {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Where I am and what I'm open to — the practical answer a recruiter
+   is scanning for, so it sits directly under the lead. */
+.contact-availability {
+  color: var(--text-2);
+  font-size: 0.97rem;
+  margin: 0.9rem 0 0;
+}
+
+/* Contact form — centred block, left-aligned fields (the section itself
+   is centre-aligned, which reads badly on labels and inputs). */
+.contact-form {
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  padding: clamp(1.25rem, 4vw, 1.9rem);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 14px;
+  text-align: left;
+  display: grid;
+  gap: 1rem;
+}
+.contact-form-title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.field { margin: 0; display: grid; gap: 0.4rem; }
+.field label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 9px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field textarea { resize: vertical; min-height: 7rem; }
+
+/* iOS Safari zooms the whole page when you focus an input smaller than 16px,
+   so hold them at 16px on the widths where that happens. */
+@media (max-width: 760px) {
+  .field input,
+  .field textarea { font-size: 1rem; }
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.field input:focus-visible,
+.field textarea:focus-visible { outline: none; }
+
+/* Honeypot: hidden from people, left in the DOM for bots to trip over. */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+.form-status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+.form-status.ok { color: var(--ok); }
+.form-status.error { color: var(--accent); }
+.contact-form.sending button[type="submit"] { opacity: 0.6; pointer-events: none; }
 
 /* --------------------------------------------------------------------------
    8. FEATURE — Shiverbug / Out of Water
@@ -836,6 +925,12 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   pointer-events: none;
 }
 .media-badge .icon { width: 0.85em; height: 0.85em; }
+
+/* On touch there is nothing to hover, and main.js skips the preview entirely,
+   so the prompt would be a lie. */
+@media (hover: none) {
+  .media-badge { display: none; }
+}
 
 .card-body {
   display: flex;
@@ -1374,9 +1469,39 @@ html.lightbox-open body { overflow: hidden; }
 
 /* ---- Print: just the sheet, as a plain paper document -------------------- */
 @media print {
+  /* The page is forced white below, but every other page on the site draws
+     its text from --text. In the dark theme that is near white, so printing
+     a breakdown while in dark mode produced an all but blank sheet. Pin the
+     whole palette to ink on paper for print and everything follows. */
+  :root,
+  :root[data-theme="dark"],
+  :root[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-soft: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #ffffff;
+    --border: #cccccc;
+    --border-strong: #999999;
+    --text: #1a1a1f;
+    --text-2: #40404a;
+    --text-3: #6d6d78;
+    --accent: #a33500;
+    --accent-contrast: #ffffff;
+    --accent-soft: transparent;
+    --accent-border: #999999;
+    --shadow: none;
+  }
+
   .site-header, .site-footer, .skip-link, .cv-toolbar,
   .theme-toggle, .nav-toggle { display: none !important; }
   body { background: #fff !important; }
+
+  /* A hover prompt and a "next case study" nav mean nothing on paper.
+     Images stay: a printed portfolio with no screenshots looks broken. */
+  .media-badge, .next-nav { display: none !important; }
+  .cs-section, .section { break-inside: auto; }
+  h2, h3 { break-after: avoid; }
+  figure, .facts li { break-inside: avoid; }
   .cv-page { padding: 0; }
   .cv-page .container { max-width: none; padding: 0; }
   .cv-sheet {
