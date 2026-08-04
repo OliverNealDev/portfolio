@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>CV · Oliver Neal · Games Developer · Unity (C#)</title>
-  <meta name="description" content="CV of Oliver Neal: games developer specialising in Unity and C#. First Class BSc (Hons) Games Development graduate from Teesside University (80% overall), ExpoTees 2026 award winner, currently a Gameplay Programmer at Shiverbug Studios.">
+  <meta name="description" content="CV of Oliver Neal: games developer specialising in Unity and C#. First Class BSc (Hons) Games Development graduate from Teesside University (80% overall), ExpoTees 2026 award winner, currently a gameplay programmer (intern) at Shiverbug Studios.">
   <link rel="canonical" href="https://oliverneal.dev/cv.html">
 
   <meta property="og:type" content="profile">
   <meta property="og:title" content="CV · Oliver Neal · Games Developer · Unity (C#)">
-  <meta property="og:description" content="First Class Games Development graduate (80% overall), ExpoTees 2026 award winner, currently a Gameplay Programmer at Shiverbug Studios.">
+  <meta property="og:description" content="First Class Games Development graduate (80% overall), ExpoTees 2026 award winner, currently a gameplay programmer (intern) at Shiverbug Studios.">
   <meta property="og:url" content="https://oliverneal.dev/cv.html">
   <meta property="og:image" content="https://oliverneal.dev/og/cv.jpg">
   <meta property="og:image:width" content="1200">
@@ -122,12 +122,13 @@
             <h2>Profile</h2>
             <p>
               Games developer specialising in Unity (C#) gameplay systems:
-              state-machine-driven enemy AI, multiplayer netcode, and simulations
-              that stay fast under load. First Class Honours graduate in Games
+              state-machine-driven characters and enemy AI, local co-op and
+              multiplayer plumbing, and the profiling work that keeps a scene
+              inside its frame budget. First Class Honours graduate in Games
               Development from Teesside University, winner of Best Games
               Programming and Development Artefact at ExpoTees 2026, and currently
-              a Gameplay Programmer at Shiverbug Studios. Eight playable projects,
-              with source on GitHub and breakdowns at
+              a gameplay programmer (intern) at Shiverbug Studios. Eight projects,
+              six of them playable, with source on GitHub and breakdowns at
               <a href="https://oliverneal.dev/">oliverneal.dev</a>.
             </p>
           </section>
@@ -136,12 +137,15 @@
             <h2>Experience</h2>
             <ul>
               <li>
-                <strong>Gameplay Programmer</strong> — Shiverbug Studios <em>(Jul – Sep 2026)</em>
+                <strong>Gameplay Programmer (intern)</strong> — Shiverbug Studios <em>(Jul – Sep 2026)</em>
                 <ul>
-                  <li>Ten-week internship on <em>Out of Water</em>, an original-IP 3D split-screen platformer collectathon for two players, working in engine daily.</li>
-                  <li>Building gameplay systems on finite and hierarchical state machines, refining core mechanics, and authoring Shader Graph shaders and VFX.</li>
-                  <li>Implementing a decoupled FMOD audio layer that the audio team plugs into directly.</li>
-                  <li><em>Unity 6 · C# · FSM/HSM · Shader Graph · VFX · FMOD</em></li>
+                  <li>Own the character and enemy gameplay code on <em>Out of Water</em>, an original-IP 3D split-screen platformer collectathon for two players, working in engine daily.</li>
+                  <li>Rebuilt both playable characters and the enemies from single-file controllers onto component-driven finite and hierarchical state machines, and built the co-op moveset on top.</li>
+                  <li>Ran the performance pass: GPU-driven rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I wrote for the team.</li>
+                  <li>Built the splitscreen plumbing (per-player device routing, cameras, character swapping) and a UI Toolkit front end on a shared token system: HUD, character select, pause, save slots and a controls tutorial.</li>
+                  <li>Implemented a decoupled FMOD audio layer that the audio team plugs into directly, plus blockout interactables and editor tooling for the level designers.</li>
+                  <li>Authored the water, caustics and bubble shaders, in Shader Graph and in hand-written URP HLSL.</li>
+                  <li><em>Unity 6 · C# · FSM/HSM · Performance · UI Toolkit · FMOD · Cinemachine · Shader Graph · HLSL</em></li>
                 </ul>
               </li>
             </ul>
@@ -150,11 +154,12 @@
           <section>
             <h2>Technical Skills</h2>
             <ul>
-              <li><strong>Languages &amp; Engines:</strong> C#, Unity (2D/3D), Shader Graph, Unreal Engine 5, Python</li>
-              <li><strong>Gameplay &amp; AI:</strong> Gameplay programming, systems design, finite &amp; hierarchical state machines, AI navigation (NavMesh), Unity UI</li>
-              <li><strong>Performance:</strong> Optimisation, time-sliced &amp; multi-rate simulation, runtime NavMesh baking, profiling large entity counts</li>
-              <li><strong>Multiplayer &amp; Services:</strong> Netcode for GameObjects, Unity Authentication, Relay, Lobbies, Cloud Save</li>
-              <li><strong>Tools &amp; Workflow:</strong> Git, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</li>
+              <li><strong>Languages &amp; Engines:</strong> C#, Unity 6 (2D/3D), Shader Graph, HLSL, Unreal Engine 5, Python</li>
+              <li><strong>Gameplay &amp; AI:</strong> Gameplay programming, systems design, finite &amp; hierarchical state machines, AI navigation (NavMesh), local co-op &amp; splitscreen, Unity Input System</li>
+              <li><strong>Performance:</strong> Profiling and frame analysis, time-sliced &amp; multi-rate simulation, GPU-driven rendering, LOD and culling, quality tiers, runtime NavMesh baking</li>
+              <li><strong>Audio, UI &amp; Presentation:</strong> FMOD, UI Toolkit, Unity UI, Cinemachine, particle VFX</li>
+              <li><strong>Multiplayer &amp; Services:</strong> Netcode for GameObjects, Unity Authentication, Relay, Cloud Save</li>
+              <li><strong>Tools &amp; Workflow:</strong> Git and Git LFS, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</li>
             </ul>
           </section>
 
