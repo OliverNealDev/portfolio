@@ -1,6 +1,6 @@
 # Oliver Neal
 
-> Games developer specialising in Unity and C#, based in Middlesbrough, North East England. First Class BSc (Hons) Games Development graduate from Teesside University (July 2026, 80% overall). Winner of Best Games Programming and Development Artefact at ExpoTees 2026. Currently a gameplay programmer (intern) at Shiverbug Studios.
+> Games developer specialising in Unity and C#, based in Middlesbrough, North East England. Making games in Unity since 2018, building them consistently since 2023. First Class BSc (Hons) Games Development graduate from Teesside University (July 2026, 80% overall). Winner of Best Games Programming and Development Artefact at ExpoTees 2026. Currently a gameplay programmer at Shiverbug Studios.
 
 Strongest in the systems layer of games: component-driven state machines for players and enemy AI, simulation and tick architecture, multiplayer netcode, and the profiling and optimisation work that keeps a scene inside its frame budget. Nine shipped projects, seven built solo, most of them playable on itch.io with source on GitHub.
 
@@ -44,9 +44,10 @@ Deep technical write-ups of how each game actually works.
 ## Elsewhere
 
 - [GitHub](https://github.com/OliverNealDev)
-- [LinkedIn](https://www.linkedin.com/in/oliver-neal-197b74290)
+- [LinkedIn](https://www.linkedin.com/in/oliverjackneal/)
 - [itch.io](https://olivernealdev.itch.io)
 - [X](https://x.com/OliverNealDev)
+- [YouTube](https://www.youtube.com/@OliverNealDev)
 - [Bluesky](https://bsky.app/profile/olivernealdev.bsky.social)
 - [Instagram](https://www.instagram.com/oliverneal04/)
 - Email: oliverjn04@gmail.com
