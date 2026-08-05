@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<!--
+  Print source for Oliver_Neal_CV.pdf. Regenerate with:
+  msedge --headless=new --print-to-pdf=Oliver_Neal_CV.pdf --no-pdf-header-footer cv-print.html
+  Layout rules: single column, DOM order = reading order, explicit URLs in
+  text (not just hyperlinks), standard section headings, so ATS parsers and
+  LLM screeners extract it cleanly. Keep it to exactly two A4 pages.
+-->
+<title>Oliver Neal CV · Games Developer · Unity (C#)</title>
+<meta name="author" content="Oliver Neal">
+<meta name="description" content="CV of Oliver Neal, Unity (C#) gameplay programmer. Gameplay systems, AI behaviour, simulation and performance.">
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --ink: #1b1b1f;
+    --muted: #55555e;
+    --faint: #77777f;
+    --accent: #c2410c;
+    --rule: #d9d9de;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 11mm 13mm 12mm; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font: 9.6pt/1.42 "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Header ── */
+  .head { display: flex; justify-content: space-between; align-items: baseline; }
+  h1 { font-size: 21pt; font-weight: 750; letter-spacing: .01em; }
+  .role { font-size: 11pt; color: var(--accent); font-weight: 600; }
+  .contact {
+    margin: 4pt 0 0;
+    padding-bottom: 6pt;
+    border-bottom: 1.4pt solid var(--ink);
+    font-size: 9.2pt; color: var(--muted);
+  }
+  .contact a { color: var(--accent); }
+  .contact .sep { color: var(--rule); padding: 0 2pt; }
+
+  /* ── Sections ── */
+  section { margin-top: 8pt; }
+  h2 {
+    font-size: 9.2pt; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .09em;
+    color: var(--accent);
+    border-bottom: .7pt solid var(--rule);
+    padding-bottom: 1.5pt; margin-bottom: 4.5pt;
+  }
+  .profile p { text-align: left; }
+
+  /* ── Entries ── */
+  .entry { margin-bottom: 4.5pt; break-inside: avoid; }
+  .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8pt; }
+  .entry-head h3 { font-size: 9.8pt; font-weight: 700; }
+  .entry-head .tech { font-weight: 400; color: var(--muted); font-size: 9pt; }
+  .entry-head .date { color: var(--faint); font-size: 9pt; white-space: nowrap; }
+  /* Native markers, no positioned pseudo-elements: positioned content paints
+     in a later phase, which scrambles the PDF text layer's reading order. */
+  .entry ul { list-style: "•  "; margin: 1.5pt 0 0; padding-left: 11pt; }
+  .entry li { margin-bottom: 1pt; }
+  .entry li::marker { color: var(--accent); }
+  .stack { font-size: 8.8pt; color: var(--faint); font-style: italic; margin-top: 1.5pt; }
+  .links { font-size: 8.6pt; color: var(--muted); margin-top: 1pt; padding-left: 11pt; }
+  .links a { color: var(--accent); }
+
+  /* ── Skills ── */
+  .skills li { padding-left: 0; margin-bottom: 1.6pt; list-style: none; }
+  .skills strong { font-weight: 650; }
+
+  /* ── Page 2 ── */
+  .page2 { break-before: page; margin-top: 0; }
+  .page2 section:first-child { margin-top: 0; }
+
+  /* ── Machine footer ── */
+  .machine {
+    margin-top: 6pt; padding-top: 3pt;
+    border-top: .7pt solid var(--rule);
+    font-size: 8.2pt; color: var(--faint);
+  }
+  .machine a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head">
+    <h1>Oliver Neal</h1>
+    <p class="role">Games Developer · Unity (C#)</p>
+  </div>
+  <p class="contact">
+    <a href="https://oliverneal.dev/">oliverneal.dev</a><span class="sep">·</span>
+    <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a><span class="sep">·</span>
+    <a href="https://github.com/OliverNealDev">github.com/OliverNealDev</a><span class="sep">·</span>
+    <a href="https://www.linkedin.com/in/oliverjackneal/">linkedin.com/in/oliverjackneal</a><span class="sep">·</span>
+    <a href="https://olivernealdev.itch.io">olivernealdev.itch.io</a><br>
+    Middlesbrough, UK<span class="sep">·</span>Right to work in the UK<span class="sep">·</span>Open to relocation and remote work
+  </p>
+</header>
+
+<section class="profile">
+  <h2>Profile</h2>
+  <p>
+    Games developer specialising in Unity (C#) gameplay systems: state-machine-driven characters
+    and enemy AI, local co-op and multiplayer plumbing, and the profiling work that keeps a scene
+    inside its frame budget. Making games in Unity since 2018, and building them consistently since
+    2023. First Class Honours graduate in Games Development from Teesside University, and winner of
+    Best Games Programming and Development Artefact at ExpoTees 2026. Currently a gameplay
+    programmer at Shiverbug Studios on <em>Out of Water</em>; open to gameplay, systems or AI
+    programming roles from September 2026. Nine shipped projects, most playable in the browser,
+    with source on GitHub and technical breakdowns at <a href="https://oliverneal.dev/">oliverneal.dev</a>.
+  </p>
+</section>
+
+<section>
+  <h2>Experience</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Gameplay Programmer (Internship) <span class="tech">· Shiverbug Studios</span></h3>
+      <span class="date">Jul to Sep 2026</span>
+    </div>
+    <ul>
+      <li>Own the character and enemy gameplay code on <em>Out of Water</em>, an original-IP 3D splitscreen platformer collectathon for two players, working in engine daily.</li>
+      <li>Rebuilt both playable characters and the enemies from single-file controllers onto component-driven finite and hierarchical state machines, and built the co-op moveset on top.</li>
+      <li>Ran the performance pass: GPU-driven rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I wrote for the team.</li>
+      <li>Built the splitscreen plumbing (per-player device routing, cameras, character swapping) and a UI Toolkit front end on a shared token system: HUD, character select, pause, save slots and a controls tutorial.</li>
+      <li>Implemented a decoupled FMOD audio layer that the audio team plugs into directly, plus blockout interactables and editor tooling for the level designers.</li>
+      <li>Authored the water, caustics and bubble shaders, in Shader Graph and in hand-written URP HLSL.</li>
+      <li>Designed and shipped the studio's public website, <a href="https://shiverbugstudios.com/">shiverbugstudios.com</a>, alongside gameplay work.</li>
+    </ul>
+    <p class="stack">Unity 6 · C# · FSM/HSM · Performance · UI Toolkit · FMOD · Cinemachine · Shader Graph · HLSL</p>
+  </div>
+</section>
+
+<section>
+  <h2>Technical Skills</h2>
+  <ul class="skills">
+    <li><strong>Languages &amp; engines:</strong> C#, Unity 6 (2D/3D), Shader Graph, HLSL, Unreal Engine 5, Python</li>
+    <li><strong>Gameplay &amp; AI:</strong> gameplay programming, systems design, finite &amp; hierarchical state machines, AI navigation (NavMesh), local co-op &amp; splitscreen, Unity Input System</li>
+    <li><strong>Performance:</strong> profiling and frame analysis, time-sliced &amp; multi-rate simulation, GPU-driven rendering, LOD and culling, quality tiers, runtime NavMesh baking</li>
+    <li><strong>Audio, UI &amp; presentation:</strong> FMOD, UI Toolkit, Unity UI, Cinemachine, particle VFX</li>
+    <li><strong>Multiplayer &amp; services:</strong> Netcode for GameObjects, Unity Authentication, Relay, Cloud Save</li>
+    <li><strong>AI-assisted development:</strong> Claude Code and Codex as accelerators in a spec-first workflow, with architecture, implementation direction and code review staying mine</li>
+    <li><strong>Tools &amp; workflow:</strong> Git and Git LFS, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</li>
+  </ul>
+</section>
+
+<div class="page2">
+
+<section>
+  <h2>Highlighted Solo Projects</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Cyber Station <span class="tech">· Unity 3D · C# · AI navigation · simulation</span></h3>
+      <span class="date">Apr 2026</span>
+    </div>
+    <ul>
+      <li>Neon station management game where passenger AI, train scheduling, staff, economy and a six-factor rating system run as one simulation on a central fixed tick.</li>
+      <li>Final-year artefact: scored 90/100 and won Best Games Programming and Development Artefact at ExpoTees 2026.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/cyber-station.html">oliverneal.dev/cyber-station.html</a> · Play: <a href="https://olivernealdev.itch.io/cyber-station">olivernealdev.itch.io/cyber-station</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Tile Turfer <span class="tech">· Unity 2D · C# · procedural generation · enemy AI</span></h3>
+      <span class="date">Jan 2026</span>
+    </div>
+    <ul>
+      <li>Turf-war shooter where one territory percentage drives difficulty, fire rate and enemy AI at once, across procedurally generated caves with runtime 2D NavMesh baking.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/tile-turfer.html">oliverneal.dev/tile-turfer.html</a> · Play: <a href="https://olivernealdev.itch.io/tile-turfer">olivernealdev.itch.io/tile-turfer</a> · Source: <a href="https://github.com/OliverNealDev/TileTurfer">github.com/OliverNealDev/TileTurfer</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Minimalists <span class="tech">· Unity 3D · C# · enemy AI · RTS</span></h3>
+      <span class="date">Aug 2025</span>
+    </div>
+    <ul>
+      <li>Node-conquest RTS pared back to essentials: capture structures and commit forces by percentage against enemy AI that scales from duels to four-way free-for-alls.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/minimalists.html">oliverneal.dev/minimalists.html</a> · Play: <a href="https://olivernealdev.itch.io/minimalists">olivernealdev.itch.io/minimalists</a> · Source: <a href="https://github.com/OliverNealDev/Minimalists">github.com/OliverNealDev/Minimalists</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Wanted <span class="tech">· Unity 6 · C# · stealth AI · one-week game jam</span></h3>
+      <span class="date">May 2025</span>
+    </div>
+    <ul>
+      <li>Top-down stealth survival game built in one week for the Tyne to Game jam: a single detection meter drives three-state officer AI, escalating patrols and helicopter passes on a runtime-baked 2D NavMesh.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/wanted.html">oliverneal.dev/wanted.html</a> · Play: <a href="https://olivernealdev.itch.io/wanted">olivernealdev.itch.io/wanted</a> · Source: <a href="https://github.com/OliverNealDev/Wanted">github.com/OliverNealDev/Wanted</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Unicellular <span class="tech">· Unity · C# · FSM · optimisation</span></h3>
+      <span class="date">Feb 2025</span>
+    </div>
+    <ul>
+      <li>Idle simulation stress-tested at 1,000 and 10,000 concurrent entities, kept smooth by a decoupled multi-rate tick and time-sliced proximity AI.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/unicellular.html">oliverneal.dev/unicellular.html</a> · Play: <a href="https://olivernealdev.itch.io/unicellular">olivernealdev.itch.io/unicellular</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>3D Netcode Tank Game <span class="tech">· Unity 3D · C# · netcode · multiplayer</span></h3>
+      <span class="date">Jan 2025</span>
+    </div>
+    <ul>
+      <li>Server-authoritative multiplayer tank shooter: Relay-hosted sessions, cloud authentication, a decoupled turret aiming rig, and a 64-ray hitscan resolved on the server.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/tank-game.html">oliverneal.dev/tank-game.html</a> · Source: <a href="https://github.com/OliverNealDev/NetcodeTankGame">github.com/OliverNealDev/NetcodeTankGame</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Pinnable <span class="tech">· Unity 2D · C# · arcade · physics</span></h3>
+      <span class="date">Mar 2024</span>
+    </div>
+    <ul>
+      <li>Arcade score-attack catch game with a weighted spawn director, homing and drilling pin behaviours, and a physics-driven catch loop.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/pinnable.html">oliverneal.dev/pinnable.html</a> · Play: <a href="https://olivernealdev.itch.io/pinnable">olivernealdev.itch.io/pinnable</a> · Source: <a href="https://github.com/OliverNealDev/Pinnable">github.com/OliverNealDev/Pinnable</a></p>
+  </div>
+</section>
+
+<section>
+  <h2>Team Projects</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Space Bar Simulator <span class="tech">· Unreal Engine 5 · Blueprints · team of 10</span></h3>
+      <span class="date">Jan 2026</span>
+    </div>
+    <ul>
+      <li>Retro-futurist first-person bar simulator for Beta Arcade, Teesside's studio-simulation module: owned the player controller on Enhanced Input, a component-based interaction system behind a Blueprint interface, camera-blended stations and the UI computer terminal.</li>
+    </ul>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/space-bar.html">oliverneal.dev/space-bar.html</a></p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Candy Corporate <span class="tech">· Unity 2D · small team · pixel art</span></h3>
+      <span class="date">Apr 2024</span>
+    </div>
+    <ul>
+      <li>Top-down extraction game inspired by Lethal Company; led level design, tile creation and pixel-art integration.</li>
+    </ul>
+    <p class="links">Play: <a href="https://jurgenwithwings.itch.io/candycorporate">jurgenwithwings.itch.io/candycorporate</a></p>
+  </div>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>BSc (Hons) Games Development <span class="tech">· Teesside University</span></h3>
+      <span class="date">Jul 2026</span>
+    </div>
+    <ul>
+      <li>First Class Honours, 80% overall; final-year project scored 84%, its artefact 90/100.</li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>FdSc Games Technologies <span class="tech">· Newcastle College University Centre</span></h3>
+      <span class="date">Jul 2025</span>
+    </div>
+    <ul>
+      <li>2:1 (Year 1 Distinction, Year 2 Merit).</li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>BTEC Level 3 National Diploma, Creative Digital Media <span class="tech">· Newcastle College</span></h3>
+      <span class="date">2023</span>
+    </div>
+    <ul>
+      <li>Distinction.</li>
+    </ul>
+  </div>
+</section>
+
+<p class="machine">
+  Structured plain-text profile: <a href="https://oliverneal.dev/llms.txt">oliverneal.dev/llms.txt</a> ·
+  Latest version of this CV: <a href="https://oliverneal.dev/Oliver_Neal_CV.pdf">oliverneal.dev/Oliver_Neal_CV.pdf</a> ·
+  Updated August 2026
+</p>
+
+</div>
+
+</body>
+</html>
