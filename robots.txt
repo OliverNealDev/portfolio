@@ -1,4 +1,66 @@
+# oliverneal.dev — the portfolio of Oliver Neal, games developer.
+# Nothing here is private. Search engines and AI assistants are both
+# welcome: the point of the site is being found by people hiring gameplay
+# programmers, and increasingly that search starts in a chatbot.
+
 User-agent: *
 Allow: /
+
+# Named explicitly so there is no ambiguity about AI retrieval and
+# training crawlers. The blanket "Allow: /" above already covers these,
+# but some crawlers only read the block matching their own user-agent.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Curated plain-text summary for language models (https://llmstxt.org):
+# https://oliverneal.dev/llms.txt
 
 Sitemap: https://oliverneal.dev/sitemap.xml

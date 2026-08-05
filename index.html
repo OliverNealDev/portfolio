@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en-GB" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,16 @@
   <title>Oliver Neal · Games Developer · Unity (C#)</title>
   <meta name="description" content="Portfolio of Oliver Neal, a games developer specialising in Unity and C#. First Class BSc (Hons) Games Development graduate from Teesside University, winner of Best Games Programming and Development Artefact at ExpoTees 2026, and currently a gameplay programmer (intern) at Shiverbug Studios.">
   <link rel="canonical" href="https://oliverneal.dev/">
+  <meta name="author" content="Oliver Neal">
+  <!-- max-image-preview:large opts the project screenshots into full-size
+       thumbnails in Google results and Discover; the default is a postage
+       stamp. max-snippet:-1 lifts the text-snippet length cap. -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
   <!-- Open Graph / social previews -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Oliver Neal · Games Developer · Unity (C#)">
-  <meta property="og:description" content="Unity gameplay systems, state-machine enemy AI and performance work, across eight projects. First Class Games Development graduate, currently a gameplay programmer (intern) at Shiverbug Studios.">
+  <meta property="og:description" content="Unity gameplay systems, state-machine enemy AI and performance work, across nine projects. First Class Games Development graduate, currently a gameplay programmer (intern) at Shiverbug Studios.">
   <meta property="og:url" content="https://oliverneal.dev/">
   <meta property="og:image" content="https://oliverneal.dev/og/home.jpg">
   <meta property="og:image:width" content="1200">
@@ -20,31 +25,153 @@
   <meta property="og:site_name" content="oliverneal.dev">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Oliver Neal · Games Developer · Unity (C#)">
+  <meta name="twitter:description" content="Unity gameplay systems, state-machine enemy AI and performance work, across nine projects. First Class Games Development graduate, currently a gameplay programmer (intern) at Shiverbug Studios.">
+  <meta name="twitter:image" content="https://oliverneal.dev/og/home.jpg">
+  <meta name="twitter:image:alt" content="Cyber Station late game: cyan trains stretched along the platforms of a large neon station">
 
+  <!--
+    One @graph for the whole site, with stable @ids. Every other page
+    references #person and #website rather than restating them, so search
+    engines resolve one Oliver Neal across nine pages instead of nine
+    unconnected copies.
+  -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Oliver Neal",
-    "url": "https://oliverneal.dev/",
-    "email": "mailto:oliverjn04@gmail.com",
-    "jobTitle": "Games Developer",
-    "worksFor": { "@type": "Organization", "name": "Shiverbug Studios" },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Middlesbrough",
-      "addressCountry": "GB"
-    },
-    "alumniOf": [
-      { "@type": "CollegeOrUniversity", "name": "Teesside University" },
-      { "@type": "CollegeOrUniversity", "name": "Newcastle College University Centre" }
-    ],
-    "award": "Best Games Programming and Development Artefact, ExpoTees 2026",
-    "knowsAbout": ["Unity", "C#", "Gameplay programming", "Game AI", "Multiplayer netcode"],
-    "sameAs": [
-      "https://github.com/OliverNealDev",
-      "https://www.linkedin.com/in/oliver-neal-197b74290",
-      "https://olivernealdev.itch.io"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://oliverneal.dev/#website",
+        "url": "https://oliverneal.dev/",
+        "name": "oliverneal.dev",
+        "description": "Portfolio of Oliver Neal, a games developer specialising in Unity and C#.",
+        "inLanguage": "en-GB",
+        "publisher": { "@id": "https://oliverneal.dev/#person" }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://oliverneal.dev/#webpage",
+        "url": "https://oliverneal.dev/",
+        "name": "Oliver Neal · Games Developer · Unity (C#)",
+        "isPartOf": { "@id": "https://oliverneal.dev/#website" },
+        "about": { "@id": "https://oliverneal.dev/#person" },
+        "mainEntity": { "@id": "https://oliverneal.dev/#person" },
+        "primaryImageOfPage": "https://oliverneal.dev/og/home.jpg",
+        "inLanguage": "en-GB"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://oliverneal.dev/#person",
+        "name": "Oliver Neal",
+        "givenName": "Oliver",
+        "familyName": "Neal",
+        "url": "https://oliverneal.dev/",
+        "mainEntityOfPage": { "@id": "https://oliverneal.dev/#webpage" },
+        "image": "https://oliverneal.dev/oliverFullImage.webp",
+        "email": "mailto:oliverjn04@gmail.com",
+        "jobTitle": "Gameplay Programmer",
+        "description": "Games developer specialising in Unity and C#, working in the systems layer: state machines driving characters and enemy AI, simulation architecture, multiplayer netcode, and the profiling and optimisation that keeps a scene inside its frame budget.",
+        "nationality": { "@type": "Country", "name": "United Kingdom" },
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Shiverbug Studios",
+          "url": "https://shiverbugstudios.com/",
+          "sameAs": "https://www.linkedin.com/company/shiverbug-studios"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Middlesbrough",
+          "addressRegion": "North East England",
+          "addressCountry": "GB"
+        },
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Teesside University",
+            "url": "https://www.tees.ac.uk/"
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Newcastle College University Centre",
+            "url": "https://ncuc.ac.uk/"
+          },
+          {
+            "@type": "EducationalOrganization",
+            "name": "Newcastle College",
+            "url": "https://www.ncl-coll.ac.uk/"
+          }
+        ],
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "Bachelor's degree",
+            "name": "BSc (Hons) Games Development, First Class Honours",
+            "educationalLevel": "Level 6",
+            "dateCreated": "2026-07",
+            "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Teesside University" }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "Foundation degree",
+            "name": "FdSc Games Technologies, 2:1",
+            "educationalLevel": "Level 5",
+            "dateCreated": "2025-07",
+            "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Newcastle College University Centre" }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "Diploma",
+            "name": "BTEC Level 3 National Diploma in Creative Digital Media, Distinction",
+            "educationalLevel": "Level 3",
+            "recognizedBy": { "@type": "EducationalOrganization", "name": "Newcastle College" }
+          }
+        ],
+        "award": "Best Games Programming and Development Artefact, ExpoTees 2026",
+        "knowsLanguage": { "@type": "Language", "name": "English", "alternateName": "en" },
+        "knowsAbout": [
+          "Unity",
+          "Unity 6",
+          "C#",
+          "Unreal Engine 5",
+          "Gameplay programming",
+          "Game AI",
+          "Finite state machines",
+          "Multiplayer netcode",
+          "Game performance optimisation",
+          "Shader Graph",
+          "HLSL",
+          "UI Toolkit",
+          "FMOD"
+        ],
+        "sameAs": [
+          "https://github.com/OliverNealDev",
+          "https://www.linkedin.com/in/oliver-neal-197b74290",
+          "https://olivernealdev.itch.io",
+          "https://x.com/OliverNealDev",
+          "https://bsky.app/profile/olivernealdev.bsky.social",
+          "https://www.instagram.com/oliverneal04/",
+          "https://shiverbugstudios.com/team/oliver-neal.html"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://oliverneal.dev/#projects",
+        "name": "Project breakdowns by Oliver Neal",
+        "description": "Technical write-ups of how each game works.",
+        "itemListOrder": "https://schema.org/ItemListOrderDescending",
+        "numberOfItems": 8,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "url": "https://oliverneal.dev/cyber-station.html", "name": "Cyber Station" },
+          { "@type": "ListItem", "position": 2, "url": "https://oliverneal.dev/space-bar.html", "name": "Space Bar Simulator" },
+          { "@type": "ListItem", "position": 3, "url": "https://oliverneal.dev/tile-turfer.html", "name": "Tile Turfer" },
+          { "@type": "ListItem", "position": 4, "url": "https://oliverneal.dev/minimalists.html", "name": "Minimalists" },
+          { "@type": "ListItem", "position": 5, "url": "https://oliverneal.dev/wanted.html", "name": "Wanted" },
+          { "@type": "ListItem", "position": 6, "url": "https://oliverneal.dev/unicellular.html", "name": "Unicellular" },
+          { "@type": "ListItem", "position": 7, "url": "https://oliverneal.dev/tank-game.html", "name": "3D Netcode Tank Game" },
+          { "@type": "ListItem", "position": 8, "url": "https://oliverneal.dev/pinnable.html", "name": "Pinnable" }
+        ]
+      }
     ]
   }
   </script>
@@ -208,7 +335,7 @@
             <p>
               Everything below is playable, most of it on itch.io with source on
               GitHub. If you'd rather read about the engineering, the
-              <a href="#breakdowns">project breakdowns</a> go deeper on seven of them.
+              <a href="#breakdowns">project breakdowns</a> go deeper on eight of them.
             </p>
           </div>
 
@@ -303,7 +430,7 @@
           </div>
           <div class="skills-row">
             <dt>Tools &amp; workflow</dt>
-            <dd>Git and <strong>Git LFS</strong>, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</dd>
+            <dd>Git and <strong>Git LFS</strong>, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, <strong>Claude Code</strong>, <strong>Codex</strong>, Figma, Trello, technical documentation</dd>
           </div>
         </dl>
       </div>
@@ -443,6 +570,44 @@
             </div>
           </article>
 
+          <!-- Wanted (behind "show all") -->
+          <article class="card project project-extra reveal">
+            <a class="card-media" href="wanted.html"
+               data-video="Project Media/hover/wanted.webm"
+               aria-label="Wanted breakdown">
+              <img src="Project Media/Wanted/WantedPoster.webp"
+                   alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
+                   width="1280" height="720" loading="lazy">
+              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
+            </a>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>Wanted</h3>
+                <span class="card-date">May 2025</span>
+              </div>
+              <p>
+                A top-down stealth survival game built in a week for the Tyne to
+                Game jam. Evade an escalating police presence, patrolling officers,
+                cars and a helicopter, across procedurally generated cover while
+                managing stamina and a rising detection meter.
+              </p>
+              <ul class="tags">
+                <li>Unity 6</li><li>C#</li><li>Procedural</li><li>Stealth AI</li>
+              </ul>
+              <div class="card-links">
+                <a class="card-cta" href="wanted.html">
+                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://olivernealdev.itch.io/wanted" target="_blank" rel="noopener">
+                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Wanted" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
           <!-- Unicellular -->
           <article class="card project reveal">
             <a class="card-media" href="unicellular.html"
@@ -555,8 +720,8 @@
         <div class="show-more-wrap">
           <button class="btn btn-outline" type="button"
                   data-show-more="solo-grid" aria-controls="solo-grid" aria-expanded="false"
-                  data-more="Show all 6 solo projects" data-less="Show fewer">
-            Show all 6 solo projects
+                  data-more="Show all 7 solo projects" data-less="Show fewer">
+            Show all 7 solo projects
           </button>
         </div>
       </div>
@@ -652,7 +817,7 @@
         <header class="section-head reveal">
           <p class="kicker">Case studies</p>
           <h2>Project breakdowns</h2>
-          <p class="section-lead">Deeper technical write-ups of how seven of these games actually work.</p>
+          <p class="section-lead">Deeper technical write-ups of how eight of these games actually work.</p>
         </header>
 
         <div class="bd-list">
@@ -672,6 +837,16 @@
             <div>
               <h3>Minimalists</h3>
               <p>A node conquest RTS pared back to essentials, and the enemy AI that plays it.</p>
+            </div>
+            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+
+          <a class="bd-card reveal" href="wanted.html">
+            <img src="Project Media/Wanted/OfficersSearching.webp"
+                 alt="Wanted: officers sweeping flashlight beams through a dark forest, throwing long shadows" loading="lazy">
+            <div>
+              <h3>Wanted</h3>
+              <p>One detection meter that fills four times slower under cover, and a police force that only ever grows.</p>
             </div>
             <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>

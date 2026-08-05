@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Wanted · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How Wanted works: a top-down stealth survival game built in a week for the Tyne to Game jam. A single detection meter that fills four times slower under cover, a three-state officer AI that searches your last known position, and an escalating police force of six cars, twenty-four officers, helicopters and radars. Built solo in Unity 6 by Oliver Neal.">
+  <link rel="canonical" href="https://oliverneal.dev/wanted.html">
+  <meta name="author" content="Oliver Neal">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Wanted · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="A stealth survival game built in a week: one detection meter, a three-state officer AI, and a police force that only ever grows. Built solo in Unity 6.">
+  <meta property="og:url" content="https://oliverneal.dev/wanted.html">
+  <meta property="og:image" content="https://oliverneal.dev/og/wanted.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees">
+  <meta property="og:site_name" content="oliverneal.dev">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wanted · Project Breakdown · Oliver Neal">
+  <meta name="twitter:description" content="A stealth survival game built in a week: one detection meter, a three-state officer AI, and a police force that only ever grows. Built solo in Unity 6.">
+  <meta name="twitter:image" content="https://oliverneal.dev/og/wanted.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://oliverneal.dev/wanted.html#article",
+        "url": "https://oliverneal.dev/wanted.html",
+        "headline": "Wanted · Project Breakdown",
+        "description": "How Wanted works: a single detection meter that fills four times slower under cover, a three-state officer AI that searches your last known position, and an escalating police force built in a week for the Tyne to Game jam.",
+        "image": "https://oliverneal.dev/og/wanted.jpg",
+        "datePublished": "2026-08-05",
+        "dateModified": "2026-08-05",
+        "inLanguage": "en-GB",
+        "author": { "@id": "https://oliverneal.dev/#person" },
+        "publisher": { "@id": "https://oliverneal.dev/#person" },
+        "isPartOf": { "@id": "https://oliverneal.dev/#website" },
+        "about": { "@id": "https://oliverneal.dev/wanted.html#game" },
+        "breadcrumb": { "@id": "https://oliverneal.dev/wanted.html#breadcrumb" },
+        "keywords": ["Unity 6", "C#", "Stealth AI", "Finite state machines", "Procedural generation", "NavMesh", "Game jam"]
+      },
+      {
+        "@type": "VideoGame",
+        "@id": "https://oliverneal.dev/wanted.html#game",
+        "name": "Wanted",
+        "description": "A top-down stealth survival game where you evade an escalating police presence across a procedurally generated forest, managing stamina and a detection meter with no way to fight back.",
+        "url": "https://olivernealdev.itch.io/wanted",
+        "image": "https://oliverneal.dev/og/wanted.jpg",
+        "author": { "@id": "https://oliverneal.dev/#person" },
+        "creator": { "@id": "https://oliverneal.dev/#person" },
+        "datePublished": "2025-05",
+        "genre": ["Stealth", "Survival", "Action"],
+        "gamePlatform": ["PC", "Web browser"],
+        "playMode": "SinglePlayer",
+        "applicationCategory": "GameApplication",
+        "inLanguage": "en",
+        "license": "https://opensource.org/licenses/MIT",
+        "codeRepository": "https://github.com/OliverNealDev/Wanted",
+        "sameAs": [
+          "https://olivernealdev.itch.io/wanted",
+          "https://github.com/OliverNealDev/Wanted"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://oliverneal.dev/wanted.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oliverneal.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Project breakdowns", "item": "https://oliverneal.dev/#breakdowns" },
+          { "@type": "ListItem", "position": 3, "name": "Wanted" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+        <a class="nav-link nav-cv" href="cv.html">CV</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#projects">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          All projects
+        </a>
+
+        <p class="kicker">Case study · Solo project · Game jam</p>
+        <h1>Wanted</h1>
+        <p class="cs-meta">May 2025 · Unity 6 · URP 2D · C#</p>
+        <p class="cs-lead">
+          A top-down stealth survival game built in a week for the Tyne to Game
+          jam. You cannot fight, and you cannot win. There is only a clock
+          counting how long you stay uncaught while the police presence around
+          you grows, car by car, until the forest is full of torchlight.
+        </p>
+
+        <div class="cs-actions">
+          <a class="btn btn-primary" href="https://olivernealdev.itch.io/wanted" target="_blank" rel="noopener">
+            Play on itch.io
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+          <a class="btn btn-outline" href="https://github.com/OliverNealDev/Wanted" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            Source on GitHub
+          </a>
+        </div>
+
+        <div class="cs-hero-media reveal">
+          <img src="Project Media/Wanted/Helicopter.webp"
+               alt="Wanted: a police helicopter sweeping a blue spotlight along the central road while a parked patrol car and two officers cast light cones over the treeline"
+               width="1600" height="894">
+        </div>
+
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · URP 2D</span></li>
+          <li><span class="fact-k">Built in</span><span class="fact-v">One week</span></li>
+          <li><span class="fact-k">Nav</span><span class="fact-v">2D NavMesh · NavMeshPlus</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Overview</p>
+          <h2>The only score is how long you last</h2>
+          <p>
+            Wanted has no objective and no win state. The whole game is a timer,
+            and your best time is the only thing it remembers between runs. That
+            single decision shapes everything underneath it: if the player can
+            never win, then the systems only ever have one job, which is to make
+            the pressure rise convincingly.
+          </p>
+          <p>
+            So there is no difficulty setting and no wave counter. Instead the
+            police force is a thing that <strong>physically arrives</strong> and
+            accumulates. Cars drive in from off-screen, park, and unload officers
+            who stay for the rest of the run. Escalation is not a number going up
+            somewhere; it is the map slowly filling with people looking for you.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/Wanted/EarlyGame.webp"
+               alt="Wanted at sixteen seconds: the player alone in a dark forest of scattered trees, with glowing cherries nearby and the stamina bar at the bottom of the screen"
+               width="1600" height="900" loading="lazy">
+          <figcaption>Sixteen seconds in. One player, no torchlight yet, and cherries glowing in the dark as the only thing worth moving toward.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ ESCALATION ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Escalation</p>
+          <h2>A force that arrives in waves</h2>
+          <p>
+            A central manager owns the whole escalation curve. A patrol car
+            arrives roughly every 30 seconds, up to six of them. Each car runs its
+            own little three-state machine, approaching a random point on the road,
+            pulling over, then parking, and only once parked does it
+            <strong>unload four officers</strong>. Six cars, four officers each, so
+            a run that goes the distance ends with twenty-four officers on the map
+            and none of them ever leaving.
+          </p>
+          <p>
+            Helicopters work differently on purpose. They spawn from 30 seconds
+            onward, fly a straight line clean through a random point on the map
+            with a spotlight drifting under them, and despawn on the far side.
+            They are a pass, not a presence, which gives the escalation a rhythm
+            instead of a flat ramp.
+          </p>
+          <p>
+            One detail I like: when a car finishes parking it triggers a
+            <strong>NavMesh rebake</strong>. The car is a solid obstacle that did
+            not exist a moment ago, so without the rebake the officers it just
+            unloaded would happily path straight through the vehicle they arrived
+            in.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/Wanted/PoliceCars.webp"
+               alt="Wanted at one minute thirty-two: two patrol cars pulled over on the road with red and blue light pooling across the grass and treeline"
+               width="1600" height="900" loading="lazy">
+          <figcaption>Two cars down, four more to come. Every car that parks is four more officers who never go home.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ DETECTION ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Detection</p>
+          <h2>One meter, four times slower under cover</h2>
+          <p>
+            Every officer runs a real line-of-sight check rather than a cone test:
+            a trigger volume catches you, then a raycast from the officer to your
+            centre has to reach you without hitting anything on the vision
+            obstructing layers. Only if that ray lands does detection start
+            climbing.
+          </p>
+          <p>
+            The rate is where the stealth actually lives. In the open the meter
+            fills at <strong>1.0 per second</strong>. Standing under foliage it
+            fills at <strong>0.25 per second</strong>, so cover does not make you
+            invisible, it buys you four times as long to be wrong. The player
+            sprite drops to 40% opacity while under a tree, so the state you are in
+            is always legible without a UI element for it.
+          </p>
+          <p>
+            Decay is deliberately unkind. The meter only starts falling after
+            <strong>three full seconds</strong> without any fresh detection, and
+            then at just 0.1 per second. Breaking line of sight is not enough;
+            you have to break it and then commit to staying hidden long enough for
+            it to count.
+          </p>
+          <p>
+            When the meter does hit 1.0, the manager sorts every officer on the map
+            by distance to you and redirects the <strong>closest 10%</strong>. That
+            proportion matters more than it looks: early on with four officers it
+            sends one, and late in a run with twenty-four it sends three. The
+            response scales with the force instead of dogpiling the entire map onto
+            one sighting.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/Wanted/OfficersSearching.webp"
+               alt="Wanted at two minutes thirty-nine: officers sweeping green flashlight beams through the trees, the beams throwing long shadows, with the detection meter part filled at the bottom of the screen"
+               width="1600" height="900" loading="lazy">
+          <figcaption>Green torchlight is an officer who has not seen you. The detection bar is filling anyway, because a beam is across open ground you are standing in.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ OFFICER AI ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Officer AI</p>
+          <h2>Patrol, chase, and search where you were</h2>
+          <p>
+            Each officer runs a three-state machine. <strong>Patrolling</strong>
+            walks between random nodes scattered across the map.
+            <strong>Chasing</strong> tracks your live position and keeps writing it
+            down. <strong>Searching</strong> is what happens when you break the
+            ray: the officer walks to your last known position, and only when they
+            arrive and find nothing do they pick a fresh search node and eventually
+            drift back to patrol.
+          </p>
+          <p>
+            That last known position needed a guard I did not anticipate. The map
+            is procedural, so the exact point where an officer lost sight of you
+            can easily be inside a tree and off the NavMesh. Feeding it straight
+            to the agent produces an officer who stops dead and never resumes, so
+            the destination is passed through <code>NavMesh.SamplePosition</code>
+            first, falling back to patrol if nothing valid is within a metre.
+          </p>
+          <p>
+            Officers also get a <strong>random speed multiplier between 0.9 and
+            1.1</strong> at spawn. Four officers unload from the same car at the
+            same instant, and without that jitter they move as a single rigid
+            block forever. A 10% spread is enough to make a squad spread out into
+            something that reads as individuals.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ READABLE STATE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Game feel</p>
+          <h2>The flashlight is the state machine</h2>
+          <p>
+            There is no alert icon anywhere in Wanted. The officer's torch is the
+            entire readout, and it maps one to one onto the state they are in.
+            Patrolling and searching gives you a normal white beam, sweeping side
+            to side on a sine oscillation, damped to 60% while they are walking so
+            it does not look unhinged. The instant an officer transitions to
+            chasing, that beam turns <strong>red and doubles in intensity</strong>.
+          </p>
+          <p>
+            Torches also switch off entirely beyond 30 units unless the officer is
+            actively searching. That started as a way to stop distant lights
+            washing out the screen, and ended up doing something better: a torch
+            appearing in the distance genuinely means something is happening over
+            there.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/Wanted/Spotted.webp"
+               alt="Wanted at four minutes eight: the player sprite glowing red as several officers converge, their beams turned red, with the detection bar completely full"
+               width="1600" height="900" loading="lazy">
+          <figcaption>Red beams, full meter, and five officers converging. Everything you need to read the situation is in the lighting.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ MAP AND PERFORMANCE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Map &amp; performance</p>
+          <h2>250 trees, and the shadows they cannot all cast</h2>
+          <p>
+            The forest is generated per run. 250 trees and 30 bushes are placed by
+            rejection sampling, each candidate rejected if it lands within 2.5
+            units of anything already placed, and constrained to two bands either
+            side of the central road so the road stays clear. Placement runs
+            <strong>one attempt per frame</strong> rather than in a single blocking
+            loop, and rejected positions are simply retried next frame. Once the
+            250th tree lands, the 2D NavMesh bakes over the finished layout.
+          </p>
+          <p>
+            The performance problem this creates is shadows. Every tree is a 2D
+            shadow caster, and every torch, headlight and spotlight is a dynamic
+            light, so the cost is trees multiplied by lights and it climbs fast
+            once two dozen officers are on the map. The fix is a distance cull:
+            each tree disables its own shadow caster beyond 15 units of the player
+            and re-enables it on the way back in. Shadows only exist where the
+            camera can actually see them resolve.
+          </p>
+          <p>
+            Cover is also a resource rather than scenery. Bushes grow berries on a
+            6 to 18 second timer, eating them restores stamina, and the bush goes
+            bare until it regrows. Sprinting is the only thing that outruns an
+            officer and it drains a stamina bar that only refills from berries and
+            scattered cherries, so hiding spots and fuel are the same object.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="Project Media/Wanted/MainMenu.webp"
+               alt="Wanted main menu: the title over a gameplay backdrop, a best time of twenty-one seconds, volume sliders, and a control list covering movement, sprinting, cherries and radars"
+               width="1600" height="900" loading="lazy">
+          <figcaption>The whole game explained in five lines, because a jam entry gets about ten seconds to teach itself.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ RADAR ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Pressure</p>
+          <h2>The radar makes hiding stop working</h2>
+          <p>
+            Hiding under a tree is strong enough that a long run could stall out
+            entirely, so officers deploy radars. A radar can only appear after the
+            first minute, only one exists at a time, and it sits there pinging on a
+            visible countdown. If that countdown completes it sets your detection
+            straight to maximum regardless of where you are hiding.
+          </p>
+          <p>
+            You can walk up and disable it, which is the point. The radar is the
+            system that forces you out of good cover and across open ground, and
+            its scan time <strong>shortens as the run goes on</strong>, floored at
+            20 seconds, so late in a run the choice between breaking cover and
+            eating a guaranteed spot gets very short indeed.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NUMBERS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Under the hood</p>
+          <h2>By the numbers</h2>
+          <ul>
+            <li><strong>Built in one week</strong> for the Tyne to Game jam, solo, in Unity 6 on URP 2D with dynamic lights and shadows.</li>
+            <li><strong>250 trees and 30 bushes</strong> per run, rejection sampled at a 2.5 unit minimum spacing, one placement attempt per frame.</li>
+            <li><strong>Six patrol cars, twenty-four officers</strong> at full strength, plus helicopter passes from 30 seconds and radars from 60.</li>
+            <li><strong>Detection fills 4x slower under cover</strong>, 1.0/s in the open against 0.25/s in foliage, with a 3 second grace before it decays at 0.1/s.</li>
+            <li><strong>The closest 10% of officers</strong> are redirected on a confirmed sighting, so the response scales with the size of the force.</li>
+            <li><strong>Shadow casters cull beyond 15 units</strong>, which is what keeps 250 trees against two dozen dynamic lights affordable.</li>
+            <li><strong>Open source under the MIT licence</strong>, on GitHub.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="minimalists.html">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Previous: Minimalists
+      </a>
+      <a href="unicellular.html">
+        Next: Unicellular
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
