@@ -231,8 +231,8 @@
       <a class="brand" href="#top">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#shiverbug">Internship</a>
+        <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#skills">Skills</a>
         <a class="nav-link" href="#projects">Projects</a>
         <a class="nav-link" href="#education">Education</a>
@@ -258,7 +258,7 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <a class="now-pill" href="#shiverbug">
+          <a class="now-line" href="#shiverbug">
             <span class="now-dot" aria-hidden="true"></span>
             <span>Gameplay Programmer at <strong>Shiverbug Studios</strong></span>
             <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
@@ -267,12 +267,10 @@
           <h1>Oliver Neal</h1>
           <p class="hero-role">Games Developer · Unity (C#)</p>
           <p class="hero-pitch">
-            I graduated from Teesside University with First Class Honours in
-            Games Development, and my final year project won Best Games
-            Programming and Development Artefact at ExpoTees 2026. I build the
-            systems layer in Unity: state machine driven characters and enemy
-            AI, the co-op and multiplayer plumbing around them, and the
-            profiling work that keeps it all fast under load.
+            First Class Games Development graduate and ExpoTees 2026 award
+            winner. I build the systems layer in Unity: state machine driven
+            characters and enemy AI, the co-op plumbing around them, and the
+            profiling that keeps it fast.
           </p>
 
           <div class="hero-ctas">
@@ -316,7 +314,70 @@
       </div>
     </section>
 
-    <!-- ===================== 2 · ABOUT ===================== -->
+    <!-- ===================== 2 · SHIVERBUG / OUT OF WATER ===================== -->
+    <section class="section" id="shiverbug">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Now</p>
+          <h2>Gameplay Programmer at Shiverbug Studios</h2>
+          <p class="section-lead">
+            Building gameplay systems in engine, every day, on an original IP at
+            <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a>.
+          </p>
+        </header>
+
+        <article class="feature reveal">
+          <div class="feature-cover">
+            <img src="OOW-in-game-image-1.webp"
+                 alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
+                 width="1600" height="902">
+          </div>
+
+          <!-- Studio side rail, then the write-up beside it -->
+          <div class="feature-body">
+            <div class="feature-side">
+              <!-- Same logo, two crops: black background for dark theme, light-blue for light -->
+              <a class="feature-logo-link" href="https://shiverbugstudios.com" target="_blank" rel="noopener" aria-label="Shiverbug Studios website">
+                <img class="feature-logo dark" src="shiverbug_studios_logo-blackBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
+                <img class="feature-logo light" src="shiverbug_studios_logo-ligthtBlueBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
+              </a>
+
+              <dl class="feature-facts">
+                <div><dt>Studio</dt><dd><a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a></dd></div>
+                <div><dt>Role</dt><dd>Gameplay Programmer</dd></div>
+                <div><dt>Dates</dt><dd>13 Jul to 18 Sep 2026</dd></div>
+                <div><dt>Length</dt><dd>10 week internship</dd></div>
+              </dl>
+            </div>
+
+            <div class="feature-main">
+              <h3>Out of Water, an original IP</h3>
+              <p class="feature-intro">
+                A 3D platformer collectathon built for two players on one sofa,
+                in splitscreen, starring a turtle and a seagull. I own the
+                character and enemy gameplay code, and I work in engine across:
+              </p>
+              <ul class="feature-list">
+                <li><strong>Component driven state machines</strong> for both playable characters and the enemies, rebuilt from single file controllers</li>
+                <li>The <strong>co-op moveset</strong> that hangs off them, and the <strong>game feel</strong> around it</li>
+                <li><strong>Performance</strong>: GPU driven rendering, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I wrote for the team</li>
+                <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping</li>
+                <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots and a controls tutorial</li>
+                <li>A <strong>decoupled FMOD layer</strong> the audio team plugs into</li>
+                <li><strong>Blockout interactables and editor tooling</strong> the level designers build puzzles from</li>
+                <li><strong>Water, caustics and bubble shaders</strong>, in Shader Graph and in hand written URP HLSL</li>
+                <li><strong>Supporting systems</strong> the rest of the team works through, including collectable saving and an in-game debug console</li>
+              </ul>
+              <ul class="tags">
+                <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Performance</li><li>FMOD</li><li>Cinemachine</li><li>UI Toolkit</li><li>Shader Graph</li><li>HLSL</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== 3 · ABOUT ===================== -->
     <section class="section" id="about">
       <div class="container">
         <header class="section-head reveal">
@@ -332,8 +393,7 @@
               consistently since 2023, so when I graduated from Teesside
               University in July 2026 with <strong>First Class Honours</strong>
               in BSc (Hons) Games Development, the degree sat on top of years
-              of self-driven projects. I'm currently a gameplay programmer at
-              Shiverbug Studios, on an internship running to September.
+              of self-driven projects.
             </p>
             <p>
               The part of games I enjoy most is the systems layer:
@@ -356,57 +416,6 @@
             <li><span class="fact-num">90</span><span class="fact-label">final year artefact grade</span></li>
           </ul>
         </div>
-      </div>
-    </section>
-
-    <!-- ===================== 3 · SHIVERBUG / OUT OF WATER ===================== -->
-    <section class="section" id="shiverbug">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">Now</p>
-          <h2>Gameplay Programmer at Shiverbug Studios</h2>
-          <p class="section-lead">Building gameplay systems in engine, every day, on an original IP.</p>
-        </header>
-
-        <article class="feature reveal">
-          <div class="feature-cover">
-            <img src="OOW-in-game-image-1.webp"
-                 alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
-                 width="1600" height="902">
-          </div>
-
-          <div class="feature-body">
-            <div>
-              <!-- Same logo, two crops: black background for dark theme, light-blue for light -->
-              <a class="feature-logo-link" href="https://www.linkedin.com/company/shiverbug-studios/" target="_blank" rel="noopener" aria-label="Shiverbug Studios on LinkedIn">
-                <img class="feature-logo dark" src="shiverbug_studios_logo-blackBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
-                <img class="feature-logo light" src="shiverbug_studios_logo-ligthtBlueBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
-              </a>
-
-              <p class="feature-meta">Internship · 13 Jul to 18 Sep 2026 · 10 weeks</p>
-              <h3>Out of Water, an original IP</h3>
-              <p>
-                A 3D platformer collectathon built for two players on one sofa,
-                in splitscreen, starring a turtle and a seagull. I own the
-                character and enemy gameplay code, and I work in engine across:
-              </p>
-              <ul class="feature-list">
-                <li><strong>Component driven state machines</strong> for both playable characters and the enemies, rebuilt from single file controllers</li>
-                <li>The <strong>co-op moveset</strong> that hangs off them, and the <strong>game feel</strong> around it</li>
-                <li><strong>Performance</strong>: GPU driven rendering, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I wrote for the team</li>
-                <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping</li>
-                <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots and a controls tutorial</li>
-                <li>A <strong>decoupled FMOD layer</strong> the audio team plugs into</li>
-                <li><strong>Blockout interactables and editor tooling</strong> the level designers build puzzles from</li>
-                <li><strong>Water, caustics and bubble shaders</strong>, in Shader Graph and in hand written URP HLSL</li>
-                <li><strong>Supporting systems</strong> the rest of the team works through, including collectable saving and an in-game debug console</li>
-              </ul>
-              <ul class="tags">
-                <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Performance</li><li>FMOD</li><li>Cinemachine</li><li>UI Toolkit</li><li>Shader Graph</li><li>HLSL</li>
-              </ul>
-            </div>
-          </div>
-        </article>
       </div>
     </section>
 
@@ -503,6 +512,14 @@
               </a>
             </div>
           </div>
+
+          <!-- The award itself, alongside the project that won it -->
+          <figure class="award-shot">
+            <img src="winningexpoteesaward.jpg"
+                 alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming &amp; Development"
+                 width="480" height="600" loading="lazy">
+            <figcaption>Collecting the award at ExpoTees 2026, Teesside University</figcaption>
+          </figure>
         </article>
 
         <div class="project-grid" id="solo-grid">
@@ -877,7 +894,7 @@
                  alt="Tile Turfer: blue and red teams fighting to claim tiles across a procedurally generated cave" loading="lazy">
             <div>
               <h3>Tile Turfer</h3>
-              <p>A turf-war shooter where one territory percentage drives difficulty, fire rate and AI, over procedurally generated caves.</p>
+              <p>One territory percentage driving difficulty, fire rate and AI, over procedurally generated caves.</p>
             </div>
             <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
@@ -907,7 +924,7 @@
                  alt="Space Bar Simulator: beer taps behind the bar of a retro futurist diner" loading="lazy">
             <div>
               <h3>Space Bar Simulator</h3>
-              <p>A ten-person UE5 team build: my player controller, interface-driven interaction system and camera-blended stations.</p>
+              <p>A ten-person UE5 build: my player controller, interaction system and camera-blended stations.</p>
             </div>
             <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
@@ -1061,8 +1078,8 @@
         <div>
           <h4>Site</h4>
           <ul>
-            <li><a href="#about">About</a></li>
             <li><a href="#shiverbug">Internship</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#breakdowns">Breakdowns</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -1072,6 +1089,7 @@
         <div>
           <h4>Elsewhere</h4>
           <ul>
+            <li><a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a></li>
             <li><a href="https://github.com/OliverNealDev" target="_blank" rel="noopener">GitHub</a></li>
             <li><a href="https://www.linkedin.com/in/oliverjackneal/" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a href="https://olivernealdev.itch.io" target="_blank" rel="noopener">itch.io</a></li>

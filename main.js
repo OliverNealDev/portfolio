@@ -299,7 +299,7 @@
 
   // Case-study figures & feature covers share one navigable viewer;
   // the hero portrait is its own single-image viewer (opens data-full).
-  initLightbox(".media-figure img, .gallery img, .feature-cover img");
+  initLightbox(".media-figure img, .gallery img, .feature-cover img, .award-shot img");
   initLightbox(".hero-portrait img");
 
   /* 4d. PRINT BUTTONS -------------------------------------------------------

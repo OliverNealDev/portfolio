@@ -156,7 +156,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   left: 0.7rem;
   z-index: 100;
   padding: 0.6rem 1rem;
-  border-radius: 9px;
+  border-radius: 4px;
   background: var(--accent);
   color: var(--accent-contrast);
   font-weight: 600;
@@ -220,7 +220,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   color: var(--text-2);
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 3px;
   padding: 0.28rem 0.7rem;
   white-space: nowrap;
 }
@@ -233,7 +233,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   align-items: center;
   gap: 0.55rem;
   padding: 0.7rem 1.3rem;
-  border-radius: 9px;
+  border-radius: 4px;
   border: 1px solid transparent;
   font: inherit;
   font-size: 0.95rem;
@@ -300,7 +300,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 .nav-link {
   padding: 0.45rem 0.75rem;
-  border-radius: 7px;
+  border-radius: 4px;
   font-size: 0.92rem;
   font-weight: 500;
   color: var(--text-2);
@@ -314,7 +314,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   margin-left: 0.4rem;
   padding: 0.42rem 0.95rem;
   border: 1px solid var(--border-strong);
-  border-radius: 999px;
+  border-radius: 4px;
   color: var(--text);
 }
 .nav-link.nav-cv:hover {
@@ -336,7 +336,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   justify-content: center;
   width: 2.4rem;
   height: 2.4rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-2);
@@ -380,7 +380,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
     padding: 0.7rem 0.75rem;
     border: 0;
     border-top: 1px solid var(--border);
-    border-radius: 0 0 7px 7px;
+    border-radius: 0 0 4px 4px;
   }
   .nav-link.nav-cv:hover { background: var(--surface-2); }
   .nav-link.nav-cv.active { background: transparent; }
@@ -389,34 +389,46 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 /* --------------------------------------------------------------------------
    6. HERO
    -------------------------------------------------------------------------- */
-.hero { padding-block: clamp(4rem, 11vh, 7.5rem) clamp(3.5rem, 8vh, 5.5rem); }
+.hero { padding-block: clamp(2.25rem, 6vh, 4rem) clamp(2.25rem, 5vh, 3.25rem); }
 
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-  gap: clamp(2rem, 6vw, 4rem);
+  gap: clamp(1.75rem, 5vw, 3.25rem);
   align-items: center;
 }
 
-/* "Currently at Shiverbug" pill */
-.now-pill {
+.hero h1 { margin-bottom: 0.3rem; }
+
+.hero-role {
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.85rem;
+}
+
+.hero-pitch {
+  max-width: 34em;
+  color: var(--text-2);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Current role — a live status line, no chip around it */
+.now-line {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 1.4rem;
-  padding: 0.5rem 1.05rem 0.5rem 0.9rem;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 999px;
-  font-size: 0.88rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-2);
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: color 0.2s ease;
 }
-.now-pill:hover { color: var(--text-2); border-color: var(--border-strong); }
-.now-pill:hover .icon { color: var(--accent); transform: translateX(2px); }
-.now-pill strong { font-weight: 600; color: var(--text); }
-.now-pill .icon {
+.now-line:hover { color: var(--text); }
+.now-line:hover .icon { color: var(--accent); transform: translateX(2px); }
+.now-line strong { font-weight: 600; color: var(--text); }
+.now-line .icon {
   width: 0.9em;
   height: 0.9em;
   color: var(--text-3);
@@ -436,28 +448,12 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   50%      { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
 }
 
-.hero h1 { margin-bottom: 0.35rem; }
-
-.hero-role {
-  font-size: clamp(1.15rem, 2.6vw, 1.45rem);
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 1rem;
-}
-
-.hero-pitch {
-  max-width: 34em;
-  color: var(--text-2);
-  font-size: 1.07rem;
-  margin-bottom: 2rem;
-}
-
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .social-row { display: flex; gap: 0.4rem; }
@@ -466,17 +462,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 /* Portrait */
 .hero-portrait {
-  position: relative;
   justify-self: center;
-  width: min(300px, 62vw);
-}
-.hero-portrait::before {
-  content: "";
-  position: absolute;
-  inset: -14%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 40%, var(--accent-soft), transparent 68%);
-  z-index: -1;
+  width: min(270px, 60vw);
 }
 .hero-portrait img {
   width: 100%;
@@ -486,7 +473,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 @media (max-width: 760px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-portrait { grid-row: 1; width: min(200px, 52vw); margin-bottom: 0.5rem; }
+  .hero-portrait { grid-row: 1; width: min(180px, 48vw); margin-bottom: 0.5rem; }
 }
 
 /* --------------------------------------------------------------------------
@@ -514,7 +501,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .fact-list li {
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 0.85rem 1.1rem;
 }
 .fact-list .fact-num {
@@ -574,7 +561,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   align-items: flex-start;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 1.2rem 1.4rem 1.2rem 1.7rem;
   overflow: hidden;
 }
@@ -584,14 +571,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .edu-logo-link {
   flex: none;
   display: block;
-  border-radius: 12px;
+  border-radius: 4px;
 }
 .edu-logo {
   flex: none;
   width: 96px;
   height: 96px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
@@ -663,7 +650,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   padding: clamp(1.25rem, 4vw, 1.9rem);
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 14px;
+  border-radius: 4px;
   text-align: left;
   display: grid;
   gap: 1rem;
@@ -683,7 +670,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .field textarea {
   width: 100%;
   padding: 0.65rem 0.85rem;
-  border-radius: 9px;
+  border-radius: 4px;
   border: 1px solid var(--border-strong);
   background: var(--bg);
   color: var(--text);
@@ -738,62 +725,89 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .feature {
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 18px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .feature-cover { position: relative; }
 .feature-cover img {
   width: 100%;
-  height: clamp(220px, 34vw, 360px);
+  height: clamp(160px, 20vw, 220px);
   object-fit: cover;
   object-position: 50% 62%; /* keep the duo on their crates in frame */
 }
 
+/* Body runs side by side: studio rail on the left, the write-up on the right */
 .feature-body {
-  padding: clamp(1.5rem, 4vw, 2.5rem);
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.5rem, 3.5vw, 2rem) clamp(1.25rem, 4vw, 2.25rem) clamp(1.5rem, 4vw, 2.25rem);
 }
 
-.feature-logo-link {
-  display: inline-block;
-  margin-bottom: 1.2rem;
-  border-radius: 14px;
-}
+.feature-side { align-self: start; }
+
+.feature-logo-link { display: block; border-radius: 4px; }
 .feature-logo {
-  width: 132px;
-  border-radius: 14px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
   border: 1px solid var(--border);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease;
 }
-.feature-logo-link:hover .feature-logo {
-  border-color: var(--border-strong);
-  transform: translateY(-2px);
-}
+.feature-logo-link:hover .feature-logo { border-color: var(--border-strong); }
 /* Black-background logo on dark theme, light-blue-background logo on light */
 [data-theme="dark"]  .feature-logo.light { display: none; }
 [data-theme="light"] .feature-logo.dark  { display: none; }
 
-.feature-meta {
+/* Key / value rail under the mark */
+.feature-facts {
+  margin: 1.1rem 0 0;
+  display: grid;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+}
+.feature-facts dt {
   font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.8rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 0.75rem;
+}
+.feature-facts dd {
+  margin: 0.1rem 0 0;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-.feature h3 { font-size: clamp(1.35rem, 2.6vw, 1.7rem); }
-.feature-body > div > p { color: var(--text-2); }
+.feature-main h3 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
+}
+.feature-intro {
+  max-width: 62ch;
+  color: var(--text-2);
+  margin-bottom: 1.4rem;
+}
 
+/* Two columns so nine ownership lines read as a spec sheet, not a scroll */
 .feature-list {
   list-style: none;
-  margin: 0 0 1.4rem;
+  margin: 0 0 1.5rem;
   padding: 0;
   display: grid;
-  gap: 0.55rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 0.7rem 2rem;
+  align-items: start;
 }
 .feature-list li {
   position: relative;
   padding-left: 1.35rem;
   color: var(--text-2);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 .feature-list li::before {
   content: "";
@@ -806,6 +820,22 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 .feature-list strong { color: var(--text); font-weight: 600; }
 
+@media (max-width: 720px) {
+  /* Rail turns into a header row: mark on the left, facts beside it */
+  .feature-body { grid-template-columns: 1fr; gap: 1.5rem; }
+  .feature-side {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+  }
+  .feature-facts {
+    margin: 0;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.6rem 1rem;
+  }
+}
+
 /* --------------------------------------------------------------------------
    9. CARDS — solo & team project grids, case-study links
    -------------------------------------------------------------------------- */
@@ -815,10 +845,12 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   gap: 1.25rem;
 }
 
-/* Featured project — full-width card above the grid */
-.project-featured {
+/* Featured project — full-width card above the grid, with the award photo
+   riding along in a third column. Needs .card.project-featured: plain
+   .project-featured loses to .card's display:flex further down the file. */
+.card.project-featured {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 200px;
   margin-bottom: 1.25rem;
 }
 .project-featured .card-media {
@@ -832,8 +864,46 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .project-featured .card-top h3 { font-size: 1.35rem; }
 .project-featured .card-body > p { flex: initial; }
 
+.award-shot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 1.9rem) 1.25rem;
+  border-left: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.award-shot img {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+}
+.award-shot figcaption {
+  margin-top: 0.6rem;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+@media (max-width: 1000px) {
+  .card.project-featured { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .award-shot {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.1rem;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    padding: 1.1rem clamp(1.25rem, 3vw, 1.9rem);
+  }
+  .award-shot img { width: 132px; flex: none; }
+  .award-shot figcaption { margin-top: 0; }
+}
+
 @media (max-width: 820px) {
-  .project-featured { grid-template-columns: 1fr; }
+  .card.project-featured { grid-template-columns: 1fr; }
   .project-featured .card-media { aspect-ratio: 16 / 9; height: auto; min-height: 0; }
 }
 
@@ -847,30 +917,35 @@ html.js .show-more-wrap {
 }
 html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 
-/* Award pill on the featured card / case-study hero */
+/* Award line on the featured card / case-study hero — a credit, not a badge */
 .award-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
   align-self: flex-start;
-  margin: 0;
-  padding: 0.32rem 0.85rem;
-  border: 1px solid var(--accent-border);
-  background: var(--accent-soft);
-  border-radius: 999px;
-  color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1.4;
+  margin: 0 0 0.4rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
 }
-.award-badge .icon { width: 1em; height: 1em; }
+.award-badge .icon {
+  width: 1.15em;
+  height: 1.15em;
+  color: var(--accent);
+  transform: translateY(0.15em);
+}
 
 .card {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 14px;
+  border-radius: 4px;
   overflow: hidden;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -916,7 +991,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   align-items: center;
   gap: 0.3rem;
   padding: 0.22rem 0.55rem;
-  border-radius: 999px;
+  border-radius: 3px;
   background: rgba(10, 10, 12, 0.72);
   color: #f0f0f3;
   font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
@@ -986,7 +1061,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   color: var(--accent);
   border: 1px solid var(--accent-border);
   background: var(--accent-soft);
-  border-radius: 999px;
+  border-radius: 3px;
   padding: 0.18rem 0.6rem;
 }
 
@@ -1013,7 +1088,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
    is unmissable next to the quieter external links. */
 .card-links .card-cta {
   padding: 0.5rem 1rem;
-  border-radius: 9px;
+  border-radius: 4px;
   background: var(--accent);
   color: var(--accent-contrast);
   transition: background-color 0.2s ease, transform 0.2s ease;
@@ -1026,18 +1101,22 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .card-links .card-cta .icon { transition: transform 0.2s ease; }
 .card-links .card-cta:hover .icon { transform: translateX(3px); }
 
-/* Case-study link rows (index, section 06) */
-.bd-list { display: grid; gap: 1rem; }
+/* Case-study link cards (index, section 06) — two-up grid, compact rows */
+.bd-list {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+}
 
 .bd-card {
   display: grid;
-  grid-template-columns: 180px 1fr auto;
+  grid-template-columns: 104px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1rem;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 14px;
-  padding: 0.9rem;
+  border-radius: 4px;
+  padding: 0.75rem;
   color: var(--text);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -1049,23 +1128,28 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .bd-card img {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 9px;
+  border-radius: 3px;
 }
-.bd-card h3 { margin-bottom: 0.2rem; font-size: 1.05rem; }
-.bd-card p { margin: 0; color: var(--text-2); font-size: 0.9rem; }
+.bd-card h3 { margin-bottom: 0.2rem; font-size: 1rem; }
+.bd-card p {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
 .bd-arrow {
-  width: 2rem;
-  height: 2rem;
+  width: 1.4rem;
+  height: 1.4rem;
   color: var(--text-3);
   transition: transform 0.25s ease, color 0.25s ease;
-  margin-right: 0.6rem;
+  margin-right: 0.25rem;
 }
 .bd-card:hover .bd-arrow { transform: translateX(4px); color: var(--accent); }
 
 @media (max-width: 640px) {
-  .bd-card { grid-template-columns: 1fr; gap: 0.9rem; }
+  .bd-card { grid-template-columns: 88px minmax(0, 1fr); gap: 0.85rem; }
   .bd-arrow { display: none; }
 }
 
@@ -1112,7 +1196,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .cs-hero-media img,
 .cs-hero-media video {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 4px;
   border: 1px solid var(--border);
 }
 
@@ -1128,7 +1212,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .facts li {
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 0.75rem 1rem;
 }
 .facts .fact-k {
@@ -1157,7 +1241,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .media-figure img,
 .media-figure video {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 4px;
   border: 1px solid var(--border);
 }
 .media-figure figcaption {
@@ -1185,7 +1269,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px solid var(--border);
 }
 .gallery figcaption { font-size: 0.8rem; color: var(--text-3); margin-top: 0.45rem; }
@@ -1205,7 +1289,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   align-items: center;
   gap: 0.55rem;
   padding: 0.7rem 1.3rem;
-  border-radius: 9px;
+  border-radius: 4px;
   border: 1px solid var(--border-strong);
   font-size: 0.95rem;
   font-weight: 600;
@@ -1274,7 +1358,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   max-height: 80vh;
   width: auto;
   height: auto;
-  border-radius: 12px;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.65);
   background: #101014;
@@ -1416,7 +1500,7 @@ html.lightbox-open body { overflow: hidden; }
   background: var(--paper);
   color: var(--ink);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 4px;
   box-shadow: var(--shadow);
   padding: clamp(1.75rem, 5vw, 3.25rem) clamp(1.5rem, 5vw, 3.5rem);
   font-size: 0.95rem;
