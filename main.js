@@ -173,7 +173,7 @@
     if (!triggers.length) return;
 
     var overlay = null;
-    var stageImg, captionEl, countEl, closeBtn, prevBtn, nextBtn;
+    var stageImg, captionEl, countEl, closeBtn, prevBtn, nextBtn, linkEl, linkLabel;
     var current = 0;
     var lastFocused = null;
 
@@ -196,6 +196,10 @@
         '<figure class="lightbox-stage">' +
         '  <img class="lightbox-img" alt="">' +
         '  <figcaption class="lightbox-caption"></figcaption>' +
+        '  <a class="lightbox-link" target="_blank" rel="noopener" hidden>' +
+        '    <span class="lightbox-link-label"></span>' +
+        '    <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>' +
+        "  </a>" +
         "</figure>" +
         '<button class="icon-btn lightbox-prev" type="button" aria-label="Previous image">' +
         '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
@@ -214,6 +218,8 @@
       closeBtn = overlay.querySelector(".lightbox-close");
       prevBtn = overlay.querySelector(".lightbox-prev");
       nextBtn = overlay.querySelector(".lightbox-next");
+      linkEl = overlay.querySelector(".lightbox-link");
+      linkLabel = overlay.querySelector(".lightbox-link-label");
 
       closeBtn.addEventListener("click", close);
       prevBtn.addEventListener("click", function () { show(current - 1); });
@@ -234,7 +240,7 @@
         if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); return; }
         // Keep Tab inside the dialog while it is open.
         if (e.key === "Tab") {
-          var focusables = [prevBtn, nextBtn, closeBtn].filter(function (b) {
+          var focusables = [linkEl, prevBtn, nextBtn, closeBtn].filter(function (b) {
             return b.offsetParent !== null;
           });
           if (!focusables.length) return;
@@ -260,6 +266,14 @@
       stageImg.alt = src.alt || "";
       captionEl.textContent = captionFor(src);
       countEl.textContent = (current + 1) + " / " + triggers.length;
+
+      // Source link (e.g. back to the LinkedIn post) when the image has one.
+      var link = src.getAttribute("data-link");
+      if (link) {
+        linkEl.href = link;
+        linkLabel.textContent = src.getAttribute("data-link-text") || "View post on LinkedIn";
+      }
+      linkEl.hidden = !link;
     }
 
     function open(index) {
@@ -298,9 +312,12 @@
   }
 
   // Case-study figures & feature covers share one navigable viewer;
-  // the hero portrait is its own single-image viewer (opens data-full).
+  // the hero portrait is its own single-image viewer (opens data-full);
+  // the LinkedIn post images browse as their own group, each carrying a
+  // caption and a link back to its post.
   initLightbox(".media-figure img, .gallery img, .feature-cover img, .award-shot img");
   initLightbox(".hero-portrait img");
+  initLightbox(".post-media img");
 
   /* 4d. PRINT BUTTONS -------------------------------------------------------
      Any element with [data-print] (the CV page's "Print" action) triggers

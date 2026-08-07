@@ -236,6 +236,7 @@
         <a class="nav-link" href="#skills">Skills</a>
         <a class="nav-link" href="#projects">Projects</a>
         <a class="nav-link" href="#education">Education</a>
+        <a class="nav-link" href="#log">Log</a>
         <a class="nav-link" href="#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -1003,7 +1004,215 @@
       </div>
     </section>
 
-    <!-- ===================== 9 · CONTACT ===================== -->
+    <!-- ===================== 9 · LINKEDIN LOG ===================== -->
+    <section class="section" id="log">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Log</p>
+          <h2>Latest from LinkedIn</h2>
+          <p class="section-lead">
+            A running log of what I'm building and shipping, posted as it
+            happens. Newest first.
+          </p>
+        </header>
+
+        <!--
+          Native representations of the LinkedIn posts, newest first — the
+          real embeds bring cookie banners and a clashing white card, so the
+          text and media live here and every card links out to the original.
+          The card's "Read on LinkedIn" link stretches over the whole card;
+          the images sit above it and open in the lightbox instead, each
+          with a data-caption and a data-link back to the post. The three
+          newest show; cards with .post-extra hide behind the "Show older
+          posts" toggle.
+          To add a post: copy one .post-card to the TOP of the grid, swap in
+          the post URL, date, text (drop the trailing portfolio link and
+          hashtags) and media, and move .post-extra so only three cards are
+          without it. The post text is clamped by CSS; the full message
+          stays in the markup.
+        -->
+        <div class="post-grid" id="post-grid">
+
+          <article class="post-card reveal">
+            <div class="post-media">
+              <img src="Project Media/LinkedIn/develop-brighton-1.jpg"
+                   alt="Four members of the Shiverbug Studios team on Brighton seafront during Develop:Brighton"
+                   data-caption="With the Shiverbug Studios team on Brighton seafront during Develop:Brighton 2026"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7484872304053854208/"
+                   width="800" height="600" loading="lazy">
+              <img src="Project Media/LinkedIn/develop-brighton-2.jpg"
+                   alt="Oliver Neal wearing a Develop:Brighton attendee badge on Brighton seafront"
+                   data-caption="Badged up on the seafront at Develop:Brighton 2026"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7484872304053854208/"
+                   width="800" height="1000" loading="lazy">
+            </div>
+            <div class="post-body">
+              <p class="post-meta">
+                <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                LinkedIn · <time datetime="2026-07-20">20 Jul 2026</time>
+              </p>
+              <p class="post-text">First week done as a Gameplay Programmer Intern at Shiverbug Studios, most of it spent at Develop:Brighton with the team. 😎
+
+Spent a day on the expo floor seeing what studios and tools teams are actually building, and the rest of the time talking to people: grads, programmers, designers, studio leads. Came away with a much better sense of the industry I've just joined.
+
+Getting to spend the week with the Shiverbug team was the best part of it. Conversations by the seaside and hanging out in the evenings playing Jackbox were really fun! 😊
+
+Thanks to everyone who stopped to chat. I really loved meeting you all!</p>
+              <a class="post-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7484872304053854208/" target="_blank" rel="noopener">
+                Read on LinkedIn <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="post-card reveal">
+            <div class="post-media">
+              <img src="Project Media/LinkedIn/first-day-oow.jpg"
+                   alt="Out of Water: the seagull and turtle by a crate in a beach level"
+                   data-caption="Out of Water, the Shiverbug Studios project I joined as a Gameplay Programmer Intern"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7482335532149260288/"
+                   width="800" height="800" loading="lazy">
+              <img src="Project Media/LinkedIn/first-day-shiverbug.jpg"
+                   alt="Shiverbug Studios skull-and-moth logo on a black background"
+                   data-caption="Shiverbug Studios"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7482335532149260288/"
+                   width="800" height="800" loading="lazy">
+            </div>
+            <div class="post-body">
+              <p class="post-meta">
+                <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                LinkedIn · <time datetime="2026-07-13">13 Jul 2026</time>
+              </p>
+              <p class="post-text">Today is my first day as a Gameplay Programmer Intern at Shiverbug Studios! 🎉
+
+After graduating from Teesside University with a First in BSc (Hons) Games Development, I'm excited to take my first step into the industry. I'm looking forward to contributing to the team, learning from experienced designers and developers, and putting everything from Cyber Station and my other Unity projects into practice in a studio environment!
+
+To hit the ground running, I'll also be at Develop:Brighton this week (14–16 July)! If you're heading down too, feel free to come say hi, I'm happy to meet anyone and everyone in the games industry!
+
+Busy week ahead 😅</p>
+              <a class="post-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7482335532149260288/" target="_blank" rel="noopener">
+                Read on LinkedIn <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="post-card reveal">
+            <div class="post-media">
+              <img src="800x_NCUC_Logo.webp"
+                   alt="Newcastle College University Centre logo"
+                   data-caption="Newcastle College University Centre, where I earned my FdSc in Games Technologies"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7475684875111616513/"
+                   width="800" height="800" loading="lazy">
+              <img src="800x_TU_Logo.webp"
+                   alt="Teesside University logo"
+                   data-caption="Teesside University, where I graduated with First Class Honours"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7475684875111616513/"
+                   width="800" height="800" loading="lazy">
+            </div>
+            <div class="post-body">
+              <p class="post-meta">
+                <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                LinkedIn · <time datetime="2026-06-25">25 Jun 2026</time>
+              </p>
+              <p class="post-text">I'm thrilled to share that I've graduated from Teesside University with a First-Class Honours degree in BSc (Hons) Games Development. 🎓
+
+This one means a lot. I started my journey at Newcastle College University Centre, where I earned a 2:1 in my FdSc Games Technologies, then took the leap of transferring to Teesside for the final year of the BSc. Stepping into a new university and a higher level all at once was a little jarring, and finishing with a First is the result I'd hoped for when I made that decision.
+
+A highlight of the year was my final year project, Cyber Station, a futuristic station-management game built in Unity (C#), using AI navigation and dynamic finite state machines to handle complex passenger needs. It scored 90, and went on to win Best Games Programming and Development Artefact at ExpoTees. Seeing it recognised to that extent made all the late nights worth it 😅
+
+Huge thanks to the lecturers and friends at both Newcastle College and Teesside who were there along the way!
+
+Onwards to what's next... 👀</p>
+              <a class="post-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7475684875111616513/" target="_blank" rel="noopener">
+                Read on LinkedIn <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="post-card post-extra reveal">
+            <div class="post-media">
+              <img src="Project Media/LinkedIn/expotees-award.jpg"
+                   alt="Oliver Neal receiving the Best Artefact award for Games Programming and Development at ExpoTees 2026"
+                   data-caption="Collecting Best Artefact for Games Programming &amp; Development at ExpoTees 2026"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7460372733651107840/"
+                   width="1134" height="1418" loading="lazy">
+              <img src="Project Media/LinkedIn/expotees-cyber-station.jpg"
+                   alt="Cyber Station: neon platforms, trains and passengers from an isometric view"
+                   data-caption="Cyber Station, the final year project that won the award"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7460372733651107840/"
+                   width="800" height="449" loading="lazy">
+            </div>
+            <div class="post-body">
+              <p class="post-meta">
+                <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                LinkedIn · <time datetime="2026-05-13">13 May 2026</time>
+              </p>
+              <p class="post-text">I'm proud to share that Cyber Station won Best Artefact for Games Programming &amp; Development at ExpoTees 2026! 🚆🏆
+
+Cyber Station is my final year project: a 3D construction and management simulation made in Unity, where players design, expand, and operate a futuristic train station.
+
+This project has been a huge step forward for me as a games developer. It challenged me to bring together passenger AI, finite state machines, train scheduling, grid-based construction, staff coordination, station ratings, progression, economy balancing, and save/load systems into one connected simulation.
+
+Winning this award means a lot, especially after the amount of time spent trying to make the station feel alive: passengers moving through the space, facilities being used, trains arriving, staff responding to problems, and multiple systems feeding into each other.
+
+A huge thank you to Neil H. for organising the event, and to everyone at Teesside University who supported, gave feedback, tested the project, or stopped by to talk about Cyber Station.</p>
+              <a class="post-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7460372733651107840/" target="_blank" rel="noopener">
+                Read on LinkedIn <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="post-card post-extra reveal">
+            <div class="post-media single">
+              <img src="Project Media/HueStation/LateGameZoomedInGameplayScreenshot.webp"
+                   alt="Cyber Station late game: crowds of passengers moving through a neon concourse"
+                   data-caption="Cyber Station in the late game — the post has the full one-minute demo"
+                   data-link="https://www.linkedin.com/feed/update/urn:li:activity:7458228242450329600/"
+                   data-link-text="Watch the demo on LinkedIn"
+                   width="1200" height="675" loading="lazy">
+              <span class="post-flag">
+                <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                1-minute demo
+              </span>
+            </div>
+            <div class="post-body">
+              <p class="post-meta">
+                <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                LinkedIn · <time datetime="2026-05-07">7 May 2026</time>
+              </p>
+              <p class="post-text">I'm excited to share that I've finished my final year project: Cyber Station! 🚆
+
+Cyber Station is a 3D construction and management simulation made in Unity, where the player designs, expands, and operates a growing futuristic train station.
+
+The project became a really rewarding systems-design challenge, bringing together passenger AI, facility interactions, train scheduling, a grid-based build system, station ratings, decoration coverage, progression, and save/load functionality.
+
+For the one-minute demo, I wanted to show the station as a living simulation: passengers moving through the station, trains arriving, facilities being used, and the management systems feeding into each other.
+
+This has been a huge step forward for me as a games developer. It pushed me to build more scalable Unity systems, work with finite state machine AI, use ScriptableObjects for data-driven content, and structure a larger codebase around managers, controllers, coordinators, and reusable components.</p>
+              <a class="post-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7458228242450329600/" target="_blank" rel="noopener">
+                Read on LinkedIn <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="show-more-wrap">
+          <button class="btn btn-outline" type="button"
+                  data-show-more="post-grid" aria-controls="post-grid" aria-expanded="false"
+                  data-more="Show older posts" data-less="Show fewer">
+            Show older posts
+          </button>
+        </div>
+
+        <div class="log-cta reveal">
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/oliverjackneal/" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+            Follow on LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 10 · CONTACT ===================== -->
     <section class="section contact" id="contact">
       <div class="container">
         <header class="section-head reveal">
@@ -1086,7 +1295,7 @@
     </section>
   </main>
 
-  <!-- ===================== 10 · FOOTER ===================== -->
+  <!-- ===================== 11 · FOOTER ===================== -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -1105,6 +1314,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#breakdowns">Breakdowns</a></li>
+            <li><a href="#log">Log</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="cv.html">CV</a></li>
           </ul>
