@@ -731,10 +731,37 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 .feature-cover { position: relative; }
 .feature-cover img {
+  display: block;
   width: 100%;
-  height: clamp(160px, 20vw, 220px);
+  height: clamp(200px, 27vw, 320px);
   object-fit: cover;
   object-position: 50% 62%; /* keep the duo on their crates in frame */
+}
+/* Scrim so the tag stays readable over the brightest part of the beach */
+.feature-cover::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+.feature-cover-tag {
+  position: absolute;
+  z-index: 1;
+  left: clamp(1.25rem, 4vw, 2.25rem);
+  bottom: clamp(0.9rem, 2.5vw, 1.25rem);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #fff;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
 }
 
 /* Body runs side by side: studio rail on the left, the write-up on the right */
@@ -792,10 +819,31 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   margin-bottom: 1.4rem;
 }
 
-/* Two columns so nine ownership lines read as a spec sheet, not a scroll */
+/* Nine ownership lines, split into three labelled groups so the panel reads
+   as a spec sheet rather than one undifferentiated wall of bullets */
+.feature-groups {
+  display: grid;
+  gap: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+.feature-group + .feature-group {
+  border-top: 1px solid var(--border);
+  padding-top: 1.15rem;
+}
+.feature-group h4 {
+  margin: 0 0 0.7rem;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Two columns inside each group */
 .feature-list {
   list-style: none;
-  margin: 0 0 1.5rem;
+  margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
@@ -845,66 +893,72 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   gap: 1.25rem;
 }
 
-/* Featured project — full-width card above the grid, with the award photo
-   riding along in a third column. Needs .card.project-featured: plain
-   .project-featured loses to .card's display:flex further down the file. */
+/* Featured project — full-width card above the grid. The screenshot stays a
+   landscape 16:9 with the write-up under it, and the award photo takes its own
+   full-height rail beside them so the portrait shot has room to be seen.
+   Needs .card.project-featured: plain .project-featured loses to .card's
+   display:flex further down the file. */
 .card.project-featured {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 200px;
+  grid-template-columns: minmax(0, 1fr) clamp(250px, 25vw, 344px);
+  grid-template-rows: auto 1fr;
   margin-bottom: 1.25rem;
 }
 .project-featured .card-media {
-  aspect-ratio: auto;
-  height: 100%;
-  min-height: 260px;
+  grid-column: 1;
+  grid-row: 1; /* 16:9 comes from .card-media; only the placement differs here */
 }
 .project-featured .card-body {
+  grid-column: 1;
+  grid-row: 2;
   padding: clamp(1.25rem, 3vw, 1.9rem);
 }
 .project-featured .card-top h3 { font-size: 1.35rem; }
-.project-featured .card-body > p { flex: initial; }
+.project-featured .card-body > p { flex: initial; max-width: 68ch; }
 
 .award-shot {
+  grid-column: 2;
+  grid-row: 1 / -1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0;
-  padding: clamp(1.25rem, 3vw, 1.9rem) 1.25rem;
+  padding: clamp(1.25rem, 2.5vw, 1.6rem);
   border-left: 1px solid var(--border);
   background: var(--bg-soft);
 }
 .award-shot img {
   width: 100%;
+  max-width: 480px; /* the source is 480px wide, do not upscale past it */
+  align-self: center;
   border-radius: 3px;
   border: 1px solid var(--border);
 }
 .award-shot figcaption {
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.68rem;
   line-height: 1.5;
   color: var(--text-3);
 }
 
-@media (max-width: 1000px) {
-  .card.project-featured { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 900px) {
+  /* Stack: screenshot, write-up, then the award as a photo-and-caption row */
+  .card.project-featured { grid-template-columns: 1fr; }
+  .project-featured .card-media,
+  .project-featured .card-body { grid-column: 1; grid-row: auto; }
   .award-shot {
-    grid-column: 1 / -1;
-    display: flex;
+    grid-column: 1;
+    grid-row: auto;
     flex-direction: row;
     align-items: center;
-    gap: 1.1rem;
+    gap: 1.2rem;
     border-left: 0;
     border-top: 1px solid var(--border);
-    padding: 1.1rem clamp(1.25rem, 3vw, 1.9rem);
+    padding: 1.2rem clamp(1.25rem, 3vw, 1.9rem);
   }
-  .award-shot img { width: 132px; flex: none; }
+  .award-shot img { width: 170px; flex: none; align-self: auto; }
   .award-shot figcaption { margin-top: 0; }
-}
-
-@media (max-width: 820px) {
-  .card.project-featured { grid-template-columns: 1fr; }
-  .project-featured .card-media { aspect-ratio: 16 / 9; height: auto; min-height: 0; }
 }
 
 /* "Show all projects" toggle — the grid starts collapsed (extra cards hidden)
