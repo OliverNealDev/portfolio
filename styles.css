@@ -614,6 +614,135 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   max-width: 46em;
 }
 
+/* LinkedIn log — native representations of the posts, styled like the
+   project cards. Media links to the original post, the text is the post's
+   own message clamped to a preview, and the footer link reads on LinkedIn. */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
+  gap: 1.25rem;
+}
+
+.post-card {
+  position: relative; /* containing block for the stretched .post-link */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.post-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+/* Older posts hide behind the "Show older posts" toggle when JS can run */
+html.js #post-grid:not(.expanded) .post-extra { display: none; }
+
+/* Post media — LinkedIn's own two-up layout, cropped square so any pair of
+   aspect ratios sits level. .single is one full-width 16:9 image. */
+.post-media {
+  position: relative;
+  z-index: 1; /* above the stretched .post-link, so images open the lightbox */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--bg-soft);
+}
+.post-media.single { grid-template-columns: 1fr; }
+.post-media img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.post-media.single img { aspect-ratio: 16 / 9; }
+.post-card:hover .post-media img { transform: scale(1.035); }
+
+/* Corner note on media, e.g. "1-minute demo" where the post holds a video */
+.post-flag {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 3px;
+  background: rgba(10, 10, 12, 0.72);
+  color: #f0f0f3;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+.post-flag .icon { width: 0.85em; height: 0.85em; }
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.7rem;
+  padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.74rem;
+  color: var(--text-3);
+}
+.post-meta .icon { width: 1.05em; height: 1.05em; color: var(--text-3); }
+
+/* The post's own message: paragraph breaks preserved, clamped to a preview.
+   The full text stays in the markup; the card links out for the rest. */
+.post-text {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.93rem;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: stretch;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: color 0.2s ease;
+}
+.post-card:hover .post-link { color: var(--accent); }
+/* Stretch the link over the whole card; the media's z-index carves the
+   images back out for the lightbox. */
+.post-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.log-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
 /* Contact */
 .contact { text-align: center; }
 .contact .section-head { margin-inline: auto; }
@@ -1428,6 +1557,27 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   line-height: 1.5;
 }
 .lightbox-caption:empty { display: none; }
+
+/* Optional source link under the caption — shown when the trigger image
+   carries data-link (the LinkedIn post cards do). */
+.lightbox-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(22, 22, 28, 0.72);
+  color: #f0f0f3;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.lightbox-link:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+.lightbox-link .icon { width: 1em; height: 1em; }
 
 .lightbox-count {
   position: absolute;
