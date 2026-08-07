@@ -330,7 +330,12 @@
           <div class="feature-cover">
             <img src="OOW-in-game-image-1.webp"
                  alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
+                 data-caption="Out of Water, in development at Shiverbug Studios"
                  width="1600" height="902">
+            <p class="feature-cover-tag">
+              <span class="now-dot" aria-hidden="true"></span>
+              Out of Water · in development
+            </p>
           </div>
 
           <!-- Studio side rail, then the write-up beside it -->
@@ -345,6 +350,7 @@
               <dl class="feature-facts">
                 <div><dt>Studio</dt><dd><a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a></dd></div>
                 <div><dt>Role</dt><dd>Gameplay Programmer</dd></div>
+                <div><dt>Engine</dt><dd>Unity 6 · C#</dd></div>
                 <div><dt>Dates</dt><dd>13 Jul to 18 Sep 2026</dd></div>
                 <div><dt>Length</dt><dd>10 week internship</dd></div>
               </dl>
@@ -357,17 +363,34 @@
                 in splitscreen, starring a turtle and a seagull. I own the
                 character and enemy gameplay code, and I work in engine across:
               </p>
-              <ul class="feature-list">
-                <li><strong>Component driven state machines</strong> for both playable characters and the enemies, rebuilt from single file controllers</li>
-                <li>The <strong>co-op moveset</strong> that hangs off them, and the <strong>game feel</strong> around it</li>
-                <li><strong>Performance</strong>: GPU driven rendering, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I wrote for the team</li>
-                <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping</li>
-                <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots and a controls tutorial</li>
-                <li>A <strong>decoupled FMOD layer</strong> the audio team plugs into</li>
-                <li><strong>Blockout interactables and editor tooling</strong> the level designers build puzzles from</li>
-                <li><strong>Water, caustics and bubble shaders</strong>, in Shader Graph and in hand written URP HLSL</li>
-                <li><strong>Supporting systems</strong> the rest of the team works through, including collectable saving and an in-game debug console</li>
-              </ul>
+              <div class="feature-groups">
+                <section class="feature-group">
+                  <h4>Gameplay</h4>
+                  <ul class="feature-list">
+                    <li><strong>Component driven state machines</strong> for both playable characters and the enemies, rebuilt from single file controllers</li>
+                    <li>The <strong>co-op moveset</strong> that hangs off them, and the <strong>game feel</strong> around it</li>
+                    <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping</li>
+                  </ul>
+                </section>
+
+                <section class="feature-group">
+                  <h4>Performance &amp; tooling</h4>
+                  <ul class="feature-list">
+                    <li><strong>GPU driven rendering</strong>, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I wrote for the team</li>
+                    <li><strong>Blockout interactables and editor tooling</strong> the level designers build puzzles from</li>
+                    <li><strong>Supporting systems</strong> the rest of the team works through, including collectable saving and an in-game debug console</li>
+                  </ul>
+                </section>
+
+                <section class="feature-group">
+                  <h4>Presentation &amp; audio</h4>
+                  <ul class="feature-list">
+                    <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots and a controls tutorial</li>
+                    <li><strong>Water, caustics and bubble shaders</strong>, in Shader Graph and in hand written URP HLSL</li>
+                    <li>A <strong>decoupled FMOD layer</strong> the audio team plugs into</li>
+                  </ul>
+                </section>
+              </div>
               <ul class="tags">
                 <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Performance</li><li>FMOD</li><li>Cinemachine</li><li>UI Toolkit</li><li>Shader Graph</li><li>HLSL</li>
               </ul>
