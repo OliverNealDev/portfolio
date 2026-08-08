@@ -13,6 +13,15 @@
 /* --------------------------------------------------------------------------
    1. TOKENS
    -------------------------------------------------------------------------- */
+/* Typography is theme independent, so it lives in its own block.
+   Space Grotesk carries the headings; IBM Plex Sans/Mono do the reading and
+   the labels. Deliberately not Inter — it is on every other dev portfolio. */
+:root {
+  --font-sans: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Space Grotesk", "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -34,7 +43,7 @@
   --accent-soft: rgba(255, 123, 28, 0.12);
   --accent-border: rgba(255, 123, 28, 0.45);
 
-  --ok: #4ade80;              /* "currently" pulse dot */
+  --ok: #4fbf78;              /* "currently" status dot */
   --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --header-bg: rgba(14, 14, 17, 0.82);
 }
@@ -53,13 +62,13 @@
   --text-2: #4c4c57;
   --text-3: #6e6e79;
 
-  --accent: #c2410c;          /* burnt orange, dark enough to read on white */
-  --accent-hover: #9a3412;
+  --accent: #b4410f;          /* burnt orange, dark enough to read on white */
+  --accent-hover: #8f3109;
   --accent-contrast: #ffffff;
-  --accent-soft: rgba(194, 65, 12, 0.08);
-  --accent-border: rgba(194, 65, 12, 0.35);
+  --accent-soft: rgba(180, 65, 15, 0.08);
+  --accent-border: rgba(180, 65, 15, 0.35);
 
-  --ok: #15803d;
+  --ok: #1d7a45;
   --shadow: 0 12px 28px rgba(20, 20, 40, 0.10);
   --header-bg: rgba(250, 250, 250, 0.85);
 }
@@ -81,7 +90,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.65;
   transition: background-color 0.35s ease, color 0.35s ease;
@@ -91,13 +100,14 @@ img, video { max-width: 100%; height: auto; display: block; }
 
 h1, h2, h3, h4 {
   margin: 0 0 0.6em;
+  font-family: var(--font-display);
   line-height: 1.15;
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); font-weight: 800; letter-spacing: -0.03em; }
+h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); letter-spacing: -0.025em; }
 h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); }
 h3 { font-size: 1.18rem; }
 
@@ -184,12 +194,12 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 
 .mono {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 /* Small accent label above section headings, e.g. "About" or "Case study" */
 .kicker {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -214,7 +224,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   margin: 0;
 }
 .tags li {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.74rem;
   letter-spacing: 0.02em;
   color: var(--text-2);
@@ -240,11 +250,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease,
-              color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
 
 .btn-primary {
   background: var(--accent);
@@ -287,7 +294,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 
 .brand {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.98rem;
   color: var(--text);
@@ -352,7 +359,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 /* Mobile nav */
 .nav-toggle { display: none; }
 
-@media (max-width: 760px) {
+/* The breakpoint is driven by what the desktop header actually needs, not by a
+   round tablet number: brand + nav + actions measure 800px, and with the
+   container's 2rem side padding that is 864px of usable width. Media queries
+   match the viewport *including* the scrollbar gutter, so a window has to be
+   roughly 880px before 864px is actually available to lay out in. 900px leaves
+   headroom for wider scrollbars and for the nav growing if a link is added.
+   Keep main.js's (min-width: 901px) matchMedia in step with this value. */
+@media (max-width: 900px) {
   .nav-toggle { display: inline-flex; }
 
   .site-nav {
@@ -435,17 +449,13 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
+/* Static, not a pulsing halo. The label already says what it means. */
 .now-dot {
   width: 8px;
   height: 8px;
   flex: none;
   border-radius: 50%;
   background: var(--ok);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.45); }
-  50%      { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
 }
 
 .hero-ctas {
@@ -506,7 +516,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 .fact-list .fact-num {
   display: block;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent);
@@ -580,12 +590,9 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   object-fit: cover;
   border-radius: 4px;
   border: 1px solid var(--border);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease;
 }
-.edu-logo-link:hover .edu-logo {
-  border-color: var(--accent-border);
-  transform: translateY(-2px);
-}
+.edu-logo-link:hover .edu-logo { border-color: var(--accent-border); }
 
 @media (max-width: 640px) {
   .edu-logo { width: 72px; height: 72px; }
@@ -601,7 +608,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .timeline h3 { margin-bottom: 0.15rem; font-size: 1.05rem; }
 .timeline .edu-org { color: var(--text-2); font-size: 0.95rem; }
 .timeline .edu-meta {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--text-3);
   margin-top: 0.5rem;
@@ -631,12 +638,10 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   background: var(--surface);
   border-radius: 4px;
   overflow: hidden;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.2s ease;
 }
 .post-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow);
+  border-color: var(--accent-border);
   color: var(--text);
 }
 
@@ -659,10 +664,8 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   height: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  transition: transform 0.4s ease;
 }
 .post-media.single img { aspect-ratio: 16 / 9; }
-.post-card:hover .post-media img { transform: scale(1.035); }
 
 /* Corner note on media, e.g. "1-minute demo" where the post holds a video */
 .post-flag {
@@ -676,7 +679,7 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   border-radius: 3px;
   background: rgba(10, 10, 12, 0.72);
   color: #f0f0f3;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.04em;
   pointer-events: none;
@@ -696,7 +699,7 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   align-items: center;
   gap: 0.45rem;
   margin: 0;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.74rem;
   color: var(--text-3);
 }
@@ -760,7 +763,18 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   margin: 0 0 2rem;
 }
 .contact-email a {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
+}
+
+/* Sits directly under the form so the answer to "where does this go?" is
+   next to the send button, not buried in the footer. Matches the form's width
+   and centring: the section is text-align:center, so a narrower box with zero
+   side margins would sit flush left and read as misaligned. */
+.contact-privacy {
+  font-size: 0.82rem;
+  color: var(--text-3);
+  max-width: 620px;
+  margin: -1.4rem auto 2rem;
 }
 
 /* Where I am and what I'm open to — the practical answer a recruiter
@@ -885,7 +899,7 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   align-items: center;
   gap: 0.55rem;
   color: #fff;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -925,7 +939,7 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   font-size: 0.85rem;
 }
 .feature-facts dt {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -961,7 +975,7 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
 }
 .feature-group h4 {
   margin: 0 0 0.7rem;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -1022,19 +1036,20 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   gap: 1.25rem;
 }
 
-/* Featured project — full-width card above the grid. The screenshot stays a
-   landscape 16:9 with the write-up under it, and the award photo takes its own
-   full-height rail beside them so the portrait shot has room to be seen.
+/* Featured project — full-width card above the grid. The screenshot spans the
+   whole card as the hero, and the row underneath splits into the write-up and
+   a compact award column. Both are content sized, so neither leaves the tall
+   empty panel a full-height award rail used to.
    Needs .card.project-featured: plain .project-featured loses to .card's
    display:flex further down the file. */
 .card.project-featured {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(250px, 25vw, 344px);
-  grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 26vw, 320px);
+  grid-template-rows: auto auto;
   margin-bottom: 1.25rem;
 }
 .project-featured .card-media {
-  grid-column: 1;
+  grid-column: 1 / -1;
   grid-row: 1; /* 16:9 comes from .card-media; only the placement differs here */
 }
 .project-featured .card-body {
@@ -1044,41 +1059,120 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
 }
 .project-featured .card-top h3 { font-size: 1.35rem; }
 .project-featured .card-body > p { flex: initial; max-width: 68ch; }
+/* The award column beside this one is taller than the write-up, so the links
+   would otherwise stop mid-card and leave a gap under them. Pin them to the
+   bottom and any spare height collects above the rule instead. */
+.project-featured .card-links { margin-top: auto; }
+
+/* The four systems the game is built around, as a labelled list rather than
+   another paragraph — they are the thing worth scanning on this card. */
+.project-systems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+  max-width: 68ch;
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+.project-systems li {
+  position: relative;
+  padding-left: 0.9rem;
+  line-height: 1.5;
+}
+.project-systems li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.project-systems b {
+  color: var(--text);
+  font-weight: 600;
+}
+.project-systems b::after {
+  content: " · "; /* the separator used across the rest of the site */
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.project-support { font-size: 0.9rem; }
+
+/* Compact spec strip: mono labels over values, same idiom as .feature-facts */
+.project-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  margin: 0.2rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
+}
+.project-specs dt {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.project-specs dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
 
 .award-shot {
   grid-column: 2;
-  grid-row: 1 / -1;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* sit at the top; never float in spare height */
+  gap: 0.75rem;
   margin: 0;
-  padding: clamp(1.25rem, 2.5vw, 1.6rem);
+  padding: clamp(1.25rem, 3vw, 1.9rem);
   border-left: 1px solid var(--border);
   background: var(--bg-soft);
 }
 .award-shot img {
   width: 100%;
-  max-width: 480px; /* the source is 480px wide, do not upscale past it */
-  align-self: center;
   border-radius: 3px;
   border: 1px solid var(--border);
 }
 .award-shot figcaption {
-  margin-top: 0.7rem;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  /* The write-up column sets the row height, and it will rarely match this
+     column exactly. Anchoring the credit to the base means the leftover shows
+     up as spacing between photo and credit rather than a dead block under
+     both — and it self corrects at any width instead of needing tuned heights. */
+  margin-top: auto;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--text-3);
 }
+.award-shot-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.award-shot-head .icon { width: 1.05em; height: 1.05em; }
 
 @media (max-width: 900px) {
   /* Stack: screenshot, write-up, then the award as a photo-and-caption row */
   .card.project-featured { grid-template-columns: 1fr; }
   .project-featured .card-media,
-  .project-featured .card-body { grid-column: 1; grid-row: auto; }
+  .project-featured .card-body,
+  .award-shot { grid-column: 1; grid-row: auto; }
   .award-shot {
-    grid-column: 1;
-    grid-row: auto;
     flex-direction: row;
     align-items: center;
     gap: 1.2rem;
@@ -1086,8 +1180,8 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
     border-top: 1px solid var(--border);
     padding: 1.2rem clamp(1.25rem, 3vw, 1.9rem);
   }
-  .award-shot img { width: 170px; flex: none; align-self: auto; }
-  .award-shot figcaption { margin-top: 0; }
+  .award-shot img { width: 150px; flex: none; }
+  .award-shot figcaption { margin-top: 0; } /* row layout: no base to anchor to */
 }
 
 /* "Show all projects" toggle — the grid starts collapsed (extra cards hidden)
@@ -1111,7 +1205,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   border: 0;
   background: none;
   color: var(--text-2);
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.76rem;
   letter-spacing: 0.01em;
   line-height: 1.5;
@@ -1130,13 +1224,12 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   background: var(--surface);
   border-radius: 4px;
   overflow: hidden;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.2s ease;
 }
-.card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow);
-}
+/* Hover reads as "this one is selected", not "this one is floating" — no lift,
+   no drop shadow, no image zoom. The border and the title carry it. */
+.card:hover { border-color: var(--accent-border); }
+.card:hover .card-top h3 { color: var(--accent); }
 
 .card-media {
   position: relative;
@@ -1149,9 +1242,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
 }
-.card:hover .card-media img { transform: scale(1.035); }
 
 /* Video preview: injected by main.js on hover for [data-video] media */
 .card-video {
@@ -1177,7 +1268,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   border-radius: 3px;
   background: rgba(10, 10, 12, 0.72);
   color: #f0f0f3;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.04em;
   pointer-events: none;
@@ -1207,7 +1298,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .card-top h3 { margin: 0; font-size: 1.08rem; }
 
 .card-date {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.74rem;
   color: var(--text-3);
   white-space: nowrap;
@@ -1237,7 +1328,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 
 .team-badge {
   display: inline-block;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1274,12 +1365,11 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   border-radius: 4px;
   background: var(--accent);
   color: var(--accent-contrast);
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 .card-links .card-cta:hover {
   background: var(--accent-hover);
   color: var(--accent-contrast);
-  transform: translateY(-1px);
 }
 .card-links .card-cta .icon { transition: transform 0.2s ease; }
 .card-links .card-cta:hover .icon { transform: translateX(3px); }
@@ -1301,12 +1391,10 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   border-radius: 4px;
   padding: 0.75rem;
   color: var(--text);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.2s ease;
 }
 .bd-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow);
+  border-color: var(--accent-border);
   color: var(--text);
 }
 .bd-card img {
@@ -1354,7 +1442,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .crumb .icon { transform: rotate(180deg); }
 
 .cs-meta {
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--text-3);
   margin-bottom: 1rem;
@@ -1400,7 +1488,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .facts .fact-k {
   display: block;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1408,6 +1496,21 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   margin-bottom: 0.15rem;
 }
 .facts .fact-v { font-weight: 600; font-size: 0.95rem; }
+
+/* Analytics opt-out control on the privacy page */
+.optout-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 1.4rem 0 0.6rem;
+}
+.optout-status {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+.optout-note { font-size: 0.85rem; }
 
 /* Case-study prose sections */
 .cs-section { padding-block: clamp(2.5rem, 6vh, 4rem); }
@@ -1477,13 +1580,11 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
-  transition: background-color 0.2s ease, border-color 0.2s ease,
-              color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .next-nav a:hover {
   border-color: var(--accent);
   color: var(--accent);
-  transform: translateY(-1px);
 }
 .next-nav a:not(.prev) {
   background: var(--accent);
@@ -1585,7 +1686,7 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   left: 50%;
   transform: translateX(-50%);
   color: #8b8b97;
-  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
 }
@@ -1810,19 +1911,14 @@ html.lightbox-open body { overflow: hidden; }
    -------------------------------------------------------------------------- */
 /* Scroll-reveal: hidden state only applies once JS has added .js to <html>,
    so content is never lost without JavaScript. */
+/* Deliberately just a short fade: no upward slide, no per-card stagger. A grid
+   of cards flying in one after another is the thing that makes a page feel
+   generated rather than built. */
 html.js .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.35s ease;
 }
-html.js .reveal.in {
-  opacity: 1;
-  transform: none;
-}
-/* Gentle stagger inside grids */
-html.js .project-grid .reveal.in:nth-child(2) { transition-delay: 0.07s; }
-html.js .project-grid .reveal.in:nth-child(3) { transition-delay: 0.14s; }
-html.js .project-grid .reveal.in:nth-child(4) { transition-delay: 0.21s; }
+html.js .reveal.in { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1833,7 +1929,5 @@ html.js .project-grid .reveal.in:nth-child(4) { transition-delay: 0.21s; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  html.js .reveal { opacity: 1; transform: none; }
-  .card:hover, .bd-card:hover, .btn:hover { transform: none; }
-  .card:hover .card-media img { transform: none; }
+  html.js .reveal { opacity: 1; }
 }

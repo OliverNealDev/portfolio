@@ -38,7 +38,9 @@
   var nav = document.querySelector(".site-nav");
 
   if (navToggle && nav) {
-    var desktop = window.matchMedia("(min-width: 761px)");
+    // Must stay in step with the mobile-nav breakpoint in styles.css
+    // (@media max-width: 900px), or the open state outlives the dropdown.
+    var desktop = window.matchMedia("(min-width: 901px)");
 
     function setNav(open) {
       nav.classList.toggle("open", open);

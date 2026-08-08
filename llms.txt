@@ -10,7 +10,7 @@ Contact: oliverjn04@gmail.com
 
 ## Portfolio
 
-- [Home](https://oliverneal.dev/): about, current role, skills, all eight projects, education and contact
+- [Home](https://oliverneal.dev/): about, current role, skills, all nine projects, education and contact
 - [CV](https://oliverneal.dev/cv.html): full CV in HTML, with a PDF download at https://oliverneal.dev/Oliver_Neal_CV.pdf
 
 ## Current role
