@@ -124,11 +124,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -188,7 +189,15 @@
           <li><span class="fact-k">Engine</span><span class="fact-v">Unity 3D · C#</span></li>
           <li><span class="fact-k">Grade</span><span class="fact-v">90 / 100</span></li>
           <li><span class="fact-k">Award</span><span class="fact-v">ExpoTees 2026 winner</span></li>
+          <li><span class="fact-k">Scale</span><span class="fact-v">88 scripts · ~17k lines</span></li>
         </ul>
+
+        <p class="cs-repo-note">
+          The repository stays private under university assessment policy, so
+          there is no public source link for this one. The excerpts below are
+          taken from it directly, and I am happy to walk through the code on
+          request.
+        </p>
       </div>
     </section>
 
@@ -319,6 +328,51 @@
             better station pulls in bigger crowds, which puts more pressure on the
             very layout that earned the rating in the first place.
           </p>
+
+          <p>
+            The whole thing runs on a one second tick rather than per frame, and
+            every rating is eased toward its target with a <code>Mathf.Lerp</code>
+            rather than snapped. That smoothing is deliberate: raw targets jump
+            around as passengers move, and a star rating that flickers reads as a
+            bug rather than as feedback.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Managers/RatingManager.cs</span>
+              <span class="code-note">the tick, the six targets, and the roll-up</span>
+            </figcaption>
+<pre><code>void Update()
+{
+    tickTimer += Time.deltaTime;
+
+    if (tickTimer &gt;= 1f)
+    {
+        CalculateTargetsAndApply();
+        tickTimer -= 1f;
+    }
+}
+
+void CalculateTargetsAndApply()
+{
+    List&lt;Passenger&gt; floorEligiblePassengers = GetFloorEligiblePassengers();
+    float targetCleanliness = GetCleanlinessTarget();
+    float targetCrowdedness = GetCrowdednessTarget(floorEligiblePassengers);
+    float targetQueueTimes = GetQueueTimesTarget();
+    float targetChoice = GetChoiceTarget();
+    float targetPassengerNeeds = GetPassengerNeedsTarget();
+    float targetDecoration = GetDecorationTarget(floorEligiblePassengers);
+
+    cleanlinessRating = Mathf.Lerp(cleanlinessRating, targetCleanliness, 0.2f);
+    crowdednessRating = Mathf.Lerp(crowdednessRating, targetCrowdedness, 0.2f);
+    queueTimesRating = Mathf.Lerp(queueTimesRating, targetQueueTimes, 0.2f);
+    choiceRating = Mathf.Lerp(choiceRating, targetChoice, 0.2f);
+    passengerNeedsRating = Mathf.Lerp(passengerNeedsRating, targetPassengerNeeds, 0.2f);
+    decorationRating = Mathf.Lerp(decorationRating, targetDecoration, 0.2f);
+
+    stationRating = (cleanlinessRating + crowdednessRating + queueTimesRating + passengerNeedsRating + choiceRating + decorationRating) / 6f;
+}</code></pre>
+          </figure>
         </div>
         <figure class="media-figure reveal">
           <img src="Project Media/HueStation/stationratings.webp"
@@ -390,6 +444,72 @@
             "who does what" decision while each worker just runs its own small state
             machine. Security even prioritises chasing down fare evaders over
             routine patrols, all through the same dispatch model.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARCHITECTURE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Architecture</p>
+          <h2>Keeping 17,000 lines workable on my own</h2>
+          <p>
+            The hardest part of this project was not any single system. It was
+            that by the end there were <strong>88 scripts and about 17,000 lines
+            of C#</strong>, all written by one person over one academic year, and
+            it still had to be something I could open in week thirty and change
+            without breaking. That only worked because the code is sorted into
+            layers with different jobs, rather than a folder of scripts.
+          </p>
+
+          <ul class="arch-list">
+            <li>
+              <span class="arch-n">11</span>
+              <span class="arch-k">Managers</span>
+              <span class="arch-d">Own global state and the simulation tick: passengers, economy, ratings, progression, trains, saves, the grid.</span>
+            </li>
+            <li>
+              <span class="arch-n">3</span>
+              <span class="arch-k">Coordinators</span>
+              <span class="arch-d">Hand out work. The janitor and security coordinators decide who does what, so no worker has to know about any other.</span>
+            </li>
+            <li>
+              <span class="arch-n">39</span>
+              <span class="arch-k">Controllers</span>
+              <span class="arch-d">One placeable thing each: ticket machines, barriers, platforms, vending machines, menus. The bulk of the file count, and the part that grows every time content is added.</span>
+            </li>
+            <li>
+              <span class="arch-n">5</span>
+              <span class="arch-k">Characters</span>
+              <span class="arch-d">Passenger, Staff, Janitor, Security Drone, all on a shared Person base.</span>
+            </li>
+            <li>
+              <span class="arch-n">11</span>
+              <span class="arch-k">Components</span>
+              <span class="arch-d">Small reusable behaviours bolted onto anything that needs them: billboarding, hover reveals, progress bars, need icons.</span>
+            </li>
+            <li>
+              <span class="arch-n">8</span>
+              <span class="arch-k">ScriptableObjects</span>
+              <span class="arch-d">Data, not code: buildables, trains, staff, expansions, dialogue and visuals, so content is authored in the editor instead of compiled in.</span>
+            </li>
+          </ul>
+
+          <p>
+            The split that mattered most was <strong>Coordinators sitting between
+            Managers and Characters</strong>. Before that, staff behaviour was
+            asking the world about other staff, and every new worker type made
+            that worse. Moving the "who takes this job" decision up into a
+            coordinator meant a janitor only ever runs its own state machine, and
+            adding the security drone later was a new character plus a new
+            coordinator rather than an edit to everything that already existed.
+          </p>
+          <p>
+            The ScriptableObject layer is what kept the 39 controllers from
+            becoming 200. Trains, staff and buildables are authored as data, so
+            most new content is an asset rather than a class.
           </p>
         </div>
       </div>

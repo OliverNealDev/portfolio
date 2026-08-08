@@ -121,11 +121,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -277,6 +278,56 @@
             <li><strong>Time-sliced proximity AI.</strong> The expensive "what is near me" queries are the bottleneck, so they are amortised across frames: roughly 150 cells are processed per pass, carrying an index forward until the whole colony has been swept.</li>
             <li><strong>One manager, not thousands of updates.</strong> A single simulation manager iterates the cell and food lists directly instead of every cell running its own per-frame update.</li>
           </ul>
+
+          <p>
+            The two rates are just two independent accumulators, and the slicing
+            falls out of one flag. When the slow tick fires it clears
+            <code>isProximityUpdateComplete</code> and starts a batch; every
+            <code>FixedUpdate</code> after that continues the sweep until the
+            colony has been covered, so the cost of a proximity pass is spread
+            over however many frames it needs rather than landing in one.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Managers/UnicellManager/EntityManager.cs</span>
+              <span class="code-note">the fast tick, the slow tick, and the sweep continuing across frames</span>
+            </figcaption>
+<pre><code>        if (LogicUpdateTimer &gt; LogicUpdateTimerThreshold)
+        {
+            LogicUpdateTimer -= LogicUpdateTimerThreshold;
+            LogicUpdate();
+        }
+
+        SlowLogicUpdateTimer += Time.deltaTime;
+        if (SlowLogicUpdateTimer &gt; SlowLogicUpdateTimerThreshold)
+        {
+            SlowLogicUpdateTimer -= SlowLogicUpdateTimerThreshold;
+            isProximityUpdateComplete = false;
+            ProximityBatchUpdate();
+            SlowLogicUpdate();
+
+            CheckUnicellsForHunger();
+        }
+    }
+    void FixedUpdate()
+    {
+        if (!isProximityUpdateComplete)
+        {
+            ProximityBatchUpdate();
+        }</code></pre>
+          </figure>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Managers/UnicellManager/EntityManager.cs</span>
+              <span class="code-note">the batch window itself: a carried index, capped at the end of the list</span>
+            </figcaption>
+<pre><code>    void ProximityBatchUpdate()
+    {
+        // Determines end index for this batch
+        int endIndex = Mathf.Min(currentIndex + ProximityBatchSize, unicellList.Count);</code></pre>
+          </figure>
         </div>
         <div class="media-pair">
           <figure class="media-figure reveal">

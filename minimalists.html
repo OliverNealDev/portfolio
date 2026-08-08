@@ -121,11 +121,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -257,6 +258,28 @@
             enemy structures are poorly garrisoned, when to reinforce a border
             house and when to mass for a push on a headquarters.
           </p>
+          <p>
+            Crucially it commits through the same percentage interface the player
+            uses, so it is bound by the same rules. It sizes the attack from what
+            the target is actually holding plus a margin, then clamps the result,
+            which is what stops it either trickling in one unit at a time or
+            emptying a node it still needs to defend.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/AIManager.cs</span>
+              <span class="code-note">the AI sizing a commitment, after scoring every source and target pair</span>
+            </figcaption>
+<pre><code>if (bestSourceNode != null &amp;&amp; bestTargetNode != null)
+{
+    // Send a calculated percentage of units to be efficient.
+    float unitsToSend = bestTargetNode.UnitCount + OFFENSIVE_ATTACK_MARGIN;
+    float percentage = unitsToSend / bestSourceNode.UnitCount;
+    bestSourceNode.SendUnits(bestTargetNode, Mathf.Clamp(percentage, 0.1f, 1.0f));
+    return true; // Offensive action taken.
+}</code></pre>
+          </figure>
           <p>
             There is not just one AI, either. I wrote <strong>several distinct AI
             personalities</strong>: a priority-list attacker, a pure scorer, one

@@ -121,11 +121,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -242,6 +243,29 @@
             new threat always announces itself cleanly rather than hiding inside a
             random roll.
           </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Pin/PinScript.cs</span>
+              <span class="code-note">one hazard's gate, scaling and guaranteed introduction; each type repeats this with its own thresholds</span>
+            </figcaption>
+<pre><code>private void SetPinType()
+{
+
+    if (PlayerController.playercontroller.TimeAlive &gt; 40) // Minimum time to pass before this pin can begin spawning
+    {
+        RedPinWeight = 1 + (int)Math.Floor(Main.main.Points / 240f); // Sets the weight (spawn likelyhood), correlating directly with the player's points
+
+        if (Main.main.RedIntroduced == false) // If the pin hasn't been introduced after it's become allowed to spawn, this runs
+        {
+            RedPinWeight = 999999; // Guarentees the introduction of this pin after the Time Alive exceeds the value
+        }
+    }
+    else
+    {
+        RedPinWeight = 0;
+    }</code></pre>
+          </figure>
         </div>
         <figure class="media-figure reveal">
           <video controls preload="none" poster="Project Media/Pinnable/GameplayPoster.webp"

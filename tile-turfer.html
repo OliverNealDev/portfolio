@@ -122,11 +122,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -212,6 +213,56 @@
             how fast you fire, which attack patterns you have unlocked, how many
             enemies spawn, and how hard those enemies push. Winning territory
             literally raises the stakes.
+          </p>
+          <p>
+            The value itself is one line, and everything else reads it rather than
+            keeping its own copy. That is the part worth stealing: because the
+            player's fire rate and the enemy's fire pattern are both derived from
+            the same number, they can never disagree about how far into the match
+            you are.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/TurfManager.cs</span>
+              <span class="code-note">the single source of truth</span>
+            </figcaption>
+<pre><code>public float GetTurfPercentage()
+{
+    if (totalTiles == 0) return 0f;
+    return (float)ownedTiles / (float)totalTiles;
+}</code></pre>
+          </figure>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/EnemyController.cs</span>
+              <span class="code-note">one consumer: the same value picks the enemy's fire pattern</span>
+            </figcaption>
+<pre><code>void SelectAndFirePattern()
+{
+    float difficulty = (turfManager != null) ? turfManager.GetTurfPercentage() : 0f;
+
+    if (difficulty &gt;= milestone3)
+    {
+        StartCoroutine(FirePatternWave());
+    }
+    else if (difficulty &gt;= milestone2)
+    {
+        StartCoroutine(FirePatternTriangle());
+    }
+    else if (difficulty &gt;= milestone1)
+    {
+        ShootBullet(0f, 0.2f);
+        ShootBullet(0f, -0.2f);
+    }</code></pre>
+          </figure>
+
+          <p>
+            The player's weapon reads the same call and interpolates between a slow
+            and a fast cadence with it, so a single <code>Mathf.Lerp</code> keeps
+            both sides of the fight moving in step:
+            <code>currentFireDelay = Mathf.Lerp(slowFireRate, fastFireRate, turfManager.GetTurfPercentage());</code>
           </p>
         </div>
         <figure class="media-figure reveal">
