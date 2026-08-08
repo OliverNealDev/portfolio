@@ -199,7 +199,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -510,20 +510,31 @@
             <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
           </a>
           <div class="card-body">
-            <p class="award-badge">
-              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
-              Best Games Programming &amp; Development Artefact · ExpoTees 2026
-            </p>
             <div class="card-top">
               <h3>Cyber Station</h3>
               <span class="card-date">Apr 2026</span>
             </div>
             <p>
-              My final year project: a neon station management game where placement,
-              passenger flow, ratings and progression all feed into each other.
-              Passenger AI, train scheduling, staff, economy and save systems run
-              together in one simulation.
+              My final year project: a neon station management game about building a
+              transport hub that can take the pressure. Four systems pull against each
+              other, so every layout decision changes how passengers path through the
+              space, which moves the ratings, which gates what you can build next.
             </p>
+            <ul class="project-systems">
+              <li><b>Placement</b> a full build catalogue, each item costed and carrying a stat effect</li>
+              <li><b>Passenger flow</b> crowds navigating the concourse you laid out</li>
+              <li><b>Ratings</b> a star score read off how well the station actually copes</li>
+              <li><b>Progression</b> tiers that unlock against that rating</li>
+            </ul>
+            <p class="project-support">
+              Train scheduling, self dispatching staff AI, an economy and save/load
+              sit around that core.
+            </p>
+            <dl class="project-specs">
+              <div><dt>Role</dt><dd>Solo developer</dd></div>
+              <div><dt>Engine</dt><dd>Unity 3D · C#</dd></div>
+              <div><dt>Grade</dt><dd>90 / 100</dd></div>
+            </dl>
             <ul class="tags">
               <li>Unity 3D</li><li>C#</li><li>AI Navigation</li><li>Simulation</li>
             </ul>
@@ -537,12 +548,21 @@
             </div>
           </div>
 
-          <!-- The award itself, alongside the project that won it -->
+          <!-- The award itself, in its own column beside the write-up. The
+               trophy credit lives here rather than in .card-body so the award
+               is stated once, not twice. -->
           <figure class="award-shot">
             <img src="winningexpoteesaward.jpg"
                  alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming &amp; Development"
                  width="480" height="600" loading="lazy">
-            <figcaption>Collecting the award at ExpoTees 2026, Teesside University</figcaption>
+            <figcaption>
+              <b class="award-shot-head">
+                <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
+                Best Artefact
+              </b>
+              Games Programming &amp; Development<br>
+              ExpoTees 2026, Teesside University
+            </figcaption>
           </figure>
         </article>
 
@@ -1268,6 +1288,11 @@ This has been a huge step forward for me as a games developer. It pushed me to b
 
         <!-- The form is the main path, so the mailto is framed as the
              alternative for anyone who would rather use their own client. -->
+        <p class="contact-privacy reveal">
+          Your name, email and message go to my inbox so I can reply, and
+          nowhere else. <a href="privacy.html">Privacy policy</a>.
+        </p>
+
         <p class="contact-email reveal">
           Rather use your own email client?
           <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a>
@@ -1317,6 +1342,7 @@ This has been a huge step forward for me as a games developer. It pushed me to b
             <li><a href="#log">Log</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="cv.html">CV</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
           </ul>
         </div>
         <div>
@@ -1334,7 +1360,7 @@ This has been a huge step forward for me as a games developer. It pushed me to b
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© <span data-year>2026</span> Oliver Neal</span>
+        <span>© <span data-year>2026</span> Oliver Neal · <a href="privacy.html">Privacy</a></span>
         <span><a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
       </div>
     </div>
