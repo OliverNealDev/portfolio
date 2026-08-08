@@ -100,7 +100,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -166,17 +166,20 @@
             Play on itch.io
             <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
           </a>
+          <!-- Deliberately not "Source on GitHub": the public repo is the ECS
+               rebuild described in "What I'd rebuild", not the GameObject build
+               this write-up is about. -->
           <a class="btn btn-outline" href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener">
             <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
-            Source on GitHub
+            ECS rebuild on GitHub
           </a>
         </div>
 
         <div class="cs-hero-media reveal">
-          <video controls preload="none" poster="Project Media/Unicellular/10kEntitiesPoster.webp"
+          <video controls preload="none" poster="media/unicellular/10k-entities-poster.webp"
                  width="1280" height="720"
                  aria-label="Unicellular stress test video: ten thousand entities simulating at once">
-            <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm">
+            <source src="media/unicellular/10k-entities.webm" type="video/webm">
           </video>
         </div>
 
@@ -218,10 +221,10 @@
           </p>
         </div>
         <figure class="media-figure reveal">
-          <video controls preload="none" poster="Project Media/Unicellular/BuyingUnicellsPoster.webp"
+          <video controls preload="none" poster="media/unicellular/buying-unicells-poster.webp"
                  width="1280" height="720"
                  aria-label="Unicellular gameplay video: purchasing unicells and adding them to the colony">
-            <source src="Project Media/Unicellular/BuyingUnicells.webm" type="video/webm">
+            <source src="media/unicellular/buying-unicells.webm" type="video/webm">
           </video>
           <figcaption>The core loop: buy cells, grow the colony, earn faster.</figcaption>
         </figure>
@@ -249,10 +252,10 @@
           </p>
         </div>
         <figure class="media-figure reveal">
-          <video controls preload="none" poster="Project Media/Unicellular/UnicellInteractionPoster.webp"
+          <video controls preload="none" poster="media/unicellular/unicell-interaction-poster.webp"
                  width="1280" height="720"
                  aria-label="Unicellular video: two unicells meeting and interacting">
-            <source src="Project Media/Unicellular/UnicellInteraction.webm" type="video/webm">
+            <source src="media/unicellular/unicell-interaction.webm" type="video/webm">
           </video>
           <figcaption>Cells interacting; each side of the exchange is a state transition.</figcaption>
         </figure>
@@ -331,18 +334,18 @@
         </div>
         <div class="media-pair">
           <figure class="media-figure reveal">
-            <video controls preload="none" poster="Project Media/Unicellular/1000EntitiesPoster.webp"
+            <video controls preload="none" poster="media/unicellular/1000-entities-poster.webp"
                    width="1280" height="720"
                    aria-label="Unicellular stress test video with one thousand entities">
-              <source src="Project Media/Unicellular/1000Entities.webm" type="video/webm">
+              <source src="media/unicellular/1000-entities.webm" type="video/webm">
             </video>
             <figcaption>Benchmark one: 1,000 entities.</figcaption>
           </figure>
           <figure class="media-figure reveal">
-            <video controls preload="none" poster="Project Media/Unicellular/10kEntitiesPoster.webp"
+            <video controls preload="none" poster="media/unicellular/10k-entities-poster.webp"
                    width="1280" height="720"
                    aria-label="Unicellular stress test video with ten thousand entities">
-              <source src="Project Media/Unicellular/10KEntities.webm" type="video/webm">
+              <source src="media/unicellular/10k-entities.webm" type="video/webm">
             </video>
             <figcaption>Benchmark two: 10,000 entities, ~90 FPS on screen.</figcaption>
           </figure>

@@ -39,10 +39,10 @@
         "@id": "https://oliverneal.dev/cyber-station.html#article",
         "url": "https://oliverneal.dev/cyber-station.html",
         "headline": "Cyber Station · Project Breakdown",
-        "description": "How Cyber Station works: placement and construction, a central fixed-tick passenger simulation with cost-based navigation, coordinated staff AI, and a six factor station rating system.",
+        "description": "How Cyber Station works: placement and construction, a central fixed-tick passenger simulation that routes by lowest estimated total delay, runtime NavMesh baking, coordinated staff AI, and a six factor station rating system.",
         "image": "https://oliverneal.dev/og/cyber-station.jpg",
         "datePublished": "2026-05-07",
-        "dateModified": "2026-08-02",
+        "dateModified": "2026-08-08",
         "inLanguage": "en-GB",
         "author": { "@id": "https://oliverneal.dev/#person" },
         "publisher": { "@id": "https://oliverneal.dev/#person" },
@@ -66,7 +66,11 @@
         "applicationCategory": "GameApplication",
         "inLanguage": "en",
         "award": "Best Games Programming and Development Artefact, ExpoTees 2026",
-        "sameAs": "https://olivernealdev.itch.io/cyber-station"
+        "codeRepository": "https://github.com/OliverNealDev/CyberStation",
+        "sameAs": [
+          "https://olivernealdev.itch.io/cyber-station",
+          "https://github.com/OliverNealDev/CyberStation"
+        ]
       },
       {
         "@type": "BreadcrumbList",
@@ -102,7 +106,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -174,13 +178,17 @@
             Play on itch.io
             <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
           </a>
+          <a class="btn btn-outline" href="https://github.com/OliverNealDev/CyberStation" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            Source on GitHub
+          </a>
         </div>
 
         <div class="cs-hero-media reveal">
-          <video controls preload="none" poster="Project Media/HueStation/LateGameZoomedOutGameplayScreenshot.webp"
+          <video controls preload="none" poster="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
                  width="1920" height="1080"
                  aria-label="Cyber Station gameplay video: a minute of building, passenger flow and trains arriving in a late game station">
-            <source src="Project Media/HueStation/CyberStationGameplay.mp4" type="video/mp4">
+            <source src="media/cyber-station/gameplay.mp4" type="video/mp4">
           </video>
         </div>
 
@@ -189,15 +197,8 @@
           <li><span class="fact-k">Engine</span><span class="fact-v">Unity 3D · C#</span></li>
           <li><span class="fact-k">Grade</span><span class="fact-v">90 / 100</span></li>
           <li><span class="fact-k">Award</span><span class="fact-v">ExpoTees 2026 winner</span></li>
-          <li><span class="fact-k">Scale</span><span class="fact-v">88 scripts · ~17k lines</span></li>
+          <li><span class="fact-k">Scale</span><span class="fact-v">86 scripts · ~17k lines</span></li>
         </ul>
-
-        <p class="cs-repo-note">
-          The repository stays private under university assessment policy, so
-          there is no public source link for this one. The excerpts below are
-          taken from it directly, and I am happy to walk through the code on
-          request.
-        </p>
       </div>
     </section>
 
@@ -248,7 +249,7 @@
           </p>
         </div>
         <figure class="media-figure reveal">
-          <img src="Project Media/HueStation/buildnenu.webp"
+          <img src="media/cyber-station/build-menu.webp"
                alt="Cyber Station build menu: a Trainline Globe decoration selected, showing its price, decoration strength and a rotate preview hint, above a scrollable item catalogue"
                width="1200" height="670" loading="lazy">
           <figcaption>The build catalogue: every item shows its cost and stat effect, with a rotating preview before placing.</figcaption>
@@ -273,35 +274,187 @@
           <p>
             Rather than every passenger running its own per-frame update, the whole
             crowd is driven from a single manager on a <strong>fixed 10&nbsp;Hz
-            logic tick</strong>. Each passenger runs a small hierarchical state
-            machine, and when it needs a facility it does not simply walk to the
-            nearest one. It picks the option with the <strong>lowest total
-            cost</strong>, weighing the real NavMesh path length against the queue
-            it would have to wait in, and re-targets if something better is built
-            nearby.
+            logic tick</strong>. Each passenger runs a two-level state machine:
+            a master state for where it is in its journey
+            (<code>InStation</code>, <code>OnPlatform</code>, <code>OnTrain</code>)
+            and a sub-state for what it is doing there
+            (<code>Idle</code>, <code>MovingToTarget</code>,
+            <code>InteractingWithSomething</code>). Splitting it that way means
+            "walking somewhere" is written once and reused, instead of once per
+            place a passenger can be walking.
           </p>
           <p>
-            Because the station is rebuilt every time you place or demolish
-            something, the navigation mesh is <strong>baked at runtime</strong>. The
-            tricky part is that the passengers and litter already in the world would
-            otherwise be baked in as obstacles, so their colliders are temporarily
-            hidden during each bake and restored afterwards, leaving a clean mesh
-            for everyone to path on.
+            When a passenger needs a facility it does not simply walk to the nearest
+            one. It picks the option with the <strong>lowest estimated total
+            delay</strong>, and the useful part is that both halves of that estimate
+            are in the same unit. The queue wait is already seconds; the walk is
+            turned into seconds by measuring the <strong>real NavMesh path</strong>,
+            corner to corner, and dividing by that passenger's own speed. Adding
+            them is then meaningful, where adding a distance to a queue length would
+            not be, and it is why a nearer machine with six people at it correctly
+            loses to a further one standing empty.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Managers/PassengerManager.cs</span>
+              <span class="code-note">choosing a facility, and the walk estimate underneath it</span>
+            </figcaption>
+<pre><code>private StationFacility GetMostAccessibleFacility(List&lt;StationFacility&gt; facilities, Passenger passenger, float maxWaitTime, out float bestWait)
+{
+    bestWait = Mathf.Infinity;
+    // ... null and empty guards ...
+    StationFacility bestFacility = null;
+
+    for (int i = 0; i &lt; facilities.Count; i++)
+    {
+        StationFacility facility = facilities[i];
+        if (facility == null || !facility.CanAcceptPerson(passenger))
+        {
+            continue;
+        }
+
+        float estimatedWait = facility.GetEstimatedQueueWaitTime();
+        float estimatedWalkTime = EstimateWalkTimeToService(passenger, facility);
+        float totalEstimatedDelay = estimatedWait + estimatedWalkTime;
+
+        // Cross-platform facilities should stay viable; delay only affects ordering.
+        if (totalEstimatedDelay &lt; bestWait)
+        {
+            bestWait = totalEstimatedDelay;
+            bestFacility = facility;
+        }
+    }
+
+    return bestFacility;
+}
+
+private float EstimateWalkTimeToService(Passenger passenger, QueuableObject target)
+{
+    // ... resolve a reachable point on the mesh near the target ...
+    float routeDistance = EstimateRouteDistance(passenger.transform.position, routeDestination);
+    float walkSpeed = GetEstimatedWalkSpeed(passenger);
+    return routeDistance / walkSpeed;
+}
+
+private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
+{
+    if (facilityRoutePath != null &amp;&amp;
+        NavMesh.CalculatePath(startPosition, destination, NavMesh.AllAreas, facilityRoutePath) &amp;&amp;
+        facilityRoutePath.status == NavMeshPathStatus.PathComplete)
+    {
+        return GetPathLength(facilityRoutePath);
+    }
+
+    // No complete path: fall back to flat distance so the facility is ranked
+    // last rather than dropped.
+    Vector3 flatOffset = destination - startPosition;
+    flatOffset.y = 0f;
+    return flatOffset.magnitude;
+}</code></pre>
+          </figure>
+
+          <p>
+            Two details in there are deliberate. <code>facilityRoutePath</code> is a
+            single <code>NavMeshPath</code> reused for every query rather than a new
+            one per candidate, because this runs for every passenger that wants
+            something and allocating per candidate would hand the garbage collector
+            a steady drip of work. And when no complete path exists the estimate
+            falls back to flat distance rather than infinity, so an unreachable
+            facility sorts last instead of vanishing, which is what stops a
+            passenger freezing when the player walls something off mid-journey.
           </p>
         </div>
         <div class="media-pair">
           <figure class="media-figure reveal">
-            <img src="Project Media/HueStation/LateGameGameplayScreenshot.webp"
+            <img src="media/cyber-station/late-game-gameplay-screenshot.webp"
                  alt="Cyber Station: a packed tier 8 concourse with crowds of passengers pathing between shops, ticket machines and platforms"
                  width="1400" height="788" loading="lazy">
             <figcaption>A maxed out tier 8 station: agents pathing between entrances, machines and platforms.</figcaption>
           </figure>
           <figure class="media-figure reveal">
-            <img src="Project Media/HueStation/LateGameZoomedInGameplayScreenshot.webp"
+            <img src="media/cyber-station/late-game-zoomed-in-gameplay-screenshot.webp"
                  alt="Cyber Station up close: passengers queueing at neon yellow, cyan and pink platforms and ticket machines"
                  width="1400" height="782" loading="lazy">
             <figcaption>Up close, every passenger is queueing, boarding or heading somewhere specific.</figcaption>
           </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NAVMESH ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Navigation</p>
+          <h2>Paying for the bake only when the floor changes</h2>
+          <p>
+            A management game where the player rearranges the world is a problem for
+            navigation, and the obvious answer, rebaking the mesh whenever anything
+            is placed, is the wrong one: <code>BuildNavMesh()</code> is a
+            <strong>synchronous full rebuild on the main thread</strong>, so doing it
+            per placement would hitch the game every time you put down a bin.
+          </p>
+          <p>
+            So there are two mechanisms, split by what actually changed. Placing a
+            ticket machine or a barrier does not change the walkable floor, it just
+            puts something on it, so those 22 buildable prefabs each carry a
+            <strong><code>NavMeshObstacle</code></strong> and carve the existing mesh
+            at runtime for free. The mesh is only genuinely rebuilt when the floor
+            itself grows, which is when the player buys a station expansion, so the
+            cost lands on a deliberate, occasional, already-celebratory action
+            instead of on every click.
+          </p>
+          <p>
+            The awkward part is what is standing on the floor at that moment.
+            Passengers and dropped litter are colliders too, and a bake would treat
+            a waiting crowd as permanent architecture, carving people-shaped holes
+            into the mesh they are about to walk on. So they are switched off for the
+            duration and switched back after. The <code>try</code>/<code>finally</code>
+            is the bit I would defend in review: if the bake ever throws, the station
+            still gets its passengers back rather than being left with a scene full
+            of invisible, collider-less people.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/NavMeshManager.cs</span>
+              <span class="code-note">hide, bake, and restore whatever happens</span>
+            </figcaption>
+<pre><code>public void BuildNavMesh()
+{
+    if (_navMeshManager != null)
+    {
+        List&lt;ColliderState&gt; litterColliders = DisableLitterCollidersForBake();
+        List&lt;ColliderState&gt; characterColliders = DisablePersonCollidersForBake();
+        List&lt;RendererState&gt; characterRenderers = DisablePersonRenderersForBake();
+
+        try
+        {
+            _navMeshManager.BuildNavMesh();
+        }
+        finally
+        {
+            RestoreRendererStates(characterRenderers);
+            RestoreColliderStates(characterColliders);
+            RestoreColliderStates(litterColliders);
+        }
+    }
+    else
+    {
+        Debug.LogError("Cannot build NavMesh because NavMeshSurface component is missing.");
+    }
+}</code></pre>
+          </figure>
+
+          <p>
+            Each helper records the <em>previous</em> enabled state rather than
+            blanket-enabling everything afterwards, so anything that was already
+            disabled for its own reasons, a passenger mid-despawn, litter queued for
+            cleanup, stays disabled. Restoring to <code>true</code> would have been
+            one line shorter and would have quietly resurrected objects the rest of
+            the game had finished with.
+          </p>
         </div>
       </div>
     </section>
@@ -321,6 +474,11 @@
             passengers get, so a station can be profitable and still bleed
             stars because people are bunching at a pinch point.
           </p>
+          <p class="note">
+            Two of those were renamed for the UI after the code was written, so
+            the excerpt below reads slightly differently: <code>queueTimes</code>
+            is Queue Lengths and <code>passengerNeeds</code> is Service.
+          </p>
           <p>
             This is the system that ties the game together, and it closes a loop:
             the six ratings are smoothed and rolled into an overall score, and that
@@ -329,12 +487,84 @@
             very layout that earned the rating in the first place.
           </p>
 
+          <figure class="diagram reveal">
+            <figcaption>
+              <span class="diagram-title">The rating loop</span>
+              <span class="diagram-note">succeeding is what makes the next minute harder</span>
+            </figcaption>
+            <svg viewBox="0 0 880 400" role="img" aria-labelledby="loop-t loop-d">
+              <title id="loop-t">How the station rating feeds back into the game</title>
+              <desc id="loop-d">Your layout shapes passenger flow, which feeds the six ratings. The six ratings are smoothed and averaged into an overall star rating. That rating sets the spawn rate, which sends more passengers back into the flow, closing the loop. The same rating also gates tier unlocks, which give you a bigger catalogue to build with, changing the layout you started from.</desc>
+
+              <defs>
+                <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path class="dg-head" d="M0 0 L10 5 L0 10 z"/>
+                </marker>
+              </defs>
+
+              <!-- Top row -->
+              <rect class="dg-box" x="40" y="50" width="200" height="66" rx="5"/>
+              <text class="dg-title" x="140" y="80" text-anchor="middle">Your layout</text>
+              <text class="dg-desc" x="140" y="100" text-anchor="middle">what you place, and where</text>
+
+              <rect class="dg-box" x="340" y="50" width="200" height="66" rx="5"/>
+              <text class="dg-title" x="440" y="80" text-anchor="middle">Passenger flow</text>
+              <text class="dg-desc" x="440" y="100" text-anchor="middle">queues, pinch points, walk times</text>
+
+              <rect class="dg-box" x="640" y="50" width="200" height="66" rx="5"/>
+              <text class="dg-title" x="740" y="76" text-anchor="middle">Six ratings</text>
+              <text class="dg-desc" x="740" y="94" text-anchor="middle">cleanliness · crowding · queues</text>
+              <text class="dg-desc" x="740" y="109" text-anchor="middle">service · decoration · choice</text>
+
+              <!-- Bottom row -->
+              <rect class="dg-box" x="40" y="250" width="200" height="66" rx="5"/>
+              <text class="dg-title" x="140" y="280" text-anchor="middle">Tier unlocks</text>
+              <text class="dg-desc" x="140" y="300" text-anchor="middle">platforms, trains, staff</text>
+
+              <rect class="dg-box" x="340" y="250" width="200" height="66" rx="5"/>
+              <text class="dg-title" x="440" y="280" text-anchor="middle">Spawn rate</text>
+              <text class="dg-desc" x="440" y="300" text-anchor="middle">how many passengers arrive</text>
+
+              <rect class="dg-box dg-box-accent" x="640" y="250" width="200" height="66" rx="5"/>
+              <text class="dg-title" x="740" y="280" text-anchor="middle">Overall stars</text>
+              <text class="dg-desc" x="740" y="300" text-anchor="middle">smoothed, then averaged</text>
+
+              <!-- The cycle -->
+              <path class="dg-line" d="M240 83 H334" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="287" y="76" text-anchor="middle">shapes</text>
+
+              <path class="dg-line" d="M540 83 H634" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="587" y="76" text-anchor="middle">feeds</text>
+
+              <path class="dg-line" d="M740 116 V244" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="750" y="185">rolled up, 1 Hz</text>
+
+              <path class="dg-line" d="M640 283 H546" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="593" y="276" text-anchor="middle">sets</text>
+
+              <path class="dg-line" d="M440 250 V122" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="450" y="190">more passengers</text>
+
+              <path class="dg-line" d="M740 316 V370 H140 V322" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="440" y="362" text-anchor="middle">gates</text>
+
+              <path class="dg-line" d="M140 250 V122" marker-end="url(#loop-arrow)"/>
+              <text class="dg-label" x="150" y="190">bigger catalogue</text>
+            </svg>
+          </figure>
+
           <p>
             The whole thing runs on a one second tick rather than per frame, and
             every rating is eased toward its target with a <code>Mathf.Lerp</code>
             rather than snapped. That smoothing is deliberate: raw targets jump
             around as passengers move, and a star rating that flickers reads as a
-            bug rather than as feedback.
+            bug rather than as feedback. Because the tick is fixed at 1&nbsp;Hz,
+            <code>Mathf.Lerp(current, target, 0.2f)</code> is
+            <strong>exponential smoothing on a fixed step</strong>, not the
+            frame-rate dependent per-frame Lerp it resembles: the same station
+            settles at the same speed on a 30&nbsp;FPS laptop and a 240&nbsp;Hz
+            monitor.
           </p>
 
           <figure class="code reveal">
@@ -375,7 +605,7 @@ void CalculateTargetsAndApply()
           </figure>
         </div>
         <figure class="media-figure reveal">
-          <img src="Project Media/HueStation/stationratings.webp"
+          <img src="media/cyber-station/station-ratings.webp"
                alt="Cyber Station ratings screen: 99% passenger throughput efficiency, a five star overall station rating, and six ratings for cleanliness, crowdedness, queue lengths, service, decoration and choice"
                width="1200" height="670" loading="lazy">
           <figcaption>Six ratings and a throughput score roll up into the overall stars.</figcaption>
@@ -398,28 +628,33 @@ void CalculateTargetsAndApply()
         </div>
         <div class="gallery">
           <figure class="reveal">
-            <img src="Project Media/HueStation/expansions menu.webp"
-                 alt="Cyber Station expansions menu listing purchasable station expansions" loading="lazy">
+            <img src="media/cyber-station/expansions-menu.webp"
+                 alt="Cyber Station expansions menu listing purchasable station expansions"
+                 width="1200" height="674" loading="lazy">
             <figcaption>Expansions: buying more physical space.</figcaption>
           </figure>
           <figure class="reveal">
-            <img src="Project Media/HueStation/platformmenu.webp"
-                 alt="Cyber Station platform menu for adding and managing platforms" loading="lazy">
+            <img src="media/cyber-station/platform-menu.webp"
+                 alt="Cyber Station platform menu for adding and managing platforms"
+                 width="1200" height="670" loading="lazy">
             <figcaption>Platforms: capacity for more lines.</figcaption>
           </figure>
           <figure class="reveal">
-            <img src="Project Media/HueStation/trainsmenu.webp"
-                 alt="Cyber Station trains menu for purchasing and assigning trains" loading="lazy">
+            <img src="media/cyber-station/trains-menu.webp"
+                 alt="Cyber Station trains menu for purchasing and assigning trains"
+                 width="1200" height="670" loading="lazy">
             <figcaption>Trains: scheduling the actual service.</figcaption>
           </figure>
           <figure class="reveal">
-            <img src="Project Media/HueStation/staffmenu.webp"
-                 alt="Cyber Station staff menu for hiring station staff" loading="lazy">
+            <img src="media/cyber-station/staff-menu.webp"
+                 alt="Cyber Station staff menu for hiring station staff"
+                 width="1200" height="672" loading="lazy">
             <figcaption>Staff: service and cleanliness pressure valves.</figcaption>
           </figure>
           <figure class="reveal">
-            <img src="Project Media/HueStation/progressionmenu.webp"
-                 alt="Cyber Station progression menu showing tier advancement" loading="lazy">
+            <img src="media/cyber-station/progression-menu.webp"
+                 alt="Cyber Station progression menu showing tier advancement"
+                 width="1200" height="670" loading="lazy">
             <figcaption>Progression: tiers gate the whole catalogue.</figcaption>
           </figure>
         </div>
@@ -457,7 +692,7 @@ void CalculateTargetsAndApply()
           <h2>Keeping 17,000 lines workable on my own</h2>
           <p>
             The hardest part of this project was not any single system. It was
-            that by the end there were <strong>88 scripts and about 17,000 lines
+            that by the end there were <strong>86 scripts and about 17,000 lines
             of C#</strong>, all written by one person over one academic year, and
             it still had to be something I could open in week thirty and change
             without breaking. That only worked because the code is sorted into
@@ -497,6 +732,67 @@ void CalculateTargetsAndApply()
             </li>
           </ul>
 
+          <figure class="diagram reveal">
+            <figcaption>
+              <span class="diagram-title">Dependency direction</span>
+              <span class="diagram-note">control runs downward, data upward, nothing sideways</span>
+            </figcaption>
+            <svg viewBox="0 0 880 500" role="img" aria-labelledby="arch-t arch-d">
+              <title id="arch-t">Cyber Station architecture, as layers</title>
+              <desc id="arch-d">Managers sit at the top and own global state and the simulation tick. They drive two layers below them: three Coordinators, which hand out work, and thirty-nine Controllers, one per placeable thing. Coordinators hand jobs down to the five Character types, each of which runs its own state machine. Eight ScriptableObjects feed the Controllers as authored data. Eleven small Components bolt onto anything above. Every dependency points downward: no Character ever queries another Character.</desc>
+
+              <defs>
+                <marker id="arch-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path class="dg-head" d="M0 0 L10 5 L0 10 z"/>
+                </marker>
+              </defs>
+
+              <!-- Layer 1 -->
+              <rect class="dg-box dg-box-accent" x="40" y="24" width="800" height="76" rx="5"/>
+              <text class="dg-title" x="62" y="54">Managers <tspan class="dg-n">× 11</tspan></text>
+              <text class="dg-desc" x="62" y="74">Own global state and the simulation tick: passengers, economy, ratings,</text>
+              <text class="dg-desc" x="62" y="90">progression, trains, saves, the grid.</text>
+
+              <path class="dg-line" d="M220 100 V158" marker-end="url(#arch-arrow)"/>
+              <text class="dg-label" x="230" y="134">tick + state</text>
+              <path class="dg-line" d="M660 100 V158" marker-end="url(#arch-arrow)"/>
+              <text class="dg-label" x="670" y="134">owns</text>
+
+              <!-- Layer 2 -->
+              <rect class="dg-box" x="40" y="160" width="380" height="76" rx="5"/>
+              <text class="dg-title" x="62" y="190">Coordinators <tspan class="dg-n">× 3</tspan></text>
+              <text class="dg-desc" x="62" y="210">Hand out work. Decide who takes which</text>
+              <text class="dg-desc" x="62" y="226">job, and lock it so nothing is doubled up.</text>
+
+              <rect class="dg-box" x="460" y="160" width="380" height="76" rx="5"/>
+              <text class="dg-title" x="482" y="190">Controllers <tspan class="dg-n">× 39</tspan></text>
+              <text class="dg-desc" x="482" y="210">One placeable thing each: ticket machines,</text>
+              <text class="dg-desc" x="482" y="226">barriers, platforms, vending machines, menus.</text>
+
+              <path class="dg-line" d="M220 236 V294" marker-end="url(#arch-arrow)"/>
+              <text class="dg-label" x="230" y="270">next job, already locked</text>
+              <path class="dg-line" d="M660 294 V238" marker-end="url(#arch-arrow)"/>
+              <text class="dg-label" x="670" y="270">read as data</text>
+
+              <!-- Layer 3 -->
+              <rect class="dg-box" x="40" y="296" width="380" height="76" rx="5"/>
+              <text class="dg-title" x="62" y="326">Characters <tspan class="dg-n">× 5</tspan></text>
+              <text class="dg-desc" x="62" y="346">Passenger, Staff, Janitor, Security Drone,</text>
+              <text class="dg-desc" x="62" y="362">on a shared Person base. One FSM each.</text>
+
+              <rect class="dg-box" x="460" y="296" width="380" height="76" rx="5"/>
+              <text class="dg-title" x="482" y="326">ScriptableObjects <tspan class="dg-n">× 8</tspan></text>
+              <text class="dg-desc" x="482" y="346">Data, not code: buildables, trains, staff,</text>
+              <text class="dg-desc" x="482" y="362">expansions, dialogue, visuals.</text>
+
+              <!-- Layer 4 -->
+              <rect class="dg-box dg-box-loose" x="40" y="412" width="800" height="56" rx="5"/>
+              <text class="dg-title" x="62" y="440">Components <tspan class="dg-n">× 11</tspan></text>
+              <text class="dg-desc" x="62" y="458">Billboarding, hover reveals, progress bars, need icons. Bolt onto anything above.</text>
+            </svg>
+          </figure>
+
           <p>
             The split that mattered most was <strong>Coordinators sitting between
             Managers and Characters</strong>. Before that, staff behaviour was
@@ -510,6 +806,54 @@ void CalculateTargetsAndApply()
             The ScriptableObject layer is what kept the 39 controllers from
             becoming 200. Trains, staff and buildables are authored as data, so
             most new content is an asset rather than a class.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT I'D CHANGE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd change</h2>
+          <p>
+            The repository is public, so rather than describe the flaws in general
+            terms, here are three you can go and confirm.
+          </p>
+          <p>
+            <strong>Eleven managers is too many, and the graph proves it.</strong>
+            <code>ProgressionManager</code> is referenced by six of the other ten,
+            and it reaches back into <code>EconomyManager</code> itself, which
+            closes a cycle: progression grants a level reward through the economy,
+            the economy pays wages by reading the staff manager's hired list, and
+            hiring staff reports back to progression. Nothing about that is fatal,
+            and it works, but a cycle means there is no order in which those three
+            can be reasoned about independently, and it happened because a tier
+            unlock is simultaneously a money question and a progression question
+            and I never picked one owner for it. The coordinators layer is the
+            proof I know how to fix it: I did exactly this for the staff, moving
+            the shared decision up into something that owns it. I did not do it
+            for progression.
+          </p>
+          <p>
+            <strong>The save system knows about everything.</strong>
+            <code>SaveManager</code> is 712 lines and touches seven of the other
+            managers across twenty-seven call sites, so adding any new manager
+            means editing the save system too. It also has no version field
+            anywhere in those 712 lines, which means a save written in week twelve
+            cannot be loaded by the build from week thirty. On a solo project where
+            I was the only person with saves, that was survivable. On anything
+            shipped it is not, and a version number plus a migration path is a day
+            of work I should have spent early rather than not at all.
+          </p>
+          <p>
+            <strong>There are no tests.</strong> Not a single test assembly in the
+            project. With 86 scripts and one developer that is an easy corner to
+            cut, and it is the one I would uncut first: the fixed-tick systems are
+            deterministic by construction, which makes them the cheapest things in
+            the codebase to test and the place balance bugs hid longest. Ratings,
+            queueing and the economy, in that order.
           </p>
         </div>
       </div>

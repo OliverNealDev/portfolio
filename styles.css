@@ -14,11 +14,18 @@
    1. TOKENS
    -------------------------------------------------------------------------- */
 /* Typography is theme independent, so it lives in its own block.
-   Space Grotesk carries the headings; IBM Plex Sans/Mono do the reading and
-   the labels. Deliberately not Inter — it is on every other dev portfolio. */
+   Space Grotesk carries the headings; Public Sans does the reading; IBM Plex
+   Mono does the labels and the code.
+
+   Public Sans rather than IBM Plex Sans: same brief, but a taller x-height and
+   heavier stems, which is most of what "easier to read" means at the small
+   sizes this site uses for metadata. It comes out of the US Web Design System,
+   where legibility was the requirement rather than a personality. Deliberately
+   not Inter or Geist either — those are on every other dev portfolio and are
+   what a generated site looks like. */
 :root {
-  --font-sans: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-display: "Space Grotesk", "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-sans: "Public Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Space Grotesk", "Public Sans", "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
@@ -484,32 +491,91 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   background: var(--ok);
 }
 
+/* Availability, dates and right to work — the three things a recruiter is
+   scanning for, so of everything in the hero this is the last text that should
+   need squinting at. It was mono at 0.78rem in the faintest grey, which is a
+   styling choice for a caption, not for the most load-bearing line on the
+   page. Now it is the body face, larger, and a step up in contrast. */
+.hero-availability {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  font-size: 0.95rem;
+  color: var(--text-2);
+}
+.hero-availability strong { color: var(--text); font-weight: 600; }
+/* The separator trails its own item rather than leading the next one, so a
+   wrapped line starts with a word instead of a stray dot. */
+.hero-availability li:not(:last-child)::after {
+  content: "·";
+  margin-left: 0.85rem;
+  color: var(--border-strong);
+}
+
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* The PDF, one click from the hero. Quiet on purpose: it is the alternative
+   to the CV page beside it, not a fourth competing button. */
+.hero-cv-note {
   margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-2);
+}
+/* Inline rather than a flex row: as a flex container each text node became
+   its own line, which broke the sentence into three. */
+.hero-cv-note .icon {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.35rem;
+  vertical-align: -0.15em;
+  color: var(--text-3);
 }
 
 .social-row { display: flex; gap: 0.4rem; }
 .social-row .icon-btn { border-color: transparent; }
 .social-row .icon-btn:hover { border-color: var(--border); }
 
-/* Portrait */
+/* Portrait.
+   It was a 270px circle floating in the middle of its column, which read as a
+   profile avatar dropped next to the text rather than as part of the layout:
+   the circle was the only one on a site built entirely from 4-6px rectangles,
+   and at that size it left a lot of air beside a tall block of copy. Now it is
+   a portrait-format panel in the same idiom as the cards, big enough to hold
+   its own half of the grid.
+
+   The source is square and the frame is taller than it is wide, so cover
+   scales to the height and the crop comes off the sides: the full head and
+   shoulders survive, and only the backdrop is lost. */
 .hero-portrait {
   justify-self: center;
-  width: min(270px, 60vw);
+  width: min(340px, 100%);
 }
 .hero-portrait img {
   width: 100%;
-  border-radius: 50%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 6px;
   border: 1px solid var(--border-strong);
 }
 
 @media (max-width: 760px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-portrait { grid-row: 1; width: min(180px, 48vw); margin-bottom: 0.5rem; }
+  .hero-portrait {
+    grid-row: 1;
+    justify-self: start;
+    width: min(220px, 55vw);
+    margin-bottom: 0.75rem;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -672,7 +738,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 
 /* Older posts hide behind the "Show older posts" toggle when JS can run */
-html.js #post-grid:not(.expanded) .post-extra { display: none; }
+
 
 /* Post media — LinkedIn's own two-up layout, cropped square so any pair of
    aspect ratios sits level. .single is one full-width 16:9 image. */
@@ -768,7 +834,9 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
 
 .log-cta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 0.6rem;
   margin-top: 1.75rem;
 }
 
@@ -1321,11 +1389,14 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .media-badge .icon { width: 0.85em; height: 0.85em; }
 
-/* On touch there is nothing to hover, and main.js skips the preview entirely,
-   so the prompt would be a lie. */
+/* On touch there is nothing to hover, so the prompt would be a lie. main.js
+   plays those previews on scroll instead and sets .previews-in-view, which
+   drops the badge because the moving card is its own affordance. The media
+   query is the no-JS fallback for the same devices. */
 @media (hover: none) {
   .media-badge { display: none; }
 }
+.previews-in-view .media-badge { display: none; }
 
 .card-body {
   display: flex;
@@ -1420,34 +1491,32 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .card-links .card-cta .icon { transition: transform 0.2s ease; }
 .card-links .card-cta:hover .icon { transform: translateX(3px); }
 
-/* Case-study link cards (index, section 06) — two-up grid, compact rows */
+/* Case-study links (index, section 07) — deliberately a text list, not a
+   second gallery. Every one of these projects already has a card above with
+   its own screenshot; repeating the thumbnails made the page scroll twice
+   through the same eight games. This is the index to them, so it reads like
+   one: three across, no images, no lazy-loaded requests. */
 .bd-list {
   display: grid;
-  gap: 0.9rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
 }
 
 .bd-card {
   display: grid;
-  grid-template-columns: 104px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: 4px;
-  padding: 0.75rem;
+  padding: 0.8rem 0.85rem;
   color: var(--text);
   transition: border-color 0.2s ease;
 }
 .bd-card:hover {
   border-color: var(--accent-border);
   color: var(--text);
-}
-.bd-card img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 3px;
 }
 .bd-card h3 { margin-bottom: 0.2rem; font-size: 1rem; }
 .bd-card p {
@@ -1466,8 +1535,8 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .bd-card:hover .bd-arrow { transform: translateX(4px); color: var(--accent); }
 
 @media (max-width: 640px) {
-  .bd-card { grid-template-columns: 88px minmax(0, 1fr); gap: 0.85rem; }
   .bd-arrow { display: none; }
+  .bd-card { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1573,16 +1642,6 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-3);
-}
-
-/* Explains a missing source link rather than leaving a conspicuous gap */
-.cs-repo-note {
-  max-width: 640px;
-  margin: 1.4rem 0 0;
-  padding-left: 0.9rem;
-  border-left: 2px solid var(--border-strong);
-  color: var(--text-3);
-  font-size: 0.88rem;
 }
 
 /* Architecture layer list — count, layer name, what it owns */
@@ -1842,6 +1901,96 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   .code code { font-size: 0.8rem; }
   .code .cl::before { width: 2.1rem; padding-right: 0.6rem; }
   .code .cl-code { width: calc(100% - 2.2rem); }
+}
+
+/* A caveat inside prose — smaller and quieter than the paragraph it qualifies,
+   e.g. noting that a field was renamed between the code and the UI. */
+.prose .note {
+  font-size: 0.9rem;
+  color: var(--text-3);
+  border-left: 2px solid var(--border-strong);
+  padding-left: 0.9rem;
+}
+
+/* --------------------------------------------------------------------------
+   DIAGRAMS
+   Hand-authored inline SVG rather than an exported image: it stays sharp,
+   costs no request, follows the theme through the same custom properties as
+   everything else, and the <title>/<desc> pair means a screen reader gets the
+   same information a sighted reader does. Colours come from classes, not
+   presentation attributes, because var() does not parse inside fill="".
+   -------------------------------------------------------------------------- */
+.diagram {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-soft);
+  overflow: hidden;
+  box-shadow: inset 3px 0 0 0 var(--accent-border);
+}
+.diagram figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.7rem;
+  padding: 0.55rem 0.7rem 0.55rem 0.95rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  line-height: 1.5;
+}
+.diagram .diagram-title { color: var(--accent); }
+.diagram .diagram-note { color: var(--text-3); flex: 1 1 12rem; }
+/* Width is the whole problem with a diagram. Squeezed into the 680px reading
+   column the labels render at about 9px, which is smaller than the page's own
+   small print. So: take every pixel the section will give (below), and where
+   that still is not enough, pan rather than shrink. */
+.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.diagram svg {
+  display: block;
+  width: 100%;
+  min-width: 700px;
+  height: auto;
+  padding: 0.9rem 1rem;
+}
+
+/* Diagram parts. Kept deliberately flat: boxes, lines, labels, one accent. */
+.dg-box { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1; }
+.dg-box-accent { fill: var(--accent-soft); stroke: var(--accent-border); }
+.dg-box-loose { fill: none; stroke: var(--border-strong); stroke-dasharray: 5 4; }
+.dg-line { fill: none; stroke: var(--text-3); stroke-width: 1.4; }
+.dg-head { fill: var(--text-3); }
+.dg-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--text);
+}
+.dg-n { fill: var(--accent); font-family: var(--font-mono); font-size: 13px; font-weight: 400; }
+.dg-desc { font-family: var(--font-sans); font-size: 12px; fill: var(--text-2); }
+/* Arrow labels sit on the figure background rather than inside a box, where
+   --text-3 measures 4.46:1 on the light theme and misses AA. --text-2 clears
+   it in both themes; the mono face and smaller size still read as secondary
+   against the box text. */
+.dg-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text-2);
+}
+
+/* Break out of the reading column the moment the container can hold it. The
+   breakpoints are the viewport widths at which the .container (max 1080px,
+   2rem gutters) is actually wide enough for the width being asked for, so the
+   figure never overhangs the section it sits in. */
+@media (min-width: 920px) {
+  .cs-section .prose .diagram {
+    width: calc(100% + 170px);
+    max-width: none;
+  }
+}
+@media (min-width: 1150px) {
+  .cs-section .prose .diagram { width: calc(100% + 400px); }
 }
 
 .media-figure { margin: 2rem 0 0; }
