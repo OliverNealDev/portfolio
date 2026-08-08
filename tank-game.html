@@ -119,11 +119,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -232,6 +233,42 @@
             little tolerance while still letting the server, and only the server,
             decide whether damage was dealt.
           </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Controllers/TankTurretController.cs</span>
+              <span class="code-note">the fan is built and resolved inside a ServerRpc, so a client never reports its own hits</span>
+            </figcaption>
+<pre><code>[ServerRpc(RequireOwnership = false)]
+void ShootRaysServerRpc()
+{
+    // Parameters
+    int numRays = 64; // Total number of rays
+    float raySpacing = 0.04f; // Vertical spacing between rays
+    Transform bulletSpawnPoint = this.bulletSpawnPoint; // Where the rays are cast from
+
+    // Variables to store the closest hit
+    RaycastHit? closestHit = null;
+    float closestDistance = Mathf.Infinity;
+    GameObject? ClosestHitGameObject = null;
+
+    // Loop to shoot rays
+    for (int i = 0; i &lt; numRays; i++)
+    {
+        // Calculate offset for the ray
+        float verticalOffset = (i - (numRays / 2)) * raySpacing; // Center the rays around the middle one
+
+        // ... commented-out offset variants omitted
+
+        Vector3 rayDirection = ((bulletDefaultTarget.position + new Vector3(0, verticalOffset, 0)) - bulletSpawnPoint.position).normalized;
+
+        // Shoot the ray
+        if (Physics.Raycast(bulletSpawnPoint.position, rayDirection, out RaycastHit hit, Mathf.Infinity, layerMask))
+        {
+            // Check if the hit object has the "Player" tag
+            if (hit.collider.CompareTag("Player"))
+            {</code></pre>
+          </figure>
         </div>
         <figure class="media-figure reveal">
           <video controls preload="none" poster="Project Media/3DNetcodeTankGame/TankControlsDemoPoster.webp"

@@ -123,11 +123,12 @@
       <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#shiverbug">Internship</a>
+        <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#skills">Skills</a>
         <a class="nav-link" href="index.html#projects">Projects</a>
         <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
       </nav>
@@ -279,6 +280,41 @@
             sprite drops to 40% opacity while under a tree, so the state you are in
             is always legible without a UI element for it.
           </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/Controllers/policeOfficerController.cs</span>
+              <span class="code-note">line of sight first, then the two fill rates</span>
+            </figcaption>
+<pre><code>RaycastHit2D hit = Physics2D.Raycast(rayOrigin, directionToPlayer, distanceToPlayerForRay, visionObstructingLayers);
+
+if (hit.collider == null)
+{
+    Debug.DrawRay(rayOrigin, directionToPlayer * distanceToPlayerForRay, Color.green);
+
+    playerController pc = other.GetComponent&lt;playerController&gt;();
+    if (pc != null)
+    {
+        if (pc.foliageUnder.Count == 0)
+        {
+            lawEnforcementManager.ChangeDetectionPercentage(1 * Time.deltaTime);
+        }
+        else
+        {
+            lawEnforcementManager.ChangeDetectionPercentage(0.25f * Time.deltaTime);
+        }
+    }
+    if (lawEnforcementManager.detectionPercentage &gt;= 1f)
+    {
+        canSeePlayerCurrentFrame = true;
+    }
+}
+else
+{
+    Debug.DrawRay(rayOrigin, directionToPlayer * hit.distance, Color.red);
+    canSeePlayerCurrentFrame = false;
+}</code></pre>
+          </figure>
           <p>
             Decay is deliberately unkind. The meter only starts falling after
             <strong>three full seconds</strong> without any fresh detection, and

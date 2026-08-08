@@ -44,6 +44,17 @@
   --accent-border: rgba(255, 123, 28, 0.45);
 
   --ok: #4fbf78;              /* "currently" status dot */
+
+  /* JetBrains Rider dark scheme. Values taken from Rider's own C# highlighting
+     so an excerpt reads the way the file does in the editor it was written in. */
+  --code-text: #bcbec4;      /* default identifier */
+  --code-com: #7f8794;       /* Rider uses #7a7e85; nudged up to clear AA here */
+  --code-gutter: #4b5059;
+  --code-key: #cf8e6d;       /* keyword orange */
+  --code-typ: #bcbec4;       /* class / type: Rider leaves these default */
+  --code-fn:  #56a8f5;       /* method call blue */
+  --code-str: #6aab73;
+  --code-num: #2aacb8;
   --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --header-bg: rgba(14, 14, 17, 0.82);
 }
@@ -69,6 +80,16 @@
   --accent-border: rgba(180, 65, 15, 0.35);
 
   --ok: #1d7a45;
+
+  /* Rider light scheme */
+  --code-text: #080808;
+  --code-com: #5d6470;       /* Rider uses #8c8c8c; darkened to clear AA */
+  --code-gutter: #a8a8b3;
+  --code-key: #0033b3;
+  --code-typ: #080808;
+  --code-fn:  #00627a;
+  --code-str: #067d17;
+  --code-num: #1750eb;
   --shadow: 0 12px 28px rgba(20, 20, 40, 0.10);
   --header-bg: rgba(250, 250, 250, 0.85);
 }
@@ -97,6 +118,11 @@ body {
 }
 
 img, video { max-width: 100%; height: auto; display: block; }
+
+/* The browser's own [hidden] rule is display:none, but any author rule that
+   sets display (.card is display:flex) outranks it and the element keeps
+   rendering. Anything toggled with the hidden attribute needs this to work. */
+[hidden] { display: none !important; }
 
 h1, h2, h3, h4 {
   margin: 0 0 0.6em;
@@ -1184,6 +1210,26 @@ html.js #post-grid:not(.expanded) .post-extra { display: none; }
   .award-shot figcaption { margin-top: 0; } /* row layout: no base to anchor to */
 }
 
+/* Under a filter the featured card is just one result among others, so it
+   drops the hero layout and sits in the grid like everything else. main.js
+   moves it into the grid and adds this class. */
+.card.project-featured.is-collapsed {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+  grid-template-rows: none;
+  margin-bottom: 0;
+}
+.project-featured.is-collapsed .award-shot { display: none; }
+.project-featured.is-collapsed .card-body {
+  padding: 1.15rem 1.25rem 1.25rem;
+}
+.project-featured.is-collapsed .card-top h3 { font-size: 1.08rem; }
+/* The extra detail earns its place on the hero card, not in a grid tile */
+.project-featured.is-collapsed .project-systems,
+.project-featured.is-collapsed .project-support,
+.project-featured.is-collapsed .project-specs { display: none; }
+
 /* "Show all projects" toggle — the grid starts collapsed (extra cards hidden)
    only when JS is available to expand it again */
 .show-more-wrap { display: none; }
@@ -1497,6 +1543,127 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .facts .fact-v { font-weight: 600; font-size: 0.95rem; }
 
+/* Project filter bar */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+.filter-btn {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--text-2);
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--border-strong); }
+.filter-btn.current {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+.filter-status {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+/* Explains a missing source link rather than leaving a conspicuous gap */
+.cs-repo-note {
+  max-width: 640px;
+  margin: 1.4rem 0 0;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--border-strong);
+  color: var(--text-3);
+  font-size: 0.88rem;
+}
+
+/* Architecture layer list — count, layer name, what it owns */
+.arch-list {
+  list-style: none;
+  margin: 1.6rem 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.arch-list li {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(7rem, auto) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.arch-n {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.arch-k {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.arch-d { color: var(--text-2); font-size: 0.9rem; line-height: 1.55; }
+
+@media (max-width: 640px) {
+  .arch-list li { grid-template-columns: 3rem minmax(0, 1fr); }
+  .arch-d { grid-column: 2; }
+}
+
+/* In-page contents on the breakdowns, built by main.js from the h2s */
+.cs-toc {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: 1.4rem clamp(1.25rem, 5vw, 2rem) 1.6rem;
+}
+.cs-toc-title {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.cs-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 0.1rem 1.5rem;
+  counter-reset: toc;
+  border-top: 1px solid var(--border);
+}
+.cs-toc li { counter-increment: toc; border-bottom: 1px solid var(--border); }
+.cs-toc a {
+  display: block;
+  padding: 0.6rem 0;
+  color: var(--text-2);
+  font-size: 0.92rem;
+  transition: color 0.2s ease;
+}
+.cs-toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  margin-right: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+.cs-toc a:hover { color: var(--accent); }
+.cs-toc a.current { color: var(--text); }
+.cs-toc a.current::before { color: var(--accent); }
+
 /* Analytics opt-out control on the privacy page */
 .optout-row {
   display: flex;
@@ -1522,6 +1689,160 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .cs-section .prose ul { color: var(--text-2); padding-left: 1.2rem; margin: 0 0 1em; }
 .cs-section .prose li { margin-bottom: 0.4rem; }
 .cs-section .prose li::marker { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   CODE EXCERPTS
+   Real excerpts from the shipped projects, so a reader can judge the code and
+   not just the description of it. Every excerpt is verbatim; anything removed
+   is marked with an ellipsis comment so nothing looks tidier here than it is
+   in the repo. Syntax colouring and line numbers are added by main.js, so the
+   HTML stays plain copyable text and still reads fine with JavaScript off.
+   -------------------------------------------------------------------------- */
+.code {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-soft);
+  overflow: hidden;
+  /* The accent edge ties the block to the section's kicker without needing a
+     heavier frame around it. */
+  box-shadow: inset 3px 0 0 0 var(--accent-border);
+}
+.code figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.7rem;
+  padding: 0.55rem 0.7rem 0.55rem 0.95rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  line-height: 1.5;
+}
+.code .code-file {
+  color: var(--accent);
+  overflow-wrap: anywhere;   /* long paths shrink rather than push the bar wide */
+}
+.code .code-note {
+  color: var(--text-3);
+  flex: 1 1 12rem;
+}
+/* Language tag and copy control sit at the right end of the caption bar */
+.code .code-lang {
+  order: 98;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.64rem;
+}
+.code .code-copy {
+  order: 99;
+  flex: none;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg-soft);
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.code .code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+.code .code-copy[data-done="true"] { color: var(--ok); border-color: var(--ok); }
+
+.code pre {
+  margin: 0;
+  padding: 0.95rem 1rem 1.05rem 0.75rem;
+  overflow-x: auto;          /* safety net only; lines wrap, so it rarely fires */
+  -webkit-overflow-scrolling: touch;
+}
+.code code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--code-text);
+  /* Wrap rather than scroll. Dragging a code block sideways to finish a line
+     is a worse read than a wrapped line, and only a few lines are long. */
+  white-space: pre-wrap;
+  overflow-wrap: normal;     /* break at spaces, never mid-identifier */
+  tab-size: 4;
+  counter-reset: codeline;
+}
+.code code::selection,
+.code code *::selection { background: var(--accent-soft); }
+
+/* Line numbers and wrap alignment.
+   The line wrappers are INLINE and the newlines stay in the text, so a
+   selection still copies the excerpt exactly, blank lines and all. The numbers
+   come from a CSS counter in ::before, which selections do not pick up, so
+   copied code never carries a gutter with it.
+
+   The inner .cl-code is an inline-block sized to the remaining width. That is
+   what stops a wrapped line from running back under the gutter: the overflow
+   wraps inside its own column and stays aligned with the code, instead of
+   restarting at the number. */
+.code .cl { counter-increment: codeline; }
+.code .cl::before {
+  content: counter(codeline);
+  display: inline-block;
+  width: 2.75rem;
+  padding-right: 1rem;
+  text-align: right;
+  color: var(--code-gutter);
+  vertical-align: top;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.code .cl-code {
+  display: inline-block;
+  width: calc(100% - 2.85rem);
+  vertical-align: top;
+  white-space: pre-wrap;
+}
+/* Syntax tokens. Muted and hand-picked rather than a stock neon theme, so the
+   code sits inside the page instead of shouting over it. */
+.code .t-com { color: var(--code-com); font-style: italic; }
+.code .t-key { color: var(--code-key); }
+.code .t-typ { color: var(--code-typ); }
+.code .t-fn  { color: var(--code-fn); }
+.code .t-str { color: var(--code-str); }
+.code .t-num { color: var(--code-num); }
+/* Inline code inside prose, e.g. a type or method name mid-sentence */
+.prose p > code,
+.prose li > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Code needs more horizontal room than prose does, and every character of it
+   is a character that does not have to wrap. Widen past the 680px reading
+   column where the container has the space to spare. */
+@media (min-width: 1000px) {
+  .cs-section .prose .code {
+    width: calc(100% + 170px);
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .code code { font-size: 0.8rem; }
+  .code .cl::before { width: 2.1rem; padding-right: 0.6rem; }
+  .code .cl-code { width: calc(100% - 2.2rem); }
+}
 
 .media-figure { margin: 2rem 0 0; }
 .media-figure img,
@@ -1913,12 +2234,18 @@ html.lightbox-open body { overflow: hidden; }
    so content is never lost without JavaScript. */
 /* Deliberately just a short fade: no upward slide, no per-card stagger. A grid
    of cards flying in one after another is the thing that makes a page feel
-   generated rather than built. */
-html.js .reveal {
-  opacity: 0;
-  transition: opacity 0.35s ease;
+   generated rather than built.
+
+   Content is VISIBLE BY DEFAULT and the class only adds an entrance animation
+   on top. The previous version set opacity:0 and waited for JavaScript to add
+   .in, which meant anything the observer missed — a deep link straight to
+   #projects, a stalled renderer, a script that never ran — stayed permanently
+   invisible. Visibility must never depend on an observer firing. */
+@keyframes reveal-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-html.js .reveal.in { opacity: 1; }
+html.js .reveal.in { animation: reveal-in 0.4s ease both; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
