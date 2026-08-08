@@ -108,67 +108,180 @@
     revealEls.forEach(function (el) { revealObserver.observe(el); });
   }
 
-  /* 4. HOVER VIDEO PREVIEWS ------------------------------------------------
+  /* 4. CARD VIDEO PREVIEWS -------------------------------------------------
      Card media with data-video shows its poster image by default and lazily
-     creates a muted looping <video> on first hover/focus, so no video data
-     is downloaded until the visitor shows intent. Skipped entirely under
-     prefers-reduced-motion or on touch-only devices. */
-  if (!reducedMotion && canHover) {
-    document.querySelectorAll(".card-media[data-video]").forEach(function (media) {
-      var video = null;
-      var wanted = false;
+     creates a muted looping <video>, so no video data is downloaded until
+     there is a reason to.
 
-      function play() {
-        wanted = true;
-        if (!video) {
-          video = document.createElement("video");
-          video.className = "card-video";
-          video.muted = true;
-          video.loop = true;
-          video.playsInline = true;
-          video.preload = "auto";
-          video.setAttribute("aria-hidden", "true");
-          // Only cross-fade once there are frames to show, otherwise a slow
-          // connection flashes a black box over the poster.
-          video.addEventListener("loadeddata", function () {
-            if (wanted) media.classList.add("playing");
-          });
-          video.src = media.dataset.video;
-          media.appendChild(video);
-        } else if (video.readyState >= 2) {
-          media.classList.add("playing");
+     What counts as a reason depends on the device. With a real pointer, hover
+     or keyboard focus is the signal. On touch there is nothing to hover, and
+     an earlier version simply skipped previews there, which meant a phone
+     visitor — the common case for anyone triaging a portfolio — had no way to
+     see any of the games move. Those devices now play a preview when a card
+     scrolls well into view, one at a time so only the card being looked at
+     ever costs anything.
+
+     Skipped entirely under prefers-reduced-motion, and on connections that
+     have asked for less: Save-Data or a 2G-class link gets the posters. */
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var frugal = !!conn && (conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || ""));
+
+  if (!reducedMotion && !frugal) {
+    var previews = [].slice.call(document.querySelectorAll(".card-media[data-video]"))
+      .map(function (media) {
+        var video = null;
+        var wanted = false;
+
+        function play() {
+          wanted = true;
+          if (!video) {
+            video = document.createElement("video");
+            video.className = "card-video";
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.preload = "auto";
+            video.setAttribute("aria-hidden", "true");
+            // Only cross-fade once there are frames to show, otherwise a slow
+            // connection flashes a black box over the poster.
+            video.addEventListener("loadeddata", function () {
+              if (wanted) media.classList.add("playing");
+            });
+            video.src = media.dataset.video;
+            media.appendChild(video);
+          } else if (video.readyState >= 2) {
+            media.classList.add("playing");
+          }
+          var p = video.play();
+          if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stays */ });
         }
-        var p = video.play();
-        if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stays */ });
-      }
 
-      function stop() {
-        wanted = false;
-        if (video) video.pause();
-        media.classList.remove("playing");
-      }
+        function stop() {
+          wanted = false;
+          if (video) video.pause();
+          media.classList.remove("playing");
+        }
 
-      media.addEventListener("pointerenter", play);
-      media.addEventListener("pointerleave", stop);
-      media.addEventListener("focus", play);
-      media.addEventListener("blur", stop);
-    });
+        return { media: media, play: play, stop: stop };
+      });
+
+    if (canHover) {
+      previews.forEach(function (p) {
+        p.media.addEventListener("pointerenter", p.play);
+        p.media.addEventListener("pointerleave", p.stop);
+        p.media.addEventListener("focus", p.play);
+        p.media.addEventListener("blur", p.stop);
+      });
+    } else if (previews.length && "IntersectionObserver" in window) {
+      // The badge says "hover", which is not true here. Autoplay is its own
+      // affordance — the card is already moving — so retire the prompt.
+      root.classList.add("previews-in-view");
+
+      // Ratios are tracked rather than a plain isIntersecting flag so that
+      // when two cards are on screen at once the one the reader is actually
+      // looking at wins, instead of whichever fired its callback last.
+      var ratios = new WeakMap();
+      var playing = null;
+
+      var pick = function () {
+        var best = null;
+        previews.forEach(function (p) {
+          var r = ratios.get(p.media) || 0;
+          if (r >= 0.65 && (!best || r > (ratios.get(best.media) || 0))) best = p;
+        });
+        if (best === playing) return;
+        if (playing) playing.stop();
+        playing = best;
+        if (playing) playing.play();
+      };
+
+      var inView = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          ratios.set(entry.target, entry.intersectionRatio);
+        });
+        pick();
+      }, { threshold: [0, 0.35, 0.65, 0.9] });
+
+      previews.forEach(function (p) { inView.observe(p.media); });
+
+      // A backgrounded tab should not keep decoding video.
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden && playing) { playing.stop(); playing = null; }
+        else pick();
+      });
+    }
   }
 
-  /* 4b. SHOW MORE PROJECTS --------------------------------------------------
-     Buttons with data-show-more="<grid id>" toggle the .expanded class on
-     that grid; CSS keeps .project-extra cards hidden until then. Without JS
-     the button is hidden and every card is visible. */
+  /* 4b. ONE ROW, THE REST BEHIND A TOGGLE -----------------------------------
+     Buttons with data-show-more="<grid id>" collapse their grid to a single
+     row. How many cards that is is not a number worth choosing: the grids are
+     auto-fill, so the browser has already decided how many columns fit at this
+     width, and hard-coding a count means a wide screen shows a half-empty row
+     while a narrow one hides things it had room for. So the count is read back
+     out of the computed style instead, and re-read whenever the grid resizes.
+
+     data-more may contain {n}, replaced with however many are actually hidden.
+     Without JS the button is hidden and every card is visible. */
+  function columnsOf(grid) {
+    var tracks = getComputedStyle(grid).gridTemplateColumns;
+    // Computed value is used track sizes ("310px 310px 310px"), so counting
+    // them is counting columns. "none" means the element is not a grid yet.
+    if (!tracks || tracks === "none") return 1;
+    return tracks.split(/\s+/).filter(Boolean).length;
+  }
+
+  // One column is the case where "as many as fit across" stops meaning
+  // anything: there is no horizontal space left to trade, and a section
+  // showing a single card over a "show 4 more" button reads as broken rather
+  // than as restraint. So a stacked layout gets a floor of two.
+  function rowBudget(grid) {
+    return Math.max(columnsOf(grid), 2);
+  }
+
   document.querySelectorAll("[data-show-more]").forEach(function (btn) {
     var grid = document.getElementById(btn.getAttribute("data-show-more"));
     if (!grid) return;
 
-    btn.addEventListener("click", function () {
-      var expanded = grid.classList.toggle("expanded");
+    var wrap = btn.parentNode;
+    var items = [].slice.call(grid.children);
+    var expanded = false;
+    var lastWidth = -1;
+
+    function sync() {
+      var budget = rowBudget(grid);
+      var allFit = items.length <= budget;
+      // Widening past the point where everything fits retires the toggle, so
+      // it never sits there saying "show fewer" with nothing left to hide.
+      if (allFit) expanded = false;
+
+      var visible = expanded || allFit ? items.length : budget;
+      items.forEach(function (el, i) { el.hidden = i >= visible; });
+
+      wrap.hidden = allFit;
       btn.setAttribute("aria-expanded", expanded ? "true" : "false");
-      btn.textContent = expanded ? btn.dataset.less : btn.dataset.more;
+      btn.textContent = expanded
+        ? btn.dataset.less
+        : (btn.dataset.more || "").replace("{n}", items.length - budget);
+    }
+
+    btn.addEventListener("click", function () {
+      expanded = !expanded;
+      sync();
       if (!expanded) grid.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
     });
+
+    // Width only: a ResizeObserver also fires on the height change that
+    // showing and hiding cards causes, which would loop.
+    var onResize = function () {
+      if (grid.clientWidth === lastWidth) return;
+      lastWidth = grid.clientWidth;
+      sync();
+    };
+
+    if ("ResizeObserver" in window) new ResizeObserver(onResize).observe(grid);
+    else window.addEventListener("resize", onResize);
+
+    onResize();
   });
 
   /* 4c. LIGHTBOX ------------------------------------------------------------
@@ -642,10 +755,15 @@
       : [];
 
     if (cards.length) {
-      // How many cards show before the "show more" button. Cyber Station is
-      // featured and sits outside the grid, so unfiltered this is 3 grid cards
-      // beside it; filtered, it collapses in and counts as one of the four.
-      var LIMIT = 4;
+      // How many cards show before the "show more" button: one grid row,
+      // however many columns that is at the current width. Unfiltered the
+      // featured card sits outside the grid and spans it, so it is a row of
+      // its own and the budget is one more than the column count; filtered it
+      // collapses in and is just another cell.
+      var limitFor = function (filtering) {
+        var cols = rowBudget(soloGrid);
+        return filtering ? cols : cols + 1;
+      };
 
       var featuredCard = projectSection.querySelector(".project-featured");
       // Remember where the featured card lives so it can be put back
@@ -709,13 +827,17 @@
 
         cards.forEach(function (card) { card.hidden = matches.indexOf(card) === -1; });
 
-        // Then collapse the matches down to the limit unless expanded
-        var overflow = Math.max(0, matches.length - LIMIT);
+        // Then collapse the matches down to one row unless expanded
+        var limit = limitFor(filtering);
+        var overflow = Math.max(0, matches.length - limit);
+        // Nothing left to hide means nothing to expand, so drop the state
+        // rather than leaving a "show fewer" button over a full list.
+        if (!overflow) expanded = false;
         if (!expanded && overflow) {
-          matches.slice(LIMIT).forEach(function (card) { card.hidden = true; });
+          matches.slice(limit).forEach(function (card) { card.hidden = true; });
         }
 
-        var visible = expanded || !overflow ? matches.length : LIMIT;
+        var visible = expanded || !overflow ? matches.length : limit;
 
         if (btn) {
           buttons.forEach(function (b) {
@@ -776,6 +898,19 @@
       bar.parentNode.insertBefore(status, bar.nextSibling);
 
       apply(GROUPS[0], buttons[0]);
+
+      // The row is however many columns fit, so a resize can change it.
+      // Width only: hiding and showing cards changes the height, and reacting
+      // to that would loop.
+      var lastGridWidth = soloGrid.clientWidth;
+      var onGridResize = function () {
+        if (soloGrid.clientWidth === lastGridWidth) return;
+        lastGridWidth = soloGrid.clientWidth;
+        apply(activeGroup, null);
+      };
+
+      if ("ResizeObserver" in window) new ResizeObserver(onGridResize).observe(soloGrid);
+      else window.addEventListener("resize", onGridResize);
     }
   }
 

@@ -9,7 +9,7 @@
   text (not just hyperlinks), standard section headings, so ATS parsers and
   LLM screeners extract it cleanly. Keep it to exactly two A4 pages.
 -->
-<title>Oliver Neal CV · Games Developer · Unity (C#)</title>
+<title>Oliver Neal CV · Gameplay Programmer · Unity (C#)</title>
 <meta name="author" content="Oliver Neal">
 <meta name="description" content="CV of Oliver Neal, Unity (C#) gameplay programmer. Gameplay systems, AI behaviour, simulation and performance.">
 <meta name="robots" content="noindex">
@@ -53,7 +53,11 @@
     border-bottom: .7pt solid var(--rule);
     padding-bottom: 1.5pt; margin-bottom: 4.5pt;
   }
+  /* Three short units rather than one 90-word block: the first sentence is
+     the positioning, the second the credentials, the third the evidence.
+     A skimmer gets all three without parsing a paragraph. */
   .profile p { text-align: left; }
+  .profile p + p { margin-top: 3pt; }
 
   /* ── Entries ── */
   .entry { margin-bottom: 4.5pt; break-inside: avoid; }
@@ -92,7 +96,7 @@
 <header>
   <div class="head">
     <h1>Oliver Neal</h1>
-    <p class="role">Games Developer · Unity (C#)</p>
+    <p class="role">Gameplay Programmer · Unity (C#)</p>
   </div>
   <p class="contact">
     <a href="https://oliverneal.dev/">oliverneal.dev</a><span class="sep">·</span>
@@ -107,14 +111,20 @@
 <section class="profile">
   <h2>Profile</h2>
   <p>
-    Games developer specialising in Unity (C#) gameplay systems: state-machine-driven characters
-    and enemy AI, local co-op and multiplayer plumbing, and the profiling work that keeps a scene
-    inside its frame budget. Making games in Unity since 2018, and building them consistently since
-    2023. First Class Honours graduate in Games Development from Teesside University, and winner of
-    Best Games Programming and Development Artefact at ExpoTees 2026. Currently a gameplay
-    programmer at Shiverbug Studios on <em>Out of Water</em>; open to gameplay, systems or AI
-    programming roles from September 2026. Nine shipped projects, most playable in the browser,
-    with source on GitHub and technical breakdowns at <a href="https://oliverneal.dev/">oliverneal.dev</a>.
+    Gameplay programmer specialising in Unity (C#) systems work: state-machine-driven characters
+    and enemy AI, local co-op and multiplayer plumbing, and the profiling that keeps a scene inside
+    its frame budget.
+  </p>
+  <p>
+    First Class Honours in BSc (Hons) Games Development from Teesside University, winner of Best
+    Games Programming and Development Artefact at ExpoTees 2026, and currently a gameplay programmer
+    at Shiverbug Studios on <em>Out of Water</em>. Open to gameplay, systems or AI programming roles
+    from September 2026.
+  </p>
+  <p>
+    Making games in Unity since 2018, building them consistently since 2023. Nine shipped projects,
+    most playable in the browser, with source on GitHub and technical breakdowns at
+    <a href="https://oliverneal.dev/">oliverneal.dev</a>.
   </p>
 </section>
 
@@ -130,8 +140,7 @@
       <li>Rebuilt both playable characters and the enemies from single-file controllers onto component-driven finite and hierarchical state machines, and built the co-op moveset on top.</li>
       <li>Ran the performance pass: GPU-driven rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I wrote for the team.</li>
       <li>Built the splitscreen plumbing (per-player device routing, cameras, character swapping) and a UI Toolkit front end on a shared token system: HUD, character select, pause, save slots and a controls tutorial.</li>
-      <li>Implemented a decoupled FMOD audio layer that the audio team plugs into directly, plus blockout interactables and editor tooling for the level designers.</li>
-      <li>Authored the water, caustics and bubble shaders, in Shader Graph and in hand-written URP HLSL.</li>
+      <li>Handled presentation and tooling: water, caustics and bubble shaders in Shader Graph and hand-written URP HLSL, a decoupled FMOD layer the audio team plugs into directly, and the blockout interactables and editor tooling the level designers build puzzles from.</li>
       <li>Designed and shipped the studio's public website, <a href="https://shiverbugstudios.com/">shiverbugstudios.com</a>, alongside gameplay work.</li>
     </ul>
     <p class="stack">Unity 6 · C# · FSM/HSM · Performance · UI Toolkit · FMOD · Cinemachine · Shader Graph · HLSL</p>
@@ -162,10 +171,10 @@
       <span class="date">Apr 2026</span>
     </div>
     <ul>
-      <li>Neon station management game where passenger AI, train scheduling, staff, economy and a six-factor rating system run as one simulation on a central fixed tick.</li>
+      <li>Neon station management game, 86 scripts and ~17k lines solo: hundreds of passengers run off one fixed 10&nbsp;Hz tick, picking facilities by lowest estimated total delay (queue wait plus real NavMesh walk time, both in seconds), with six live ratings feeding back into the spawn rate.</li>
       <li>Final-year artefact: scored 90/100 and won Best Games Programming and Development Artefact at ExpoTees 2026.</li>
     </ul>
-    <p class="links">Breakdown: <a href="https://oliverneal.dev/cyber-station.html">oliverneal.dev/cyber-station.html</a> · Play: <a href="https://olivernealdev.itch.io/cyber-station">olivernealdev.itch.io/cyber-station</a></p>
+    <p class="links">Breakdown: <a href="https://oliverneal.dev/cyber-station.html">oliverneal.dev/cyber-station.html</a> · Play: <a href="https://olivernealdev.itch.io/cyber-station">olivernealdev.itch.io/cyber-station</a> · Source: <a href="https://github.com/OliverNealDev/CyberStation">github.com/OliverNealDev/CyberStation</a></p>
   </div>
 
   <div class="entry">
@@ -185,7 +194,7 @@
       <span class="date">Aug 2025</span>
     </div>
     <ul>
-      <li>Node-conquest RTS pared back to essentials: capture structures and commit forces by percentage against enemy AI that scales from duels to four-way free-for-alls.</li>
+      <li>Node-conquest RTS whose enemy AI gets no cheats and no extra information: it commits through the same percentage interface the player uses, sizing each attack from what the target actually holds, across several distinct AI personalities.</li>
     </ul>
     <p class="links">Breakdown: <a href="https://oliverneal.dev/minimalists.html">oliverneal.dev/minimalists.html</a> · Play: <a href="https://olivernealdev.itch.io/minimalists">olivernealdev.itch.io/minimalists</a> · Source: <a href="https://github.com/OliverNealDev/Minimalists">github.com/OliverNealDev/Minimalists</a></p>
   </div>
@@ -229,7 +238,7 @@
       <span class="date">Mar 2024</span>
     </div>
     <ul>
-      <li>Arcade score-attack catch game with a weighted spawn director, homing and drilling pin behaviours, and a physics-driven catch loop.</li>
+      <li>Arcade score-attack catch game with a self-escalating spawn director: hazards unlock on a survival timer, then scale their own spawn weight with score, so difficulty tracks skill rather than a fixed curve.</li>
     </ul>
     <p class="links">Breakdown: <a href="https://oliverneal.dev/pinnable.html">oliverneal.dev/pinnable.html</a> · Play: <a href="https://olivernealdev.itch.io/pinnable">olivernealdev.itch.io/pinnable</a> · Source: <a href="https://github.com/OliverNealDev/Pinnable">github.com/OliverNealDev/Pinnable</a></p>
   </div>

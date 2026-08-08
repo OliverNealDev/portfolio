@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Oliver Neal · Games Developer · Unity (C#)</title>
-  <meta name="description" content="Portfolio of Oliver Neal, Unity (C#) games developer at Shiverbug Studios and ExpoTees 2026 award winner. Browser-playable games with technical breakdowns.">
+  <title>Oliver Neal · Gameplay Programmer · Unity (C#)</title>
+  <meta name="description" content="Portfolio of Oliver Neal, Unity (C#) gameplay programmer at Shiverbug Studios and ExpoTees 2026 award winner. Available from September 2026. Browser-playable games with technical breakdowns.">
   <link rel="canonical" href="https://oliverneal.dev/">
   <meta name="author" content="Oliver Neal">
   <!-- max-image-preview:large opts the project screenshots into full-size
@@ -15,7 +15,7 @@
 
   <!-- Open Graph / social previews -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Oliver Neal · Games Developer · Unity (C#)">
+  <meta property="og:title" content="Oliver Neal · Gameplay Programmer · Unity (C#)">
   <meta property="og:description" content="Unity gameplay systems, state-machine enemy AI and performance work, across nine projects. First Class Games Development graduate, currently a gameplay programmer at Shiverbug Studios.">
   <meta property="og:url" content="https://oliverneal.dev/">
   <meta property="og:image" content="https://oliverneal.dev/og/home.jpg">
@@ -25,7 +25,7 @@
   <meta property="og:site_name" content="oliverneal.dev">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Oliver Neal · Games Developer · Unity (C#)">
+  <meta name="twitter:title" content="Oliver Neal · Gameplay Programmer · Unity (C#)">
   <meta name="twitter:description" content="Unity gameplay systems, state-machine enemy AI and performance work, across nine projects. First Class Games Development graduate, currently a gameplay programmer at Shiverbug Studios.">
   <meta name="twitter:image" content="https://oliverneal.dev/og/home.jpg">
   <meta name="twitter:image:alt" content="Cyber Station late game: cyan trains stretched along the platforms of a large neon station">
@@ -53,7 +53,7 @@
         "@type": "ProfilePage",
         "@id": "https://oliverneal.dev/#webpage",
         "url": "https://oliverneal.dev/",
-        "name": "Oliver Neal · Games Developer · Unity (C#)",
+        "name": "Oliver Neal · Gameplay Programmer · Unity (C#)",
         "isPartOf": { "@id": "https://oliverneal.dev/#website" },
         "about": { "@id": "https://oliverneal.dev/#person" },
         "mainEntity": { "@id": "https://oliverneal.dev/#person" },
@@ -68,7 +68,7 @@
         "familyName": "Neal",
         "url": "https://oliverneal.dev/",
         "mainEntityOfPage": { "@id": "https://oliverneal.dev/#webpage" },
-        "image": "https://oliverneal.dev/oliverFullImage.webp",
+        "image": "https://oliverneal.dev/media/oliver-neal-full.webp",
         "email": "mailto:oliverjn04@gmail.com",
         "jobTitle": "Gameplay Programmer",
         "description": "Games developer specialising in Unity and C#, working in the systems layer: state machines driving characters and enemy AI, simulation architecture, multiplayer netcode, and the profiling and optimisation that keeps a scene inside its frame budget.",
@@ -199,7 +199,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -266,13 +266,22 @@
           </a>
 
           <h1>Oliver Neal</h1>
-          <p class="hero-role">Games Developer · Unity (C#)</p>
+          <p class="hero-role">Gameplay Programmer · Unity (C#)</p>
           <p class="hero-pitch">
             First Class Games Development graduate and ExpoTees 2026 award
             winner. I build the systems layer in Unity: state machine driven
             characters and enemy AI, the co-op plumbing around them, and the
             profiling that keeps it fast.
           </p>
+
+          <!-- The practical answer a recruiter is scanning for. It was only in
+               the contact section at the very bottom, which is the last place
+               anyone triaging a portfolio in a minute would reach. -->
+          <ul class="hero-availability">
+            <li>Available from <strong>September 2026</strong></li>
+            <li>Middlesbrough or remote</li>
+            <li>Right to work in the UK</li>
+          </ul>
 
           <div class="hero-ctas">
             <a class="btn btn-primary" href="#projects">
@@ -285,6 +294,13 @@
             </a>
             <a class="btn btn-ghost" href="#contact">Contact</a>
           </div>
+
+          <!-- The PDF lived only behind the CV page; a reviewer who wants the
+               document rather than the web version now gets it in one click. -->
+          <p class="hero-cv-note">
+            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
+            Or take the <a href="Oliver_Neal_CV.pdf" download>CV as a PDF</a>.
+          </p>
 
           <div class="social-row">
             <a class="icon-btn" href="https://github.com/OliverNealDev" target="_blank" rel="noopener" aria-label="GitHub: OliverNealDev">
@@ -309,8 +325,8 @@
         </div>
 
         <div class="hero-portrait">
-          <img src="oliver.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high"
-               data-full="oliverFullImage.webp" data-caption="Oliver Neal · ExpoTees 2026">
+          <img src="media/oliver-neal.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high"
+               data-full="media/oliver-neal-full.webp" data-caption="Oliver Neal · ExpoTees 2026">
         </div>
       </div>
     </section>
@@ -329,7 +345,7 @@
 
         <article class="feature reveal">
           <div class="feature-cover">
-            <img src="OOW-in-game-image-1.webp"
+            <img src="media/out-of-water/beach-level.webp"
                  alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
                  data-caption="Out of Water, in development at Shiverbug Studios"
                  width="1600" height="902">
@@ -344,8 +360,8 @@
             <div class="feature-side">
               <!-- Same logo, two crops: black background for dark theme, light-blue for light -->
               <a class="feature-logo-link" href="https://shiverbugstudios.com" target="_blank" rel="noopener" aria-label="Shiverbug Studios website">
-                <img class="feature-logo dark" src="shiverbug_studios_logo-blackBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
-                <img class="feature-logo light" src="shiverbug_studios_logo-ligthtBlueBG.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
+                <img class="feature-logo dark" src="media/logos/shiverbug-dark.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
+                <img class="feature-logo light" src="media/logos/shiverbug-light.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
               </a>
 
               <dl class="feature-facts">
@@ -428,9 +444,10 @@
               <a href="cyber-station.html">Cyber Station</a>, scored 90 out of 100.
             </p>
             <p>
-              Everything below is playable, most of it on itch.io with source on
-              GitHub. If you'd rather read about the engineering, the
-              <a href="#breakdowns">project breakdowns</a> go deeper on eight of them.
+              Most of what's below is playable in the browser on itch.io, and
+              nearly all of it has source on GitHub. If you'd rather read about
+              the engineering, the <a href="#breakdowns">project breakdowns</a>
+              go deeper on eight of the nine.
             </p>
           </div>
 
@@ -502,9 +519,9 @@
         <!-- Cyber Station: featured (final year project, ExpoTees 2026 winner) -->
         <article class="card project project-featured reveal">
           <a class="card-media" href="cyber-station.html"
-             data-video="Project Media/hover/cyber-station.webm"
+             data-video="media/hover/cyber-station.webm"
              aria-label="Cyber Station breakdown">
-            <img src="Project Media/HueStation/LateGameZoomedOutGameplayScreenshot.webp"
+            <img src="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
                  alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
                  width="1400" height="784" loading="lazy">
             <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -545,6 +562,9 @@
               <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
                 itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
               </a>
+              <a href="https://github.com/OliverNealDev/CyberStation" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
+              </a>
             </div>
           </div>
 
@@ -552,7 +572,7 @@
                trophy credit lives here rather than in .card-body so the award
                is stated once, not twice. -->
           <figure class="award-shot">
-            <img src="winningexpoteesaward.jpg"
+            <img src="media/expotees/award.webp"
                  alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming &amp; Development"
                  width="480" height="600" loading="lazy">
             <figcaption>
@@ -571,7 +591,7 @@
           <!-- Tile Turfer (behind "show all") -->
           <article class="card project project-extra reveal">
             <a class="card-media" href="tile-turfer.html" aria-label="Tile Turfer breakdown">
-              <img src="Project Media/TileTurfer/tile1.webp"
+              <img src="media/tile-turfer/tile-1.webp"
                    alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
                    width="1200" height="674" loading="lazy">
             </a>
@@ -608,9 +628,9 @@
           <!-- Minimalists -->
           <article class="card project reveal">
             <a class="card-media" href="minimalists.html"
-               data-video="Project Media/hover/minimalists.webm"
+               data-video="media/hover/minimalists.webm"
                aria-label="Minimalists breakdown">
-              <img src="Project Media/Minimalists/1v1Poster.webp"
+              <img src="media/minimalists/1v1-poster.webp"
                    alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
                    width="1040" height="582" loading="lazy">
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -645,9 +665,9 @@
           <!-- Wanted (behind "show all") -->
           <article class="card project project-extra reveal">
             <a class="card-media" href="wanted.html"
-               data-video="Project Media/hover/wanted.webm"
+               data-video="media/hover/wanted.webm"
                aria-label="Wanted breakdown">
-              <img src="Project Media/Wanted/WantedPoster.webp"
+              <img src="media/wanted/wanted-poster.webp"
                    alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
                    width="1280" height="720" loading="lazy">
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -683,9 +703,9 @@
           <!-- Unicellular -->
           <article class="card project reveal">
             <a class="card-media" href="unicellular.html"
-               data-video="Project Media/hover/unicellular.webm"
+               data-video="media/hover/unicellular.webm"
                aria-label="Unicellular breakdown">
-              <img src="Project Media/Unicellular/10kEntitiesPoster.webp"
+              <img src="media/unicellular/10k-entities-poster.webp"
                    alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
                    width="1280" height="720" loading="lazy">
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -710,8 +730,11 @@
                 <a href="https://olivernealdev.itch.io/unicellular" target="_blank" rel="noopener">
                   itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
                 </a>
+                <!-- The public repo is the later ECS rebuild, not the
+                     GameObject build this card describes. Labelled as such so
+                     nobody opens it expecting the code the write-up is about. -->
                 <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> ECS rebuild, source
                 </a>
               </div>
             </div>
@@ -720,9 +743,9 @@
           <!-- 3D Netcode Tank Game (behind "show all") -->
           <article class="card project project-extra reveal">
             <a class="card-media" href="tank-game.html"
-               data-video="Project Media/hover/tank-game.webm"
+               data-video="media/hover/tank-game.webm"
                aria-label="3D Netcode Tank Game breakdown">
-              <img src="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp"
+              <img src="media/tank-game/multiplayer-demo-poster.webp"
                    alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
                    width="1280" height="720" loading="lazy">
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -754,9 +777,9 @@
           <!-- Pinnable -->
           <article class="card project reveal">
             <a class="card-media" href="pinnable.html"
-               data-video="Project Media/hover/pinnable.webm"
+               data-video="media/hover/pinnable.webm"
                aria-label="Pinnable breakdown">
-              <img src="Project Media/Pinnable/GameplayPoster.webp"
+              <img src="media/pinnable/gameplay-poster.webp"
                    alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
                    width="1280" height="720" loading="lazy">
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -813,7 +836,7 @@
           <!-- Space Bar Simulator -->
           <article class="card project reveal">
             <a class="card-media" href="space-bar.html" aria-label="Space Bar Simulator breakdown">
-              <img src="Project Media/SpaceBarSimulator/space5.webp"
+              <img src="media/space-bar/space-5.webp"
                    alt="Space Bar Simulator gameplay: carrying a tray in first person while collecting Space Beer bottles from a fridge, with table orders and the day timer on the HUD"
                    width="1200" height="618" loading="lazy">
             </a>
@@ -846,9 +869,9 @@
           <!-- Candy Corporate -->
           <article class="card project reveal">
             <a class="card-media" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener"
-               data-video="Project Media/hover/candy-corporate.webm"
+               data-video="media/hover/candy-corporate.webm"
                aria-label="Candy Corporate on itch.io (opens in a new tab)">
-              <img src="Project Media/Candy Corporate/FrontOfMapPoster.webp"
+              <img src="media/candy-corporate/front-of-map-poster.webp"
                    alt="Candy Corporate: pixel art top down view of the candy company storefront"
                    width="1280" height="720" loading="lazy">
               <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
@@ -889,13 +912,20 @@
         <header class="section-head reveal">
           <p class="kicker">Case studies</p>
           <h2>Project breakdowns</h2>
-          <p class="section-lead">Deeper technical write-ups of how eight of these games actually work.</p>
+          <p class="section-lead">
+            The same eight games as above, indexed by the problem each write-up
+            is actually about.
+          </p>
         </header>
 
+        <!--
+          A text index, not a second gallery. Every project here already has a
+          card further up the page with its own screenshot, so repeating the
+          thumbnails meant scrolling twice through the same eight games and
+          paying for the images again.
+        -->
         <div class="bd-list">
           <a class="bd-card reveal" href="cyber-station.html">
-            <img src="Project Media/HueStation/LateGameGameplayScreenshot.webp"
-                 alt="Cyber Station: a packed late game concourse with crowds of passengers moving between shops and platforms" loading="lazy">
             <div>
               <h3>Cyber Station</h3>
               <p>Placement, passenger flow and a six factor station rating system, running as one simulation.</p>
@@ -904,8 +934,6 @@
           </a>
 
           <a class="bd-card reveal" href="minimalists.html">
-            <img src="Project Media/Minimalists/4vsPoster.webp"
-                 alt="Minimalists: the Gridlock map with rows of capturable structures" loading="lazy">
             <div>
               <h3>Minimalists</h3>
               <p>A node conquest RTS pared back to essentials, and the enemy AI that plays it.</p>
@@ -914,8 +942,6 @@
           </a>
 
           <a class="bd-card reveal" href="wanted.html">
-            <img src="Project Media/Wanted/OfficersSearching.webp"
-                 alt="Wanted: officers sweeping flashlight beams through a dark forest, throwing long shadows" loading="lazy">
             <div>
               <h3>Wanted</h3>
               <p>One detection meter that fills four times slower under cover, and a police force that only ever grows.</p>
@@ -924,8 +950,6 @@
           </a>
 
           <a class="bd-card reveal" href="unicellular.html">
-            <img src="Project Media/Unicellular/10kEntitiesPoster.webp"
-                 alt="Unicellular: a field of thousands of glowing cells" loading="lazy">
             <div>
               <h3>Unicellular</h3>
               <p>Keeping thousands of FSM driven organisms simulating smoothly in a single scene.</p>
@@ -934,8 +958,6 @@
           </a>
 
           <a class="bd-card reveal" href="tile-turfer.html">
-            <img src="Project Media/TileTurfer/tile1.webp"
-                 alt="Tile Turfer: blue and red teams fighting to claim tiles across a procedurally generated cave" loading="lazy">
             <div>
               <h3>Tile Turfer</h3>
               <p>One territory percentage driving difficulty, fire rate and AI, over procedurally generated caves.</p>
@@ -944,8 +966,6 @@
           </a>
 
           <a class="bd-card reveal" href="pinnable.html">
-            <img src="Project Media/Pinnable/GameplayPoster.webp"
-                 alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging pins" loading="lazy">
             <div>
               <h3>Pinnable</h3>
               <p>A 2D arcade catch game and the weighted spawn director, pin AI and physics loop underneath it.</p>
@@ -954,8 +974,6 @@
           </a>
 
           <a class="bd-card reveal" href="tank-game.html">
-            <img src="Project Media/3DNetcodeTankGame/MultiplayerDemoPoster.webp"
-                 alt="3D Netcode Tank Game: two clients connected in a hosted online session" loading="lazy">
             <div>
               <h3>3D Netcode Tank Game</h3>
               <p>Server-authoritative multiplayer on Unity Netcode for GameObjects, with a 64-ray hitscan and Relay sessions.</p>
@@ -964,8 +982,6 @@
           </a>
 
           <a class="bd-card reveal" href="space-bar.html">
-            <img src="Project Media/SpaceBarSimulator/space2.webp"
-                 alt="Space Bar Simulator: beer taps behind the bar of a retro futurist diner" loading="lazy">
             <div>
               <h3>Space Bar Simulator</h3>
               <p>A ten-person UE5 build: my player controller, interaction system and camera-blended stations.</p>
@@ -987,7 +1003,7 @@
         <ol class="timeline">
           <li class="reveal">
             <a class="edu-logo-link" href="https://www.tees.ac.uk/" target="_blank" rel="noopener" aria-label="Teesside University website">
-              <img class="edu-logo" src="800x_TU_Logo.webp" alt="Teesside University logo" width="192" height="192" loading="lazy">
+              <img class="edu-logo" src="media/logos/teesside.webp" alt="Teesside University logo" width="192" height="192" loading="lazy">
             </a>
             <div>
               <h3>BSc (Hons) Games Development</h3>
@@ -1002,7 +1018,7 @@
           </li>
           <li class="reveal">
             <a class="edu-logo-link" href="https://ncuc.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College University Centre website">
-              <img class="edu-logo" src="800x_NCUC_Logo.webp" alt="Newcastle College University Centre logo" width="192" height="192" loading="lazy">
+              <img class="edu-logo" src="media/logos/ncuc.webp" alt="Newcastle College University Centre logo" width="192" height="192" loading="lazy">
             </a>
             <div>
               <h3>FdSc Games Technologies</h3>
@@ -1012,7 +1028,7 @@
           </li>
           <li class="reveal">
             <a class="edu-logo-link" href="https://www.ncl-coll.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College website">
-              <img class="edu-logo" src="NewcastleCollege_Logo.webp" alt="Newcastle College logo" width="192" height="192" loading="lazy">
+              <img class="edu-logo" src="media/logos/newcastle-college.webp" alt="Newcastle College logo" width="192" height="192" loading="lazy">
             </a>
             <div>
               <h3>BTEC Level 3 National Diploma in Creative Digital Media</h3>
@@ -1032,7 +1048,8 @@
           <h2>Latest from LinkedIn</h2>
           <p class="section-lead">
             A running log of what I'm building and shipping, posted as it
-            happens. Newest first.
+            happens. Newest first. Longer gameplay footage goes on
+            <a href="https://www.youtube.com/@OliverNealDev" target="_blank" rel="noopener">YouTube</a>.
           </p>
         </header>
 
@@ -1042,25 +1059,26 @@
           text and media live here and every card links out to the original.
           The card's "Read on LinkedIn" link stretches over the whole card;
           the images sit above it and open in the lightbox instead, each
-          with a data-caption and a data-link back to the post. The three
-          newest show; cards with .post-extra hide behind the "Show older
-          posts" toggle.
-          To add a post: copy one .post-card to the TOP of the grid, swap in
+          with a data-caption and a data-link back to the post.
+
+          One row shows, whatever that is at the current width, and the rest
+          hide behind the toggle — main.js reads the column count back off the
+          grid, so there is no per-card class to maintain here.
+          To add a post: copy one .post-card to the TOP of the grid and swap in
           the post URL, date, text (drop the trailing portfolio link and
-          hashtags) and media, and move .post-extra so only three cards are
-          without it. The post text is clamped by CSS; the full message
-          stays in the markup.
+          hashtags) and media. The post text is clamped by CSS; the full
+          message stays in the markup.
         -->
         <div class="post-grid" id="post-grid">
 
           <article class="post-card reveal">
             <div class="post-media">
-              <img src="Project Media/LinkedIn/develop-brighton-1.jpg"
+              <img src="media/linkedin/develop-brighton-1.webp"
                    alt="Four members of the Shiverbug Studios team on Brighton seafront during Develop:Brighton"
                    data-caption="With the Shiverbug Studios team on Brighton seafront during Develop:Brighton 2026"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7484872304053854208/"
                    width="800" height="600" loading="lazy">
-              <img src="Project Media/LinkedIn/develop-brighton-2.jpg"
+              <img src="media/linkedin/develop-brighton-2.webp"
                    alt="Oliver Neal wearing a Develop:Brighton attendee badge on Brighton seafront"
                    data-caption="Badged up on the seafront at Develop:Brighton 2026"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7484872304053854208/"
@@ -1086,12 +1104,12 @@ Thanks to everyone who stopped to chat. I really loved meeting you all!</p>
 
           <article class="post-card reveal">
             <div class="post-media">
-              <img src="Project Media/LinkedIn/first-day-oow.jpg"
+              <img src="media/linkedin/first-day-oow.webp"
                    alt="Out of Water: the seagull and turtle by a crate in a beach level"
                    data-caption="Out of Water, the Shiverbug Studios project I joined as a Gameplay Programmer Intern"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7482335532149260288/"
                    width="800" height="800" loading="lazy">
-              <img src="Project Media/LinkedIn/first-day-shiverbug.jpg"
+              <img src="media/linkedin/first-day-shiverbug.webp"
                    alt="Shiverbug Studios skull-and-moth logo on a black background"
                    data-caption="Shiverbug Studios"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7482335532149260288/"
@@ -1117,12 +1135,12 @@ Busy week ahead 😅</p>
 
           <article class="post-card reveal">
             <div class="post-media">
-              <img src="800x_NCUC_Logo.webp"
+              <img src="media/logos/ncuc.webp"
                    alt="Newcastle College University Centre logo"
                    data-caption="Newcastle College University Centre, where I earned my FdSc in Games Technologies"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7475684875111616513/"
                    width="800" height="800" loading="lazy">
-              <img src="800x_TU_Logo.webp"
+              <img src="media/logos/teesside.webp"
                    alt="Teesside University logo"
                    data-caption="Teesside University, where I graduated with First Class Honours"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7475684875111616513/"
@@ -1148,14 +1166,14 @@ Onwards to what's next... 👀</p>
             </div>
           </article>
 
-          <article class="post-card post-extra reveal">
+          <article class="post-card reveal">
             <div class="post-media">
-              <img src="Project Media/LinkedIn/expotees-award.jpg"
+              <img src="media/linkedin/expotees-award.webp"
                    alt="Oliver Neal receiving the Best Artefact award for Games Programming and Development at ExpoTees 2026"
                    data-caption="Collecting Best Artefact for Games Programming &amp; Development at ExpoTees 2026"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7460372733651107840/"
                    width="1134" height="1418" loading="lazy">
-              <img src="Project Media/LinkedIn/expotees-cyber-station.jpg"
+              <img src="media/linkedin/expotees-cyber-station.webp"
                    alt="Cyber Station: neon platforms, trains and passengers from an isometric view"
                    data-caption="Cyber Station, the final year project that won the award"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7460372733651107840/"
@@ -1181,9 +1199,9 @@ A huge thank you to Neil H. for organising the event, and to everyone at Teessid
             </div>
           </article>
 
-          <article class="post-card post-extra reveal">
+          <article class="post-card reveal">
             <div class="post-media single">
-              <img src="Project Media/HueStation/LateGameZoomedInGameplayScreenshot.webp"
+              <img src="media/cyber-station/late-game-zoomed-in-gameplay-screenshot.webp"
                    alt="Cyber Station late game: crowds of passengers moving through a neon concourse"
                    data-caption="Cyber Station in the late game — the post has the full one-minute demo"
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7458228242450329600/"
@@ -1218,7 +1236,7 @@ This has been a huge step forward for me as a games developer. It pushed me to b
         <div class="show-more-wrap">
           <button class="btn btn-outline" type="button"
                   data-show-more="post-grid" aria-controls="post-grid" aria-expanded="false"
-                  data-more="Show older posts" data-less="Show fewer">
+                  data-more="Show {n} older posts" data-less="Show fewer">
             Show older posts
           </button>
         </div>
