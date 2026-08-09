@@ -13,7 +13,7 @@ Last verified: 9 August 2026.
 
 | Game | Local folder | GitHub repo | Engine | Playable |
 |---|---|---|---|---|
-| **Cyber Station** | `C:\Users\olive\Documents\Unity Projects & Builds\TSA` | [OliverNealDev/CyberStation](https://github.com/OliverNealDev/CyberStation) | Unity 6 (6000.3.8f1) | [itch.io](https://olivernealdev.itch.io/cyber-station), Windows download only |
+| **Cyber Station** | `C:\Users\olive\Documents\Unity Projects & Builds\TSA` | [OliverNealDev/CyberStation](https://github.com/OliverNealDev/CyberStation) | Unity 6 (6000.3.8f1) | [itch.io](https://olivernealdev.itch.io/cyber-station), browser and Windows |
 | **Tile Turfer** | `C:\Users\olive\ThreatHealth` | [OliverNealDev/TileTurfer](https://github.com/OliverNealDev/TileTurfer) | Unity 6 (6000.0.55f1), URP 2D | [itch.io](https://olivernealdev.itch.io/tile-turfer) |
 | **Minimalists** | `C:\Users\olive\Minimalists` | [OliverNealDev/Minimalists](https://github.com/OliverNealDev/Minimalists) | Unity 6 (6000.0.45f1) | [itch.io](https://olivernealdev.itch.io/minimalists) |
 | **Wanted** | `C:\Users\olive\Wanted` | [OliverNealDev/Wanted](https://github.com/OliverNealDev/Wanted) | Unity 6 (6000.0.45f1), URP 2D | [itch.io](https://olivernealdev.itch.io/wanted) |
