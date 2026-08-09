@@ -4,7 +4,7 @@
 
 Strongest in the systems layer of games: component-driven state machines for players and enemy AI, simulation and tick architecture, multiplayer netcode, and the profiling and optimisation work that keeps a scene inside its frame budget. Nine shipped projects, seven built solo, most of them playable on itch.io with source on GitHub.
 
-Tools and workflow: Git and Git LFS, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, Claude Code, Codex, Figma, Trello, technical documentation.
+Tools and workflow: Git and Git LFS, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation.
 
 Contact: oliverjn04@gmail.com
 

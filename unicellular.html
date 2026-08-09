@@ -101,7 +101,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-08-09">
+  <link rel="stylesheet" href="styles.css?v=2026-08-09d">
 </head>
 <body>
 
@@ -372,8 +372,9 @@
             simulation actually wants, and it should take the entity ceiling
             well past ten thousand rather than making ten thousand survivable.
             I would learn ECS properly rather than reaching for it as a label,
-            and I would lean on <strong>AI driven technical development</strong>
-            to move faster through the parts I have not written before.
+            and I would <strong>start from the profiler rather than the
+            rewrite</strong>: the proximity sweep is the measured bottleneck, so
+            that is the system that earns the change first.
           </p>
         </div>
       </div>
@@ -401,6 +402,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=2026-08-09"></script>
+  <script src="main.js?v=2026-08-09d"></script>
 </body>
 </html>

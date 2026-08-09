@@ -435,14 +435,355 @@
   }
 
   // Case-study figures & feature covers share one navigable viewer;
-  // the hero portrait is its own single-image viewer (opens data-full);
-  // the LinkedIn post images browse as their own group, each carrying a
-  // caption and a link back to its post.
+  // the hero portrait is its own single-image viewer (opens data-full).
+  // The LinkedIn post images are not in here: their cards open the post
+  // viewer below, which shows every image at full width in context.
   initLightbox(".media-figure img, .gallery img, .feature-cover img, .award-shot img");
   initLightbox(".hero-portrait img");
-  initLightbox(".post-media img");
 
-  /* 4d. PRINT BUTTONS -------------------------------------------------------
+  /* 4d. LINKEDIN POST VIEWER ------------------------------------------------
+     A log card opens into the whole post: author, date, the full message
+     with its breaks intact, every image, and a link to the original. Laid
+     out the way LinkedIn lays out a post, but in the page's own theme.
+
+     Everything is read back off the .post-card markup and the grid's
+     data-author-* attributes, so adding a post to the grid needs no change
+     here. Arrows walk the entire log, including the posts still hidden
+     behind "Show older posts". */
+  (function initPostViewer() {
+    var grid = document.getElementById("post-grid");
+    if (!grid) return;
+
+    var cards = [].slice.call(grid.querySelectorAll(".post-card"));
+    if (!cards.length) return;
+
+    var overlay = null;
+    var cardEl, avatarEl, nameEl, headlineEl, dateEl, textEl, mediaEl,
+        linkEl, linkLabel, countEl, closeBtn, prevBtn, nextBtn;
+    var zoomEl, zoomImg, zoomCaption, zoomCount, zoomPrev, zoomNext, zoomClose;
+    var current = 0;
+    var zoomAt = -1; // -1 when the enlarged image is closed
+    var lastFocused = null;
+    var lastTile = null;
+
+    function build() {
+      overlay = document.createElement("div");
+      overlay.className = "postview" + (cards.length < 2 ? " single" : "");
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-label", "LinkedIn post viewer");
+      overlay.hidden = true;
+      overlay.innerHTML =
+        '<span class="postview-count" aria-hidden="true"></span>' +
+        '<article class="postview-card">' +
+        '  <header class="postview-head">' +
+        '    <img class="postview-avatar" alt="" width="96" height="96">' +
+        "    <div>" +
+        '      <p class="postview-name"></p>' +
+        '      <p class="postview-headline"></p>' +
+        '      <p class="postview-date">' +
+        '        <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>' +
+        "        <time></time>" +
+        "      </p>" +
+        "    </div>" +
+        "  </header>" +
+        '  <p class="postview-text"></p>' +
+        '  <div class="postview-media"></div>' +
+        '  <footer class="postview-foot">' +
+        '    <a class="postview-link" target="_blank" rel="noopener">' +
+        '      <span class="postview-link-label"></span>' +
+        '      <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>' +
+        "    </a>" +
+        "  </footer>" +
+        "</article>" +
+        '<button class="icon-btn postview-prev" type="button" aria-label="Previous post">' +
+        '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
+        "</button>" +
+        '<button class="icon-btn postview-next" type="button" aria-label="Next post">' +
+        '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
+        "</button>" +
+        '<button class="icon-btn postview-close" type="button" aria-label="Close post viewer">' +
+        '  <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>' +
+        "</button>" +
+        // Tapping a tile enlarges it over the post rather than opening a
+        // second dialog, so there is only ever one thing to escape from.
+        '<div class="postview-zoom" hidden>' +
+        '  <span class="postview-zoom-count" aria-hidden="true"></span>' +
+        '  <figure class="postview-zoom-stage">' +
+        '    <img class="postview-zoom-img" alt="">' +
+        '    <figcaption class="postview-zoom-caption"></figcaption>' +
+        "  </figure>" +
+        '  <button class="icon-btn postview-zoom-prev" type="button" aria-label="Previous image">' +
+        '    <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
+        "  </button>" +
+        '  <button class="icon-btn postview-zoom-next" type="button" aria-label="Next image">' +
+        '    <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>' +
+        "  </button>" +
+        '  <button class="icon-btn postview-zoom-close" type="button" aria-label="Back to the post">' +
+        '    <svg class="icon icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>' +
+        "  </button>" +
+        "</div>";
+      document.body.appendChild(overlay);
+
+      cardEl = overlay.querySelector(".postview-card");
+      avatarEl = overlay.querySelector(".postview-avatar");
+      nameEl = overlay.querySelector(".postview-name");
+      headlineEl = overlay.querySelector(".postview-headline");
+      dateEl = overlay.querySelector(".postview-date time");
+      textEl = overlay.querySelector(".postview-text");
+      mediaEl = overlay.querySelector(".postview-media");
+      linkEl = overlay.querySelector(".postview-link");
+      linkLabel = overlay.querySelector(".postview-link-label");
+      countEl = overlay.querySelector(".postview-count");
+      closeBtn = overlay.querySelector(".postview-close");
+      prevBtn = overlay.querySelector(".postview-prev");
+      nextBtn = overlay.querySelector(".postview-next");
+      zoomEl = overlay.querySelector(".postview-zoom");
+      zoomImg = overlay.querySelector(".postview-zoom-img");
+      zoomCaption = overlay.querySelector(".postview-zoom-caption");
+      zoomCount = overlay.querySelector(".postview-zoom-count");
+      zoomPrev = overlay.querySelector(".postview-zoom-prev");
+      zoomNext = overlay.querySelector(".postview-zoom-next");
+      zoomClose = overlay.querySelector(".postview-zoom-close");
+
+      // The author strip is the same on every post, so it is written once.
+      var name = grid.getAttribute("data-author-name") || "";
+      var profile = grid.getAttribute("data-author-url");
+      nameEl.textContent = name;
+      if (profile) {
+        nameEl.innerHTML = "";
+        var a = document.createElement("a");
+        a.href = profile;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = name;
+        nameEl.appendChild(a);
+      }
+      headlineEl.textContent = grid.getAttribute("data-author-headline") || "";
+      avatarEl.src = grid.getAttribute("data-author-avatar") || "";
+      avatarEl.alt = name ? "Portrait of " + name : "";
+
+      closeBtn.addEventListener("click", close);
+      prevBtn.addEventListener("click", function () { show(current - 1); });
+      nextBtn.addEventListener("click", function () { show(current + 1); });
+
+      zoomClose.addEventListener("click", closeZoom);
+      zoomPrev.addEventListener("click", function () { showZoom(zoomAt - 1); });
+      zoomNext.addEventListener("click", function () { showZoom(zoomAt + 1); });
+      zoomEl.addEventListener("click", function (e) {
+        if (e.target === zoomEl || e.target.classList.contains("postview-zoom-stage")) closeZoom();
+      });
+
+      // Tiles are rebuilt on every post, so the click lives on the block.
+      mediaEl.addEventListener("click", function (e) {
+        var shot = e.target.closest(".postview-shot");
+        if (shot) openZoom(tiles().indexOf(shot));
+      });
+      mediaEl.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        var shot = e.target.closest(".postview-shot");
+        if (!shot) return;
+        e.preventDefault();
+        openZoom(tiles().indexOf(shot));
+      });
+
+      // Backdrop click closes; clicks inside the post card don't.
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) close();
+      });
+
+      overlay.addEventListener("keydown", function (e) {
+        // The enlarged image is the innermost thing open, so it answers
+        // Escape and the arrows first and hands them back when it closes.
+        if (zoomAt > -1) {
+          if (e.key === "Escape") { e.stopPropagation(); closeZoom(); return; }
+          if (e.key === "ArrowLeft") { e.preventDefault(); showZoom(zoomAt - 1); return; }
+          if (e.key === "ArrowRight") { e.preventDefault(); showZoom(zoomAt + 1); return; }
+        } else {
+          if (e.key === "Escape") { close(); return; }
+          if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); return; }
+          if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); return; }
+        }
+        if (e.key === "Tab") {
+          var ring = zoomAt > -1
+            ? [zoomPrev, zoomNext, zoomClose]
+            : [linkEl, prevBtn, nextBtn, closeBtn];
+          var focusables = ring.filter(function (b) {
+            return b.offsetParent !== null;
+          });
+          if (!focusables.length) return;
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault(); last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault(); first.focus();
+          }
+        }
+      });
+    }
+
+    function tiles() {
+      return [].slice.call(mediaEl.querySelectorAll(".postview-shot"));
+    }
+
+    /* The enlarged image. It lives inside the post overlay rather than in a
+       dialog of its own, so the post stays open behind it and Escape peels
+       one layer at a time. Arrows here walk this post's images, not posts. */
+    function showZoom(index) {
+      var shots = tiles();
+      if (!shots.length) return;
+      zoomAt = (index + shots.length) % shots.length;
+
+      var shot = shots[zoomAt];
+      var img = shot.querySelector("img");
+      zoomImg.src = img.src;
+      zoomImg.alt = img.alt || "";
+      zoomCaption.textContent = shot.getAttribute("data-caption") || "";
+      zoomCount.textContent = (zoomAt + 1) + " / " + shots.length;
+      zoomEl.classList.toggle("single", shots.length < 2);
+    }
+
+    function openZoom(index) {
+      if (index < 0) return;
+      lastTile = tiles()[index] || null;
+      showZoom(index);
+      zoomEl.hidden = false;
+      overlay.classList.add("zoomed");
+      void zoomEl.offsetWidth;
+      zoomEl.classList.add("open");
+      zoomClose.focus();
+    }
+
+    function closeZoom() {
+      if (zoomAt < 0) return;
+      zoomAt = -1;
+      zoomEl.classList.remove("open");
+      overlay.classList.remove("zoomed");
+      var done = function () { zoomEl.hidden = true; };
+      if (reducedMotion) { done(); } else { setTimeout(done, 200); }
+      if (lastTile && lastTile.isConnected) lastTile.focus();
+      else closeBtn.focus();
+    }
+
+    function show(index) {
+      closeZoom();
+      current = (index + cards.length) % cards.length;
+      var card = cards[current];
+
+      var time = card.querySelector(".post-meta time");
+      if (time) {
+        dateEl.textContent = "LinkedIn · " + time.textContent.trim();
+        dateEl.setAttribute("datetime", time.getAttribute("datetime") || "");
+      }
+
+      var text = card.querySelector(".post-text");
+      textEl.textContent = text ? text.textContent.trim() : "";
+
+      // Rebuild the media block from the card's own images. They tile into
+      // one block rather than stacking, so the count drives the layout; CSS
+      // does the rest. No captions, because a caption between two tiles is
+      // what stops a pair reading as one image the way LinkedIn shows it.
+      mediaEl.innerHTML = "";
+      var flag = card.querySelector(".post-flag");
+      var images = [].slice.call(card.querySelectorAll(".post-media img"));
+      mediaEl.setAttribute("data-count", String(Math.min(images.length, 4)));
+
+      images.forEach(function (img, i) {
+        var shot = document.createElement("span");
+        shot.className = "postview-shot";
+        shot.setAttribute("role", "button");
+        shot.setAttribute("tabindex", "0");
+        shot.setAttribute(
+          "aria-label",
+          "Enlarge image" + (images.length > 1 ? " " + (i + 1) + " of " + images.length : "")
+        );
+
+        var full = document.createElement("img");
+        full.src = img.getAttribute("data-full") || img.currentSrc || img.src;
+        // data-caption is the fuller line the card has no room for; it makes
+        // a better description here than the card's own short alt.
+        full.alt = img.getAttribute("data-caption") || img.alt || "";
+        full.loading = "lazy";
+        shot.appendChild(full);
+        // Kept on the tile so the enlarged view can caption it.
+        if (img.getAttribute("data-caption")) {
+          shot.setAttribute("data-caption", img.getAttribute("data-caption"));
+        }
+
+        // The corner note ("1-minute demo") belongs to the first tile only.
+        if (flag && i === 0) {
+          var badge = document.createElement("span");
+          badge.className = "postview-flag";
+          badge.innerHTML = flag.innerHTML;
+          shot.appendChild(badge);
+        }
+        mediaEl.appendChild(shot);
+      });
+
+      var source = card.querySelector(".post-link");
+      var firstImg = card.querySelector(".post-media img");
+      linkEl.href = source ? source.getAttribute("href") : "";
+      linkLabel.textContent =
+        (firstImg && firstImg.getAttribute("data-link-text")) || "View post on LinkedIn";
+
+      countEl.textContent = (current + 1) + " / " + cards.length;
+      cardEl.scrollTop = 0;
+    }
+
+    function open(index) {
+      if (!overlay) build();
+      lastFocused = document.activeElement;
+      show(index);
+      overlay.hidden = false;
+      root.classList.add("postview-open");
+      // Force a reflow so the opacity/scale transition actually runs.
+      void overlay.offsetWidth;
+      overlay.classList.add("open");
+      closeBtn.focus();
+    }
+
+    function close() {
+      closeZoom();
+      overlay.classList.remove("open");
+      root.classList.remove("postview-open");
+      var done = function () { overlay.hidden = true; };
+      if (reducedMotion) { done(); } else { setTimeout(done, 300); }
+      // A post reached with the arrows can be one the "show older" toggle is
+      // still hiding, and focus() on a hidden card goes nowhere, so fall back
+      // to the card that opened the viewer.
+      var target = lastFocused && lastFocused.offsetParent !== null
+        ? lastFocused
+        : cards.filter(function (c) { return c.offsetParent !== null; })[0];
+      if (target && target.focus) target.focus();
+    }
+
+    cards.forEach(function (card, i) {
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      var time = card.querySelector(".post-meta time");
+      card.setAttribute(
+        "aria-label",
+        "Read the full LinkedIn post" + (time ? " from " + time.textContent.trim() : "")
+      );
+
+      card.addEventListener("click", function (e) {
+        // "Read on LinkedIn" is a real link and stays one.
+        if (e.target.closest("a")) return;
+        open(i);
+      });
+
+      card.addEventListener("keydown", function (e) {
+        if (e.target !== card) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(i);
+        }
+      });
+    });
+  })();
+
+  /* 4e. PRINT BUTTONS -------------------------------------------------------
      Any element with [data-print] (the CV page's "Print" action) triggers
      the browser's print dialog. */
   document.querySelectorAll("[data-print]").forEach(function (btn) {

@@ -2,7 +2,7 @@
 
 Source for my portfolio site: [oliverneal.dev](https://oliverneal.dev).
 
-Hand-written HTML, CSS and vanilla JavaScript. No framework, no build step, no dependencies. Deployed straight from `main` by GitHub Pages.
+Static HTML, CSS and vanilla JavaScript. No framework, no build step, no dependencies, nothing to install: what is in this repository is exactly what ships. Deployed straight from `main` by GitHub Pages.
 
 ---
 
@@ -41,7 +41,7 @@ Discovery files: `sitemap.xml`, `robots.txt` (which welcomes AI crawlers explici
 
 ## Running it locally
 
-Any static file server works. There is a zero-install one wired up for Claude Code in `.claude/launch.json`, or:
+Any static file server works. There is a zero-install one wired up in `.claude/launch.json`, or:
 
 ```bash
 python -m http.server 8347

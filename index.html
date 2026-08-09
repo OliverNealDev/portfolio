@@ -200,7 +200,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-08-09">
+  <link rel="stylesheet" href="styles.css?v=2026-08-09d">
 </head>
 <body>
 
@@ -385,7 +385,6 @@
                   <h4>Gameplay</h4>
                   <ul class="feature-list">
                     <li><strong>Component driven state machines</strong> for both playable characters and the enemies, rebuilt from single file controllers</li>
-                    <li>The <strong>co-op moveset</strong> that hangs off them, and the <strong>game feel</strong> around it</li>
                     <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping</li>
                   </ul>
                 </section>
@@ -395,7 +394,6 @@
                   <ul class="feature-list">
                     <li><strong>GPU driven rendering</strong>, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I wrote for the team</li>
                     <li><strong>Blockout interactables and editor tooling</strong> the level designers build puzzles from</li>
-                    <li><strong>Supporting systems</strong> the rest of the team works through, including collectable saving and an in-game debug console</li>
                   </ul>
                 </section>
 
@@ -404,7 +402,6 @@
                   <ul class="feature-list">
                     <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots and a controls tutorial</li>
                     <li><strong>Water, caustics and bubble shaders</strong>, in Shader Graph and in hand written URP HLSL</li>
-                    <li>A <strong>decoupled FMOD layer</strong> the audio team plugs into</li>
                   </ul>
                 </section>
               </div>
@@ -491,7 +488,7 @@
           </div>
           <div class="skills-row">
             <dt>Tools &amp; workflow</dt>
-            <dd>Git and <strong>Git LFS</strong>, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, <strong>Claude Code</strong>, <strong>Codex</strong>, Figma, Trello, technical documentation</dd>
+            <dd>Git and <strong>Git LFS</strong>, branch workflow on a shared team repo, Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</dd>
           </div>
         </dl>
       </div>
@@ -1048,8 +1045,7 @@
           <h2>Latest from LinkedIn</h2>
           <p class="section-lead">
             A running log of what I'm building and shipping, posted as it
-            happens. Newest first. Longer gameplay footage goes on
-            <a href="https://www.youtube.com/@OliverNealDev" target="_blank" rel="noopener">YouTube</a>.
+            happens. Newest first.
           </p>
         </header>
 
@@ -1057,19 +1053,29 @@
           Native representations of the LinkedIn posts, newest first — the
           real embeds bring cookie banners and a clashing white card, so the
           text and media live here and every card links out to the original.
-          The card's "Read on LinkedIn" link stretches over the whole card;
-          the images sit above it and open in the lightbox instead, each
-          with a data-caption and a data-link back to the post.
+          Clicking a card opens the post viewer in main.js: the full message,
+          every image and a link to the original, laid out the way LinkedIn
+          lays out a post, with arrows to walk the whole log. The "Read on
+          LinkedIn" link inside the card still goes straight to the post.
+
+          The viewer reads everything off the card markup, and the author
+          strip comes off the data-author-* attributes below, so nothing here
+          is duplicated anywhere else.
 
           One row shows, whatever that is at the current width, and the rest
           hide behind the toggle — main.js reads the column count back off the
-          grid, so there is no per-card class to maintain here.
+          grid, so there is no per-card class to maintain here. Posts hidden
+          by the toggle are still reachable inside the viewer.
           To add a post: copy one .post-card to the TOP of the grid and swap in
           the post URL, date, text (drop the trailing portfolio link and
-          hashtags) and media. The post text is clamped by CSS; the full
-          message stays in the markup.
+          hashtags) and media. The post text is clamped by CSS on the card; the
+          full message stays in the markup and the viewer shows all of it.
         -->
-        <div class="post-grid" id="post-grid">
+        <div class="post-grid" id="post-grid"
+             data-author-name="Oliver Neal"
+             data-author-headline="Gameplay Programmer at Shiverbug Studios · Unity (C#)"
+             data-author-avatar="media/oliver-neal.webp"
+             data-author-url="https://www.linkedin.com/in/oliverjackneal/">
 
           <article class="post-card reveal">
             <div class="post-media">
@@ -1203,7 +1209,7 @@ A huge thank you to Neil H. for organising the event, and to everyone at Teessid
             <div class="post-media single">
               <img src="media/cyber-station/late-game-zoomed-in-gameplay-screenshot.webp"
                    alt="Cyber Station late game: crowds of passengers moving through a neon concourse"
-                   data-caption="Cyber Station in the late game — the post has the full one-minute demo"
+                   data-caption="Cyber Station in the late game. The post has the full one-minute demo."
                    data-link="https://www.linkedin.com/feed/update/urn:li:activity:7458228242450329600/"
                    data-link-text="Watch the demo on LinkedIn"
                    width="1200" height="675" loading="lazy">
@@ -1384,6 +1390,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-08-09"></script>
+  <script src="main.js?v=2026-08-09d"></script>
 </body>
 </html>
