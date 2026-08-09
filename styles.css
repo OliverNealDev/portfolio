@@ -494,26 +494,40 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 /* Availability, dates and right to work — the three things a recruiter is
    scanning for, so of everything in the hero this is the last text that should
    need squinting at. It was mono at 0.78rem in the faintest grey, which is a
-   styling choice for a caption, not for the most load-bearing line on the
-   page. Now it is the body face, larger, and a step up in contrast. */
+   caption's styling, not the most load-bearing line on the page. Loose text
+   split by middots then read as a stray third paragraph competing with the
+   pitch above it, so the facts are chips: one row that is obviously metadata,
+   in the body face and at full contrast. */
 .hero-availability {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem 0.85rem;
+  gap: 0.45rem;
   list-style: none;
   margin: 0 0 1.5rem;
   padding: 0;
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   color: var(--text-2);
 }
+.hero-availability li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.72rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+}
 .hero-availability strong { color: var(--text); font-weight: 600; }
-/* The separator trails its own item rather than leading the next one, so a
-   wrapped line starts with a word instead of a stray dot. */
-.hero-availability li:not(:last-child)::after {
-  content: "·";
-  margin-left: 0.85rem;
-  color: var(--border-strong);
+/* The same green signal as the status line at the top of the hero, so the
+   one chip that is about being open to work is the one that carries it. */
+.hero-availability li:first-child::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ok);
 }
 
 .hero-ctas {
@@ -723,7 +737,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 
 .post-card {
-  position: relative; /* containing block for the stretched .post-link */
+  position: relative;
+  cursor: pointer; /* the whole card opens the post viewer (see main.js 4d) */
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
@@ -824,13 +839,10 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   transition: color 0.2s ease;
 }
 .post-card:hover .post-link { color: var(--accent); }
-/* Stretch the link over the whole card; the media's z-index carves the
-   images back out for the lightbox. */
-.post-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
+/* The footer row sits above the card's own click target, so the whole
+   "Read on LinkedIn" strip goes straight to the post while the media and
+   text above it open the viewer. */
+.post-link { position: relative; z-index: 2; }
 
 .log-cta {
   display: flex;
@@ -2183,13 +2195,306 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 .lightbox.single .lightbox-next,
 .lightbox.single .lightbox-count { display: none; }
 
-/* Lock page scroll while the viewer is open */
+/* Lock page scroll while either viewer is open */
 html.lightbox-open,
-html.lightbox-open body { overflow: hidden; }
+html.lightbox-open body,
+html.postview-open,
+html.postview-open body { overflow: hidden; }
 
 @media (max-width: 640px) {
   .lightbox { padding: 0.85rem 3.4rem; }
   .lightbox-img { max-height: 72vh; }
+}
+
+/* --------------------------------------------------------------------------
+   10c. POST VIEWER — the LinkedIn log, read in full
+   Built once by main.js from the .post-card markup. Same dark scrim as the
+   lightbox, but the card itself uses the page's own surface tokens so it
+   reads correctly in both themes rather than imitating LinkedIn's white.
+   -------------------------------------------------------------------------- */
+.postview {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(0.85rem, 4vw, 3rem) clamp(0.85rem, 4vw, 4.5rem);
+  background: rgba(8, 8, 11, 0.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+.postview[hidden] { display: none; }
+.postview.open { opacity: 1; }
+
+.postview-card {
+  width: min(640px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
+  transform: scale(0.975);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.postview.open .postview-card { transform: none; }
+
+/* Author strip, straight off the grid's data-author-* attributes */
+.postview-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.15rem 1.25rem 0.9rem;
+}
+.postview-avatar {
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+.postview-name {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.postview-name a { color: inherit; }
+.postview-name a:hover { color: var(--accent); }
+.postview-headline {
+  margin: 0.1rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-3);
+  line-height: 1.35;
+}
+.postview-date {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.25rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+.postview-date .icon { width: 1em; height: 1em; }
+
+/* The message itself: every line of it, breaks preserved, no clamp */
+.postview-text {
+  margin: 0;
+  padding: 0 1.25rem 1.1rem;
+  color: var(--text-2);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* Media is one tiled block, the way LinkedIn merges a post's images: a lone
+   picture keeps its own shape, and two or more crop into equal tiles split by
+   a hairline, so the set reads as a single object instead of a stack. The
+   layout is picked by data-count, which main.js sets from the card. */
+.postview-media {
+  display: grid;
+  gap: 2px;
+  background: var(--border);
+  border-block: 1px solid var(--border);
+}
+.postview-media:empty { display: none; }
+
+.postview-shot {
+  position: relative;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.postview-shot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.postview-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--bg-soft);
+}
+
+/* One image is shown whole rather than cropped, capped so a tall shot can't
+   push the message off the top of the viewer. */
+.postview-media[data-count="1"] img {
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+/* Two side by side, square, like the two-up on the card */
+.postview-media[data-count="2"] { grid-template-columns: 1fr 1fr; }
+.postview-media[data-count="2"] .postview-shot { aspect-ratio: 1 / 1; }
+
+/* Three: one tall on the left, two stacked beside it */
+.postview-media[data-count="3"] { grid-template-columns: 1fr 1fr; }
+.postview-media[data-count="3"] .postview-shot { aspect-ratio: 1 / 1; }
+.postview-media[data-count="3"] .postview-shot:first-child {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+/* Four or more fill a square grid, extras flowing onto further rows */
+.postview-media[data-count="4"] { grid-template-columns: 1fr 1fr; }
+.postview-media[data-count="4"] .postview-shot { aspect-ratio: 1 / 1; }
+/* Carries over the card's corner note, e.g. "1-minute demo" */
+.postview-flag {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 3px;
+  background: rgba(10, 10, 12, 0.72);
+  color: #f0f0f3;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+.postview-flag .icon { width: 0.85em; height: 0.85em; }
+
+.postview-foot { padding: 1rem 1.25rem 1.15rem; }
+.postview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.postview-link:hover { border-color: var(--accent-border); color: var(--accent); }
+.postview-link .icon { width: 1em; height: 1em; }
+
+.postview-count,
+.postview-zoom-count {
+  position: absolute;
+  top: 1.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #8b8b97;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+}
+
+/* An enlarged tile, over the post rather than in a dialog of its own, so
+   the post is still there behind it and Escape peels one layer at a time. */
+.postview-zoom {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 3.5rem);
+  background: rgba(6, 6, 9, 0.94);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.postview-zoom[hidden] { display: none; }
+.postview-zoom.open { opacity: 1; }
+
+.postview-zoom-stage {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+.postview-zoom-img {
+  max-width: min(1400px, 100%);
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.65);
+  background: #101014;
+}
+.postview-zoom-caption {
+  max-width: 62em;
+  color: #c7c7d1;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.5;
+}
+.postview-zoom-caption:empty { display: none; }
+
+.postview-zoom-close { top: 1rem; right: 1rem; }
+.postview-zoom-prev,
+.postview-zoom-next { top: 50%; margin-top: -1.375rem; }
+.postview-zoom-prev { left: max(0.75rem, env(safe-area-inset-left)); }
+.postview-zoom-next { right: max(0.75rem, env(safe-area-inset-right)); }
+.postview-zoom-prev .icon { transform: rotate(180deg); }
+.postview-zoom.single .postview-zoom-prev,
+.postview-zoom.single .postview-zoom-next,
+.postview-zoom.single .postview-zoom-count { display: none; }
+
+/* While a tile is enlarged the post's own controls step out of the way,
+   so there is one set of arrows on screen and they do one thing. */
+.postview.zoomed .postview-prev,
+.postview.zoomed .postview-next,
+.postview.zoomed .postview-close,
+.postview.zoomed .postview-count { display: none; }
+
+.postview .icon-btn {
+  position: absolute;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(22, 22, 28, 0.72);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #f0f0f3;
+}
+.postview .icon-btn:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+.postview-close { top: 1rem; right: 1rem; }
+.postview-prev,
+.postview-next { top: 50%; margin-top: -1.375rem; }
+.postview-prev { left: max(0.75rem, env(safe-area-inset-left)); }
+.postview-next { right: max(0.75rem, env(safe-area-inset-right)); }
+.postview-prev .icon { transform: rotate(180deg); }
+
+/* On a phone there is no room beside the card, so the arrows move to the
+   bottom corners and the count sits out of the way of the close button. */
+@media (max-width: 720px) {
+  .postview { padding: 3.25rem 0.75rem 4.75rem; }
+  .postview-count,
+  .postview-zoom-count { top: auto; bottom: 1.55rem; }
+  .postview-prev,
+  .postview-next,
+  .postview-zoom-prev,
+  .postview-zoom-next { top: auto; bottom: 1rem; margin-top: 0; }
+  .postview-prev,
+  .postview-zoom-prev { left: 1rem; }
+  .postview-next,
+  .postview-zoom-next { right: 1rem; }
+  .postview-zoom { padding: 3.25rem 0.75rem 4.75rem; }
+  .postview-zoom-img { max-height: 70vh; }
+  .postview-head { padding: 1rem 1rem 0.8rem; }
+  .postview-text { padding: 0 1rem 1rem; }
+  .postview-media figcaption { padding-inline: 1rem; }
+  .postview-foot { padding: 0.9rem 1rem 1.05rem; }
 }
 
 /* --------------------------------------------------------------------------
