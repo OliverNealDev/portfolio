@@ -127,7 +127,10 @@
   var frugal = !!conn && (conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || ""));
 
   if (!reducedMotion && !frugal) {
-    var previews = [].slice.call(document.querySelectorAll(".card-media[data-video]"))
+    // .card-media is the project grids; .tl-media is a picture on the timeline
+    // rail. Same contract either way: a poster, a data-video, and a .playing
+    // class the stylesheet cross-fades on.
+    var previews = [].slice.call(document.querySelectorAll("[data-video]"))
       .map(function (media) {
         var video = null;
         var wanted = false;
@@ -1355,9 +1358,19 @@
 
     function tlClamp(n, lo, hi) { return n < lo ? lo : (n > hi ? hi : n); }
 
-    // Travel offset at which this milestone sits against the left edge.
-    // offsetLeft is a layout value, so the rail's transform never skews it.
-    function tlTravelOf(item) { return tlClamp(item.offsetLeft, 0, tlDistance); }
+    /* Travel offset that brings this milestone to the reading position. Not
+       flush against the left edge but the rail's own left gutter in from it,
+       which is where the very first card sits at rest, so a card arrived at by
+       a step, a year marker or the keyboard lands exactly where a card that has
+       not been travelled to yet already is.
+
+       offsetLeft is a layout value, so the rail's transform never skews it. */
+    function tlLead() {
+      return parseFloat(window.getComputedStyle(tlRail).paddingLeft) || 0;
+    }
+    function tlTravelOf(item) {
+      return tlClamp(item.offsetLeft - tlLead(), 0, tlDistance);
+    }
 
     // Page scroll position that produces a given travel offset
     function tlScrollFor(travel) {
@@ -1514,9 +1527,64 @@
       }
     }
 
+    /* How tall the pictures are allowed to be.
+
+       A card has to fit its picture and its whole write-up inside one row of
+       the stage, and that row is whatever the window has left once the header
+       and the bar have taken their share. The previous version guessed at that
+       with a few viewport-height breakpoints and settled on a letterbox strip
+       thin enough that a photograph of two people showed neither of them.
+
+       So it is measured instead. The pictures are collapsed to nothing, every
+       write-up is measured at its real width, and whatever the tallest one
+       leaves over is what the pictures get. Landscape sources share one height,
+       so cards still line up; the portrait one is measured separately, because
+       it is the shape a portrait needs that made the old crop wrong and it sits
+       beside a shorter write-up anyway. */
+    function tlShots() {
+      if (!tlItems.length) return;
+
+      var portraits = [];
+      var landscapes = [];
+
+      tlItems.forEach(function (item) {
+        var card = item.querySelector(".tl-card");
+        if (!card) return;
+        (item.querySelector(".tl-shot-portrait") ? portraits : landscapes)
+          .push(card);
+      });
+
+      // Collapse first, then measure: with the pictures at zero a card's height
+      // is its write-up, which is the one number that does not depend on the
+      // answer being computed here.
+      tl.style.setProperty("--tl-shot-h", "0px");
+      tl.style.setProperty("--tl-shot-h-portrait", "0px");
+
+      var rows = window.getComputedStyle(tlItems[0]).gridTemplateRows.split(" ");
+      var room = tlItems[0].clientHeight - (parseFloat(rows[0]) || 70);
+
+      function tallest(cards) {
+        return cards.reduce(function (n, card) {
+          return Math.max(n, card.offsetHeight);
+        }, 0);
+      }
+
+      // Bounds, not taste: below the floor a picture is not worth showing, and
+      // above the ceiling one picture would be the whole card.
+      tl.style.setProperty(
+        "--tl-shot-h",
+        tlClamp(Math.floor(room - tallest(landscapes)), 96, 236) + "px"
+      );
+      tl.style.setProperty(
+        "--tl-shot-h-portrait",
+        tlClamp(Math.floor(room - tallest(portraits)), 130, 330) + "px"
+      );
+    }
+
     function tlMeasure() {
       tlStickyTop = parseFloat(window.getComputedStyle(tlStage).top) || 0;
 
+      tlShots();
       tlSpace();
       tlDistance = Math.max(0, tlRail.scrollWidth - tlViewport.clientWidth);
 
@@ -1552,7 +1620,63 @@
       delete tl.dataset.mode;
       tl.style.height = "";
       tlRail.style.transform = "";
+      tl.style.removeProperty("--tl-shot-h");
+      tl.style.removeProperty("--tl-shot-h-portrait");
       tlUnspace();
+    }
+
+    /* The scene behind the rail. The milestone being read lights the room: its
+       own picture, blown up and blurred to nothing but colour and shape, is
+       cross-faded in behind the cards, and the year stands behind that.
+
+       Two layers alternating rather than one layer changing its background,
+       because a background-image swap is a cut, and a cut behind a rail that is
+       gliding is the one thing that would make the whole page feel cheap. The
+       outgoing layer keeps its picture until the incoming one has finished
+       arriving, so there is never a frame of empty backdrop between them.
+
+       Everything here is decorative: it is aria-hidden in the markup, it is
+       only ever built while pinned, and pinned mode never engages under
+       prefers-reduced-motion. */
+    var tlSceneLayers = tl.querySelectorAll("[data-tl-scene-layer]");
+    var tlSceneYear = tl.querySelector("[data-tl-scene-year]");
+    var tlSceneFace = 0;
+    var tlSceneSrc = "";
+    var tlSceneYearAt = "";
+
+    function tlScene(item) {
+      if (!tlSceneLayers.length) return;
+
+      // The card's own picture, or the crest for a milestone that is a course.
+      // A card with neither keeps whatever was already lit rather than dropping
+      // to a bare background, so the room dims between pictures instead of
+      // going out.
+      var img = item.querySelector(".tl-media img") || item.querySelector(".tl-crest");
+      var src = img ? img.currentSrc || img.src : "";
+      if (!src || src === tlSceneSrc) return;
+
+      tlSceneSrc = src;
+      tlSceneFace = 1 - tlSceneFace;
+
+      var next = tlSceneLayers[tlSceneFace];
+      next.style.backgroundImage = 'url("' + src + '")';
+      // Restart the drift so the incoming picture arrives moving. Reading
+      // offsetWidth between the two writes is what makes it a new animation
+      // rather than a no-op.
+      next.classList.remove("is-on");
+      void next.offsetWidth;
+      next.classList.add("is-on");
+
+      tlSceneLayers[1 - tlSceneFace].classList.remove("is-on");
+    }
+
+    function tlSceneYearSet(year) {
+      if (!tlSceneYear || year === tlSceneYearAt) return;
+      tlSceneYearAt = year;
+      tlSceneYear.textContent = year;
+      tlSceneYear.classList.remove("is-turning");
+      void tlSceneYear.offsetWidth;
+      tlSceneYear.classList.add("is-turning");
     }
 
     function tlReadout(travel) {
@@ -1588,6 +1712,9 @@
       var heading = item.querySelector("h2");
       tlLabelOut.textContent = heading ? heading.textContent.trim() : "";
       if (tlIndexOut) tlIndexOut.textContent = idx + 1;
+
+      tlScene(item);
+      tlSceneYearSet(item.dataset.year);
 
       tlTicks.forEach(function (t) {
         t.el.classList.toggle("current", t.year === item.dataset.year);
@@ -1701,6 +1828,9 @@
 
       var t = e.target;
       if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      // The viewer takes the arrow keys while it is open, and its keydown
+      // still bubbles out to here, so the rail has to stand down for it.
+      if (document.querySelector("dialog[open]")) return;
 
       // Only while the stage actually fills the viewport
       var rect = tl.getBoundingClientRect();
@@ -1728,6 +1858,78 @@
     tlSettle();
     window.addEventListener("load", tlSettle);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(tlSettle);
+  }
+
+  /* 11b. FULL SIZE VIEWER ---------------------------------------------------
+     timeline.html only. Every picture on the rail is shown inside a card that
+     has to crop it to fit; this is where one can be looked at whole.
+
+     A native <dialog> opened with showModal, which is what makes the focus
+     trap, the Escape key, the inertness of the page behind it and the return
+     of focus to the picture that was clicked the browser's job rather than
+     four things to get subtly wrong by hand. Where showModal is missing, no
+     listener is attached and .has-lightbox is never set, so the pictures never
+     claim to open and nothing is broken by promising it. */
+  var lb = document.getElementById("tl-lightbox");
+  var lbShots = lb ? [].slice.call(document.querySelectorAll("[data-full]")) : [];
+
+  if (lb && lbShots.length && typeof lb.showModal === "function") {
+    root.classList.add("has-lightbox");
+
+    var lbImg = lb.querySelector("[data-lb-img]");
+    var lbCap = lb.querySelector("[data-lb-cap]");
+    var lbFig = lb.querySelector(".lb-figure");
+    var lbAt = 0;
+
+    var lbShow = function (i) {
+      // Wrapping rather than stopping: this is a gallery of a dozen pictures,
+      // not a form, and a dead arrow at either end is only a dead end.
+      lbAt = (i + lbShots.length) % lbShots.length;
+
+      var shot = lbShots[lbAt];
+      var img = shot.querySelector("img");
+
+      lbImg.src = shot.dataset.full;
+      // The card's alt already describes this exact picture, so it is reused
+      // rather than written twice and left to drift.
+      lbImg.alt = img ? img.alt : "";
+      lbCap.textContent = shot.dataset.caption || "";
+
+      // Re-run the arrival animation, so stepping through reads as one picture
+      // replacing another rather than a src quietly changing.
+      lbFig.style.animation = "none";
+      void lbFig.offsetWidth;
+      lbFig.style.animation = "";
+    };
+
+    lbShots.forEach(function (shot, i) {
+      shot.addEventListener("click", function () {
+        lbShow(i);
+        if (!lb.open) lb.showModal();
+      });
+    });
+
+    lb.addEventListener("click", function (e) {
+      var hit = e.target.closest ? e.target : e.target.parentNode;
+      if (hit.closest("[data-lb-close]")) { lb.close(); return; }
+
+      var step = hit.closest("[data-lb-step]");
+      if (step) { lbShow(lbAt + (+step.dataset.lbStep)); return; }
+
+      // Anywhere that is not the picture itself closes it, including the
+      // backdrop, which reports the dialog as the target.
+      if (!hit.closest(".lb-figure")) lb.close();
+    });
+
+    lb.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); lbShow(lbAt - 1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); lbShow(lbAt + 1); }
+    });
+
+    // Release the full size photograph once the viewer is shut. Opening always
+    // goes through lbShow, so an engine that never fires this only costs one
+    // decoded image held longer than it needed to be.
+    lb.addEventListener("close", function () { lbImg.removeAttribute("src"); });
   }
 
   /* 12. ANALYTICS -----------------------------------------------------------
