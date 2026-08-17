@@ -77,7 +77,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-08-17b">
+  <link rel="stylesheet" href="styles.css?v=2026-08-17c">
 </head>
 <body>
 
@@ -93,6 +93,9 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5"/><path d="M15 20h5v-5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/></g></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></g></symbol>
   </svg>
 
   <a class="skip-link" href="#main">Skip to content</a>
@@ -153,9 +156,10 @@
 
         <p class="tl-howto">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          Scroll to travel along it. The arrow keys and the two buttons step
-          one milestone at a time, the year markers jump, and the quarter marks
-          under the bar show the time going by.
+          Scroll to travel along it. The arrow keys and the two buttons step one
+          milestone at a time, the year markers jump, the quarter marks under the
+          bar show the time going by, and any photo opens full size when you
+          click it.
         </p>
       </div>
     </section>
@@ -173,6 +177,23 @@
     -->
     <div class="tl" id="timeline" data-sticky-top="4rem">
       <div class="tl-stage">
+
+        <!--
+          The scene behind the rail. Two stacked layers hold the current
+          milestone's own picture, blown up, blurred and dimmed, and main.js
+          cross-fades between them as the reading position moves, so travelling
+          the rail changes the light in the room rather than only sliding cards
+          past. The year sits behind everything as a piece of scenery.
+
+          Entirely decorative, entirely main.js's: with no JavaScript nothing is
+          ever written into it and it stays an empty, invisible box.
+        -->
+        <div class="tl-scene" data-tl-scene aria-hidden="true">
+          <span class="tl-scene-layer" data-tl-scene-layer></span>
+          <span class="tl-scene-layer" data-tl-scene-layer></span>
+          <span class="tl-scene-wash"></span>
+          <span class="tl-scene-year" data-tl-scene-year></span>
+        </div>
 
         <div class="tl-bar">
           <div class="container tl-bar-inner">
@@ -290,9 +311,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Mar 2024</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/pinnable/gameplay-poster.webp"
-                       alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
-                       width="1280" height="720" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/pinnable.webm"
+                          data-full="media/pinnable/gameplay-poster.webp"
+                          data-caption="Pinnable · marbles fired from the cannon while the pins come down">
+                    <img src="media/pinnable/gameplay-poster.webp"
+                         alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
+                         width="1280" height="720" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project</p>
@@ -315,9 +345,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Apr 2024</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/candy-corporate/front-of-map-poster.webp"
-                       alt="Candy Corporate: pixel art top down view of the candy company storefront"
-                       width="1280" height="720" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/candy-corporate.webm"
+                          data-full="media/candy-corporate/front-of-map-poster.webp"
+                          data-caption="Candy Corporate · the storefront, and the map I laid out around it">
+                    <img src="media/candy-corporate/front-of-map-poster.webp"
+                         alt="Candy Corporate: pixel art top down view of the candy company storefront"
+                         width="1280" height="720" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Team project</p>
@@ -341,9 +380,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jan 2025</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/tank-game/multiplayer-demo-poster.webp"
-                       alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
-                       width="1280" height="720" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/tank-game.webm"
+                          data-full="media/tank-game/multiplayer-demo-poster.webp"
+                          data-caption="3D Netcode Tank Game · two clients, one Relay hosted session">
+                    <img src="media/tank-game/multiplayer-demo-poster.webp"
+                         alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
+                         width="1280" height="720" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project</p>
@@ -366,9 +414,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Feb 2025</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/unicellular/10k-entities-poster.webp"
-                       alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
-                       width="1280" height="720" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/unicellular.webm"
+                          data-full="media/unicellular/10k-entities-poster.webp"
+                          data-caption="Unicellular · 10,000 entities on screen, still holding 92 FPS">
+                    <img src="media/unicellular/10k-entities-poster.webp"
+                         alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
+                         width="1280" height="720" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project</p>
@@ -391,9 +448,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">May 2025</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/wanted/wanted-poster.webp"
-                       alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
-                       width="1280" height="720" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/wanted.webm"
+                          data-full="media/wanted/wanted-poster.webp"
+                          data-caption="Wanted · spotted, with the whole patrol turning towards the beam">
+                    <img src="media/wanted/wanted-poster.webp"
+                         alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
+                         width="1280" height="720" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project</p>
@@ -433,9 +499,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Aug 2025</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/minimalists/1v1-poster.webp"
-                       alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
-                       width="1040" height="582" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/minimalists.webm"
+                          data-full="media/minimalists/1v1-poster.webp"
+                          data-caption="Minimalists · one on one against an AI running the player's own interface">
+                    <img src="media/minimalists/1v1-poster.webp"
+                         alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
+                         width="1040" height="582" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project</p>
@@ -475,9 +550,17 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jan 2026</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/space-bar/space-5.webp"
-                       alt="Space Bar Simulator gameplay: carrying a tray in first person while collecting Space Beer bottles from a fridge, with table orders and the day timer on the HUD"
-                       width="1200" height="618" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-full="media/space-bar/space-5.webp"
+                          data-caption="Space Bar Simulator · a tray, a fridge full of Space Beer and a day timer">
+                    <img src="media/space-bar/space-5.webp"
+                         alt="Space Bar Simulator gameplay: carrying a tray in first person while collecting Space Beer bottles from a fridge, with table orders and the day timer on the HUD"
+                         width="1200" height="618" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-expand"/></svg>
+                      <span class="visually-hidden">Open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Team project</p>
@@ -501,9 +584,17 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jan 2026</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/tile-turfer/tile-1.webp"
-                       alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
-                       width="1200" height="674" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-full="media/tile-turfer/tile-1.webp"
+                          data-caption="Tile Turfer · the territory split that drives everything else">
+                    <img src="media/tile-turfer/tile-1.webp"
+                         alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
+                         width="1200" height="674" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-expand"/></svg>
+                      <span class="visually-hidden">Open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project</p>
@@ -526,9 +617,18 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Apr 2026</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
-                       alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
-                       width="1920" height="1080" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-video="media/hover/cyber-station.webm"
+                          data-full="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
+                          data-caption="Cyber Station · the late game station, running hundreds of passengers at once">
+                    <img src="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
+                         alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
+                         width="1920" height="1080" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span class="visually-hidden">Play the preview, or open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Project · final year artefact</p>
@@ -551,10 +651,22 @@
             <li class="tl-item" data-kind="award" data-year="2026" data-date="2026-05-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">May 2026</span></p>
               <article class="tl-card">
-                <figure class="tl-shot tl-shot-tall">
-                  <img src="media/expotees/award.webp"
-                       alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming and Development"
-                       width="480" height="600" loading="lazy" decoding="async">
+                <!-- A portrait photograph of two people, so it gets a portrait
+                     slot and a focal point low in the frame. The default
+                     centre crop of a wide slot lands on the projector screen
+                     and leaves both faces outside the picture entirely. -->
+                <figure class="tl-shot tl-shot-portrait">
+                  <button class="tl-media" type="button"
+                          data-full="media/expotees/award-full.webp"
+                          data-caption="Best Artefact, Games Programming and Development · ExpoTees 2026, Teesside University">
+                    <img src="media/expotees/award-full.webp"
+                         alt="Oliver Neal shaking hands with the dean and collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming and Development"
+                         width="1134" height="1418" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-expand"/></svg>
+                      <span class="visually-hidden">Open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">
@@ -592,9 +704,17 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">13 Jul 2026</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/out-of-water/beach-level.webp"
-                       alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
-                       width="1600" height="902" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-full="media/out-of-water/beach-level.webp"
+                          data-caption="Out of Water · the beach level, the seagull and the turtle">
+                    <img src="media/out-of-water/beach-level.webp"
+                         alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
+                         width="1600" height="902" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-expand"/></svg>
+                      <span class="visually-hidden">Open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">
@@ -621,9 +741,17 @@
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">14 to 16 Jul 2026</span></p>
               <article class="tl-card">
                 <figure class="tl-shot">
-                  <img src="media/linkedin/develop-brighton-1.webp"
-                       alt="Four members of the Shiverbug Studios team on Brighton seafront during Develop:Brighton"
-                       width="800" height="600" loading="lazy" decoding="async">
+                  <button class="tl-media" type="button"
+                          data-full="media/linkedin/develop-brighton-1.webp"
+                          data-caption="Develop:Brighton 2026 · the Shiverbug team on the seafront">
+                    <img src="media/linkedin/develop-brighton-1.webp"
+                         alt="Four members of the Shiverbug Studios team on Brighton seafront during Develop:Brighton"
+                         width="800" height="600" loading="lazy" decoding="async">
+                    <span class="tl-media-cue">
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-expand"/></svg>
+                      <span class="visually-hidden">Open the picture full size</span>
+                    </span>
+                  </button>
                 </figure>
                 <div class="tl-text">
                   <p class="tl-kind">Industry</p>
@@ -704,6 +832,39 @@
     </section>
   </main>
 
+  <!--
+    The full size viewer. Every picture on the rail is shown inside a card that
+    has to crop it to fit, so this is where a picture can actually be looked at:
+    the whole frame, nothing cropped, with the rest of the rail's pictures one
+    arrow key away.
+
+    A native <dialog>, opened with showModal, so the focus trap, the Escape key
+    and inertness of the page behind it are the browser's job rather than a
+    hand-rolled version of each. main.js is what opens it; with no JavaScript it
+    never appears and the cards are simply pictures, which is the same thing
+    this page has always been without JavaScript.
+  -->
+  <dialog class="lb" id="tl-lightbox" aria-label="Photograph, full size">
+    <div class="lb-inner">
+      <button class="lb-btn lb-prev" type="button" data-lb-step="-1" aria-label="Previous picture">
+        <svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg>
+      </button>
+
+      <figure class="lb-figure">
+        <img data-lb-img alt="" decoding="async">
+        <figcaption data-lb-cap></figcaption>
+      </figure>
+
+      <button class="lb-btn lb-next" type="button" data-lb-step="1" aria-label="Next picture">
+        <svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg>
+      </button>
+
+      <button class="lb-btn lb-close" type="button" data-lb-close autofocus aria-label="Close the viewer">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </dialog>
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
@@ -713,6 +874,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=2026-08-17b"></script>
+  <script src="main.js?v=2026-08-17c"></script>
 </body>
 </html>
