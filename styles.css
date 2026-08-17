@@ -2547,7 +2547,7 @@ html.postview-open body { overflow: hidden; }
   font-size: 0.88rem;
   color: var(--text-3);
 }
-.tl-howto .icon { color: var(--accent); transform: rotate(90deg); }
+.tl-howto .icon { flex: none; color: var(--accent); transform: rotate(90deg); }
 
 /* Markers. One vocabulary, shared by the legend keys and the rail dots:
    hollow ring for education, small solid dot for a project, filled accent for
@@ -2556,6 +2556,7 @@ html.postview-open body { overflow: hidden; }
 .tl-dot,
 .tl-key {
   flex: none;
+  position: relative;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -2600,13 +2601,15 @@ html.postview-open body { overflow: hidden; }
   gap: 1.1rem;
 }
 
-.tl-item {
+.tl-item,
+.tl-gap {
   position: relative;
   padding-left: 1.9rem;
 }
 /* The rule the dots sit on. It runs through the gap to the next milestone,
    and stops at the last dot rather than trailing into nothing. */
-.tl-item::before {
+.tl-item::before,
+.tl-gap::before {
   content: "";
   position: absolute;
   left: 6px;
@@ -2616,6 +2619,28 @@ html.postview-open body { overflow: hidden; }
   background: var(--border);
 }
 .tl-item:last-child::before { bottom: auto; height: 0.9rem; }
+
+/* The one stretch where drawing the real spacing would be four screens of
+   nothing. It is compressed rather than dropped, and says so, so the jump in
+   the scale is disclosed instead of quietly hidden. Dashes rather than a solid
+   rule, because the time inside it is not being drawn to scale. */
+.tl-gap::before {
+  background: repeating-linear-gradient(
+    to bottom, var(--border) 0 4px, transparent 4px 10px
+  );
+}
+.tl-gap-text {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding-block: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.tl-gap-text b { font-weight: 500; color: var(--text-2); }
 
 .tl-axis {
   display: flex;
@@ -2634,13 +2659,63 @@ html.postview-open body { overflow: hidden; }
 .tl-item[data-kind="next"] .tl-date,
 .tl-item[data-kind="origin"] .tl-date { color: var(--accent); }
 
+/* The card is a two column box wherever there is room: the shot on the left,
+   the write-up beside it. Pinned mode restacks it into a column, because there
+   a card is only 300px wide. */
 .tl-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: 4px;
   padding: 1.1rem 1.25rem 1.2rem;
 }
 .tl-now .tl-card { border-color: var(--accent-border); }
+
+.tl-text { min-width: 0; }
+.tl-text > *:last-child { margin-bottom: 0; }
+
+/* Screenshots. A fixed aspect ratio in both layouts, so a portrait source and
+   a 16:9 source still line up card to card. */
+.tl-shot {
+  flex: none;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg-soft);
+}
+.tl-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+/* The award shot is a portrait photo, so it is cropped from the top rather
+   than the middle to keep faces and the screen behind them in frame. */
+.tl-shot-tall img { object-position: 50% 18%; }
+
+@media (min-width: 640px) {
+  .tl-card { flex-direction: row; gap: 1.25rem; }
+  .tl-shot { width: 236px; }
+}
+
+/* Institution logos, for the milestones that are a course rather than a build.
+   A small crest reads better than a wide strip of a building. */
+.tl-crest {
+  position: absolute;
+  top: 1rem;
+  right: 1.15rem;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+.tl-card:has(.tl-crest) .tl-kind,
+.tl-card:has(.tl-crest) h2 { padding-right: 3.2rem; }
 
 .tl-kind {
   display: inline-flex;
@@ -2667,7 +2742,6 @@ html.postview-open body { overflow: hidden; }
 .tl-org { color: var(--text-2); font-size: 0.92rem; margin: 0 0 0.6rem; }
 .tl-body { color: var(--text-2); font-size: 0.93rem; margin: 0 0 0.85rem; }
 .tl-card .tags { margin-bottom: 0.85rem; }
-.tl-card > *:last-child { margin-bottom: 0; }
 
 .tl-link {
   display: inline-flex;
@@ -2708,11 +2782,19 @@ html.postview-open body { overflow: hidden; }
 .tl[data-mode="pinned"] .tl-bar {
   display: block;
   flex: none;
-  padding-block: 0.8rem 0.9rem;
+  padding-block: 0.75rem 0.85rem;
   background: var(--bg-soft);
   border-bottom: 1px solid var(--border);
 }
-.tl-bar-inner { display: grid; gap: 0.55rem; }
+.tl-bar-inner { display: grid; gap: 0.5rem; }
+
+.tl-bar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-width: 0;
+}
 
 .tl-readout {
   display: flex;
@@ -2722,6 +2804,7 @@ html.postview-open body { overflow: hidden; }
   min-width: 0;
 }
 .tl-readout-year {
+  flex: none;
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 700;
@@ -2736,12 +2819,62 @@ html.postview-open body { overflow: hidden; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Re-run on every change of milestone, so the readout reads as one value being
+   replaced rather than text quietly mutating under the reader. */
+.tl-readout.is-turning .tl-readout-year { animation: tl-turn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.tl-readout.is-turning .tl-readout-label { animation: tl-turn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) 0.04s both; }
+@keyframes tl-turn {
+  from { opacity: 0; transform: translateY(0.42em); }
+  to { opacity: 1; transform: none; }
+}
 
-.tl-progress { position: relative; padding-bottom: 1.15rem; }
+/* Step controls and the position counter */
+.tl-steps { flex: none; display: flex; align-items: center; gap: 0.4rem; }
+.tl-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-right: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+.tl-count-sep { margin-inline: 0.3rem; opacity: 0.55; }
+
+.tl-step {
+  display: inline-grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+.tl-step .icon { width: 1rem; height: 1rem; }
+.tl-step-prev .icon { transform: rotate(180deg); }
+.tl-step:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+.tl-step:active { transform: scale(0.92); }
+.tl-step[disabled] { opacity: 0.35; cursor: default; transform: none; }
+.tl-step[disabled]:hover {
+  color: var(--text-2);
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.tl-progress { position: relative; padding-bottom: 1.45rem; }
 .tl-progress-track {
-  height: 2px;
+  position: relative;
+  height: 4px;
   border-radius: 2px;
   background: var(--border);
+  overflow: hidden;
 }
 .tl-progress-fill {
   display: block;
@@ -2751,12 +2884,26 @@ html.postview-open body { overflow: hidden; }
   background: var(--accent);
 }
 
+/* The quarter scale. Because the rail spaces cards by elapsed time, these are
+   a real ruler: evenly spaced marks mean time passing evenly, and marks packed
+   together mean a lot of milestones landed inside one quarter. Built and
+   positioned in main.js from the dates on the cards. */
+.tl-scale { position: absolute; inset: 0; pointer-events: none; }
+.tl-mark {
+  position: absolute;
+  top: 6px;
+  width: 1px;
+  height: 4px;
+  background: var(--border-strong);
+}
+.tl-mark-year { height: 7px; background: var(--text-3); }
+
 /* Year markers, positioned by main.js at the travel offset of the first
    milestone in that year. Clicking one jumps the page there. */
 .tl-ticks { position: absolute; inset: 0; pointer-events: none; }
 .tl-tick {
   position: absolute;
-  top: 8px;
+  top: 15px;
   transform: translateX(-50%);
   pointer-events: auto;
   padding: 0 0.3rem;
@@ -2770,26 +2917,29 @@ html.postview-open body { overflow: hidden; }
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.tl-tick::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -7px;
-  width: 1px;
-  height: 5px;
-  background: var(--border-strong);
-}
 .tl-tick:hover { color: var(--text); }
 .tl-tick.current { color: var(--accent); }
-.tl-tick.current::before { background: var(--accent); }
 
 .tl[data-mode="pinned"] .tl-viewport {
+  position: relative;
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   align-items: center;
   overflow: hidden;
   overflow: clip;
+}
+/* Cards run off the right edge rather than being sliced by it, so the strip
+   reads as continuing past the window instead of stopping at it. */
+.tl[data-mode="pinned"] .tl-viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: clamp(2rem, 5vw, 4.5rem);
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--bg));
 }
 
 .tl[data-mode="pinned"] .tl-rail {
@@ -2798,7 +2948,7 @@ html.postview-open body { overflow: hidden; }
   display: flex;
   align-items: stretch;
   gap: 0;
-  height: min(100%, 620px);
+  height: min(100%, 660px);
   max-width: none;
   margin-inline: 0;
   padding: 0 0 0 clamp(1.25rem, 5vw, 2rem);
@@ -2815,12 +2965,51 @@ html.postview-open body { overflow: hidden; }
   background: var(--border);
 }
 
+/* Month marks along the axis, drawn by main.js only into the stretches where
+   nothing shipped for a while. Out of flow, so they add nothing to the rail's
+   width, which is what the travel distance is measured from. */
+.tl-months { display: none; }
+.tl[data-mode="pinned"] .tl-months {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 2.4rem;
+  height: 0;
+  pointer-events: none;
+}
+.tl-mmark {
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 7px;
+  background: var(--border-strong);
+}
+.tl-mmark-year {
+  top: -6px;
+  height: 13px;
+  background: var(--text-3);
+}
+.tl-mmark-year::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  top: -1.45rem;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+
+/* Cards are a fixed width; what varies is the space before each one, which
+   main.js sets from the months between this milestone and the one before it.
+   That is the whole point of the rail: distance means elapsed time. */
 .tl[data-mode="pinned"] .tl-item {
   flex: none;
   width: 320px;
   padding: 0 1.5rem 0 0;
   display: grid;
-  grid-template-rows: 4.8rem minmax(0, 1fr);
+  grid-template-rows: 4.4rem minmax(0, 1fr);
 }
 /* Trailing gutter. It lives on the last item rather than as padding on the
    rail because a flex container's trailing padding is not reliably counted in
@@ -2843,8 +3032,97 @@ html.postview-open body { overflow: hidden; }
 .tl[data-mode="pinned"] .tl-card {
   grid-row: 2;
   align-self: start;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem 1.15rem 1.05rem;
   max-height: 100%;
   overflow: hidden;
+}
+.tl[data-mode="pinned"] .tl-shot { width: auto; }
+/* A letterbox crop rather than the list layout's 16:9. A card here has to fit
+   its shot and a whole write-up inside one row of the stage, and the row is
+   whatever the window has left after the header and the bar. */
+.tl[data-mode="pinned"] .tl-shot img { aspect-ratio: 16 / 6.5; max-height: 118px; }
+.tl[data-mode="pinned"] .tl-card h2 { font-size: 1.02rem; }
+/* The one thing on a card long enough to overrun the row. Bounding it here is
+   what stops .tl-card's overflow:hidden from silently eating the tags and the
+   breakdown link underneath it, and every card that gets trimmed has a
+   breakdown page carrying the full version. */
+.tl[data-mode="pinned"] .tl-body {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+}
+@media (max-height: 860px) {
+  .tl[data-mode="pinned"] .tl-body { -webkit-line-clamp: 4; }
+}
+/* Just above the height main.js will pin at all, so this is the tightest the
+   layout ever has to be */
+@media (max-height: 760px) {
+  .tl[data-mode="pinned"] .tl-body { -webkit-line-clamp: 3; }
+  .tl[data-mode="pinned"] .tl-shot img { max-height: 104px; }
+}
+
+/* The compressed stretch, turned on its side */
+.tl[data-mode="pinned"] .tl-gap {
+  flex: none;
+  width: 226px;
+  padding: 0 1.5rem 0 0;
+  display: grid;
+  grid-template-rows: 4.8rem minmax(0, 1fr);
+}
+.tl[data-mode="pinned"] .tl-gap::before {
+  left: 0;
+  right: 1.5rem;
+  top: 2.4rem;
+  bottom: auto;
+  width: auto;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right, var(--border-strong) 0 5px, transparent 5px 12px
+  );
+}
+.tl[data-mode="pinned"] .tl-gap-text {
+  grid-row: 1;
+  align-self: center;
+  padding: 0 1.5rem 1.9rem 0;
+  gap: 0.3rem;
+}
+
+/* ---- Travel animation ---------------------------------------------------- */
+/* main.js writes --tl-e per card: 0 while it is still off the right edge, 1
+   once it has settled into place, and back towards 0 as it leaves on the left.
+   Everything below is a function of that one number, so the whole rail
+   animates off the scroll position with no timers and nothing to fall out of
+   sync. Pinned mode never engages under prefers-reduced-motion, so there is no
+   motion here to opt out of. */
+.tl[data-mode="pinned"] .tl-item { --tl-e: 1; }
+.tl[data-mode="pinned"] .tl-card {
+  opacity: calc(0.2 + 0.8 * var(--tl-e));
+  transform: translate3d(0, calc((1 - var(--tl-e)) * 24px), 0)
+             scale(calc(0.968 + 0.032 * var(--tl-e)));
+  transform-origin: 50% 0;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.tl[data-mode="pinned"] .tl-axis { opacity: calc(0.25 + 0.75 * var(--tl-e)); }
+
+/* The milestone the readout is currently describing */
+.tl[data-mode="pinned"] .tl-item.is-current .tl-card {
+  border-color: var(--accent-border);
+  box-shadow: 0 14px 34px -22px rgb(0 0 0 / 0.55);
+}
+.tl[data-mode="pinned"] .tl-item.is-current .tl-date { color: var(--accent); }
+.tl[data-mode="pinned"] .tl-item.is-current .tl-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  animation: tl-ping 0.75s ease-out;
+}
+@keyframes tl-ping {
+  from { box-shadow: 0 0 0 0 var(--accent); opacity: 0.5; }
+  to { box-shadow: 0 0 0 13px var(--accent); opacity: 0; }
 }
 
 /* ---- Print: never pinned, always the list ------------------------------- */
@@ -2855,8 +3133,10 @@ html.postview-open body { overflow: hidden; }
     height: auto;
     overflow: visible;
   }
-  .tl[data-mode="pinned"] .tl-bar { display: none; }
+  .tl[data-mode="pinned"] .tl-bar,
+  .tl[data-mode="pinned"] .tl-months { display: none; }
   .tl[data-mode="pinned"] .tl-viewport { display: block; overflow: visible; }
+  .tl[data-mode="pinned"] .tl-viewport::after { display: none; }
   .tl[data-mode="pinned"] .tl-rail {
     display: grid;
     gap: 1.1rem;
@@ -2866,15 +3146,25 @@ html.postview-open body { overflow: hidden; }
     transform: none !important;
   }
   .tl[data-mode="pinned"] .tl-rail::before { display: none; }
-  .tl[data-mode="pinned"] .tl-item {
+  .tl[data-mode="pinned"] .tl-item,
+  .tl[data-mode="pinned"] .tl-gap {
     display: block;
     width: auto;
+    margin-left: 0 !important;
     padding: 0 0 0 1.9rem;
     break-inside: avoid;
   }
-  .tl[data-mode="pinned"] .tl-item::before { display: none; }
-  .tl[data-mode="pinned"] .tl-axis { margin: 0 0 0.55rem -1.9rem; }
-  .tl[data-mode="pinned"] .tl-card { max-height: none; overflow: visible; }
+  .tl[data-mode="pinned"] .tl-item::before,
+  .tl[data-mode="pinned"] .tl-gap::before { display: none; }
+  .tl[data-mode="pinned"] .tl-axis { margin: 0 0 0.55rem -1.9rem; opacity: 1; }
+  .tl[data-mode="pinned"] .tl-gap-text { padding: 0; }
+  .tl[data-mode="pinned"] .tl-card {
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 /* --------------------------------------------------------------------------

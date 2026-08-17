@@ -77,7 +77,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-08-17a">
+  <link rel="stylesheet" href="styles.css?v=2026-08-17b">
 </head>
 <body>
 
@@ -87,6 +87,7 @@
     <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></g></symbol>
     <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></g></symbol>
     <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H4v1.5A3.5 3.5 0 0 0 7.5 10"/><path d="M17 5h3v1.5A3.5 3.5 0 0 1 16.5 10"/><path d="M12 14v4"/><path d="M8 18h8v2H8z"/></g></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
@@ -138,7 +139,9 @@
         <p class="tl-lead">
           Every step from the first Unity build in 2018 to a studio desk in
           2026: the courses, the nine projects and the two graduations, laid
-          out end to end. Nineteen milestones, oldest first.
+          out end to end. Nineteen milestones, oldest first, and the gaps
+          between them are drawn to scale, so a quiet stretch looks quiet and
+          a busy month looks busy.
         </p>
 
         <ul class="tl-legend">
@@ -150,8 +153,9 @@
 
         <p class="tl-howto">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          Scroll to travel along it. Tab moves card to card, and the year
-          markers jump.
+          Scroll to travel along it. The arrow keys and the two buttons step
+          one milestone at a time, the year markers jump, and the quarter marks
+          under the bar show the time going by.
         </p>
       </div>
     </section>
@@ -172,15 +176,37 @@
 
         <div class="tl-bar">
           <div class="container tl-bar-inner">
-            <p class="tl-readout">
-              <span class="tl-readout-year" data-tl-year>2018</span>
-              <span class="tl-readout-label" data-tl-label>First builds in Unity</span>
-            </p>
-            <!-- Ticks are built in main.js from the years already on the
-                 milestones below, so adding a card never means editing a
-                 second list. -->
+            <div class="tl-bar-top">
+              <p class="tl-readout" data-tl-readout>
+                <span class="tl-readout-year" data-tl-year>2018</span>
+                <span class="tl-readout-label" data-tl-label>First builds in Unity</span>
+              </p>
+
+              <!-- Stepping one milestone at a time. Both buttons move the page,
+                   not a hidden scroller, so the readout and the rail cannot
+                   drift apart. -->
+              <div class="tl-steps">
+                <span class="tl-count">
+                  <span data-tl-index>1</span><span class="tl-count-sep">/</span><span data-tl-total>19</span>
+                </span>
+                <button class="tl-step tl-step-prev" type="button" data-tl-step="-1" aria-label="Previous milestone">
+                  <svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg>
+                </button>
+                <button class="tl-step" type="button" data-tl-step="1" aria-label="Next milestone">
+                  <svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Both the quarter scale and the year markers are built in
+                 main.js from the dates already on the milestones below, so
+                 adding a card never means editing a second list. The scale is
+                 what makes the pacing legible: because the rail spaces cards by
+                 elapsed time, evenly spaced quarters mean time is passing
+                 evenly, and marks bunching up mean a lot landed at once. -->
             <div class="tl-progress">
               <div class="tl-progress-track"><span class="tl-progress-fill" data-tl-fill></span></div>
+              <div class="tl-scale" data-tl-scale aria-hidden="true"></div>
               <div class="tl-ticks" data-tl-ticks></div>
             </div>
           </div>
@@ -189,334 +215,454 @@
         <div class="tl-viewport">
           <ol class="tl-rail" id="tl-rail">
 
+            <!-- Month marks along the axis, drawn by main.js into the stretches
+                 where nothing shipped for a while. They are what turns a long
+                 empty run into legible time rather than an apparent layout
+                 fault. Out of flow, so they cost the rail no width, and
+                 decorative, since every date they mark is on a card already. -->
+            <li class="tl-months" data-tl-months aria-hidden="true"></li>
+
             <!-- ---------- 2018 ---------- -->
-            <li class="tl-item" data-kind="origin" data-year="2018">
+            <li class="tl-item" data-kind="origin" data-year="2018" data-date="2018-06-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">2018</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Where it starts</p>
-                <h2>First builds in Unity</h2>
-                <p class="tl-org">Self taught</p>
-                <p class="tl-body">
-                  Unity, C# and whatever idea was interesting that week. No
-                  brief and no deadline, years before any of it counted towards
-                  a grade.
-                </p>
+                <div class="tl-text">
+                  <p class="tl-kind">Where it starts</p>
+                  <h2>First builds in Unity</h2>
+                  <p class="tl-org">Self taught</p>
+                  <p class="tl-body">
+                    Unity, C# and whatever idea was interesting that week. No
+                    brief and no deadline, years before any of it counted towards
+                    a grade.
+                  </p>
+                </div>
               </article>
+            </li>
+
+            <!-- The one stretch where the true spacing would be four screens of
+                 nothing. It is compressed rather than dropped, and labelled with
+                 what it is, so the jump is disclosed instead of hidden. -->
+            <li class="tl-gap">
+              <p class="tl-gap-text">
+                <b>2019 to 2022</b>
+                <span>Still building, none of it for a grade yet</span>
+              </p>
             </li>
 
             <!-- ---------- 2023 ---------- -->
-            <li class="tl-item" data-kind="education" data-year="2023">
+            <li class="tl-item" data-kind="education" data-year="2023" data-date="2023-06-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">2023</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Education</p>
-                <h2>BTEC Level 3 National Diploma</h2>
-                <p class="tl-org">Creative Digital Media · Newcastle College</p>
-                <p class="tl-body">
-                  Finished at Distinction, and the point where games stopped
-                  being the thing to do after homework and became the thing to
-                  study next.
-                </p>
-                <ul class="tags"><li>Distinction</li></ul>
+                <img class="tl-crest" src="media/logos/newcastle-college.webp" alt="Newcastle College logo" width="192" height="192" loading="lazy" decoding="async">
+                <div class="tl-text">
+                  <p class="tl-kind">Education</p>
+                  <h2>BTEC Level 3 National Diploma</h2>
+                  <p class="tl-org">Creative Digital Media · Newcastle College</p>
+                  <p class="tl-body">
+                    Finished at Distinction, and the point where games stopped
+                    being the thing to do after homework and became the thing to
+                    study next.
+                  </p>
+                  <ul class="tags"><li>Distinction</li></ul>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="education" data-year="2023">
+            <li class="tl-item" data-kind="education" data-year="2023" data-date="2023-09-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Sep 2023</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Education</p>
-                <h2>FdSc Games Technologies begins</h2>
-                <p class="tl-org">Newcastle College University Centre</p>
-                <p class="tl-body">
-                  Two years of games technology, and the year the output turned
-                  consistent rather than occasional. Everything past this point
-                  shipped.
-                </p>
+                <img class="tl-crest" src="media/logos/ncuc.webp" alt="Newcastle College University Centre logo" width="192" height="192" loading="lazy" decoding="async">
+                <div class="tl-text">
+                  <p class="tl-kind">Education</p>
+                  <h2>FdSc Games Technologies begins</h2>
+                  <p class="tl-org">Newcastle College University Centre</p>
+                  <p class="tl-body">
+                    Two years of games technology, and the year the output turned
+                    consistent rather than occasional. Everything past this point
+                    shipped.
+                  </p>
+                </div>
               </article>
             </li>
 
             <!-- ---------- 2024 ---------- -->
-            <li class="tl-item" data-kind="project" data-year="2024">
+            <li class="tl-item" data-kind="project" data-year="2024" data-date="2024-03-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Mar 2024</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project</p>
-                <h2>Pinnable</h2>
-                <p class="tl-org">Solo · Unity 2D</p>
-                <p class="tl-body">
-                  An arcade score attack game whose hazards unlock on a survival
-                  timer, then scale their own spawn weight with score. The
-                  difficulty tracks the player instead of a fixed curve.
-                </p>
-                <ul class="tags"><li>Unity 2D</li><li>C#</li><li>Physics</li></ul>
-                <a class="tl-link" href="pinnable.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/pinnable/gameplay-poster.webp"
+                       alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
+                       width="1280" height="720" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project</p>
+                  <h2>Pinnable</h2>
+                  <p class="tl-org">Solo · Unity 2D</p>
+                  <p class="tl-body">
+                    An arcade score attack game whose hazards unlock on a survival
+                    timer, then scale their own spawn weight with score. The
+                    difficulty tracks the player instead of a fixed curve.
+                  </p>
+                  <ul class="tags"><li>Unity 2D</li><li>C#</li><li>Physics</li></ul>
+                  <a class="tl-link" href="pinnable.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="project" data-year="2024">
+            <li class="tl-item" data-kind="project" data-year="2024" data-date="2024-04-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Apr 2024</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Team project</p>
-                <h2>Candy Corporate</h2>
-                <p class="tl-org">Small team · Unity 2D</p>
-                <p class="tl-body">
-                  A top down extraction game in the shape of Lethal Company. I
-                  led the level design, tile creation and pixel art
-                  integration.
-                </p>
-                <ul class="tags"><li>Pixel art</li><li>Level design</li></ul>
-                <a class="tl-link" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/candy-corporate/front-of-map-poster.webp"
+                       alt="Candy Corporate: pixel art top down view of the candy company storefront"
+                       width="1280" height="720" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Team project</p>
+                  <h2>Candy Corporate</h2>
+                  <p class="tl-org">Small team · Unity 2D</p>
+                  <p class="tl-body">
+                    A top down extraction game in the shape of Lethal Company. I
+                    led the level design, tile creation and pixel art
+                    integration.
+                  </p>
+                  <ul class="tags"><li>Pixel art</li><li>Level design</li></ul>
+                  <a class="tl-link" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
+                    itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
             <!-- ---------- 2025 ---------- -->
-            <li class="tl-item" data-kind="project" data-year="2025">
+            <li class="tl-item" data-kind="project" data-year="2025" data-date="2025-01-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jan 2025</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project</p>
-                <h2>3D Netcode Tank Game</h2>
-                <p class="tl-org">Solo · Unity 3D</p>
-                <p class="tl-body">
-                  Networking learned properly: Relay hosted sessions on a 30 Hz
-                  tick, cloud authentication, and a 64 ray hitscan resolved on
-                  the server so a client never reports its own hits.
-                </p>
-                <ul class="tags"><li>Netcode</li><li>Multiplayer</li></ul>
-                <a class="tl-link" href="tank-game.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/tank-game/multiplayer-demo-poster.webp"
+                       alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
+                       width="1280" height="720" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project</p>
+                  <h2>3D Netcode Tank Game</h2>
+                  <p class="tl-org">Solo · Unity 3D</p>
+                  <p class="tl-body">
+                    Networking learned properly: Relay hosted sessions on a 30 Hz
+                    tick, cloud authentication, and a 64 ray hitscan resolved on
+                    the server so a client never reports its own hits.
+                  </p>
+                  <ul class="tags"><li>Netcode</li><li>Multiplayer</li></ul>
+                  <a class="tl-link" href="tank-game.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="project" data-year="2025">
+            <li class="tl-item" data-kind="project" data-year="2025" data-date="2025-02-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Feb 2025</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project</p>
-                <h2>Unicellular</h2>
-                <p class="tl-org">Solo · Unity</p>
-                <p class="tl-body">
-                  An idle simulation stress tested at 10,000 concurrent
-                  entities, held together by a multi rate tick and time sliced
-                  proximity AI rather than a per entity update.
-                </p>
-                <ul class="tags"><li>Simulation</li><li>FSM</li><li>Optimisation</li></ul>
-                <a class="tl-link" href="unicellular.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/unicellular/10k-entities-poster.webp"
+                       alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
+                       width="1280" height="720" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project</p>
+                  <h2>Unicellular</h2>
+                  <p class="tl-org">Solo · Unity</p>
+                  <p class="tl-body">
+                    An idle simulation stress tested at 10,000 concurrent
+                    entities, held together by a multi rate tick and time sliced
+                    proximity AI rather than a per entity update.
+                  </p>
+                  <ul class="tags"><li>Simulation</li><li>FSM</li><li>Optimisation</li></ul>
+                  <a class="tl-link" href="unicellular.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="project" data-year="2025">
+            <li class="tl-item" data-kind="project" data-year="2025" data-date="2025-05-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">May 2025</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project</p>
-                <h2>Wanted</h2>
-                <p class="tl-org">Solo · Tyne to Game jam</p>
-                <p class="tl-body">
-                  Built in one week. A single detection meter drives three state
-                  officer AI, escalating patrols and helicopter passes across
-                  procedurally placed cover.
-                </p>
-                <ul class="tags"><li>Stealth AI</li><li>Procedural</li></ul>
-                <a class="tl-link" href="wanted.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/wanted/wanted-poster.webp"
+                       alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
+                       width="1280" height="720" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project</p>
+                  <h2>Wanted</h2>
+                  <p class="tl-org">Solo · Tyne to Game jam</p>
+                  <p class="tl-body">
+                    Built in one week. A single detection meter drives three state
+                    officer AI, escalating patrols and helicopter passes across
+                    procedurally placed cover.
+                  </p>
+                  <ul class="tags"><li>Stealth AI</li><li>Procedural</li></ul>
+                  <a class="tl-link" href="wanted.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="education" data-year="2025">
+            <li class="tl-item" data-kind="education" data-year="2025" data-date="2025-07-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jul 2025</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Education</p>
-                <h2>FdSc Games Technologies</h2>
-                <p class="tl-org">Newcastle College University Centre</p>
-                <p class="tl-body">
-                  Graduated with a 2:1, a Distinction in year one and a Merit in
-                  year two.
-                </p>
-                <ul class="tags"><li>2:1</li></ul>
+                <img class="tl-crest" src="media/logos/ncuc.webp" alt="Newcastle College University Centre logo" width="192" height="192" loading="lazy" decoding="async">
+                <div class="tl-text">
+                  <p class="tl-kind">Education</p>
+                  <h2>FdSc Games Technologies</h2>
+                  <p class="tl-org">Newcastle College University Centre</p>
+                  <p class="tl-body">
+                    Graduated with a 2:1, a Distinction in year one and a Merit in
+                    year two.
+                  </p>
+                  <ul class="tags"><li>2:1</li></ul>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="project" data-year="2025">
+            <li class="tl-item" data-kind="project" data-year="2025" data-date="2025-08-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Aug 2025</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project</p>
-                <h2>Minimalists</h2>
-                <p class="tl-org">Solo · Unity 3D</p>
-                <p class="tl-body">
-                  A node conquest RTS whose AI gets no cheats and no extra
-                  information. It commits through the same percentage interface
-                  the player uses, across several distinct personalities.
-                </p>
-                <ul class="tags"><li>Enemy AI</li><li>RTS</li></ul>
-                <a class="tl-link" href="minimalists.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/minimalists/1v1-poster.webp"
+                       alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
+                       width="1040" height="582" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project</p>
+                  <h2>Minimalists</h2>
+                  <p class="tl-org">Solo · Unity 3D</p>
+                  <p class="tl-body">
+                    A node conquest RTS whose AI gets no cheats and no extra
+                    information. It commits through the same percentage interface
+                    the player uses, across several distinct personalities.
+                  </p>
+                  <ul class="tags"><li>Enemy AI</li><li>RTS</li></ul>
+                  <a class="tl-link" href="minimalists.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="education" data-year="2025">
+            <li class="tl-item" data-kind="education" data-year="2025" data-date="2025-09-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Sep 2025</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Education</p>
-                <h2>Transferred to Teesside University</h2>
-                <p class="tl-org">BSc (Hons) Games Development, final year</p>
-                <p class="tl-body">
-                  A new university and a higher level in the same step, straight
-                  into the final year of the BSc.
-                </p>
+                <img class="tl-crest" src="media/logos/teesside.webp" alt="Teesside University logo" width="192" height="192" loading="lazy" decoding="async">
+                <div class="tl-text">
+                  <p class="tl-kind">Education</p>
+                  <h2>Transferred to Teesside University</h2>
+                  <p class="tl-org">BSc (Hons) Games Development, final year</p>
+                  <p class="tl-body">
+                    A new university and a higher level in the same step, straight
+                    into the final year of the BSc.
+                  </p>
+                </div>
               </article>
             </li>
 
             <!-- ---------- 2026 ---------- -->
-            <li class="tl-item" data-kind="project" data-year="2026">
+            <li class="tl-item" data-kind="project" data-year="2026" data-date="2026-01-05">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jan 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Team project</p>
-                <h2>Space Bar Simulator</h2>
-                <p class="tl-org">Team of 10 · Unreal Engine 5</p>
-                <p class="tl-body">
-                  Beta Arcade, Teesside's studio simulation module. I owned the
-                  player controller on Enhanced Input, the interaction system
-                  behind one Blueprint interface, and the camera blended
-                  stations.
-                </p>
-                <ul class="tags"><li>Unreal Engine 5</li><li>Blueprints</li></ul>
-                <a class="tl-link" href="space-bar.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/space-bar/space-5.webp"
+                       alt="Space Bar Simulator gameplay: carrying a tray in first person while collecting Space Beer bottles from a fridge, with table orders and the day timer on the HUD"
+                       width="1200" height="618" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Team project</p>
+                  <h2>Space Bar Simulator</h2>
+                  <p class="tl-org">Team of 10 · Unreal Engine 5</p>
+                  <p class="tl-body">
+                    Beta Arcade, Teesside's studio simulation module. I owned the
+                    player controller on Enhanced Input, the interaction system
+                    behind one Blueprint interface, and the camera blended
+                    stations.
+                  </p>
+                  <ul class="tags"><li>Unreal Engine 5</li><li>Blueprints</li></ul>
+                  <a class="tl-link" href="space-bar.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="project" data-year="2026">
+            <li class="tl-item" data-kind="project" data-year="2026" data-date="2026-01-20">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jan 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project</p>
-                <h2>Tile Turfer</h2>
-                <p class="tl-org">Solo · Unity 2D</p>
-                <p class="tl-body">
-                  One territory percentage drives the difficulty, the fire rate
-                  and the enemy AI at once, across procedurally generated caves
-                  with runtime 2D NavMesh baking.
-                </p>
-                <ul class="tags"><li>Procedural</li><li>Enemy AI</li></ul>
-                <a class="tl-link" href="tile-turfer.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/tile-turfer/tile-1.webp"
+                       alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
+                       width="1200" height="674" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project</p>
+                  <h2>Tile Turfer</h2>
+                  <p class="tl-org">Solo · Unity 2D</p>
+                  <p class="tl-body">
+                    One territory percentage drives the difficulty, the fire rate
+                    and the enemy AI at once, across procedurally generated caves
+                    with runtime 2D NavMesh baking.
+                  </p>
+                  <ul class="tags"><li>Procedural</li><li>Enemy AI</li></ul>
+                  <a class="tl-link" href="tile-turfer.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="project" data-year="2026">
+            <li class="tl-item" data-kind="project" data-year="2026" data-date="2026-04-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Apr 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Project · final year artefact</p>
-                <h2>Cyber Station</h2>
-                <p class="tl-org">Solo · Unity 3D · 90 / 100</p>
-                <p class="tl-body">
-                  86 scripts and roughly 17,000 lines. Hundreds of passengers
-                  run off one fixed 10 Hz tick, picking facilities by lowest
-                  estimated total delay, with six live ratings feeding back into
-                  the spawn rate.
-                </p>
-                <ul class="tags"><li>Simulation</li><li>AI Navigation</li></ul>
-                <a class="tl-link" href="cyber-station.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
+                       alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
+                       width="1920" height="1080" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Project · final year artefact</p>
+                  <h2>Cyber Station</h2>
+                  <p class="tl-org">Solo · Unity 3D · 90 / 100</p>
+                  <p class="tl-body">
+                    86 scripts and roughly 17,000 lines. Hundreds of passengers
+                    run off one fixed 10 Hz tick, picking facilities by lowest
+                    estimated total delay, with six live ratings feeding back into
+                    the spawn rate.
+                  </p>
+                  <ul class="tags"><li>Simulation</li><li>AI Navigation</li></ul>
+                  <a class="tl-link" href="cyber-station.html">
+                    Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="award" data-year="2026">
+            <li class="tl-item" data-kind="award" data-year="2026" data-date="2026-05-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">May 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">
-                  <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
-                  Award
-                </p>
-                <h2>Best Artefact, Games Programming and Development</h2>
-                <p class="tl-org">ExpoTees 2026, Teesside University</p>
-                <p class="tl-body">
-                  Cyber Station took Best Artefact in its category at the
-                  university's end of year showcase.
-                </p>
+                <figure class="tl-shot tl-shot-tall">
+                  <img src="media/expotees/award.webp"
+                       alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming and Development"
+                       width="480" height="600" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">
+                    <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
+                    Award
+                  </p>
+                  <h2>Best Artefact, Games Programming and Development</h2>
+                  <p class="tl-org">ExpoTees 2026, Teesside University</p>
+                  <p class="tl-body">
+                    Cyber Station took Best Artefact in its category at the
+                    university's end of year showcase.
+                  </p>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="education" data-year="2026">
+            <li class="tl-item" data-kind="education" data-year="2026" data-date="2026-07-01">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Jul 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Education</p>
-                <h2>Graduated with First Class Honours</h2>
-                <p class="tl-org">BSc (Hons) Games Development · Teesside University</p>
-                <p class="tl-body">
-                  80% overall, with the final year project at 84% and its
-                  artefact at 90.
-                </p>
-                <ul class="tags"><li>First Class</li><li>80% overall</li></ul>
+                <img class="tl-crest" src="media/logos/teesside.webp" alt="Teesside University logo" width="192" height="192" loading="lazy" decoding="async">
+                <div class="tl-text">
+                  <p class="tl-kind">Education</p>
+                  <h2>Graduated with First Class Honours</h2>
+                  <p class="tl-org">BSc (Hons) Games Development · Teesside University</p>
+                  <p class="tl-body">
+                    80% overall, with the final year project at 84% and its
+                    artefact at 90.
+                  </p>
+                  <ul class="tags"><li>First Class</li><li>80% overall</li></ul>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item tl-now" data-kind="work" data-year="2026">
+            <li class="tl-item tl-now" data-kind="work" data-year="2026" data-date="2026-07-13">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">13 Jul 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">
-                  <span class="now-dot" aria-hidden="true"></span>
-                  Work · now
-                </p>
-                <h2>Gameplay Programmer at Shiverbug Studios</h2>
-                <p class="tl-org">Out of Water · Unity 6</p>
-                <p class="tl-body">
-                  Ten weeks in a studio on an original IP, owning the character
-                  and enemy gameplay code: component driven state machines, the
-                  splitscreen plumbing under co-op, and a performance pass
-                  measured branch to branch.
-                </p>
-                <ul class="tags"><li>Unity 6</li><li>FSM / HSM</li><li>Performance</li></ul>
-                <a class="tl-link" href="index.html#shiverbug">
-                  What I work on <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/out-of-water/beach-level.webp"
+                       alt="Out of Water in game screenshot: the seagull and turtle sitting on a pile of crates in an open beach level, surrounded by sand, palm trees and rocky cliffs"
+                       width="1600" height="902" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">
+                    <span class="now-dot" aria-hidden="true"></span>
+                    Work · now
+                  </p>
+                  <h2>Gameplay Programmer at Shiverbug Studios</h2>
+                  <p class="tl-org">Out of Water · Unity 6</p>
+                  <p class="tl-body">
+                    Ten weeks in a studio on an original IP, owning the character
+                    and enemy gameplay code: component driven state machines, the
+                    splitscreen plumbing under co-op, and a performance pass
+                    measured branch to branch.
+                  </p>
+                  <ul class="tags"><li>Unity 6</li><li>FSM / HSM</li><li>Performance</li></ul>
+                  <a class="tl-link" href="index.html#shiverbug">
+                    What I work on <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="work" data-year="2026">
+            <li class="tl-item" data-kind="work" data-year="2026" data-date="2026-07-14">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">14 to 16 Jul 2026</span></p>
               <article class="tl-card">
-                <p class="tl-kind">Industry</p>
-                <h2>Develop:Brighton 2026</h2>
-                <p class="tl-org">Week one of the internship</p>
-                <p class="tl-body">
-                  Spent with the Shiverbug team: a day on the expo floor, and the
-                  rest of it talking to grads, programmers, designers and studio
-                  leads.
-                </p>
-                <a class="tl-link" href="index.html#log">
-                  Read the post <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
+                <figure class="tl-shot">
+                  <img src="media/linkedin/develop-brighton-1.webp"
+                       alt="Four members of the Shiverbug Studios team on Brighton seafront during Develop:Brighton"
+                       width="800" height="600" loading="lazy" decoding="async">
+                </figure>
+                <div class="tl-text">
+                  <p class="tl-kind">Industry</p>
+                  <h2>Develop:Brighton 2026</h2>
+                  <p class="tl-org">Week one of the internship</p>
+                  <p class="tl-body">
+                    Spent with the Shiverbug team: a day on the expo floor, and the
+                    rest of it talking to grads, programmers, designers and studio
+                    leads.
+                  </p>
+                  <a class="tl-link" href="index.html#log">
+                    Read the post <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                </div>
               </article>
             </li>
 
-            <li class="tl-item" data-kind="next" data-year="2026">
+            <li class="tl-item" data-kind="next" data-year="2026" data-date="2026-09-18">
               <p class="tl-axis"><span class="tl-dot" aria-hidden="true"></span><span class="tl-date">Sep 2026</span></p>
               <article class="tl-card tl-card-end">
-                <p class="tl-kind">What's next</p>
-                <h2>Available from September 2026</h2>
-                <p class="tl-org">Gameplay, systems or AI programming</p>
-                <p class="tl-body">
-                  The Shiverbug internship runs to 18 September 2026.
-                  Middlesbrough or remote, with the right to work in the UK and
-                  happy to relocate.
-                </p>
-                <div class="tl-end-ctas">
-                  <a class="btn btn-primary" href="index.html#contact">
-                    Get in touch
-                    <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                  </a>
-                  <a class="btn btn-outline" href="cv.html">
-                    <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
-                    View CV
-                  </a>
+                <div class="tl-text">
+                  <p class="tl-kind">What's next</p>
+                  <h2>Available from September 2026</h2>
+                  <p class="tl-org">Gameplay, systems or AI programming</p>
+                  <p class="tl-body">
+                    The Shiverbug internship runs to 18 September 2026.
+                    Middlesbrough or remote, with the right to work in the UK and
+                    happy to relocate.
+                  </p>
+                  <div class="tl-end-ctas">
+                    <a class="btn btn-primary" href="index.html#contact">
+                      Get in touch
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                    </a>
+                    <a class="btn btn-outline" href="cv.html">
+                      <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
+                      View CV
+                    </a>
+                  </div>
                 </div>
               </article>
             </li>
@@ -567,6 +713,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=2026-08-17a"></script>
+  <script src="main.js?v=2026-08-17b"></script>
 </body>
 </html>

@@ -1270,6 +1270,23 @@
      Vertical scrolling is never cancelled, so the scrollbar tells the truth
      and wheel, trackpad, touch, space bar and Page Down all keep working.
 
+     Distance along the rail means elapsed time, and what is measured is the
+     stride: the distance from one milestone's left edge to the next one's, set
+     to TL_PX_PER_MONTH for every month between their dates. Spacing the gaps
+     instead of the strides would not work, because a card is 320px wide and
+     most of these milestones are a month or two apart, so the cards themselves
+     would be most of the distance and the scale would be theirs, not time's.
+
+     Two bounds, both of them geometry rather than taste. A stride can never be
+     shorter than a card, or cards would overlap, which puts everything under
+     about a month and a half at the same minimum. And a stride is capped, so
+     the emptiest stretches stay inside a screen; those runs get month marks
+     drawn along the axis, so a long empty stretch reads as time passing rather
+     than as a layout mistake. In between, which is most of the rail, the
+     spacing is the elapsed time to scale. The one stretch far outside both
+     bounds is 2019 to 2022, and that is a labelled .tl-gap element on the page
+     saying so rather than a silent compression.
+
      It only engages where it is an improvement: a wide enough window for a
      320px card to make sense, a tall enough one for a card to fit without
      clipping, and no reduced-motion preference. Everywhere else, and with no
@@ -1277,29 +1294,63 @@
   var tl = document.getElementById("timeline");
 
   if (tl) {
+    var TL_PX_PER_MONTH = 200;
+    var TL_GAP_MIN = 18;      // clearance between two cards at the minimum stride
+    var TL_STRIDE_MAX = 1000; // about five months; past that it is dead scrolling
+    var TL_RAMP_IN = 320;   // px of travel a card animates in over
+    var TL_RAMP_OUT = 280;
+
     var tlStage = tl.querySelector(".tl-stage");
     var tlViewport = tl.querySelector(".tl-viewport");
     var tlRail = tl.querySelector(".tl-rail");
     var tlItems = Array.prototype.slice.call(tl.querySelectorAll(".tl-item"));
     var tlFill = tl.querySelector("[data-tl-fill]");
     var tlTickBox = tl.querySelector("[data-tl-ticks]");
+    var tlScaleBox = tl.querySelector("[data-tl-scale]");
+    var tlMonthBox = tl.querySelector("[data-tl-months]");
+    var tlReadoutEl = tl.querySelector("[data-tl-readout]");
     var tlYearOut = tl.querySelector("[data-tl-year]");
     var tlLabelOut = tl.querySelector("[data-tl-label]");
+    var tlIndexOut = tl.querySelector("[data-tl-index]");
+    var tlTotalOut = tl.querySelector("[data-tl-total]");
+    var tlSteps = Array.prototype.slice.call(tl.querySelectorAll("[data-tl-step]"));
 
     var tlPinned = false;
     var tlDistance = 0;
     var tlStickyTop = 0;
     var tlOffsets = [];   // each item's travel offset, cached to avoid reflow
+    var tlRaw = [];       // unclamped offsetLeft, for the entry animation
+    var tlWidths = [];
+    var tlEase = [];      // last --tl-e written, so unchanged frames cost nothing
     var tlTicks = [];
     var tlAt = -1;        // index of the milestone currently being read
     var tlQueued = false;
 
     var tlWide = window.matchMedia("(min-width: 901px)");
 
+    /* Dates. data-date on every milestone is the one source for both the
+       spacing and the scale, so the page never carries a second list of them
+       that could drift out of step with the cards. */
+    var tlDates = tlItems.map(function (item) {
+      var parts = (item.dataset.date || "").split("-");
+      return {
+        y: +parts[0] || 0,
+        m: +parts[1] || 1,
+        d: +parts[2] || 1,
+        // months since year 0, fractional by day, which is all the precision
+        // the layout needs
+        t: (+parts[0] || 0) * 12 + (+parts[1] || 1) - 1 + ((+parts[2] || 1) - 1) / 30
+      };
+    });
+
+    if (tlTotalOut) tlTotalOut.textContent = tlItems.length;
+
     // A 320px card needs room to sit beside its neighbours, and it needs the
-    // height to render without being clipped by its own row.
+    // height to render without being clipped by its own row. 700 is where the
+    // tallest card, its screenshot included, still fits the stage once the
+    // header and the bar have taken their share.
     function tlCanPin() {
-      return !reducedMotion && tlWide.matches && window.innerHeight >= 620;
+      return !reducedMotion && tlWide.matches && window.innerHeight >= 700;
     }
 
     function tlClamp(n, lo, hi) { return n < lo ? lo : (n > hi ? hi : n); }
@@ -1316,6 +1367,64 @@
 
     function tlCurrentTravel() {
       return tlClamp(tlStickyTop - tl.getBoundingClientRect().top, 0, tlDistance);
+    }
+
+    /* The spacing pass. Everything about the pacing of the rail comes from
+       here: the stride from each milestone to the next is the months between
+       them times TL_PX_PER_MONTH, and the margin is whatever that leaves over
+       once the card itself is paid for. Where a .tl-gap element sits between
+       two milestones it is already standing in for that stretch, so the margin
+       is left at zero and the element's own width is the space. */
+    function tlSpace() {
+      // Read every width before writing any margin. A margin cannot change a
+      // card's width, so interleaving the two would only buy nineteen forced
+      // reflows for nothing.
+      var cards = tlItems.map(function (item) { return item.offsetWidth; });
+
+      tlItems.forEach(function (item, i) {
+        if (!i) { item.style.marginLeft = ""; return; }
+
+        var prev = item.previousElementSibling;
+        if (prev && prev.classList.contains("tl-gap")) {
+          item.style.marginLeft = "";
+          return;
+        }
+
+        var card = cards[i - 1];
+        var months = tlDates[i].t - tlDates[i - 1].t;
+        var stride = tlClamp(
+          months * TL_PX_PER_MONTH, card + TL_GAP_MIN, TL_STRIDE_MAX
+        );
+        item.style.marginLeft = Math.round(stride - card) + "px";
+      });
+    }
+
+    function tlUnspace() {
+      tlItems.forEach(function (item) {
+        item.style.marginLeft = "";
+        item.style.removeProperty("--tl-e");
+        item.classList.remove("is-current");
+      });
+      tlEase = [];
+    }
+
+    /* Position of an arbitrary date, interpolated along the stride between the
+       two milestones either side of it. Both rulers are drawn through here, in
+       whichever coordinates they need: the quarter scale in travel offsets, the
+       axis month marks in rail offsets. Deriving them from the layout rather
+       than from an independent idea of where time should be is what keeps the
+       ruler and the thing it measures in agreement. */
+    function tlPosForDate(t, at) {
+      if (!at.length) return 0;
+      if (t <= tlDates[0].t) return at[0];
+
+      for (var i = 1; i < tlDates.length; i++) {
+        if (t > tlDates[i].t) continue;
+        var span = tlDates[i].t - tlDates[i - 1].t;
+        var f = span > 0 ? (t - tlDates[i - 1].t) / span : 0;
+        return at[i - 1] + f * (at[i] - at[i - 1]);
+      }
+      return at[at.length - 1];
     }
 
     /* Year markers, built from the years already on the milestones so adding a
@@ -1343,8 +1452,72 @@
       });
     }
 
+    /* The quarter scale under the progress bar. It starts at the first
+       milestone that is inside the continuously scaled part of the rail, which
+       means the first one after the compressed .tl-gap, because marks drawn
+       across a compressed stretch would be measuring nothing. */
+    function tlBuildScale() {
+      if (!tlScaleBox || !tlDistance) return;
+      tlScaleBox.textContent = "";
+
+      var from = 0;
+      for (var i = 0; i < tlItems.length; i++) {
+        var prev = tlItems[i].previousElementSibling;
+        if (prev && prev.classList.contains("tl-gap")) { from = i; break; }
+      }
+
+      var start = tlDates[from];
+      var end = tlDates[tlDates.length - 1];
+      var y = start.y;
+      var m = 1 + 3 * Math.floor((start.m - 1) / 3);   // back to the quarter start
+
+      while (y * 12 + m - 1 <= end.t) {
+        var pos = tlPosForDate(y * 12 + m - 1, tlOffsets);
+        if (pos >= tlOffsets[from] - 1) {
+          var mark = document.createElement("span");
+          mark.className = m === 1 ? "tl-mark tl-mark-year" : "tl-mark";
+          mark.style.left = (pos / tlDistance) * 100 + "%";
+          tlScaleBox.appendChild(mark);
+        }
+        m += 3;
+        if (m > 12) { m = 1; y++; }
+      }
+    }
+
+    /* Month marks along the axis, in the stretches long enough to be worth
+       measuring. Nothing is drawn where the cards are close together: there the
+       cards themselves are the scale, and marks would only collide with the
+       dates already printed beside every dot. */
+    function tlBuildMonths() {
+      if (!tlMonthBox) return;
+      tlMonthBox.textContent = "";
+
+      for (var i = 1; i < tlItems.length; i++) {
+        var before = tlItems[i].previousElementSibling;
+        if (before && before.classList.contains("tl-gap")) continue;
+
+        var from = tlRaw[i - 1] + tlWidths[i - 1];   // trailing edge of the last card
+        var to = tlRaw[i];                           // leading edge of this one
+        if (to - from < 90) continue;
+
+        for (var m = Math.ceil(tlDates[i - 1].t + 0.02); m < tlDates[i].t; m++) {
+          var pos = tlPosForDate(m, tlRaw);
+          if (pos < from + 12 || pos > to - 12) continue;
+
+          var mark = document.createElement("span");
+          var january = m % 12 === 0;
+          mark.className = january ? "tl-mmark tl-mmark-year" : "tl-mmark";
+          if (january) mark.dataset.label = m / 12;
+          mark.style.left = Math.round(pos) + "px";
+          tlMonthBox.appendChild(mark);
+        }
+      }
+    }
+
     function tlMeasure() {
       tlStickyTop = parseFloat(window.getComputedStyle(tlStage).top) || 0;
+
+      tlSpace();
       tlDistance = Math.max(0, tlRail.scrollWidth - tlViewport.clientWidth);
 
       // A rail that already fits has nothing to travel through
@@ -1352,10 +1525,15 @@
 
       tl.style.height = (tlStage.offsetHeight + tlDistance) + "px";
       tlOffsets = tlItems.map(function (item) { return tlTravelOf(item); });
+      tlRaw = tlItems.map(function (item) { return item.offsetLeft; });
+      tlWidths = tlItems.map(function (item) { return item.offsetWidth; });
+      tlEase = [];
 
       tlTicks.forEach(function (t) {
         t.el.style.left = (tlTravelOf(t.item) / tlDistance) * 100 + "%";
       });
+      tlBuildScale();
+      tlBuildMonths();
 
       tlAt = -1;
       tlUpdate();
@@ -1374,29 +1552,73 @@
       delete tl.dataset.mode;
       tl.style.height = "";
       tlRail.style.transform = "";
+      tlUnspace();
     }
 
     function tlReadout(travel) {
       // The year and title describe the leftmost card in the viewport, so the
       // reading line sits just past the middle of one card rather than a
       // fraction of the whole viewport, which would skip the first milestone
-      // before the reader had moved at all.
-      var probe = travel + (tlItems[0] ? tlItems[0].offsetWidth : 344) * 0.6;
+      // before the reader had moved at all. Compared against the unclamped
+      // offsets, because the last few cards all share the same clamped travel
+      // value and would otherwise read as one milestone.
+      var probe = travel + (tlWidths[0] || 344) * 0.6;
       var idx = 0;
-      for (var i = 0; i < tlOffsets.length; i++) {
-        if (tlOffsets[i] > probe) break;
-        idx = i;
+
+      if (travel >= tlDistance - 1) {
+        // At the end of the travel the rail has stopped but there is still a
+        // screen of cards to the right of the reading line, and the last of
+        // them is where the reader has actually arrived.
+        idx = tlItems.length - 1;
+      } else {
+        for (var i = 0; i < tlRaw.length; i++) {
+          if (tlRaw[i] > probe) break;
+          idx = i;
+        }
       }
       if (idx === tlAt) return;
+
+      if (tlAt >= 0 && tlItems[tlAt]) tlItems[tlAt].classList.remove("is-current");
       tlAt = idx;
 
       var item = tlItems[idx];
-      var heading = item.querySelector("h2");
+      item.classList.add("is-current");
+
       tlYearOut.textContent = item.dataset.year;
+      var heading = item.querySelector("h2");
       tlLabelOut.textContent = heading ? heading.textContent.trim() : "";
+      if (tlIndexOut) tlIndexOut.textContent = idx + 1;
+
       tlTicks.forEach(function (t) {
         t.el.classList.toggle("current", t.year === item.dataset.year);
       });
+
+      // Restart the readout's animation. Cheap: this runs once per milestone
+      // crossed, not once per frame.
+      if (tlReadoutEl) {
+        tlReadoutEl.classList.remove("is-turning");
+        void tlReadoutEl.offsetWidth;
+        tlReadoutEl.classList.add("is-turning");
+      }
+    }
+
+    /* Cards fade and rise into place as they arrive and settle back out as they
+       leave, driven straight off the travel position rather than a transition,
+       so the motion tracks the scroll exactly and reverses with it. One custom
+       property per card, written only when it has actually changed. */
+    function tlAnimate(travel) {
+      var vw = tlViewport.clientWidth;
+
+      for (var i = 0; i < tlItems.length; i++) {
+        var x = tlRaw[i] - travel;
+        var inEase = tlClamp((vw - x) / TL_RAMP_IN, 0, 1);
+        var outEase = tlClamp((x + tlWidths[i]) / TL_RAMP_OUT, 0, 1);
+        var e = Math.round(Math.min(inEase, outEase) * 50) / 50;
+
+        if (tlEase[i] === e) continue;
+        tlEase[i] = e;
+        tlItems[i].style.setProperty("--tl-e", e);
+      }
     }
 
     function tlUpdate() {
@@ -1407,6 +1629,14 @@
       tlRail.style.transform = "translate3d(" + -travel + "px, 0, 0)";
       tlFill.style.width = (travel / tlDistance) * 100 + "%";
       tlReadout(travel);
+      tlAnimate(travel);
+
+      tlSteps.forEach(function (btn) {
+        var spent = +btn.dataset.tlStep < 0
+          ? travel <= 1
+          : travel >= tlDistance - 1;
+        if (btn.disabled !== spent) btn.disabled = spent;
+      });
     }
 
     function tlSchedule() {
@@ -1424,6 +1654,20 @@
       window.requestAnimationFrame(function () {
         tlResizeQueued = false;
         tlSettle();
+      });
+    });
+
+    /* Stepping one milestone at a time. Both buttons move the page rather than
+       a scroller of their own, for the same reason the rail is driven off page
+       scroll: there is only ever one position to be in. */
+    tlSteps.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!tlPinned) return;
+        var idx = tlClamp(tlAt + (+btn.dataset.tlStep), 0, tlItems.length - 1);
+        window.scrollTo({
+          top: tlScrollFor(tlTravelOf(tlItems[idx])),
+          behavior: "smooth"
+        });
       });
     });
 
@@ -1448,7 +1692,8 @@
     });
 
     // Left and right do nothing on a page that does not scroll sideways, so
-    // giving them the timeline costs nothing and is the obvious mapping.
+    // giving them the timeline costs nothing and is the obvious mapping. One
+    // press is one milestone, which is also what the two buttons do.
     document.addEventListener("keydown", function (e) {
       if (!tlPinned) return;
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
@@ -1462,8 +1707,8 @@
       if (rect.top > tlStickyTop + 1 || rect.bottom < window.innerHeight - 1) return;
 
       e.preventDefault();
-      var step = (tlItems[0] ? tlItems[0].offsetWidth : 344) * (e.key === "ArrowRight" ? 1 : -1);
-      window.scrollBy({ top: step, behavior: "smooth" });
+      var idx = tlClamp(tlAt + (e.key === "ArrowRight" ? 1 : -1), 0, tlItems.length - 1);
+      window.scrollTo({ top: tlScrollFor(tlTravelOf(tlItems[idx])), behavior: "smooth" });
     });
 
     /* Re-run the whole decision rather than only re-measuring. The first pass
