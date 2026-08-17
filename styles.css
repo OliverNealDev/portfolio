@@ -6,8 +6,9 @@
    Structure:
      1. Tokens        5. Header / nav       9. Cards (projects/team)
      2. Base          6. Hero              10. Case-study pages
-     3. Utilities     7. Sections          11. Footer
-     4. Buttons       8. Feature (Shiverbug) 12. Motion & responsive
+     3. Utilities     7. Sections         10b. Timeline page
+     4. Buttons       8. Feature (Shiverbug) 11. Footer / 11b. CV page
+                                            12. Motion & responsive
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -2495,6 +2496,385 @@ html.postview-open body { overflow: hidden; }
   .postview-text { padding: 0 1rem 1rem; }
   .postview-media figcaption { padding-inline: 1rem; }
   .postview-foot { padding: 0.9rem 1rem 1.05rem; }
+}
+
+/* --------------------------------------------------------------------------
+   10b. TIMELINE PAGE (timeline.html)
+
+   One set of markup, two layouts.
+
+   The DEFAULT is a plain vertical list: a rule down the left, a dot and a date
+   per milestone, a card beside it. That is what renders with no JavaScript, on
+   a phone, on a short window, and under prefers-reduced-motion.
+
+   The horizontal layout only applies once main.js has measured the rail and
+   set data-mode="pinned" on .tl. Then .tl becomes a tall scroll driver, the
+   stage inside it sticks under the header, and the rail is translated left as
+   the page scrolls, one pixel of travel per pixel of scroll. The page scroll
+   is never intercepted, so the scrollbar stays truthful and trackpad, wheel,
+   touch and keyboard all behave normally.
+   -------------------------------------------------------------------------- */
+.tl-intro { padding-block: clamp(3rem, 7vh, 4.5rem) clamp(1.75rem, 4vh, 2.5rem); }
+
+.tl-lead {
+  max-width: 46em;
+  font-size: 1.12rem;
+  color: var(--text-2);
+  margin-bottom: 1.6rem;
+}
+
+/* Legend — the same four marker treatments used on the rail itself */
+.tl-legend {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  padding: 0;
+  margin: 0 0 1.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.tl-legend li { display: inline-flex; align-items: center; gap: 0.55rem; }
+
+.tl-howto {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-3);
+}
+.tl-howto .icon { color: var(--accent); transform: rotate(90deg); }
+
+/* Markers. One vocabulary, shared by the legend keys and the rail dots:
+   hollow ring for education, small solid dot for a project, filled accent for
+   an award, filled accent with a halo for work, larger accent ring for the
+   two endpoints. */
+.tl-dot,
+.tl-key {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--bg);
+}
+.tl-item[data-kind="project"] .tl-dot,
+.tl-key[data-kind="project"] {
+  width: 9px;
+  height: 9px;
+  border-color: var(--text-3);
+  background: var(--text-3);
+}
+.tl-item[data-kind="award"] .tl-dot,
+.tl-key[data-kind="award"] {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.tl-item[data-kind="work"] .tl-dot,
+.tl-key[data-kind="work"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.tl-item[data-kind="origin"] .tl-dot,
+.tl-item[data-kind="next"] .tl-dot {
+  width: 14px;
+  height: 14px;
+  border-color: var(--accent);
+}
+
+/* ---- Default layout: a vertical list ------------------------------------ */
+/* As a list the rail is the page's one column, so it carries the same width
+   and gutters as .container does everywhere else. */
+.tl-rail {
+  list-style: none;
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: 0 clamp(1.25rem, 5vw, 2rem) clamp(3rem, 7vh, 4.5rem);
+  display: grid;
+  gap: 1.1rem;
+}
+
+.tl-item {
+  position: relative;
+  padding-left: 1.9rem;
+}
+/* The rule the dots sit on. It runs through the gap to the next milestone,
+   and stops at the last dot rather than trailing into nothing. */
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: -1.1rem;
+  width: 1px;
+  background: var(--border);
+}
+.tl-item:last-child::before { bottom: auto; height: 0.9rem; }
+
+.tl-axis {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0 0 0.55rem -1.9rem; /* pull the dot back onto the rule */
+}
+.tl-date {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+}
+.tl-item[data-kind="award"] .tl-date,
+.tl-item[data-kind="work"] .tl-date,
+.tl-item[data-kind="next"] .tl-date,
+.tl-item[data-kind="origin"] .tl-date { color: var(--accent); }
+
+.tl-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 4px;
+  padding: 1.1rem 1.25rem 1.2rem;
+}
+.tl-now .tl-card { border-color: var(--accent-border); }
+
+.tl-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.tl-kind .icon { width: 1em; height: 1em; }
+.tl-item[data-kind="award"] .tl-kind,
+.tl-item[data-kind="work"] .tl-kind,
+.tl-item[data-kind="next"] .tl-kind,
+.tl-item[data-kind="origin"] .tl-kind { color: var(--accent); }
+
+.tl-card h2 {
+  font-size: 1.08rem;
+  line-height: 1.25;
+  margin-bottom: 0.2rem;
+}
+.tl-org { color: var(--text-2); font-size: 0.92rem; margin: 0 0 0.6rem; }
+.tl-body { color: var(--text-2); font-size: 0.93rem; margin: 0 0 0.85rem; }
+.tl-card .tags { margin-bottom: 0.85rem; }
+.tl-card > *:last-child { margin-bottom: 0; }
+
+.tl-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.tl-link .icon { transition: transform 0.2s ease; }
+.tl-link:hover .icon { transform: translateX(2px); }
+
+.tl-end-ctas { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+/* The progress bar only means anything while the rail is being travelled */
+.tl-bar { display: none; }
+
+.tl-outro { border-top: 1px solid var(--border); }
+
+/* ---- Pinned layout: the rail runs left to right -------------------------- */
+.tl[data-mode="pinned"] { position: relative; }
+
+.tl[data-mode="pinned"] .tl-stage {
+  position: sticky;
+  top: 4rem; /* the sticky header's height; main.js reads this back */
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  /* clip rather than hidden, in both places it is used here. An overflow:hidden
+     box is still a scroll container, so focusing a card off to the right lets
+     the browser scroll the box itself to reveal it, which slides the rail out
+     of step with the page position and strands the reader. A clip box is not
+     scrollable at all, so that cannot happen. hidden stays as the fallback for
+     anything that does not know clip. */
+  overflow: hidden;
+  overflow: clip;
+}
+
+.tl[data-mode="pinned"] .tl-bar {
+  display: block;
+  flex: none;
+  padding-block: 0.8rem 0.9rem;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+}
+.tl-bar-inner { display: grid; gap: 0.55rem; }
+
+.tl-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0;
+  min-width: 0;
+}
+.tl-readout-year {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.tl-readout-label {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tl-progress { position: relative; padding-bottom: 1.15rem; }
+.tl-progress-track {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--border);
+}
+.tl-progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* Year markers, positioned by main.js at the travel offset of the first
+   milestone in that year. Clicking one jumps the page there. */
+.tl-ticks { position: absolute; inset: 0; pointer-events: none; }
+.tl-tick {
+  position: absolute;
+  top: 8px;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  padding: 0 0.3rem;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.tl-tick::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -7px;
+  width: 1px;
+  height: 5px;
+  background: var(--border-strong);
+}
+.tl-tick:hover { color: var(--text); }
+.tl-tick.current { color: var(--accent); }
+.tl-tick.current::before { background: var(--accent); }
+
+.tl[data-mode="pinned"] .tl-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  overflow: clip;
+}
+
+.tl[data-mode="pinned"] .tl-rail {
+  position: relative;
+  flex: none;               /* take max-content width, do not shrink to fit */
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  height: min(100%, 620px);
+  max-width: none;
+  margin-inline: 0;
+  padding: 0 0 0 clamp(1.25rem, 5vw, 2rem);
+  will-change: transform;
+}
+/* The axis, spanning the whole rail rather than one screen of it */
+.tl[data-mode="pinned"] .tl-rail::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2.4rem;
+  height: 1px;
+  background: var(--border);
+}
+
+.tl[data-mode="pinned"] .tl-item {
+  flex: none;
+  width: 320px;
+  padding: 0 1.5rem 0 0;
+  display: grid;
+  grid-template-rows: 4.8rem minmax(0, 1fr);
+}
+/* Trailing gutter. It lives on the last item rather than as padding on the
+   rail because a flex container's trailing padding is not reliably counted in
+   scrollWidth, and scrollWidth is what sets the travel distance. */
+.tl[data-mode="pinned"] .tl-item:last-child { padding-right: clamp(2.5rem, 7vw, 4rem); }
+
+/* The stem from the dot down to its card */
+.tl[data-mode="pinned"] .tl-item::before {
+  left: 6px;
+  top: 2.4rem;
+  bottom: auto;
+  height: 2.4rem;
+}
+
+.tl[data-mode="pinned"] .tl-axis {
+  grid-row: 1;
+  align-self: center;
+  margin: 0;
+}
+.tl[data-mode="pinned"] .tl-card {
+  grid-row: 2;
+  align-self: start;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* ---- Print: never pinned, always the list ------------------------------- */
+@media print {
+  .tl[data-mode="pinned"] { height: auto !important; }
+  .tl[data-mode="pinned"] .tl-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .tl[data-mode="pinned"] .tl-bar { display: none; }
+  .tl[data-mode="pinned"] .tl-viewport { display: block; overflow: visible; }
+  .tl[data-mode="pinned"] .tl-rail {
+    display: grid;
+    gap: 1.1rem;
+    height: auto;
+    max-width: none;
+    padding: 0;
+    transform: none !important;
+  }
+  .tl[data-mode="pinned"] .tl-rail::before { display: none; }
+  .tl[data-mode="pinned"] .tl-item {
+    display: block;
+    width: auto;
+    padding: 0 0 0 1.9rem;
+    break-inside: avoid;
+  }
+  .tl[data-mode="pinned"] .tl-item::before { display: none; }
+  .tl[data-mode="pinned"] .tl-axis { margin: 0 0 0.55rem -1.9rem; }
+  .tl[data-mode="pinned"] .tl-card { max-height: none; overflow: visible; }
 }
 
 /* --------------------------------------------------------------------------

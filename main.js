@@ -819,8 +819,12 @@
     });
   }
 
-  /* 6. FOOTER YEAR ---------------------------------------------------------- */
-  document.querySelectorAll("[data-year]").forEach(function (el) {
+  /* 6. FOOTER YEAR ----------------------------------------------------------
+     Scoped to the footer on purpose. This used to match [data-year] anywhere,
+     which is a landmine: any element that legitimately carries a year, such as
+     the milestones on the timeline page, had its entire contents replaced with
+     the current year. */
+  document.querySelectorAll(".site-footer [data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
   });
 
@@ -1255,7 +1259,233 @@
     }
   }
 
-  /* 11. ANALYTICS -----------------------------------------------------------
+  /* 11. CAREER TIMELINE -----------------------------------------------------
+     timeline.html only. Turns the vertical list of milestones into a rail that
+     runs left to right as the page scrolls down.
+
+     The mechanism is deliberately not scroll hijacking. #timeline is a tall
+     empty driver whose height is set here to (stage height + travel distance);
+     the stage inside it is position:sticky, so it parks under the header for
+     exactly that many pixels while the rail is translated by the same amount.
+     Vertical scrolling is never cancelled, so the scrollbar tells the truth
+     and wheel, trackpad, touch, space bar and Page Down all keep working.
+
+     It only engages where it is an improvement: a wide enough window for a
+     320px card to make sense, a tall enough one for a card to fit without
+     clipping, and no reduced-motion preference. Everywhere else, and with no
+     JavaScript at all, the CSS default vertical list is what renders. */
+  var tl = document.getElementById("timeline");
+
+  if (tl) {
+    var tlStage = tl.querySelector(".tl-stage");
+    var tlViewport = tl.querySelector(".tl-viewport");
+    var tlRail = tl.querySelector(".tl-rail");
+    var tlItems = Array.prototype.slice.call(tl.querySelectorAll(".tl-item"));
+    var tlFill = tl.querySelector("[data-tl-fill]");
+    var tlTickBox = tl.querySelector("[data-tl-ticks]");
+    var tlYearOut = tl.querySelector("[data-tl-year]");
+    var tlLabelOut = tl.querySelector("[data-tl-label]");
+
+    var tlPinned = false;
+    var tlDistance = 0;
+    var tlStickyTop = 0;
+    var tlOffsets = [];   // each item's travel offset, cached to avoid reflow
+    var tlTicks = [];
+    var tlAt = -1;        // index of the milestone currently being read
+    var tlQueued = false;
+
+    var tlWide = window.matchMedia("(min-width: 901px)");
+
+    // A 320px card needs room to sit beside its neighbours, and it needs the
+    // height to render without being clipped by its own row.
+    function tlCanPin() {
+      return !reducedMotion && tlWide.matches && window.innerHeight >= 620;
+    }
+
+    function tlClamp(n, lo, hi) { return n < lo ? lo : (n > hi ? hi : n); }
+
+    // Travel offset at which this milestone sits against the left edge.
+    // offsetLeft is a layout value, so the rail's transform never skews it.
+    function tlTravelOf(item) { return tlClamp(item.offsetLeft, 0, tlDistance); }
+
+    // Page scroll position that produces a given travel offset
+    function tlScrollFor(travel) {
+      var top = tl.getBoundingClientRect().top + window.pageYOffset;
+      return top - tlStickyTop + travel;
+    }
+
+    function tlCurrentTravel() {
+      return tlClamp(tlStickyTop - tl.getBoundingClientRect().top, 0, tlDistance);
+    }
+
+    /* Year markers, built from the years already on the milestones so adding a
+       card to the page never means editing a second list. */
+    function tlBuildTicks() {
+      if (tlTicks.length) return;
+      var seen = {};
+
+      tlItems.forEach(function (item) {
+        var year = item.dataset.year;
+        if (!year || seen[year]) return;
+        seen[year] = true;
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "tl-tick";
+        btn.textContent = year;
+        btn.setAttribute("aria-label", "Jump to " + year);
+        btn.addEventListener("click", function () {
+          window.scrollTo({ top: tlScrollFor(tlTravelOf(item)), behavior: "smooth" });
+        });
+
+        tlTickBox.appendChild(btn);
+        tlTicks.push({ el: btn, item: item, year: year });
+      });
+    }
+
+    function tlMeasure() {
+      tlStickyTop = parseFloat(window.getComputedStyle(tlStage).top) || 0;
+      tlDistance = Math.max(0, tlRail.scrollWidth - tlViewport.clientWidth);
+
+      // A rail that already fits has nothing to travel through
+      if (!tlDistance) { tlUnpin(); return; }
+
+      tl.style.height = (tlStage.offsetHeight + tlDistance) + "px";
+      tlOffsets = tlItems.map(function (item) { return tlTravelOf(item); });
+
+      tlTicks.forEach(function (t) {
+        t.el.style.left = (tlTravelOf(t.item) / tlDistance) * 100 + "%";
+      });
+
+      tlAt = -1;
+      tlUpdate();
+    }
+
+    function tlPin() {
+      if (tlPinned) return;
+      tlPinned = true;
+      tl.dataset.mode = "pinned";
+      tlBuildTicks();
+      tlMeasure();
+    }
+
+    function tlUnpin() {
+      tlPinned = false;
+      delete tl.dataset.mode;
+      tl.style.height = "";
+      tlRail.style.transform = "";
+    }
+
+    function tlReadout(travel) {
+      // The year and title describe the leftmost card in the viewport, so the
+      // reading line sits just past the middle of one card rather than a
+      // fraction of the whole viewport, which would skip the first milestone
+      // before the reader had moved at all.
+      var probe = travel + (tlItems[0] ? tlItems[0].offsetWidth : 344) * 0.6;
+      var idx = 0;
+      for (var i = 0; i < tlOffsets.length; i++) {
+        if (tlOffsets[i] > probe) break;
+        idx = i;
+      }
+      if (idx === tlAt) return;
+      tlAt = idx;
+
+      var item = tlItems[idx];
+      var heading = item.querySelector("h2");
+      tlYearOut.textContent = item.dataset.year;
+      tlLabelOut.textContent = heading ? heading.textContent.trim() : "";
+      tlTicks.forEach(function (t) {
+        t.el.classList.toggle("current", t.year === item.dataset.year);
+      });
+    }
+
+    function tlUpdate() {
+      tlQueued = false;
+      if (!tlPinned) return;
+
+      var travel = tlCurrentTravel();
+      tlRail.style.transform = "translate3d(" + -travel + "px, 0, 0)";
+      tlFill.style.width = (travel / tlDistance) * 100 + "%";
+      tlReadout(travel);
+    }
+
+    function tlSchedule() {
+      if (tlQueued || !tlPinned) return;
+      tlQueued = true;
+      window.requestAnimationFrame(tlUpdate);
+    }
+
+    window.addEventListener("scroll", tlSchedule, { passive: true });
+
+    var tlResizeQueued = false;
+    window.addEventListener("resize", function () {
+      if (tlResizeQueued) return;
+      tlResizeQueued = true;
+      window.requestAnimationFrame(function () {
+        tlResizeQueued = false;
+        tlSettle();
+      });
+    });
+
+    /* Keyboard. Tabbing into a card that is off to the right would otherwise
+       make the browser scroll the clipped viewport to reveal it, which desyncs
+       the transform from the page position and strands the reader. Undo that
+       scroll and move the page instead, so focus and travel stay in step. */
+    tlRail.addEventListener("focusin", function (e) {
+      if (!tlPinned) return;
+      tlViewport.scrollLeft = 0;
+
+      var item = e.target.closest ? e.target.closest(".tl-item") : null;
+      if (!item) return;
+
+      var target = tlTravelOf(item);
+      var travel = tlCurrentTravel();
+      var offRight = target - travel + item.offsetWidth > tlViewport.clientWidth;
+
+      if (target < travel || offRight) {
+        window.scrollTo({ top: tlScrollFor(target), behavior: "instant" });
+      }
+    });
+
+    // Left and right do nothing on a page that does not scroll sideways, so
+    // giving them the timeline costs nothing and is the obvious mapping.
+    document.addEventListener("keydown", function (e) {
+      if (!tlPinned) return;
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      var t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+
+      // Only while the stage actually fills the viewport
+      var rect = tl.getBoundingClientRect();
+      if (rect.top > tlStickyTop + 1 || rect.bottom < window.innerHeight - 1) return;
+
+      e.preventDefault();
+      var step = (tlItems[0] ? tlItems[0].offsetWidth : 344) * (e.key === "ArrowRight" ? 1 : -1);
+      window.scrollBy({ top: step, behavior: "smooth" });
+    });
+
+    /* Re-run the whole decision rather than only re-measuring. The first pass
+       happens while this script is still parsing, when the web fonts have not
+       landed and, in a background or zero-height tab, the viewport may not have
+       its real size yet. Anything that changes either the gate or the rail's
+       width has to be able to pull it back through here. */
+    function tlSettle() {
+      if (tlCanPin()) {
+        if (tlPinned) tlMeasure();
+        else tlPin();
+      } else if (tlPinned) {
+        tlUnpin();
+      }
+    }
+
+    tlSettle();
+    window.addEventListener("load", tlSettle);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(tlSettle);
+  }
+
+  /* 12. ANALYTICS -----------------------------------------------------------
      GoatCounter: no cookies, no personal data, nothing to consent to.
      GOATCOUNTER_CODE is the subdomain of the GoatCounter site (the "myname"
      in myname.goatcounter.com). Blank it to switch analytics off entirely:
@@ -1305,6 +1535,8 @@
         countEvent("play-itch", "Play on itch.io: " + label);
       } else if (/github\.com/i.test(href)) {
         countEvent("view-source", "Source on GitHub: " + href.split("/").pop());
+      } else if (/^timeline\.html/.test(href)) {
+        countEvent("open-timeline", "Timeline opened");
       } else if (/^(?!https?:)/.test(href) && /-|cv\.html/.test(href) && /\.html$/i.test(href)) {
         countEvent("open-breakdown", "Breakdown opened: " + href.replace(/\.html$/, ""));
       } else if (link.protocol === "mailto:") {

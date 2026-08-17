@@ -12,6 +12,7 @@ Contact: oliverjn04@gmail.com
 
 - [Home](https://oliverneal.dev/): about, current role, skills, all nine projects, education and contact
 - [CV](https://oliverneal.dev/cv.html): full CV in HTML, with a PDF download at https://oliverneal.dev/Oliver_Neal_CV.pdf
+- [Timeline](https://oliverneal.dev/timeline.html): the career and education history as one ordered list of nineteen milestones, 2018 to September 2026
 
 ## Current role
 
