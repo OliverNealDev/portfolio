@@ -16,7 +16,7 @@ Contact: oliverjn04@gmail.com
 
 ## Current role
 
-- Gameplay Programmer (intern) at [Shiverbug Studios](https://shiverbugstudios.com/), 13 July to 18 September 2026, ten weeks. Working in Unity 6 on Out of Water, an original IP: a two-player splitscreen 3D platformer collectathon. Owns character and enemy gameplay code, the co-op moveset, performance work (GPU-driven rendering, quality tiers, LOD and culling, measured with a profiling tool built for the team), splitscreen device routing and cameras, a UI Toolkit front end, a decoupled FMOD audio layer, editor tooling for level designers, and water/caustic/bubble shaders in Shader Graph and hand-written URP HLSL.
+- Gameplay Programmer (intern) at [Shiverbug Studios](https://shiverbugstudios.com/), 13 July to 18 September 2026, ten weeks. Working in Unity 6 on Out of Water, an original IP: a two-player splitscreen 3D platformer collectathon. Owns character and enemy gameplay code, the co-op moveset, performance work (GPU-driven rendering, quality tiers, LOD and culling, measured with a profiling tool built for the team), splitscreen device routing and cameras, a UI Toolkit front end, a decoupled FMOD audio layer, editor tooling for level designers, and water/caustic/bubble shaders in Shader Graph and custom URP HLSL.
 - Studio team page: https://shiverbugstudios.com/team/oliver-neal.html
 
 ## Project breakdowns

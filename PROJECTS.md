@@ -93,7 +93,7 @@ character and enemy gameplay code, the co-op moveset, performance work (GPU-driv
 rendering, quality tiers, LOD and culling, plus a profiling tool built for the team),
 splitscreen device routing and cameras, a UI Toolkit front end, a decoupled FMOD
 audio layer, editor tooling for level designers, and water, caustic and bubble
-shaders in Shader Graph and hand-written URP HLSL. **Read-only context: this is the
+shaders in Shader Graph and custom URP HLSL. **Read-only context: this is the
 studio's private repository, not mine to restructure.**
 
 **Space Bar Simulator** (Jan 2026, team of ten, Unreal Engine 5). No local folder on

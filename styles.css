@@ -1083,7 +1083,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   margin-bottom: 1.4rem;
 }
 
-/* Nine ownership lines, split into three labelled groups so the panel reads
+/* Eight ownership lines, split into four labelled groups so the panel reads
    as a spec sheet rather than one undifferentiated wall of bullets */
 .feature-groups {
   display: grid;
@@ -1131,6 +1131,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   background: var(--accent);
 }
 .feature-list strong { color: var(--text); font-weight: 600; }
+
+/* The work that sat outside the game itself, one line under the groups */
+.feature-note {
+  max-width: 62ch;
+  margin: 0 0 1.5rem;
+  color: var(--text-2);
+  font-size: 0.95rem;
+}
 
 @media (max-width: 720px) {
   /* Rail turns into a header row: mark on the left, facts beside it */
