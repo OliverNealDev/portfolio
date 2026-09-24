@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Oliver Neal · Gameplay Programmer · Unity (C#)</title>
-  <meta name="description" content="Portfolio of Oliver Neal, Unity (C#) gameplay programmer at Shiverbug Studios and ExpoTees 2026 award winner. Available from September 2026. Browser-playable games with technical breakdowns.">
+  <meta name="description" content="Portfolio of Oliver Neal, Unity (C#) gameplay programmer at Shiverbug Studios and ExpoTees 2026 award winner. Available now. Browser-playable games with technical breakdowns.">
   <link rel="canonical" href="https://oliverneal.dev/">
   <meta name="author" content="Oliver Neal">
   <!-- max-image-preview:large opts the project screenshots into full-size
@@ -200,7 +200,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-08-17c">
+  <link rel="stylesheet" href="styles.css?v=2026-09-24">
 </head>
 <body>
 
@@ -231,7 +231,7 @@
       <a class="brand" href="#top">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="#shiverbug">Internship</a>
+        <a class="nav-link" href="#shiverbug">Shiverbug</a>
         <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#skills">Skills</a>
         <a class="nav-link" href="#projects">Projects</a>
@@ -278,7 +278,7 @@
                the contact section at the very bottom, which is the last place
                anyone triaging a portfolio in a minute would reach. -->
           <ul class="hero-availability">
-            <li>Available from <strong>September 2026</strong></li>
+            <li>Available <strong>now</strong></li>
             <li>Middlesbrough or remote</li>
             <li>Right to work in the UK</li>
           </ul>
@@ -338,8 +338,10 @@
           <p class="kicker">Now</p>
           <h2>Gameplay Programmer at Shiverbug Studios</h2>
           <p class="section-lead">
-            Building gameplay systems in engine, every day, on an original IP at
+            Ten weeks on an original IP at
             <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a>.
+            I was brought in for the character and enemy code, and finished as
+            the studio's buildmaster and main programmer. I've stayed on since.
           </p>
         </header>
 
@@ -377,36 +379,53 @@
               <h3>Out of Water, an original IP</h3>
               <p class="feature-intro">
                 A 3D platformer collectathon built for two players on one sofa,
-                in splitscreen, starring a turtle and a seagull. I own the
-                character and enemy gameplay code, and I work in engine across:
+                in splitscreen, starring a turtle and a seagull. I was hired for
+                the character and enemy code. By week ten I was also building the
+                tools the level designers work with, running the build, and
+                reviewing everyone else's work:
               </p>
               <div class="feature-groups">
                 <section class="feature-group">
-                  <h4>Gameplay</h4>
+                  <h4>Characters &amp; enemies</h4>
                   <ul class="feature-list">
-                    <li><strong>Component driven state machines</strong> for both playable characters and the enemies, rebuilt from single file controllers</li>
-                    <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping</li>
+                    <li><strong>Component driven state machines</strong> for both playable characters and the enemy framework every enemy runs on, from the crabs to a shark that swims, rebuilt from single file controllers</li>
+                    <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping. Then a platformer camera rig that follows the floor, not the jump</li>
                   </ul>
                 </section>
 
                 <section class="feature-group">
-                  <h4>Performance &amp; tooling</h4>
+                  <h4>Tools for the team</h4>
                   <ul class="feature-list">
-                    <li><strong>GPU driven rendering</strong>, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I wrote for the team</li>
-                    <li><strong>Blockout interactables and editor tooling</strong> the level designers build puzzles from</li>
+                    <li><strong>Level design tools</strong> the designers build puzzles from: blockout interactables, spline walkways and ring courses, a click to place prop palette, and a prober that runs the characters' own jump maths to show what they can reach</li>
+                    <li>A <strong>dialogue and cutscene system</strong> with one component NPC setup, and <strong>Elder Trials</strong>: timed challenge rooms with medals that hand out new moves as rewards</li>
+                  </ul>
+                </section>
+
+                <section class="feature-group">
+                  <h4>Build &amp; performance</h4>
+                  <ul class="feature-list">
+                    <li><strong>Buildmaster</strong> for the studio. I set up the git workflow the team follows, reviewed and merged their pull requests, and tagged a playtest build every fortnight</li>
+                    <li><strong>GPU driven rendering</strong>, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I built. One August clean up took the project from 10.1 GB to 3.5 GB</li>
                   </ul>
                 </section>
 
                 <section class="feature-group">
                   <h4>Presentation &amp; audio</h4>
                   <ul class="feature-list">
-                    <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots and a controls tutorial</li>
-                    <li><strong>Water, caustics and bubble shaders</strong>, in Shader Graph and in hand written URP HLSL</li>
+                    <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots, a controls tutorial, and accessibility options like a partner marker and an on-screen input overlay</li>
+                    <li><strong>Water</strong> in Shader Graph and custom URP HLSL: caustics, underwater fog, and currents and rafts the characters can ride</li>
                   </ul>
                 </section>
               </div>
+              <p class="feature-note">
+                Outside the game, I built the studio's website,
+                <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">shiverbugstudios.com</a>,
+                and an internal wiki for the team that turns the design
+                documents into a searchable site, with art renders and item
+                pages pulled straight from the Unity project.
+              </p>
               <ul class="tags">
-                <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Performance</li><li>FMOD</li><li>Cinemachine</li><li>UI Toolkit</li><li>Shader Graph</li><li>HLSL</li>
+                <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Editor tooling</li><li>Performance</li><li>Git LFS</li><li>UI Toolkit</li><li>Cinemachine</li><li>FMOD</li><li>Shader Graph</li><li>HLSL</li>
               </ul>
             </div>
           </div>
@@ -1264,10 +1283,9 @@ This has been a huge step forward for me as a games developer. It pushed me to b
           <p class="kicker">Contact</p>
           <h2>Get in touch</h2>
           <p class="section-lead">
-            I'm currently a gameplay programmer at Shiverbug Studios, on an
-            internship running to September 2026, and looking for what comes
-            after it. Whether it's about my work, a project or a future
-            opportunity, I'd be glad to hear from you.
+            I finished a ten week internship at Shiverbug Studios in September
+            and have stayed on with the studio. Whether it's about my work, a
+            project or a full-time role, I'd be glad to hear from you.
           </p>
           <p class="contact-availability">
             Based in Middlesbrough in the UK, with the right to work here.
@@ -1360,7 +1378,7 @@ This has been a huge step forward for me as a games developer. It pushed me to b
         <div>
           <h4>Site</h4>
           <ul>
-            <li><a href="#shiverbug">Internship</a></li>
+            <li><a href="#shiverbug">Shiverbug</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#breakdowns">Breakdowns</a></li>
@@ -1391,6 +1409,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-08-17c"></script>
+  <script src="main.js?v=2026-09-24"></script>
 </body>
 </html>
