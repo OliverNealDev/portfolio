@@ -10,7 +10,7 @@ Static HTML, CSS and vanilla JavaScript. No framework, no build step, no depende
 
 | Page | Purpose |
 |---|---|
-| `index.html` | Home: internship, about, skills, all nine projects, education, log, contact |
+| `index.html` | Home: Shiverbug role, about, skills, all nine projects, education, log, contact |
 | `cv.html` / `cv-print.html` | The CV in HTML, plus a print-optimised variant behind `Oliver_Neal_CV.pdf` |
 | `cyber-station.html` | Case study: Cyber Station, my ExpoTees 2026 award-winning final-year artefact |
 | `tile-turfer.html` | Case study: Tile Turfer |
@@ -67,6 +67,6 @@ Use the date of the deploy. Both `styles.css?v=` and `main.js?v=` are updated by
 
 ## Author
 
-**Oliver Neal**, gameplay programmer specialising in Unity and C#.
+**Oliver Neal**, Technical Director at Shiverbug Studios, working in Unity and C#.
 
 [oliverneal.dev](https://oliverneal.dev) · [itch.io](https://olivernealdev.itch.io) · [LinkedIn](https://www.linkedin.com/in/oliverjackneal/) · [GitHub](https://github.com/OliverNealDev)

@@ -9,9 +9,9 @@
   text (not just hyperlinks), standard section headings, so ATS parsers and
   LLM screeners extract it cleanly. Keep it to exactly two A4 pages.
 -->
-<title>Oliver Neal CV · Gameplay Programmer · Unity (C#)</title>
+<title>Oliver Neal CV · Technical Director, Shiverbug Studios · Unity (C#)</title>
 <meta name="author" content="Oliver Neal">
-<meta name="description" content="CV of Oliver Neal, Unity (C#) gameplay programmer. Gameplay systems, AI behaviour, simulation and performance.">
+<meta name="description" content="CV of Oliver Neal, Technical Director at Shiverbug Studios and Unity (C#) systems programmer. Gameplay systems, AI behaviour, simulation and performance.">
 <meta name="robots" content="noindex">
 <style>
   :root {
@@ -81,6 +81,9 @@
   /* ── Page 2 ── */
   .page2 { break-before: page; margin-top: 0; }
   .page2 section:first-child { margin-top: 0; }
+  /* Page 2 carries every project plus education; a hair less air between
+     entries is what keeps the CV at two pages. */
+  .page2 .entry { margin-bottom: 3.6pt; }
 
   /* ── Machine footer ── */
   .machine {
@@ -96,7 +99,7 @@
 <header>
   <div class="head">
     <h1>Oliver Neal</h1>
-    <p class="role">Gameplay Programmer · Unity (C#)</p>
+    <p class="role">Technical Director, Shiverbug Studios · Unity (C#)</p>
   </div>
   <p class="contact">
     <a href="https://oliverneal.dev/">oliverneal.dev</a><span class="sep">·</span>
@@ -104,22 +107,22 @@
     <a href="https://github.com/OliverNealDev">github.com/OliverNealDev</a><span class="sep">·</span>
     <a href="https://www.linkedin.com/in/oliverjackneal/">linkedin.com/in/oliverjackneal</a><span class="sep">·</span>
     <a href="https://olivernealdev.itch.io">olivernealdev.itch.io</a><br>
-    Middlesbrough, UK<span class="sep">·</span>Right to work in the UK<span class="sep">·</span>Open to relocation and remote work
+    Middlesbrough, UK<span class="sep">·</span>Right to work in the UK
   </p>
 </header>
 
 <section class="profile">
   <h2>Profile</h2>
   <p>
-    Gameplay programmer specialising in Unity (C#) systems work: state-machine-driven characters
-    and enemy AI, local co-op and multiplayer plumbing, and the profiling that keeps a scene inside
-    its frame budget.
+    Technical Director at Shiverbug Studios, leading the technical side of <em>Out of Water</em>, a
+    two-player co-op 3D platformer in Unity 6. A systems programmer at heart: state-machine-driven
+    characters and enemy AI, local co-op and multiplayer plumbing, tools for the team, and the
+    profiling that keeps a scene inside its frame budget.
   </p>
   <p>
-    First Class Honours in BSc (Hons) Games Development from Teesside University, winner of Best
-    Games Programming and Development Artefact at ExpoTees 2026, and currently a gameplay programmer
-    at Shiverbug Studios on <em>Out of Water</em>. Open to gameplay, systems or AI programming roles
-    from September 2026.
+    First Class Honours in BSc (Hons) Games Development from Teesside University and winner of Best
+    Games Programming and Development Artefact at ExpoTees 2026. Now studying an MA in Games Design
+    at Teesside alongside the studio role.
   </p>
   <p>
     Making games in Unity since 2018, building them consistently since 2023. Nine shipped projects,
@@ -132,11 +135,22 @@
   <h2>Experience</h2>
   <div class="entry">
     <div class="entry-head">
+      <h3>Technical Director <span class="tech">· Shiverbug Studios</span></h3>
+      <span class="date">Oct 2026 to present</span>
+    </div>
+    <ul>
+      <li>Lead the technical side of the studio and sit on its board, alongside the MA. Engineering on <em>Out of Water</em>: the character and enemy framework, level design tools, UI and performance.</li>
+      <li>Own the build (git workflow, pull request review, a tagged playtest build every fortnight), the technical plan for the vertical slice, and the studio's repositories and access.</li>
+      <li>Get artists and designers working confidently in Unity and git, so an art-only change never has to wait for a programmer.</li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
       <h3>Gameplay Programmer (Internship) <span class="tech">· Shiverbug Studios</span></h3>
       <span class="date">Jul to Sep 2026</span>
     </div>
     <ul>
-      <li>Own the character and enemy gameplay code on <em>Out of Water</em>, an original-IP 3D splitscreen platformer collectathon for two players, working in engine daily.</li>
+      <li>Hired for the character and enemy gameplay code on <em>Out of Water</em>, an original-IP two-player co-op 3D platformer collectathon; by the end of the ten weeks I was also the studio's buildmaster.</li>
       <li>Rebuilt both playable characters and the enemies from single-file controllers onto component-driven finite and hierarchical state machines, and built the co-op moveset on top.</li>
       <li>Ran the performance pass: GPU-driven rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I built for the team.</li>
       <li>Built the splitscreen plumbing (per-player device routing, cameras, character swapping) and a UI Toolkit front end on a shared token system: HUD, character select, pause, save slots and a controls tutorial.</li>
@@ -273,6 +287,12 @@
   <h2>Education</h2>
   <div class="entry">
     <div class="entry-head">
+      <h3>MA Games Design (with Advanced Practice) <span class="tech">· Teesside University · in progress</span></h3>
+      <span class="date">Sep 2026 to 2028</span>
+    </div>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
       <h3>BSc (Hons) Games Development <span class="tech">· Teesside University</span></h3>
       <span class="date">Jul 2026</span>
     </div>
@@ -303,7 +323,7 @@
 <p class="machine">
   Structured plain-text profile: <a href="https://oliverneal.dev/llms.txt">oliverneal.dev/llms.txt</a> ·
   Latest version of this CV: <a href="https://oliverneal.dev/Oliver_Neal_CV.pdf">oliverneal.dev/Oliver_Neal_CV.pdf</a> ·
-  Updated August 2026
+  Updated October 2026
 </p>
 
 </div>

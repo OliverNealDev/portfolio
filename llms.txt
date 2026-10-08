@@ -1,6 +1,6 @@
 # Oliver Neal
 
-> Gameplay programmer specialising in Unity and C#, based in Middlesbrough, North East England. Making games in Unity since 2018, building them consistently since 2023. First Class BSc (Hons) Games Development graduate from Teesside University (July 2026, 80% overall). Winner of Best Games Programming and Development Artefact at ExpoTees 2026. Currently a gameplay programmer at Shiverbug Studios, and available from September 2026.
+> Technical Director at Shiverbug Studios and games developer specialising in Unity and C#, based in Middlesbrough, North East England. Making games in Unity since 2018, building them consistently since 2023. First Class BSc (Hons) Games Development graduate from Teesside University (July 2026, 80% overall). Winner of Best Games Programming and Development Artefact at ExpoTees 2026. Now Technical Director at Shiverbug Studios, leading the technical side of Out of Water, and studying an MA in Games Design at Teesside (2026 to 2028).
 
 Strongest in the systems layer of games: component-driven state machines for players and enemy AI, simulation and tick architecture, multiplayer netcode, and the profiling and optimisation work that keeps a scene inside its frame budget. Nine shipped projects, seven built solo, most of them playable on itch.io with source on GitHub.
 
@@ -12,11 +12,12 @@ Contact: oliverjn04@gmail.com
 
 - [Home](https://oliverneal.dev/): about, current role, skills, all nine projects, education and contact
 - [CV](https://oliverneal.dev/cv.html): full CV in HTML, with a PDF download at https://oliverneal.dev/Oliver_Neal_CV.pdf
-- [Timeline](https://oliverneal.dev/timeline.html): the career and education history as one ordered list of nineteen milestones, 2018 to September 2026
+- [Timeline](https://oliverneal.dev/timeline.html): the career and education history as one ordered list of twenty-one milestones, 2018 to October 2026
 
 ## Current role
 
-- Gameplay Programmer (intern) at [Shiverbug Studios](https://shiverbugstudios.com/), 13 July to 18 September 2026, ten weeks. Working in Unity 6 on Out of Water, an original IP: a two-player splitscreen 3D platformer collectathon. Owns character and enemy gameplay code, the co-op moveset, performance work (GPU-driven rendering, quality tiers, LOD and culling, measured with a profiling tool built for the team), splitscreen device routing and cameras, a UI Toolkit front end, a decoupled FMOD audio layer, editor tooling for level designers, and water/caustic/bubble shaders in Shader Graph and custom URP HLSL.
+- Technical Director at [Shiverbug Studios](https://shiverbugstudios.com/), October 2026 to present, part-time and on the board. Leads the technical side of Out of Water, an original IP: a two-player co-op 3D platformer collectathon in Unity 6, played in local splitscreen or online. Covers engineering (the character and enemy framework, level design tools, UI and performance), the build (git workflow, pull request review, a tagged playtest build every fortnight, repositories and access), technical planning for the vertical slice, and getting the artists and designers working confidently in Unity and git.
+- Previously Gameplay Programmer (intern) at Shiverbug Studios, 13 July to 18 September 2026, ten weeks, hired for the character and enemy code and finishing as the studio's buildmaster. Built character and enemy gameplay code, the co-op moveset, performance work (GPU-driven rendering, quality tiers, LOD and culling, measured with a profiling tool built for the team), splitscreen device routing and cameras, a UI Toolkit front end, a decoupled FMOD audio layer, editor tooling for level designers, and water/caustic/bubble shaders in Shader Graph and custom URP HLSL.
 - Studio team page: https://shiverbugstudios.com/team/oliver-neal.html
 
 ## Project breakdowns
@@ -38,6 +39,7 @@ Deep technical write-ups of how each game actually works.
 
 ## Education
 
+- MA Games Design (with Advanced Practice), Teesside University. September 2026 to 2028, in progress.
 - BSc (Hons) Games Development, Teesside University. Graduated July 2026, First Class Honours, 80% overall. Final-year project 84%, artefact 90.
 - FdSc Games Technologies, Newcastle College University Centre. Graduated July 2025, 2:1 (Year 1 Distinction, Year 2 Merit).
 - BTEC Level 3 National Diploma in Creative Digital Media, Newcastle College. Distinction.
