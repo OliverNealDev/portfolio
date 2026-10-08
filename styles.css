@@ -534,16 +534,6 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   background: var(--surface);
 }
 .hero-availability strong { color: var(--text); font-weight: 600; }
-/* The same green signal as the status line at the top of the hero, so the
-   one chip that is about being open to work is the one that carries it. */
-.hero-availability li:first-child::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  flex: none;
-  border-radius: 50%;
-  background: var(--ok);
-}
 
 .hero-ctas {
   display: flex;
@@ -997,9 +987,11 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .feature-cover img {
   display: block;
   width: 100%;
-  height: clamp(200px, 27vw, 320px);
+  /* Tall enough that the seagull's head and the turtle's flippers both stay
+     in a desktop-width crop of the dock shot */
+  height: clamp(220px, 32vw, 380px);
   object-fit: cover;
-  object-position: 50% 62%; /* keep the duo on their crates in frame */
+  object-position: 50% 44%;
 }
 /* Scrim so the tag stays readable over the brightest part of the beach */
 .feature-cover::after {
@@ -1073,6 +1065,64 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   line-height: 1.4;
 }
 
+/* Role path: the current title on top with the live dot, the internship it
+   grew out of below, joined by a rail so the step up reads at a glance. */
+.role-path {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.95rem;
+  position: relative;
+}
+.role-path::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--ok), var(--border-strong));
+  opacity: 0.7;
+}
+.role-path li {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  padding-left: 1.3rem;
+}
+.role-path li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+}
+.role-path li.is-current::before {
+  background: var(--ok);
+  border-color: var(--ok);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent);
+}
+.role-path-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--text-2);
+}
+.role-path li.is-current .role-path-title { color: var(--text); font-size: 1.08rem; }
+.role-path-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
 .feature-main h3 {
   margin: 0 0 0.7rem;
   font-size: clamp(1.3rem, 2.6vw, 1.6rem);
@@ -1081,6 +1131,57 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   max-width: 62ch;
   color: var(--text-2);
   margin-bottom: 1.4rem;
+}
+
+/* What the director role covers, set apart from the build list beneath it:
+   tinted panel, four short labelled cells. */
+.remit {
+  margin: 0 0 1.75rem;
+  padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--accent-border);
+  border-left-width: 3px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+.remit-title {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.remit-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1rem 2rem;
+}
+.remit-grid li {
+  display: grid;
+  align-content: start; /* rows share a height; keep label and text together */
+  gap: 0.2rem;
+  color: var(--text-2);
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+.remit-k {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+/* Small label over the build list, in the same voice as the group heads */
+.feature-subhead {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--text);
 }
 
 /* Eight ownership lines, split into four labelled groups so the panel reads
@@ -1149,7 +1250,9 @@ main[tabindex="-1"]:focus-visible { outline: none; }
     gap: 1rem;
     align-items: center;
   }
+  .role-path { margin: 0; }
   .feature-facts {
+    grid-column: 1 / -1;
     margin: 0;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.6rem 1rem;
