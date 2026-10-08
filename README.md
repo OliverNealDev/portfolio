@@ -12,7 +12,6 @@ Static HTML, CSS and vanilla JavaScript. No framework, no build step, no depende
 |---|---|
 | `index.html` | Home: Shiverbug role, about, skills, all nine projects, education, log, contact |
 | `cv.html` / `cv-print.html` | The CV in HTML, plus a print-optimised variant behind `Oliver_Neal_CV.pdf` |
-| `out-of-water.html` | Case study: Out of Water, the game I'm Technical Director on at Shiverbug Studios |
 | `cyber-station.html` | Case study: Cyber Station, my ExpoTees 2026 award-winning final-year artefact |
 | `tile-turfer.html` | Case study: Tile Turfer |
 | `minimalists.html` | Case study: Minimalists |
