@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Out of Water · Project Breakdown · Oliver Neal</title>
+  <meta name="description" content="How Out of Water is built: a two-player co-op 3D platformer in Unity 6 at Shiverbug Studios, where Oliver Neal is Technical Director. Characters, enemies, level design tools, online co-op, replays and the build pipeline.">
+  <link rel="canonical" href="https://oliverneal.dev/out-of-water.html">
+  <meta name="author" content="Oliver Neal">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Out of Water · Project Breakdown · Oliver Neal">
+  <meta property="og:description" content="A two-player co-op 3D platformer in Unity 6 at Shiverbug Studios. What I've built on it, and how I run its technical side as Technical Director.">
+  <meta property="og:url" content="https://oliverneal.dev/out-of-water.html">
+  <meta property="og:image" content="https://oliverneal.dev/og/out-of-water.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Out of Water: the seagull carrying the turtle in a glide over a lagoon ringed by sandstone cliffs">
+  <meta property="og:site_name" content="oliverneal.dev">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Out of Water · Project Breakdown · Oliver Neal">
+  <meta name="twitter:description" content="A two-player co-op 3D platformer in Unity 6 at Shiverbug Studios. What I've built on it, and how I run its technical side as Technical Director.">
+  <meta name="twitter:image" content="https://oliverneal.dev/og/out-of-water.jpg">
+
+  <!--
+    Studio project, so the game takes "contributor" rather than "author" and
+    names the studio as its publisher. The article's author is still #person,
+    because the write-up is mine.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://oliverneal.dev/out-of-water.html#article",
+        "url": "https://oliverneal.dev/out-of-water.html",
+        "headline": "Out of Water · Project Breakdown",
+        "description": "A two-player co-op 3D platformer in Unity 6 at Shiverbug Studios. Oliver Neal's work on it: the character and enemy state machines, level design tools, online co-op, replays, performance and the build pipeline, and the Technical Director role.",
+        "image": "https://oliverneal.dev/og/out-of-water.jpg",
+        "datePublished": "2026-10-08",
+        "dateModified": "2026-10-08",
+        "inLanguage": "en-GB",
+        "author": { "@id": "https://oliverneal.dev/#person" },
+        "publisher": { "@id": "https://oliverneal.dev/#person" },
+        "isPartOf": { "@id": "https://oliverneal.dev/#website" },
+        "about": { "@id": "https://oliverneal.dev/out-of-water.html#game" },
+        "breadcrumb": { "@id": "https://oliverneal.dev/out-of-water.html#breadcrumb" },
+        "keywords": ["Unity 6", "C#", "Hierarchical state machines", "Enemy AI", "Editor tooling", "Online co-op", "Performance", "Technical direction"]
+      },
+      {
+        "@type": "VideoGame",
+        "@id": "https://oliverneal.dev/out-of-water.html#game",
+        "name": "Out of Water",
+        "description": "A two-player co-op 3D platformer collectathon about a turtle and a seagull, played in local splitscreen or online. An original IP in development at Shiverbug Studios.",
+        "url": "https://oliverneal.dev/out-of-water.html",
+        "image": "https://oliverneal.dev/og/out-of-water.jpg",
+        "contributor": { "@id": "https://oliverneal.dev/#person" },
+        "publisher": { "@type": "Organization", "name": "Shiverbug Studios", "url": "https://shiverbugstudios.com/" },
+        "genre": ["Platformer", "Co-op"],
+        "numberOfPlayers": { "@type": "QuantitativeValue", "value": 2 },
+        "gamePlatform": "PC",
+        "applicationCategory": "GameApplication",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://oliverneal.dev/out-of-water.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://oliverneal.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Shiverbug Studios", "item": "https://oliverneal.dev/#shiverbug" },
+          { "@type": "ListItem", "position": 3, "name": "Out of Water" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = t;
+      document.documentElement.classList.add("js");
+      if (t === "light") {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", "#fafafa");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2026-10-08-2">
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">oliverneal<span>.dev</span></a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#shiverbug">Shiverbug</a>
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#skills">Skills</a>
+        <a class="nav-link" href="index.html#projects">Projects</a>
+        <a class="nav-link" href="index.html#education">Education</a>
+        <a class="nav-link" href="index.html#log">Log</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+        <a class="nav-link nav-cv" href="cv.html">CV</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle colour theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ============ CASE-STUDY HERO ============ -->
+    <section class="cs-hero">
+      <div class="container">
+        <a class="crumb" href="index.html#shiverbug">
+          <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+          Back to Shiverbug
+        </a>
+
+        <p class="kicker">Case study · Studio work</p>
+        <h1>Out of Water</h1>
+        <p class="cs-meta">Jul 2026 to now · Unity 6 · C# · Shiverbug Studios</p>
+        <p class="cs-lead">
+          A two-player co-op 3D platformer collectathon about a turtle and a
+          seagull, played side by side in splitscreen or online: Shiverbug
+          Studios' original IP. I joined in July as a gameplay programming
+          intern, hired for the character and enemy code, and in October joined
+          the board as Technical Director. This page covers what I've built on
+          the game and how I run its technical side.
+        </p>
+
+        <div class="cs-hero-media reveal">
+          <img src="media/out-of-water/duo-glide.webp"
+               alt="Out of Water in game screenshot: the seagull carrying the turtle in a glide past a giant tree, over a lagoon ringed by sandstone cliffs"
+               width="1600" height="900">
+        </div>
+
+        <ul class="facts">
+          <li><span class="fact-k">Role</span><span class="fact-v">Technical Director</span></li>
+          <li><span class="fact-k">Before</span><span class="fact-v">Gameplay Programmer Intern</span></li>
+          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · C#</span></li>
+          <li><span class="fact-k">Players</span><span class="fact-v">Two, local or online</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ THE ROLE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">The role</p>
+          <h2>Giving a small team the tools to do their best work</h2>
+          <p>
+            Out of Water is made by a small team of artists and designers, and
+            most of what they make only reaches the game through code and a
+            build. My job is to make that path short and dependable, so the
+            people with the ideas spend their time on the game rather than on
+            waiting for me.
+          </p>
+          <ul>
+            <li><strong>Engineering</strong> on the game: the character and enemy framework, the tools the level designers build with, UI and performance.</li>
+            <li><strong>The build</strong>: the git workflow, pull request review, a tagged playtest build every fortnight, and the studio's repositories and access.</li>
+            <li><strong>Planning</strong>: the technical plan for the vertical slice we're building now.</li>
+            <li><strong>The team</strong>: getting artists and designers working confidently in Unity and git, so an art-only change never has to wait for a programmer.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CHARACTERS & ENEMIES ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Characters &amp; enemies</p>
+          <h2>One framework under every creature</h2>
+          <p>
+            Each hero runs on a <strong>hierarchical state machine</strong> that
+            lives on its prefab, with its behaviour split across small sibling
+            components and its feel tuned in ScriptableObject assets. The turtle
+            and the seagull are built the same way, on the same engine and the
+            same update pipeline, so almost everything is shared rather than
+            copied. Both were rebuilt onto it from single file controllers, and
+            the co-op moves the pair share, like riding on the turtle's shell and
+            gliding together, sit on top.
+          </p>
+          <p>
+            Enemies get a smaller <strong>finite state machine</strong> assembled
+            from shared pieces: a runner and a brain, components for movement,
+            sensing, combat, health and reactions, and generic idle, patrol,
+            chase and attack states. A standard melee enemy is configuration
+            rather than code. A custom brain is only written when the decision
+            graph is genuinely different, like the medium crab's spin and dizzy
+            loop.
+          </p>
+          <p>
+            Underneath co-op sits the <strong>splitscreen plumbing</strong>: per
+            player device routing, a camera each, and a platformer camera rig
+            that follows the floor rather than the jump, so a hop doesn't drag
+            the whole view up with it.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="media/out-of-water/crab-scuffle.webp"
+               alt="Out of Water in game screenshot: the turtle and seagull surrounded by a pack of purple-shelled crabs on a sandy beach"
+               width="1600" height="900" loading="lazy">
+          <figcaption>A crab pack on the lagoon beach. Every crab runs on the shared enemy state machine.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ TOOLS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Tools for the team</p>
+          <h2>Level tools that know the jump maths</h2>
+          <p>
+            The designers build levels from a <strong>blockout toolkit</strong>
+            I wrote for them: signals, buttons, pressure plates, rings, movers,
+            water currents and cages; spline
+            tools that lay chains, plank walkways and ring courses along a curve;
+            a blockout terrain that shapes itself to the level's floors and
+            paints itself by rule; enemy clusters dropped in formation; and a
+            click to place prop palette.
+          </p>
+          <p>
+            The <strong>Reachability Prober</strong> answers the question every
+            platformer level raises: can they get there? It flies the game's own
+            movement maths, with the open scene's tuning, to show where the
+            turtle, the seagull or the pair can reach, which gaps they can clear
+            and the fastest route between two points, without touching the
+            scene.
+          </p>
+          <p>
+            Before a level goes into a pull request, <strong>Level Health</strong>
+            checks it for the things that break a level quietly: switches wired
+            to nothing, systems placed twice, enemies standing off the navmesh.
+            After a playtest, a <strong>log viewer and heatmap</strong> read
+            every tester's session back onto the level: where they went, where
+            they died, which moves they used and what the frame rate did.
+          </p>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="media/out-of-water/ruins-ride.webp"
+               alt="Out of Water in game screenshot: the seagull riding on the turtle's shell across the sand in front of ancient stone columns and arches"
+               width="1600" height="900" loading="lazy">
+          <figcaption>Riding through the ruins.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ SYSTEMS ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Systems</p>
+          <h2>The game around them</h2>
+          <ul>
+            <li><strong>Online co-op</strong> on two PCs, joined from the game's menus, a Steam invite or a code. The host's game runs the enemies for both, and the level, the story and the save stay in step.</li>
+            <li><strong>Replays</strong> of every session, played back inside the real level from the main menu. A replay is built as an online guest whose host is a file, so it reuses the co-op code rather than duplicating it.</li>
+            <li><strong>Elder Trials</strong>: timed challenge rooms where the best run so far races beside the pair as a ghost, with medals that unlock new moves.</li>
+            <li>A <strong>dialogue and cutscene system</strong> with one component NPC setup.</li>
+            <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots, a controls tutorial, and accessibility options like a partner marker and an on-screen input overlay.</li>
+            <li><strong>Water</strong> in Shader Graph and custom URP HLSL: caustics, underwater fog, and currents and rafts the characters can ride.</li>
+          </ul>
+        </div>
+        <figure class="media-figure reveal">
+          <img src="media/out-of-water/dock-duo.webp"
+               alt="Out of Water in game screenshot: the seagull perched on the turtle's shell on a wooden dock, with a sandy beach, palm trees, ruins and turquoise water behind them"
+               width="1600" height="900" loading="lazy">
+          <figcaption>The pair on the dock, above the lagoon's water.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ BUILD & PERFORMANCE ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Build &amp; performance</p>
+          <h2>A build the whole team can trust</h2>
+          <p>
+            I set up the <strong>git workflow</strong> the studio follows, with
+            Git LFS for the art. Changes go through pull request review before
+            they land, and a <strong>tagged playtest build</strong> goes out every fortnight, so
+            there is always a known good version of the game to play and to
+            show.
+          </p>
+          <p>
+            Performance is measured, not guessed: <strong>GPU driven
+            rendering</strong>, quality tiers, LOD and culling passes, each
+            checked branch to branch with a profiling tool I built for the
+            team. One clean up in August took the project from
+            <strong>10.1 GB to 3.5 GB</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TEAM ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">The team</p>
+          <h2>Their art, our game</h2>
+          <p>
+            Every screenshot on this page is the work of Shiverbug's artists and
+            designers: the characters, the island, the lighting. My side is the
+            technology underneath, and the way the team builds on it. You can
+            meet them at
+            <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">shiverbugstudios.com</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT ============ -->
+    <nav class="next-nav container" aria-label="More case studies">
+      <a class="prev" href="index.html#shiverbug">
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Back to the portfolio
+      </a>
+      <a href="cyber-station.html">
+        Next: Cyber Station
+        <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Oliver Neal · <a href="privacy.html">Privacy</a></span>
+        <span><a href="index.html">oliverneal.dev</a> · <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js?v=2026-10-08-2"></script>
+</body>
+</html>
