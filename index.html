@@ -161,16 +161,17 @@
         "name": "Project breakdowns by Oliver Neal",
         "description": "Technical write-ups of how each game works.",
         "itemListOrder": "https://schema.org/ItemListOrderDescending",
-        "numberOfItems": 8,
+        "numberOfItems": 9,
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "url": "https://oliverneal.dev/cyber-station.html", "name": "Cyber Station" },
-          { "@type": "ListItem", "position": 2, "url": "https://oliverneal.dev/space-bar.html", "name": "Space Bar Simulator" },
-          { "@type": "ListItem", "position": 3, "url": "https://oliverneal.dev/tile-turfer.html", "name": "Tile Turfer" },
-          { "@type": "ListItem", "position": 4, "url": "https://oliverneal.dev/minimalists.html", "name": "Minimalists" },
-          { "@type": "ListItem", "position": 5, "url": "https://oliverneal.dev/wanted.html", "name": "Wanted" },
-          { "@type": "ListItem", "position": 6, "url": "https://oliverneal.dev/unicellular.html", "name": "Unicellular" },
-          { "@type": "ListItem", "position": 7, "url": "https://oliverneal.dev/tank-game.html", "name": "3D Netcode Tank Game" },
-          { "@type": "ListItem", "position": 8, "url": "https://oliverneal.dev/pinnable.html", "name": "Pinnable" }
+          { "@type": "ListItem", "position": 1, "url": "https://oliverneal.dev/out-of-water.html", "name": "Out of Water" },
+          { "@type": "ListItem", "position": 2, "url": "https://oliverneal.dev/cyber-station.html", "name": "Cyber Station" },
+          { "@type": "ListItem", "position": 3, "url": "https://oliverneal.dev/space-bar.html", "name": "Space Bar Simulator" },
+          { "@type": "ListItem", "position": 4, "url": "https://oliverneal.dev/tile-turfer.html", "name": "Tile Turfer" },
+          { "@type": "ListItem", "position": 5, "url": "https://oliverneal.dev/minimalists.html", "name": "Minimalists" },
+          { "@type": "ListItem", "position": 6, "url": "https://oliverneal.dev/wanted.html", "name": "Wanted" },
+          { "@type": "ListItem", "position": 7, "url": "https://oliverneal.dev/unicellular.html", "name": "Unicellular" },
+          { "@type": "ListItem", "position": 8, "url": "https://oliverneal.dev/tank-game.html", "name": "3D Netcode Tank Game" },
+          { "@type": "ListItem", "position": 9, "url": "https://oliverneal.dev/pinnable.html", "name": "Pinnable" }
         ]
       }
     ]
@@ -200,7 +201,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-08">
+  <link rel="stylesheet" href="styles.css?v=2026-10-08-2">
 </head>
 <body>
 
@@ -342,117 +343,158 @@
             I lead the technical side of
             <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a>,
             an indie studio in Middlesbrough, and sit on its board. I joined in
-            July as a gameplay programming intern, hired for the character and
-            enemy code. Over the ten weeks I also got the chance to look after
-            the build, and in October I stepped up to Technical Director.
+            July as a gameplay programming intern and stepped up in October.
           </p>
         </header>
 
-        <article class="feature reveal">
-          <div class="feature-cover">
-            <img src="media/out-of-water/dock-duo.webp"
-                 alt="Out of Water in game screenshot: the seagull perched on the turtle's shell on a wooden dock, with a sandy beach, palm trees, ruins and turquoise water behind them"
-                 data-caption="Out of Water, in development at Shiverbug Studios"
+        <article class="oow reveal">
+          <!-- The game first: one big shot with the title over it, so the
+               section reads as "this is what I'm making" before it reads as
+               a list of what I did. -->
+          <div class="oow-hero">
+            <img src="media/out-of-water/duo-glide.webp"
+                 alt="Out of Water in game screenshot: the seagull carrying the turtle in a glide past a giant tree, over a lagoon ringed by sandstone cliffs"
+                 data-caption="Out of Water · the duo glide over the lagoon"
                  width="1600" height="900">
-            <p class="feature-cover-tag">
-              <span class="now-dot" aria-hidden="true"></span>
-              Out of Water · in development
-            </p>
+            <div class="oow-hero-text">
+              <p class="oow-status">
+                <span class="now-dot" aria-hidden="true"></span>
+                In development · Unity 6
+              </p>
+              <h3 class="oow-title">Out of Water</h3>
+              <p class="oow-pitch">
+                A two-player co-op 3D platformer about a turtle and a seagull,
+                played side by side in splitscreen or online.
+              </p>
+            </div>
           </div>
 
-          <!-- Studio side rail, then the write-up beside it -->
-          <div class="feature-body">
-            <div class="feature-side">
-              <!-- Same logo, two crops: black background for dark theme, light-blue for light -->
-              <a class="feature-logo-link" href="https://shiverbugstudios.com" target="_blank" rel="noopener" aria-label="Shiverbug Studios website">
-                <img class="feature-logo dark" src="media/logos/shiverbug-dark.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
-                <img class="feature-logo light" src="media/logos/shiverbug-light.webp" alt="Shiverbug Studios logo" width="264" height="262" loading="lazy">
-              </a>
+          <!-- Studio and the step up, as one strip under the shot -->
+          <div class="oow-role">
+            <a class="oow-studio" href="https://shiverbugstudios.com" target="_blank" rel="noopener">
+              <img class="oow-studio-logo dark" src="media/logos/shiverbug-dark.webp" alt="" width="264" height="262" loading="lazy">
+              <img class="oow-studio-logo light" src="media/logos/shiverbug-light.webp" alt="" width="264" height="262" loading="lazy">
+              <span>
+                <strong>Shiverbug Studios</strong>
+                <span class="oow-studio-sub">Middlesbrough, UK</span>
+              </span>
+            </a>
+            <ol class="role-path" aria-label="My roles at Shiverbug Studios, newest first">
+              <li class="is-current">
+                <span class="role-path-title">Technical Director</span>
+                <span class="role-path-meta">Oct 2026 to now · board</span>
+              </li>
+              <li>
+                <span class="role-path-title">Gameplay Programmer Intern</span>
+                <span class="role-path-meta">Jul to Sep 2026 · 10 weeks</span>
+              </li>
+            </ol>
+          </div>
 
-              <!-- The step up, drawn as a path: the role now on top with the
-                   live dot, the internship it grew out of underneath. -->
-              <ol class="role-path" aria-label="Roles at Shiverbug Studios, newest first">
-                <li class="is-current">
-                  <span class="role-path-title">Technical Director</span>
-                  <span class="role-path-meta">Oct 2026 to now · board</span>
-                </li>
-                <li>
-                  <span class="role-path-title">Gameplay Programmer Intern</span>
-                  <span class="role-path-meta">Jul to Sep 2026 · 10 weeks</span>
-                </li>
-              </ol>
+          <ul class="oow-do">
+            <li>
+              <span class="oow-do-k">Lead the tech</span>
+              Engineering on the game, and the technical plan for the vertical
+              slice we're building now.
+            </li>
+            <li>
+              <span class="oow-do-k">Run the pipeline</span>
+              The git workflow, pull request review, and a tagged playtest build
+              every fortnight.
+            </li>
+            <li>
+              <span class="oow-do-k">Unblock the team</span>
+              Artists and designers working confidently in Unity and git, so an
+              art-only change never has to wait for me.
+            </li>
+          </ul>
 
-              <dl class="feature-facts">
-                <div><dt>Studio</dt><dd><a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a></dd></div>
-                <div><dt>Engine</dt><dd>Unity 6 · C#</dd></div>
-                <div><dt>Based</dt><dd>Middlesbrough, UK</dd></div>
-              </dl>
-            </div>
-
-            <div class="feature-main">
-              <h3>Out of Water, an original IP</h3>
-              <p class="feature-intro">
-                A two-player co-op 3D platformer collectathon starring a turtle
-                and a seagull, played in local splitscreen or online. It's made
-                by a brilliant small team of artists and designers, and my job is
-                to give them the tools and the pipeline to do their best work.
-              </p>
-
-              <section class="remit" aria-labelledby="remit-title">
-                <h4 class="remit-title" id="remit-title">As Technical Director</h4>
-                <ul class="remit-grid">
-                  <li><span class="remit-k">Engineering</span>The character and enemy framework, the tools the level designers build with, UI and performance</li>
-                  <li><span class="remit-k">The build</span>The git workflow, pull request review, a tagged playtest build every fortnight, and the studio's repositories and access</li>
-                  <li><span class="remit-k">Planning</span>The technical plan for the vertical slice we're building now</li>
-                  <li><span class="remit-k">The team</span>Getting artists and designers working confidently in Unity and git, so an art-only change never has to wait for me</li>
-                </ul>
-              </section>
-
-              <p class="feature-subhead">What I've built on it</p>
-              <div class="feature-groups">
-                <section class="feature-group">
-                  <h4>Characters &amp; enemies</h4>
-                  <ul class="feature-list">
-                    <li><strong>Component driven state machines</strong> for both playable characters and the enemy framework every enemy runs on, from the crabs to a shark that swims, rebuilt from single file controllers</li>
-                    <li>The <strong>splitscreen plumbing</strong> underneath co-op: per player device routing, cameras and character swapping. Then a platformer camera rig that follows the floor, not the jump</li>
-                  </ul>
-                </section>
-
-                <section class="feature-group">
-                  <h4>Tools for the team</h4>
-                  <ul class="feature-list">
-                    <li><strong>Level design tools</strong> the designers build puzzles from: blockout interactables, spline walkways and ring courses, a click to place prop palette, and a prober that runs the characters' own jump maths to show what they can reach</li>
-                    <li>A <strong>dialogue and cutscene system</strong> with one component NPC setup, and <strong>Elder Trials</strong>: timed challenge rooms with medals that hand out new moves as rewards</li>
-                  </ul>
-                </section>
-
-                <section class="feature-group">
-                  <h4>Build &amp; performance</h4>
-                  <ul class="feature-list">
-                    <li><strong>Buildmaster</strong> for the studio. I set up the git workflow the team follows, reviewed and merged their pull requests, and tagged a playtest build every fortnight</li>
-                    <li><strong>GPU driven rendering</strong>, quality tiers, LOD and culling passes, measured branch to branch with a profiling tool I built. One August clean up took the project from 10.1 GB to 3.5 GB</li>
-                  </ul>
-                </section>
-
-                <section class="feature-group">
-                  <h4>Presentation &amp; audio</h4>
-                  <ul class="feature-list">
-                    <li>A <strong>UI Toolkit front end</strong> on a shared token system: HUD, character select, pause, save slots, a controls tutorial, and accessibility options like a partner marker and an on-screen input overlay</li>
-                    <li><strong>Water</strong> in Shader Graph and custom URP HLSL: caustics, underwater fog, and currents and rafts the characters can ride</li>
-                  </ul>
-                </section>
+          <div class="oow-cards">
+            <article class="oow-card">
+              <div class="oow-card-media">
+                <img src="media/out-of-water/crab-scuffle.webp"
+                     alt="Out of Water in game screenshot: the turtle and seagull surrounded by a pack of purple-shelled crabs on a sandy beach"
+                     data-caption="Out of Water · a crab pack on the lagoon beach"
+                     width="1600" height="900" loading="lazy">
               </div>
-              <p class="feature-note">
-                Outside the game, I built the studio's website,
-                <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">shiverbugstudios.com</a>,
-                and an internal wiki for the team that turns the design
-                documents into a searchable site, with art renders and item
-                pages pulled straight from the Unity project.
-              </p>
-              <ul class="tags">
-                <li>Unity 6</li><li>C#</li><li>FSM / HSM</li><li>Editor tooling</li><li>Performance</li><li>Git LFS</li><li>UI Toolkit</li><li>Cinemachine</li><li>FMOD</li><li>Shader Graph</li><li>HLSL</li>
-              </ul>
-            </div>
+              <div class="oow-card-body">
+                <p class="oow-card-k">Characters &amp; enemies</p>
+                <h4>One framework under every creature</h4>
+                <p>
+                  Both heroes and every enemy run on component driven state
+                  machines, rebuilt from single file controllers. The co-op
+                  moves the pair share sit on top.
+                </p>
+              </div>
+            </article>
+
+            <article class="oow-card">
+              <div class="oow-card-media">
+                <img src="media/out-of-water/ruins-ride.webp"
+                     alt="Out of Water in game screenshot: the seagull riding on the turtle's shell across the sand in front of ancient stone columns and arches"
+                     data-caption="Out of Water · riding through the ruins"
+                     width="1600" height="900" loading="lazy">
+              </div>
+              <div class="oow-card-body">
+                <p class="oow-card-k">Tools for the team</p>
+                <h4>Level tools that know the jump maths</h4>
+                <p>
+                  Blockout interactables, spline walkways, a prop palette, and a
+                  prober that runs the characters' own jump maths to show the
+                  designers what they can reach.
+                </p>
+              </div>
+            </article>
+
+            <article class="oow-card">
+              <div class="oow-card-media">
+                <img src="media/out-of-water/dock-duo.webp"
+                     alt="Out of Water in game screenshot: the seagull perched on the turtle's shell on a wooden dock, with a sandy beach, palm trees, ruins and turquoise water behind them"
+                     data-caption="Out of Water · the pair on the dock"
+                     width="1600" height="900" loading="lazy">
+              </div>
+              <div class="oow-card-body">
+                <p class="oow-card-k">Performance</p>
+                <h4>Measured branch to branch</h4>
+                <p class="oow-stat"><span>10.1 GB</span><svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg><span>3.5 GB</span></p>
+                <p>
+                  GPU driven rendering, quality tiers, LOD and culling, checked
+                  with a profiling tool I built. One clean up cut the project to
+                  a third of its size.
+                </p>
+              </div>
+            </article>
+
+            <article class="oow-card oow-card-flow">
+              <!-- No screenshot fits a git workflow, so the card draws it -->
+              <ol class="oow-flow" aria-label="How a change reaches a playtest build">
+                <li>Branch</li>
+                <li>Review</li>
+                <li>Merge</li>
+                <li class="is-build">Playtest build <span class="oow-flow-note">every fortnight</span></li>
+              </ol>
+              <div class="oow-card-body">
+                <p class="oow-card-k">The pipeline</p>
+                <h4>A build the whole team can trust</h4>
+                <p>
+                  I set up the git workflow everyone follows. Changes are
+                  reviewed before they land, and a tagged playtest build goes
+                  out every fortnight.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="oow-foot">
+            <p class="oow-team">
+              Out of Water is made by a brilliant small team of artists and
+              designers. Every shot here is their art; my side is the tech
+              underneath it.
+            </p>
+            <a class="btn btn-primary" href="out-of-water.html">
+              The full breakdown
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
           </div>
         </article>
       </div>
@@ -1448,6 +1490,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-10-08"></script>
+  <script src="main.js?v=2026-10-08-2"></script>
 </body>
 </html>

@@ -437,11 +437,11 @@
     });
   }
 
-  // Case-study figures & feature covers share one navigable viewer;
+  // Case-study figures & the Out of Water shots share one navigable viewer;
   // the hero portrait is its own single-image viewer (opens data-full).
   // The LinkedIn post images are not in here: their cards open the post
   // viewer below, which shows every image at full width in context.
-  initLightbox(".media-figure img, .gallery img, .feature-cover img, .award-shot img");
+  initLightbox(".media-figure img, .gallery img, .oow-hero img, .oow-card-media img, .award-shot img");
   initLightbox(".hero-portrait img");
 
   /* 4d. LINKEDIN POST VIEWER ------------------------------------------------
