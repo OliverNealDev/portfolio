@@ -986,15 +986,15 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   overflow: hidden;
 }
 
-/* Hero shot. The pair sit left of centre and in the upper half of the
-   frame, so the crop holds them and the title takes the lower left. */
+/* Hero shot. The pair sit in the middle of the frame, so a crop a little
+   above centre holds them and leaves the dock under the title. */
 .oow-hero { position: relative; }
 .oow-hero img {
   display: block;
   width: 100%;
   height: clamp(300px, 44vw, 520px);
   object-fit: cover;
-  object-position: 40% 40%;
+  object-position: 50% 40%;
 }
 .oow-hero::after {
   content: "";
@@ -1234,6 +1234,33 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .oow-stat span:first-child { color: var(--text-3); text-decoration: line-through; text-decoration-thickness: 2px; }
 .oow-stat .icon { width: 1.1rem; height: 1.1rem; color: var(--accent); }
 
+/* Stand-in for a screenshot the studio hasn't cleared yet: the same slot,
+   so the cards keep their rhythm, and plainly marked as to come. */
+.oow-placeholder {
+  aspect-ratio: 16 / 8;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 23px, color-mix(in srgb, var(--border) 60%, transparent) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, color-mix(in srgb, var(--border) 60%, transparent) 23px 24px),
+    var(--surface);
+}
+.oow-placeholder .icon { width: 1.9rem; height: 1.9rem; }
+/* On a case-study page it stands in for a full-width figure, so shallower */
+.oow-placeholder.is-wide {
+  aspect-ratio: 16 / 5;
+  margin-top: 1.75rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+}
+
 /* The pipeline card draws its flow where the others have a screenshot,
    at the same 16:8 so the row lines up: four stops on one rail, the build
    at the end lit in the accent. */
@@ -1327,7 +1354,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   /* The two roles stack here, so the rail between them would point at nothing */
   .role-path { flex-direction: column; }
   .role-path li + li::after { display: none; }
-  .oow-hero img { height: 340px; object-position: 30% 35%; }
+  .oow-hero img { height: 340px; object-position: 50% 35%; }
+  .oow-placeholder.is-wide { aspect-ratio: 16 / 8; }
   .oow-flow { aspect-ratio: auto; min-height: 9.5rem; }
 }
 
