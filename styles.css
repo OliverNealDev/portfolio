@@ -976,8 +976,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 /* --------------------------------------------------------------------------
    8. OUT OF WATER — the Shiverbug section on the home page
    Game first (one big shot with the title over it), then the studio and the
-   step up, three lines on the job, and four picture cards. The detail lives
-   on out-of-water.html, so this stays short enough to read in passing.
+   step up, three lines on the job, and four picture cards, short enough to
+   read in passing.
    -------------------------------------------------------------------------- */
 .oow {
   border: 1px solid var(--border);
