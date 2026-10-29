@@ -200,7 +200,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-08-3">
+  <link rel="stylesheet" href="styles.css?v=2026-10-29">
 </head>
 <body>
 
@@ -216,7 +216,6 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
     <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></g></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></g></symbol>
-    <symbol id="i-image" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m21 16-5-5-8.5 8.5"/></g></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
     <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H4v1.5A3.5 3.5 0 0 0 7.5 10"/><path d="M17 5h3v1.5A3.5 3.5 0 0 1 16.5 10"/><path d="M12 14v4"/><path d="M8 18h8v2H8z"/></g></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></g></symbol>
@@ -351,8 +350,9 @@
           <!-- The game first: one big shot with the title over it, so the
                section reads as "this is what I'm making" before it reads as
                a list of what I did. Studio screenshots need the studio's OK,
-               and only this one has it so far; the cards hold placeholders
-               until the rest are cleared. -->
+               and only this one has it so far, so the cards below are text.
+               A cleared still can go in a card as
+               <div class="oow-card-media"><img ...></div> above its body. -->
           <div class="oow-hero">
             <img src="media/out-of-water/dock-duo.webp"
                  alt="Out of Water in game screenshot: the seagull perched on the turtle's shell on a wooden dock, with a sandy beach, palm trees, ruins and turquoise water behind them"
@@ -413,10 +413,6 @@
 
           <div class="oow-cards">
             <article class="oow-card">
-              <div class="oow-placeholder" role="img" aria-label="Screenshot to come">
-                  <svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>
-                  <span>Screenshot to come</span>
-                </div>
               <div class="oow-card-body">
                 <p class="oow-card-k">Characters &amp; enemies</p>
                 <h4>One framework under every creature</h4>
@@ -429,10 +425,6 @@
             </article>
 
             <article class="oow-card">
-              <div class="oow-placeholder" role="img" aria-label="Screenshot to come">
-                  <svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>
-                  <span>Screenshot to come</span>
-                </div>
               <div class="oow-card-body">
                 <p class="oow-card-k">Tools for the team</p>
                 <h4>Level tools that know the jump maths</h4>
@@ -445,10 +437,6 @@
             </article>
 
             <article class="oow-card">
-              <div class="oow-placeholder" role="img" aria-label="Screenshot to come">
-                  <svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>
-                  <span>Screenshot to come</span>
-                </div>
               <div class="oow-card-body">
                 <p class="oow-card-k">Performance</p>
                 <h4>Measured branch to branch</h4>
@@ -461,17 +449,17 @@
               </div>
             </article>
 
-            <article class="oow-card oow-card-flow">
-              <!-- No screenshot fits a git workflow, so the card draws it -->
-              <ol class="oow-flow" aria-label="How a change reaches a playtest build">
-                <li>Branch</li>
-                <li>Review</li>
-                <li>Merge</li>
-                <li class="is-build">Playtest build <span class="oow-flow-note">every fortnight</span></li>
-              </ol>
+            <article class="oow-card">
               <div class="oow-card-body">
                 <p class="oow-card-k">The pipeline</p>
                 <h4>A build the whole team can trust</h4>
+                <!-- Drawn where the performance card has its number -->
+                <ol class="oow-flow" aria-label="How a change reaches a playtest build">
+                  <li>Branch</li>
+                  <li>Review</li>
+                  <li>Merge</li>
+                  <li class="is-build">Playtest build</li>
+                </ol>
                 <p>
                   I set up the git workflow everyone follows. Changes are
                   reviewed before they land, and a tagged playtest build goes
@@ -1482,6 +1470,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-10-08-3"></script>
+  <script src="main.js?v=2026-10-29"></script>
 </body>
 </html>

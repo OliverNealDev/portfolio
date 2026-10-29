@@ -976,7 +976,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 /* --------------------------------------------------------------------------
    8. OUT OF WATER — the Shiverbug section on the home page
    Game first (one big shot with the title over it), then the studio and the
-   step up, three lines on the job, and four picture cards, short enough to
+   step up, three lines on the job, and four short cards, quick enough to
    read in passing.
    -------------------------------------------------------------------------- */
 .oow {
@@ -1169,7 +1169,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   color: var(--text);
 }
 
-/* Four picture cards, two by two */
+/* Four cards, two by two. Text only until more stills are cleared by the
+   studio; .oow-card-media is ready for one above a card's body. */
 .oow-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1234,101 +1235,58 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .oow-stat span:first-child { color: var(--text-3); text-decoration: line-through; text-decoration-thickness: 2px; }
 .oow-stat .icon { width: 1.1rem; height: 1.1rem; color: var(--accent); }
 
-/* Stand-in for a screenshot the studio hasn't cleared yet: the same slot,
-   so the cards keep their rhythm, and plainly marked as to come. */
-.oow-placeholder {
-  aspect-ratio: 16 / 8;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 0.55rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  background:
-    repeating-linear-gradient(0deg, transparent 0 23px, color-mix(in srgb, var(--border) 60%, transparent) 23px 24px),
-    repeating-linear-gradient(90deg, transparent 0 23px, color-mix(in srgb, var(--border) 60%, transparent) 23px 24px),
-    var(--surface);
-}
-.oow-placeholder .icon { width: 1.9rem; height: 1.9rem; }
-/* On a case-study page it stands in for a full-width figure, so shallower */
-.oow-placeholder.is-wide {
-  aspect-ratio: 16 / 5;
-  margin-top: 1.75rem;
-  border: 1px dashed var(--border-strong);
-  border-radius: 4px;
-}
-
-/* The pipeline card draws its flow where the others have a screenshot,
-   at the same 16:8 so the row lines up: four stops on one rail, the build
-   at the end lit in the accent. */
+/* The pipeline card's answer to that number: the route a change takes,
+   as stops on a short rail, the playtest build at the end lit in the
+   accent. Wraps rather than squeezes on a phone. */
 .oow-flow {
   list-style: none;
-  margin: 0;
-  padding: 1.25rem clamp(0.75rem, 3vw, 2rem);
-  aspect-ratio: 16 / 8;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-content: center;
-  background:
-    radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%),
-    repeating-linear-gradient(0deg, transparent 0 23px, color-mix(in srgb, var(--border) 60%, transparent) 23px 24px),
-    repeating-linear-gradient(90deg, transparent 0 23px, color-mix(in srgb, var(--border) 60%, transparent) 23px 24px),
-    var(--surface);
-  counter-reset: flow;
+  margin: 0.15rem 0 0.7rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.3rem;
 }
 .oow-flow li {
   position: relative;
-  display: grid;
-  justify-items: center;
-  align-content: start;
-  gap: 0.55rem;
-  text-align: center;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--surface);
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 500;
   line-height: 1.3;
+  letter-spacing: 0.03em;
   color: var(--text);
 }
-.oow-flow li::before {
-  counter-increment: flow;
-  content: counter(flow);
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 50%;
-  border: 2px solid var(--border-strong);
-  background: var(--surface);
-  font-size: 0.85rem;
-  color: var(--text-2);
-}
-/* Rail from this stop's circle to the next one's */
+/* Rail from this stop to the next */
 .oow-flow li:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: calc(1.2rem - 1px);
-  left: calc(50% + 1.2rem);
-  width: calc(100% - 2.4rem);
+  top: calc(50% - 1px);
+  left: calc(100% + 1px);
+  width: 1.3rem;
   height: 2px;
   background: linear-gradient(to right, var(--border-strong), var(--accent-border));
 }
-.oow-flow li.is-build::before {
+.oow-flow li.is-build {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--accent-contrast);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 20%, transparent);
 }
-.oow-flow-note {
-  margin-top: -0.3rem;
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
+/* The row needs about 24rem. Narrower than that (phones, and the two-up
+   grid just above the breakpoint) it folds into two by two, and the rail
+   off the end of the first line goes, so no rail points at nothing. */
+.oow-card-body { container-type: inline-size; }
+@container (max-width: 24.5rem) {
+  .oow-flow {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+  }
+  .oow-flow li { text-align: center; }
+  .oow-flow li:nth-child(2)::after { display: none; }
 }
 
 .oow-foot {
@@ -1355,8 +1313,6 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   .role-path { flex-direction: column; }
   .role-path li + li::after { display: none; }
   .oow-hero img { height: 340px; object-position: 50% 35%; }
-  .oow-placeholder.is-wide { aspect-ratio: 16 / 8; }
-  .oow-flow { aspect-ratio: auto; min-height: 9.5rem; }
 }
 
 /* --------------------------------------------------------------------------
