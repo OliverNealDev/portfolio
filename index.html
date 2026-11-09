@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Oliver Neal · Technical Director, Shiverbug Studios · Unity (C#)</title>
-  <meta name="description" content="Portfolio of Oliver Neal, Technical Director at Shiverbug Studios, leading the technical side of Out of Water. Unity (C#) systems programmer and ExpoTees 2026 award winner. Browser-playable games with technical breakdowns.">
+  <meta name="description" content="Oliver Neal, Technical Director at Shiverbug Studios, leading the technical side of Out of Water. Unity (C#) systems programmer and ExpoTees 2026 award winner.">
   <link rel="canonical" href="https://oliverneal.dev/">
   <meta name="author" content="Oliver Neal">
   <!-- max-image-preview:large opts the project screenshots into full-size
@@ -122,7 +122,7 @@
           {
             "@type": "EducationalOccupationalCredential",
             "credentialCategory": "Diploma",
-            "name": "BTEC Level 3 National Diploma in Creative Digital Media, Distinction",
+            "name": "BTEC Level 3 National Foundation Diploma in Creative Digital Media Production, Distinction",
             "educationalLevel": "Level 3",
             "recognizedBy": { "@type": "EducationalOrganization", "name": "Newcastle College" }
           }
@@ -200,7 +200,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-29">
+  <link rel="stylesheet" href="styles.css?v=2026-11-09">
 </head>
 <body>
 
@@ -341,8 +341,9 @@
           <p class="section-lead">
             I lead the technical side of
             <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a>,
-            an indie studio in Middlesbrough, and sit on its board. I joined in
-            July as a gameplay programming intern and stepped up in October.
+            an indie studio of twelve in Middlesbrough, and sit on its board. I
+            joined in July as a gameplay programming intern and stepped up in
+            October, part-time alongside my MA.
           </p>
         </header>
 
@@ -384,7 +385,7 @@
             <ol class="role-path" aria-label="My roles at Shiverbug Studios, newest first">
               <li class="is-current">
                 <span class="role-path-title">Technical Director</span>
-                <span class="role-path-meta">Oct 2026 to now · board</span>
+                <span class="role-path-meta">Oct 2026 to now · board · part-time</span>
               </li>
               <li>
                 <span class="role-path-title">Gameplay Programmer Intern</span>
@@ -426,6 +427,19 @@
 
             <article class="oow-card">
               <div class="oow-card-body">
+                <p class="oow-card-k">Online co-op</p>
+                <h4>The same pair, on two machines</h4>
+                <p>
+                  Online play built on the same characters as splitscreen. Each
+                  player's machine owns their own character and the host owns
+                  the world, and it is tested with two instances under
+                  simulated lag before it reaches a playtest.
+                </p>
+              </div>
+            </article>
+
+            <article class="oow-card">
+              <div class="oow-card-body">
                 <p class="oow-card-k">Tools for the team</p>
                 <h4>Level tools that know the jump maths</h4>
                 <p>
@@ -438,13 +452,29 @@
 
             <article class="oow-card">
               <div class="oow-card-body">
+                <p class="oow-card-k">Architecture</p>
+                <h4>Layers that only point one way</h4>
+                <p>
+                  The code is split into core, game, online and UI layers, with
+                  the logic that needs no engine at the bottom where it can be
+                  unit tested. Automated tests hold the feel of the moveset and
+                  the combat to recorded baselines.
+                </p>
+              </div>
+            </article>
+
+            <article class="oow-card">
+              <div class="oow-card-body">
                 <p class="oow-card-k">Performance</p>
                 <h4>Measured branch to branch</h4>
-                <p class="oow-stat"><span>10.1 GB</span><svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg><span>3.5 GB</span></p>
+                <!-- A frame cost, so the number under "Performance" is a
+                     performance number. The repo size clean up, which used to
+                     sit here, is in the pipeline card where it belongs. -->
+                <p class="oow-stat">15 to 18% <small>fewer draw calls in split screen</small></p>
                 <p>
                   GPU driven rendering, quality tiers, LOD and culling, checked
-                  with a profiling tool I built. A clean up with two teammates
-                  cut the project to a third of its size.
+                  with a profiling tool I built. That number is the latest
+                  pass, measured on the lowest quality tier.
                 </p>
               </div>
             </article>
@@ -463,7 +493,8 @@
                 <p>
                   I set up the git workflow everyone follows. Changes are
                   reviewed before they land, and a tagged playtest build goes
-                  out every fortnight.
+                  out every fortnight. A clean up with two teammates took the
+                  repository from 10.1 GB to 3.5 GB.
                 </p>
               </div>
             </article>
@@ -794,11 +825,12 @@
                 <a href="https://olivernealdev.itch.io/unicellular" target="_blank" rel="noopener">
                   itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
                 </a>
-                <!-- The public repo is the later ECS rebuild, not the
-                     GameObject build this card describes. Labelled as such so
-                     nobody opens it expecting the code the write-up is about. -->
-                <a href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> ECS rebuild, source
+                <!-- The repo was once called UnicellularRebuiltECS: the rebuild
+                     borrowed the idea of one manager driving every unicell
+                     from ECS, but it is GameObjects, and it is the code this
+                     card describes. -->
+                <a href="https://github.com/OliverNealDev/Unicellular" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
                 </a>
               </div>
             </div>
@@ -1109,7 +1141,7 @@
               <img class="edu-logo" src="media/logos/newcastle-college.webp" alt="Newcastle College logo" width="192" height="192" loading="lazy">
             </a>
             <div>
-              <h3>BTEC Level 3 National Diploma in Creative Digital Media</h3>
+              <h3>BTEC Level 3 National Foundation Diploma in Creative Digital Media Production</h3>
               <p class="edu-org">Newcastle College</p>
               <p class="edu-meta"><strong>Distinction</strong></p>
             </div>
@@ -1158,6 +1190,34 @@
              data-author-headline="Technical Director at Shiverbug Studios · Unity (C#)"
              data-author-avatar="media/oliver-neal.webp"
              data-author-url="https://www.linkedin.com/in/oliverjackneal/">
+
+          <article class="post-card reveal">
+            <div class="post-media single">
+              <img src="media/out-of-water/dock-duo.webp"
+                   alt="Out of Water: the seagull perched on the turtle's shell on a wooden dock, with a beach, palm trees and ruins behind them"
+                   data-caption="Out of Water, the game I now lead the technical side of. The art is all the team's work."
+                   data-link="https://www.linkedin.com/posts/oliverjackneal_gamedev-unity-indiedev-share-7513908531654184961-syQL/"
+                   width="1600" height="900" loading="lazy">
+            </div>
+            <div class="post-body">
+              <p class="post-meta">
+                <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                LinkedIn · <time datetime="2026-10-08">8 Oct 2026</time>
+              </p>
+              <p class="post-text">Some news: I've joined the board at Shiverbug Studios as Technical Director! 🌊
+
+I walked in on 13 July as a gameplay programming intern, hired to write the character and enemy code for Out of Water. Week one was Develop:Brighton. Over the ten weeks I also got the opportunity to look after the build: the git workflow, pull request reviews and a tagged playtest build every fortnight.
+
+The new role covers the technical side of Out of Water, the plan for the vertical slice we're building, and making sure our artists and designers can work in Unity and git without waiting on me. Out of Water is our original IP, a two-player co-op 3D platformer, and the aim is still to bring family gaming night back to the sofa.
+
+That screenshot is all the team's work. We've got a brilliant group of artists and designers, and getting to build this game with them is the best part of the job.
+
+I'm doing it alongside my MA in Games Design at Teesside. Thanks to Lewis Mennim and Ryan Hughes for trusting me with this role ❤️</p>
+              <a class="post-link" href="https://www.linkedin.com/posts/oliverjackneal_gamedev-unity-indiedev-share-7513908531654184961-syQL/" target="_blank" rel="noopener">
+                Read on LinkedIn <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+              </a>
+            </div>
+          </article>
 
           <article class="post-card reveal">
             <div class="post-media">
@@ -1470,6 +1530,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-10-29"></script>
+  <script src="main.js?v=2026-11-09"></script>
 </body>
 </html>

@@ -10,13 +10,13 @@ Contact: oliverjn04@gmail.com
 
 ## Portfolio
 
-- [Home](https://oliverneal.dev/): about, current role, skills, all nine projects, education and contact
+- [Home](https://oliverneal.dev/): current role, about, skills, all nine projects, education, a log of LinkedIn posts and contact
 - [CV](https://oliverneal.dev/cv.html): full CV in HTML, with a PDF download at https://oliverneal.dev/Oliver_Neal_CV.pdf
 - [Timeline](https://oliverneal.dev/timeline.html): the career and education history as one ordered list of twenty-one milestones, 2018 to October 2026
 
 ## Current role
 
-- Technical Director at [Shiverbug Studios](https://shiverbugstudios.com/), October 2026 to present, part-time and on the board. Leads the technical side of Out of Water, an original IP: a two-player co-op 3D platformer collectathon in Unity 6, played in local splitscreen or online. Covers engineering (the character and enemy framework, level design tools, UI and performance), the build (git workflow, pull request review, a tagged playtest build every fortnight, repositories and access), technical planning for the vertical slice, and getting the artists and designers working confidently in Unity and git.
+- Technical Director at [Shiverbug Studios](https://shiverbugstudios.com/), October 2026 to present, part-time and on the board. Leads the technical side of Out of Water, an original IP: a two-player co-op 3D platformer collectathon in Unity 6, played in local splitscreen or online. Covers engineering (the character and enemy framework, online co-op alongside splitscreen, level design tools, UI and performance, on a layered codebase with automated tests), the build (git workflow, pull request review, a tagged playtest build every fortnight, repositories and access), technical planning for the vertical slice, and getting the artists and designers working confidently in Unity and git.
 - Previously Gameplay Programmer (intern) at Shiverbug Studios, 13 July to 18 September 2026, ten weeks, hired for the character and enemy code and finishing as the studio's buildmaster. Built character and enemy gameplay code, the co-op moveset, performance work (GPU-driven rendering, quality tiers, LOD and culling, measured with a profiling tool built for the team), splitscreen device routing and cameras, a UI Toolkit front end, a decoupled FMOD audio layer, editor tooling for level designers, and water/caustic/bubble shaders in Shader Graph and custom URP HLSL.
 - Studio team page: https://shiverbugstudios.com/team/oliver-neal.html
 
@@ -28,7 +28,7 @@ Deep technical write-ups of how each game actually works.
 - [Tile Turfer](https://oliverneal.dev/tile-turfer.html) (Unity 2D, C#, solo, January 2026): Splatoon-style turf-war shooter. Procedural cave generation, runtime 2D NavMesh baking, and a single territory percentage that drives difficulty, fire rate and enemy AI together. Play: https://olivernealdev.itch.io/tile-turfer — source: https://github.com/OliverNealDev/TileTurfer
 - [Minimalists](https://oliverneal.dev/minimalists.html) (Unity 3D, C#, solo, August 2025): node-conquest RTS pared back to essentials, where forces are committed by percentage against enemy AI that scales from duels to four-way free-for-alls. Play: https://olivernealdev.itch.io/minimalists — source: https://github.com/OliverNealDev/Minimalists
 - [Wanted](https://oliverneal.dev/wanted.html) (Unity 6, C#, solo, May 2025): top-down stealth survival game built in one week for the Tyne to Game jam. No win condition, only a survival timer. A single detection meter fills at 1.0/s in the open and 0.25/s under foliage, decays only after a 3 second grace, and on a confirmed sighting redirects the closest 10% of officers. Three-state officer AI (patrol, chase, search last known position) on a runtime-baked 2D NavMesh via NavMeshPlus, an escalating force of six patrol cars and twenty-four officers plus helicopter passes and radars, 250 procedurally placed trees with distance-culled 2D shadows. MIT licensed. Play: https://olivernealdev.itch.io/wanted — source: https://github.com/OliverNealDev/Wanted
-- [Unicellular](https://oliverneal.dev/unicellular.html) (Unity, C#, solo, February 2025): idle simulation holding thousands of FSM-driven organisms in one scene via a decoupled multi-rate tick and time-sliced proximity AI, stress-tested at 1,000 and 10,000 entities. Play: https://olivernealdev.itch.io/unicellular — source: https://github.com/EmbitGames/UnicellularRebuiltECS
+- [Unicellular](https://oliverneal.dev/unicellular.html) (Unity, C#, solo, February 2025): idle simulation holding thousands of FSM-driven organisms in one scene via a decoupled multi-rate tick and time-sliced proximity AI, stress-tested at 1,000 and 10,000 entities. Play: https://olivernealdev.itch.io/unicellular — source: https://github.com/OliverNealDev/Unicellular
 - [3D Netcode Tank Game](https://oliverneal.dev/tank-game.html) (Unity 3D, C#, solo, January 2025): server-authoritative multiplayer tank shooter on Unity Netcode for GameObjects, with a 64-ray hitscan resolved on the server, a decoupled turret aiming rig, Relay-hosted sessions and cloud authentication. Source: https://github.com/OliverNealDev/NetcodeTankGame
 - [Pinnable](https://oliverneal.dev/pinnable.html) (Unity 2D, C#, solo, March 2024): arcade score-attack catch game with a weighted spawn director, homing and drilling pin behaviours and a physics-driven catch loop. Play: https://olivernealdev.itch.io/pinnable — source: https://github.com/OliverNealDev/Pinnable
 - [Space Bar Simulator](https://oliverneal.dev/space-bar.html) (Unreal Engine 5, Blueprints, team of ten, January 2026): retro-futurist first-person bar simulator. Oliver's contribution: the player controller on Enhanced Input, a component-based interaction system behind a Blueprint interface, camera-blended interactive stations and the UI computer terminal.
@@ -42,7 +42,7 @@ Deep technical write-ups of how each game actually works.
 - MA Games Design (with Advanced Practice), Teesside University. September 2026 to 2028, in progress.
 - BSc (Hons) Games Development, Teesside University. Graduated July 2026, First Class Honours, 80% overall. Final-year project 84%, artefact 90.
 - FdSc Games Technologies, Newcastle College University Centre. Graduated July 2025, 2:1 (Year 1 Distinction, Year 2 Merit).
-- BTEC Level 3 National Diploma in Creative Digital Media, Newcastle College. Distinction.
+- BTEC Level 3 National Foundation Diploma in Creative Digital Media Production, Newcastle College. Awarded June 2023, Distinction.
 
 ## Elsewhere
 
