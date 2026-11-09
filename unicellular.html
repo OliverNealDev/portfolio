@@ -37,7 +37,7 @@
         "description": "How Unicellular keeps thousands of FSM driven organisms simulating smoothly in Unity: a decoupled multi-rate tick, time-sliced proximity AI and careful performance work, with stress tests at 1,000 and 10,000 entities.",
         "image": "https://oliverneal.dev/og/unicellular.jpg",
         "datePublished": "2025-02-08",
-        "dateModified": "2026-08-02",
+        "dateModified": "2026-11-09",
         "inLanguage": "en-GB",
         "author": { "@id": "https://oliverneal.dev/#person" },
         "publisher": { "@id": "https://oliverneal.dev/#person" },
@@ -60,10 +60,10 @@
         "gamePlatform": "PC",
         "applicationCategory": "GameApplication",
         "inLanguage": "en",
-        "codeRepository": "https://github.com/EmbitGames/UnicellularRebuiltECS",
+        "codeRepository": "https://github.com/OliverNealDev/Unicellular",
         "sameAs": [
           "https://olivernealdev.itch.io/unicellular",
-          "https://github.com/EmbitGames/UnicellularRebuiltECS"
+          "https://github.com/OliverNealDev/Unicellular"
         ]
       },
       {
@@ -166,12 +166,12 @@
             Play on itch.io
             <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
           </a>
-          <!-- Deliberately not "Source on GitHub": the public repo is the ECS
-               rebuild described in "What I'd rebuild", not the GameObject build
-               this write-up is about. -->
-          <a class="btn btn-outline" href="https://github.com/EmbitGames/UnicellularRebuiltECS" target="_blank" rel="noopener">
+          <!-- The repo is the rebuilt game this write-up is about. It was once
+               named UnicellularRebuiltECS after the idea the rebuild borrowed,
+               but it is GameObjects, not ECS. -->
+          <a class="btn btn-outline" href="https://github.com/OliverNealDev/Unicellular" target="_blank" rel="noopener">
             <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
-            ECS rebuild on GitHub
+            Source on GitHub
           </a>
         </div>
 
@@ -212,6 +212,9 @@
             instead of every cell thinking every frame, the simulation is split
             across several tick rates and the expensive proximity checks are spread
             out a batch at a time, all inside Unity's standard GameObject workflow.
+            This is the second build of the game: I restarted it around one
+            manager that drives every cell, an idea borrowed from ECS, once the
+            first version's per cell updates ran out of room.
           </p>
           <p>
             On top of the simulation sits a full idle-game economy: seven species
