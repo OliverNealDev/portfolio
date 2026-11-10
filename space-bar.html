@@ -219,8 +219,7 @@
             the character class.
           </p>
           <p>
-            The split between the two blueprints is deliberate <strong>separation
-            of concerns</strong>: the controller only captures and routes input,
+            The split between the two blueprints is deliberate: the controller only captures and routes input,
             while the character owns the actual movement logic, converting inputs
             into world-space movement along its own forward and right vectors so
             movement always follows where the player is facing.
@@ -301,9 +300,7 @@
             Exiting reverses the process: the camera blends back to the stored
             view target, the cursor is hidden, and input is only restored once
             the blend has begun. Early versions let players walk around while
-            the camera was fixed on a beer tap, and debugging that taught me
-            how much good gameplay code comes down to <strong>strict state
-            management</strong>.
+            the camera was fixed on a beer tap. That bug is why the order above matters.
           </p>
         </div>
         <div class="media-pair">

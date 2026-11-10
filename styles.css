@@ -170,6 +170,11 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+/* A page shorter than the screen, the 404 for one, still ends with its
+   footer at the bottom. */
+body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+body > main { flex: 1; }
+
 img, video { max-width: 100%; height: auto; display: block; }
 
 /* The browser's own [hidden] rule is display:none, but any author rule that
@@ -630,6 +635,12 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
+.oow-credit {
+  margin: 0.75rem 0 0;
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
 .oow-hero {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -865,14 +876,6 @@ a.role-path-title:hover .icon { color: var(--accent); }
   .decision dl div { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
   .decision dt { padding-top: 0; }
 }
-
-.studio-foot {
-  margin-top: clamp(1.75rem, 4vw, 2.5rem);
-  color: var(--text-2);
-  font-size: var(--fs-md);
-}
-.studio-foot p { margin: 0; }
-
 @media (max-width: 820px) {
   .duties { grid-template-columns: 1fr; }
   .built ul { grid-template-columns: 1fr; }
@@ -1639,6 +1642,7 @@ html.js .show-more-wrap {
   font-size: var(--fs-label);
   line-height: 1.5;
 }
+a.code-file:hover { text-decoration: underline; }
 .code .code-file {
   color: var(--accent);
   overflow-wrap: anywhere;   /* long paths shrink rather than push the bar wide */
@@ -1860,7 +1864,7 @@ html.js .show-more-wrap {
   }
 }
 @media (min-width: 1150px) {
-  .cs-section .prose .diagram { width: calc(100% + 400px); }
+  .cs-section .prose .diagram { width: calc(100% + 376px); }
 }
 
 .media-figure { margin: 2rem 0 0; }
@@ -2471,7 +2475,7 @@ html.postview-open body { overflow: hidden; }
   border-bottom: 1px solid var(--border-strong);
   font-size: var(--fs-sm);
 }
-.cv-contact .sep { color: var(--rule); padding: 0 0.35em; }
+.cv-contact .sep { color: var(--ink-3); padding: 0 0.35em; }
 
 .cv-sheet section { margin-top: 1.4rem; }
 .cv-sheet h2 {

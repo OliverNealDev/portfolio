@@ -350,6 +350,7 @@
             </p>
           </div>
         </div>
+        <p class="oow-credit">The shot is the team's art. My side is the tech underneath it.</p>
 
         <div class="oow-role">
           <a class="oow-studio" href="https://shiverbugstudios.com" target="_blank" rel="noopener">
@@ -390,11 +391,11 @@
 
         <div class="built reveal">
           <h3>What I built first</h3>
-          <p>Ten weeks as the intern, before any of the decisions below.</p>
+          <p>Ten weeks as the intern, hired for the character and enemy code.</p>
           <ul>
             <li><b>Characters and enemies.</b> Both heroes and every enemy, rebuilt from single-file controllers onto component-driven state machines, with the co-op moves on top.</li>
-            <li><b>Splitscreen.</b> Per-player devices, cameras and character swapping.</li>
-            <li><b>Front end.</b> HUD, character select, pause, save slots and a controls tutorial, in UI Toolkit.</li>
+            <li><b>Splitscreen and front end.</b> Per-player devices, cameras and character swapping, then the HUD, character select, pause, save slots and a controls tutorial in UI Toolkit.</li>
+            <li><b>Performance.</b> A pass over rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I made for the team.</li>
             <li><b>Audio and water.</b> A decoupled FMOD layer the audio team plugs into, and the water shaders.</li>
             <li><b>Level tools.</b> A prop palette, spline walkways, and a prober that runs the characters' own jump maths to show the designers what they can reach.</li>
             <li><b>The studio's website.</b> <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">shiverbugstudios.com</a>, alongside the gameplay work.</li>
@@ -416,37 +417,26 @@
               <p class="decision-topic">Online co-op</p>
               <h4>Each player's machine owns their own character</h4>
               <p class="decision-what">
-                Online play is client-host. Your machine runs your character
-                exactly as it does in splitscreen, your partner's character is
-                a puppet on your screen, and the host owns the world: enemies,
-                puzzles, pickups and the save.
+                Online play is client-host. Your machine runs your character exactly as it does in splitscreen, your partner's character is a puppet on your screen, and the host owns the world: enemies, puzzles, pickups and the save.
               </p>
             </div>
             <dl>
               <div>
                 <dt>Why</dt>
                 <dd>
-                  A platformer lives on input latency, and this way your own
-                  character never waits on the network. The state machines
-                  that already drive both heroes run untouched. Rollback was
-                  the alternative, and it needs a deterministic simulation,
-                  which this game does not have.
+                  A platformer lives on input latency, and this way your own character never waits on the network. The state machines that already drive both heroes run untouched. Rollback was the alternative, and it needs a deterministic simulation, which this game does not have.
                 </dd>
               </div>
               <div>
                 <dt>Cost</dt>
                 <dd>
-                  The two players can disagree for one round trip. That only
-                  matters where the characters touch each other, so those
-                  moves need the most care.
+                  The two players can disagree for one round trip. That only matters where the characters touch each other, so those moves need the most care.
                 </dd>
               </div>
               <div>
                 <dt>Tested</dt>
                 <dd>
-                  With two instances at a simulated 150 ms of lag, before it
-                  reaches a playtest. <strong>How it feels on a real
-                  connection is still to be proven.</strong>
+                  With two instances at a simulated 150 ms of lag, before it reaches a playtest. <strong>How it feels on a real connection is still to be proven.</strong>
                 </dd>
               </div>
             </dl>
@@ -455,38 +445,28 @@
           <li class="decision reveal">
             <div>
               <p class="decision-topic">The pipeline</p>
-              <h4>Nothing lands without a second pair of eyes</h4>
+              <h4>Every change lands through a pull request</h4>
               <p class="decision-what">
-                Everyone works on their own branch and opens a pull request
-                into a shared integration branch. Each one goes through me or
-                another reviewer. A small change is reviewed as a diff; a
-                bigger one is opened in Unity and played before it merges.
+                Everyone works on their own branch and opens a pull request into a shared integration branch. Each one goes through me or one of the founders. A small change is reviewed as a diff; a bigger one is opened in Unity and played before it merges.
               </p>
             </div>
             <dl>
               <div>
                 <dt>Why</dt>
                 <dd>
-                  A Unity merge can come back with no conflicts and still be
-                  wrong. Scenes, prefabs and materials do not merge as text,
-                  so no conflicts means the text lined up, not that the
-                  project still works.
+                  A Unity merge can come back with no conflicts and still be wrong. Scenes, prefabs and materials do not merge as text, so no conflicts means the text lined up, not that the project still works.
                 </dd>
               </div>
               <div>
                 <dt>Cost</dt>
                 <dd>
-                  Finished work waits on a reviewer. A couple of minutes in
-                  the editor is cheaper than a broken shared branch costing
-                  everyone an afternoon.
+                  Finished work waits on a reviewer. <strong>And my own code is the gap:</strong> there is no second programmer to review it, so it leans on the automated tests and the playtest build.
                 </dd>
               </div>
               <div>
                 <dt>Result</dt>
                 <dd>
-                  <strong>A tagged playtest build every fortnight.</strong>
-                  Anyone who would rather not open a pull request pushes
-                  their branch and tells me, and I open it for them.
+                  <strong>A tagged playtest build every fortnight.</strong> Anyone who would rather not open a pull request pushes their branch and tells me, and I open it for them.
                 </dd>
               </div>
             </dl>
@@ -497,10 +477,7 @@
               <p class="decision-topic">Architecture</p>
               <h4>Layers that only point one way</h4>
               <p class="decision-what">
-                The code is split into core, game, online and UI layers. Each
-                is its own assembly, so the compiler refuses a reference that
-                points the wrong way. Logic that needs no engine sits at the
-                bottom, where it can be unit tested.
+                The code is split into core, game, online and UI layers. Each is its own assembly, so the compiler refuses a reference that points the wrong way. Logic that needs no engine sits at the bottom, where it can be unit tested.
               </p>
             </div>
             <dl>
@@ -511,19 +488,15 @@
                 </dd>
               </div>
               <div>
-                <dt>Result</dt>
+                <dt>Cost</dt>
                 <dd>
-                  <strong>That count is now zero.</strong> Automated tests
-                  hold the feel of the moveset and the combat to recorded
-                  baselines.
+                  It is not finished. Inside the game layer the player, the enemies and the level tools still reference each other, and that is the next cut.
                 </dd>
               </div>
               <div>
-                <dt>Cost</dt>
+                <dt>Result</dt>
                 <dd>
-                  It is not finished. Inside the game layer the player, the
-                  enemies and the level tools still reference each other, and
-                  that is the next cut.
+                  <strong>That count is now zero.</strong> Automated tests hold the feel of the moveset and the combat to recorded baselines.
                 </dd>
               </div>
             </dl>
@@ -534,44 +507,31 @@
               <p class="decision-topic">Performance</p>
               <h4>Nothing is faster until it is measured</h4>
               <p class="decision-what">
-                Performance work is compared branch against branch, on the
-                same scene at the same quality tier, with a profiling tool I
-                made for the team.
+                Performance work is compared branch against branch, on the same scene at the same quality tier, with a profiling tool I made for the team.
               </p>
             </div>
             <dl>
               <div>
                 <dt>Why</dt>
                 <dd>
-                  Split screen draws the world twice, so a change that looks
-                  free on one camera can cost double. A number settles the
-                  argument.
+                  Split screen draws the world twice, so a change that looks free on one camera can cost double. A number settles the argument.
+                </dd>
+              </div>
+              <div>
+                <dt>Cost</dt>
+                <dd>
+                  It is slower. A change is not called faster until the same scene has been captured on both branches.
                 </dd>
               </div>
               <div>
                 <dt>Result</dt>
                 <dd>
-                  The latest pass took <strong>15 to 18% of the draw calls</strong>
-                  out of split screen on the lowest quality tier.
-                </dd>
-              </div>
-              <div>
-                <dt>Open</dt>
-                <dd>
-                  What I do not have yet is a frame time for the whole game on
-                  the hardware we are aiming at. That benchmark is still to
-                  run.
+                  The latest pass took <strong>15 to 18% of the draw calls</strong> out of split screen on the lowest quality tier. What I do not have yet is a frame time for the whole game on the hardware we are aiming at. <strong>That benchmark is still to run.</strong>
                 </dd>
               </div>
             </dl>
           </li>
         </ol>
-
-        <div class="studio-foot reveal">
-          <p>
-            The shot above is the team's art. My side is the tech underneath it.
-          </p>
-        </div>
       </div>
     </section>
 
@@ -694,9 +654,7 @@
                 a duel to a four way free for all.
               </p>
               <p class="feature-point">
-                The enemy AI gets no cheats and no extra information. It
-                commits through the same percentage interface the player uses,
-                across six AI personalities.
+                The enemy AI sees only what the player sees, and commits through the same send call the player's slider drives. Six AI personalities play it differently.
               </p>
               <div class="feature-links">
                 <a class="feature-cta" href="minimalists.html">
@@ -807,9 +765,8 @@
           <div class="about-copy reveal">
             <p>
               I've been making games in <strong>Unity and C#</strong> since
-              2018 and building them consistently since 2023, so the First I
-              graduated with from Teesside in July 2026 sat on top of years of
-              self-driven projects.
+              2018, and building them consistently since 2023. I graduated
+              from Teesside in July 2026 with a First.
             </p>
             <p>
               The part of games I enjoy most is the systems layer:

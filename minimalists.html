@@ -248,7 +248,7 @@
           <p class="kicker">Opponents</p>
           <h2>Enemy AI that plays the same game you do</h2>
           <p>
-            The AI has no cheats and no extra information. It wins by making the
+            The AI has no extra information. It wins by making the
             same commitment decisions the player faces. Each opponent continuously
             weighs its options: which neutral structures are cheap to take, which
             enemy structures are poorly garrisoned, when to reinforce a border
@@ -261,7 +261,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/AIManager.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/Minimalists/blob/HEAD/Assets/Scripts/AIManager.cs" target="_blank" rel="noopener">Assets/Scripts/AIManager.cs</a>
               <span class="code-note">scoring every source and target pair it can afford</span>
             </figcaption>
 <pre><code>foreach (var sourceNode in potentialAttackers)
@@ -293,8 +293,7 @@
 }</code></pre>
           </figure>
           <p>
-            Then it commits through the same percentage interface the player
-            uses, so it is bound by the same rules. It sizes the attack from what
+            Then it commits through the same <code>SendUnits</code> call the player's slider drives. It sizes the attack from what
             the target is actually holding plus a margin, then clamps the result,
             which is what stops it either trickling in one unit at a time or
             emptying a node it still needs to defend.
@@ -302,7 +301,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/AIManager.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/Minimalists/blob/HEAD/Assets/Scripts/AIManager.cs" target="_blank" rel="noopener">Assets/Scripts/AIManager.cs</a>
               <span class="code-note">sizing the commitment for the pair that scored best</span>
             </figcaption>
 <pre><code>if (bestSourceNode != null &amp;&amp; bestTargetNode != null)
@@ -391,6 +390,12 @@
             <code>1000f</code> and the <code>1.5f</code> in the excerpt above.
             They belong in data, where they can be tuned without a recompile
             and compared between personalities.
+          </p>
+          <p>
+            The AI is also not quite bound by the player's rules. The player
+            commits in four steps, 25 to 100%, and the excerpt above passes
+            any fraction from 10% upward to the same call. It is a small
+            advantage, and one the player does not get.
           </p>
         </div>
       </div>

@@ -202,8 +202,7 @@
             to grow harder in step with how well you are doing.
           </p>
           <p>
-            Underneath, it is a study in a handful of small systems that each do
-            one job well: a spawn director that decides <em>what</em> the game
+            Underneath, it is a handful of small systems that each do one job: a spawn director that decides <em>what</em> the game
             throws at you, per-pin behaviour that decides <em>how</em> those hazards
             move, and a physics catch loop that carries the moment-to-moment feel.
           </p>
@@ -234,7 +233,7 @@
             quietly stacks itself against you.
           </p>
           <p>
-            There is a deliberate piece of stagecraft in there too. The first time
+            The first time
             a newly unlocked type is due to appear, its weight is spiked so the
             introduction is guaranteed, then it settles back to normal scaling. A
             new threat always announces itself cleanly rather than hiding inside a
@@ -243,7 +242,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/Pin/PinScript.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/Pinnable/blob/HEAD/Assets/Scripts/Pin/PinScript.cs" target="_blank" rel="noopener">Assets/Scripts/Pin/PinScript.cs</a>
               <span class="code-note">one hazard's gate, scaling and guaranteed introduction; each type repeats this with its own thresholds</span>
             </figcaption>
 <pre><code>private void SetPinType()
@@ -287,7 +286,7 @@
             ignoring one becomes a slowly tightening trap. <strong>Drill pins</strong>
             watch the player's position, charge up when you line up beneath them,
             then bore downward with an accelerating fall and a slowdown zone that
-            sells the sense of grinding through the floor.
+            reads as grinding through the floor.
           </p>
           <p>
             Each behaviour is a compact, self-contained routine tied to its own
@@ -305,7 +304,7 @@
           <p class="kicker">Game feel</p>
           <h2>A physics catch loop, and the feel around it</h2>
           <p>
-            Marbles are genuine <strong>Rigidbody2D</strong> objects. They launch
+            Marbles are <strong>Rigidbody2D</strong> objects. They launch
             from the cannon with a velocity biased by both the player's position
             and the cannon's own lateral movement, arc across the screen, and
             bounce off the bucket. The fire rate tightens over time, so the screen
@@ -328,7 +327,7 @@
                    aria-label="Pinnable options menu video">
               <source src="media/pinnable/options.webm" type="video/webm">
             </video>
-            <figcaption>Options and presentation, kept in the same clean arcade style.</figcaption>
+            <figcaption>The options screen.</figcaption>
           </figure>
           <figure class="media-figure reveal">
             <video controls preload="none" poster="media/pinnable/dying-poster.webp"

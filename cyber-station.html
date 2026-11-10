@@ -278,7 +278,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/Managers/PassengerManager.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/CyberStation/blob/HEAD/Assets/Scripts/Managers/PassengerManager.cs" target="_blank" rel="noopener">Assets/Scripts/Managers/PassengerManager.cs</a>
               <span class="code-note">choosing a facility, and the walk estimate underneath it</span>
             </figcaption>
 <pre><code>private StationFacility GetMostAccessibleFacility(List&lt;StationFacility&gt; facilities, Passenger passenger, float maxWaitTime, out float bestWait)
@@ -399,7 +399,7 @@ private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/NavMeshManager.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/CyberStation/blob/HEAD/Assets/Scripts/NavMeshManager.cs" target="_blank" rel="noopener">Assets/Scripts/NavMeshManager.cs</a>
               <span class="code-note">hide, bake, and restore whatever happens</span>
             </figcaption>
 <pre><code>public void BuildNavMesh()
@@ -550,7 +550,7 @@ private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/Managers/RatingManager.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/CyberStation/blob/HEAD/Assets/Scripts/Managers/RatingManager.cs" target="_blank" rel="noopener">Assets/Scripts/Managers/RatingManager.cs</a>
               <span class="code-note">the tick, the six targets, and the roll-up</span>
             </figcaption>
 <pre><code>void Update()
@@ -694,6 +694,11 @@ void CalculateTargetsAndApply()
               <span class="arch-d">Data, not code: buildables, trains, staff, expansions, dialogue and visuals, so content is authored in the editor instead of compiled in.</span>
             </li>
           </ul>
+          <p>
+            The other nine scripts sit at the root of the folder: the NavMesh
+            manager, the passenger spawner, the train service, and smaller
+            pieces such as the day and night cycle.
+          </p>
 
           <figure class="diagram reveal">
             <figcaption>

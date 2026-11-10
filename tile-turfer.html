@@ -220,7 +220,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/TurfManager.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/TileTurfer/blob/HEAD/Assets/Scripts/TurfManager.cs" target="_blank" rel="noopener">Assets/Scripts/TurfManager.cs</a>
               <span class="code-note">the single source of truth</span>
             </figcaption>
 <pre><code>public float GetTurfPercentage()
@@ -232,7 +232,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/EnemyController.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/TileTurfer/blob/HEAD/Assets/Scripts/EnemyController.cs" target="_blank" rel="noopener">Assets/Scripts/EnemyController.cs</a>
               <span class="code-note">one consumer: the same value picks the enemy's fire pattern</span>
             </figcaption>
 <pre><code>void SelectAndFirePattern()
@@ -338,8 +338,7 @@
           <p>
             The turf percentage is the spine of the whole design. As you gain
             ground, your fire rate speeds up and you unlock wider attack patterns at
-            25%, 50% and 75%. So do the enemies, and the spawn cap climbs from a
-            handful toward the low dozens while the spawn interval tightens.
+            25%, 50% and 75%. So do the enemies, and the spawn cap climbs from 3 to 40 while the spawn interval tightens from four seconds to half a second.
           </p>
           <p>
             The better you do, the harder the game pushes back, with no hand-authored difficulty stages.

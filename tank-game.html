@@ -233,7 +233,7 @@
 
           <figure class="code reveal">
             <figcaption>
-              <span class="code-file">Assets/Scripts/Controllers/TankTurretController.cs</span>
+              <a class="code-file" href="https://github.com/OliverNealDev/NetcodeTankGame/blob/HEAD/Assets/Scripts/Controllers/TankTurretController.cs" target="_blank" rel="noopener">Assets/Scripts/Controllers/TankTurretController.cs</a>
               <span class="code-note">the fan is built and resolved inside a ServerRpc, so a client never reports its own hits</span>
             </figcaption>
 <pre><code>[ServerRpc(RequireOwnership = false)]
@@ -299,9 +299,7 @@ void ShootRaysServerRpc()
           </p>
           <p>
             The effect is a mechanical, rate-limited swing that reads like a real
-            gun barrel coming around, rather than an instant lock-on. Decoupling
-            where the player wants to aim from where the turret currently points is
-            a small rig that adds a lot of weight to the aiming.
+            gun barrel coming around, rather than an instant lock-on.
           </p>
         </div>
       </div>
