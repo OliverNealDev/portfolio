@@ -144,10 +144,10 @@
       <div class="container">
         <a class="crumb" href="index.html#work">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          All projects
+          All work
         </a>
 
-        <p class="kicker">Case study · Solo project</p>
+        <p class="kicker">Breakdown · Solo project</p>
         <h1>3D Netcode Tank Game</h1>
         <p class="cs-meta">Jan 2025 · Unity 6 · C# · Netcode for GameObjects</p>
         <p class="cs-lead">
@@ -172,10 +172,10 @@
         </div>
 
         <ul class="facts">
-          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
-          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · C#</span></li>
-          <li><span class="fact-k">Netcode</span><span class="fact-v">Netcode for GameObjects</span></li>
-          <li><span class="fact-k">Model</span><span class="fact-v">Server-authoritative</span></li>
+          <li><span class="fact-k">Per shot</span><span class="fact-v">64 server rays</span></li>
+          <li><span class="fact-k">Network tick</span><span class="fact-v">30 Hz</span></li>
+          <li><span class="fact-k">Players</span><span class="fact-v">2, over Relay</span></li>
+          <li><span class="fact-k">Menu</span><span class="fact-v">10-state FSM</span></li>
         </ul>
       </div>
     </section>
@@ -319,12 +319,7 @@ void ShootRaysServerRpc()
             proper handshake: the effect fades its material out, drifts, and when
             the fade completes the owner asks the server to despawn it.
           </p>
-          <p>
-            It is a small detail, but getting the owner-to-server despawn flow right
-            is exactly the kind of thing that separates a networked prototype that
-            leaks objects from one that behaves.
-          </p>
-        </div>
+          </div>
       </div>
     </section>
 
@@ -358,13 +353,13 @@ void ShootRaysServerRpc()
     </section>
 
     <!-- ============ NEXT ============ -->
-    <nav class="next-nav container" aria-label="More case studies">
-      <a class="prev" href="pinnable.html">
+    <nav class="next-nav container" aria-label="More breakdowns">
+      <a class="prev" href="space-bar.html">
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-        Previous: Pinnable
+        Previous: Space Bar Simulator
       </a>
-      <a href="space-bar.html">
-        Next: Space Bar Simulator
+      <a href="pinnable.html">
+        Next: Pinnable
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
       </a>
     </nav>

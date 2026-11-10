@@ -757,30 +757,27 @@
       var target = lastFocused && lastFocused.offsetParent !== null
         ? lastFocused
         : cards.filter(function (c) { return c.offsetParent !== null; })[0];
-      if (target && target.focus) target.focus();
+      var opener = target && target.querySelector ? target.querySelector(".post-open") : null;
+      if (opener) opener.focus();
+      else if (target && target.focus) target.focus();
     }
 
+    // Each card gets a real button for the keyboard and for screen readers.
+    // The card itself stays an article, so its text is still read as text,
+    // and a click anywhere on it is a convenience for the mouse.
     cards.forEach(function (card, i) {
-      card.setAttribute("tabindex", "0");
-      card.setAttribute("role", "button");
       var time = card.querySelector(".post-meta time");
-      card.setAttribute(
-        "aria-label",
-        "Read the full LinkedIn post" + (time ? " from " + time.textContent.trim() : "")
-      );
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "post-open";
+      btn.setAttribute("aria-label", "Read the full post" + (time ? " from " + time.textContent.trim() : ""));
+      btn.addEventListener("click", function (e) { e.stopPropagation(); open(i); });
+      card.insertBefore(btn, card.firstChild);
 
       card.addEventListener("click", function (e) {
         // "Read on LinkedIn" is a real link and stays one.
         if (e.target.closest("a")) return;
         open(i);
-      });
-
-      card.addEventListener("keydown", function (e) {
-        if (e.target !== card) return;
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          open(i);
-        }
       });
     });
   })();

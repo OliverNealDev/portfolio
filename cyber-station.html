@@ -153,10 +153,10 @@
       <div class="container">
         <a class="crumb" href="index.html#work">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          All projects
+          All work
         </a>
 
-        <p class="kicker">Case study · Final year project</p>
+        <p class="kicker">Breakdown · Final year project</p>
         <h1>Cyber Station</h1>
         <p class="cs-meta">Apr 2026 · Unity 3D · C# · Released on itch.io</p>
         <p class="award-badge">
@@ -167,7 +167,7 @@
           A neon station management game about building a transport hub that can
           take the pressure: placement, passenger flow, ratings and progression
           all pulling against each other. I built it solo as the artefact for my
-          final-year project at Teesside University, where it scored 90.
+          final-year project at Teesside University.
         </p>
 
         <div class="cs-actions">
@@ -190,11 +190,10 @@
         </div>
 
         <ul class="facts">
-          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
-          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 3D · C#</span></li>
-          <li><span class="fact-k">Grade</span><span class="fact-v">90 / 100</span></li>
-          <li><span class="fact-k">Award</span><span class="fact-v">ExpoTees 2026 winner</span></li>
           <li><span class="fact-k">Scale</span><span class="fact-v">86 scripts · ~17k lines</span></li>
+          <li><span class="fact-k">Logic tick</span><span class="fact-v">Fixed 10 Hz</span></li>
+          <li><span class="fact-k">Ratings</span><span class="fact-v">6 live factors</span></li>
+          <li><span class="fact-k">Grade</span><span class="fact-v">90 / 100</span></li>
         </ul>
       </div>
     </section>
@@ -397,7 +396,7 @@ private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
             ticket machine or a barrier does not change the walkable floor, it just
             puts something on it, so those 22 buildable prefabs each carry a
             <strong><code>NavMeshObstacle</code></strong> and carve the existing mesh
-            at runtime for free. The mesh is only genuinely rebuilt when the floor
+            at runtime without a rebake. The mesh is only genuinely rebuilt when the floor
             itself grows, which is when the player buys a station expansion, so the
             cost lands on a deliberate, occasional, already-celebratory action
             instead of on every click.
@@ -672,7 +671,7 @@ void CalculateTargetsAndApply()
             and locks it, so nothing is ever double-assigned.
           </p>
           <p>
-            It keeps the behaviour clean and extensible: the coordinator owns the
+            The coordinator owns the
             "who does what" decision while each worker just runs its own small state
             machine. Security even prioritises chasing down fare evaders over
             routine patrols, all through the same dispatch model.
@@ -857,13 +856,13 @@ void CalculateTargetsAndApply()
     </section>
 
     <!-- ============ NEXT ============ -->
-    <nav class="next-nav container" aria-label="More case studies">
-      <a class="prev" href="index.html#work">
+    <nav class="next-nav container" aria-label="More breakdowns">
+      <a class="prev" href="pinnable.html">
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-        All breakdowns
+        Previous: Pinnable
       </a>
-      <a href="minimalists.html">
-        Next: Minimalists
+      <a href="wanted.html">
+        Next: Wanted
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
       </a>
     </nav>

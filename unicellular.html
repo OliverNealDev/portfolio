@@ -146,10 +146,10 @@
       <div class="container">
         <a class="crumb" href="index.html#work">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          All projects
+          All work
         </a>
 
-        <p class="kicker">Case study · Solo project</p>
+        <p class="kicker">Breakdown · Solo project</p>
         <h1>Unicellular</h1>
         <p class="cs-meta">Feb 2025 · Unity · C# · Released on itch.io</p>
         <p class="cs-lead">
@@ -181,10 +181,10 @@
         </div>
 
         <ul class="facts">
-          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
-          <li><span class="fact-k">Engine</span><span class="fact-v">Unity</span></li>
-          <li><span class="fact-k">Entities</span><span class="fact-v">10,000 stress-tested</span></li>
-          <li><span class="fact-k">Core tech</span><span class="fact-v">FSM + time-slicing</span></li>
+          <li><span class="fact-k">Stress test</span><span class="fact-v">10,000 cells</span></li>
+          <li><span class="fact-k">Behaviour tick</span><span class="fact-v">20 Hz</span></li>
+          <li><span class="fact-k">Bookkeeping tick</span><span class="fact-v">0.5 Hz</span></li>
+          <li><span class="fact-k">Proximity pass</span><span class="fact-v">~150 cells</span></li>
         </ul>
       </div>
     </section>
@@ -296,60 +296,93 @@
               <span class="code-file">Assets/Scripts/Managers/UnicellManager/EntityManager.cs</span>
               <span class="code-note">the fast tick, the slow tick, and the sweep continuing across frames</span>
             </figcaption>
-<pre><code>        if (LogicUpdateTimer &gt; LogicUpdateTimerThreshold)
-        {
-            LogicUpdateTimer -= LogicUpdateTimerThreshold;
-            LogicUpdate();
-        }
-
-        SlowLogicUpdateTimer += Time.deltaTime;
-        if (SlowLogicUpdateTimer &gt; SlowLogicUpdateTimerThreshold)
-        {
-            SlowLogicUpdateTimer -= SlowLogicUpdateTimerThreshold;
-            isProximityUpdateComplete = false;
-            ProximityBatchUpdate();
-            SlowLogicUpdate();
-
-            CheckUnicellsForHunger();
-        }
-    }
-    void FixedUpdate()
+<pre><code>void Update()
+{
+    LogicUpdateTimer += Time.deltaTime;
+    if (LogicUpdateTimer &gt; LogicUpdateTimerThreshold)
     {
-        if (!isProximityUpdateComplete)
-        {
-            ProximityBatchUpdate();
-        }</code></pre>
+        LogicUpdateTimer -= LogicUpdateTimerThreshold;
+        LogicUpdate();
+    }
+
+    SlowLogicUpdateTimer += Time.deltaTime;
+    if (SlowLogicUpdateTimer &gt; SlowLogicUpdateTimerThreshold)
+    {
+        SlowLogicUpdateTimer -= SlowLogicUpdateTimerThreshold;
+        isProximityUpdateComplete = false;
+        ProximityBatchUpdate();
+        SlowLogicUpdate();
+
+        CheckUnicellsForHunger();
+    }
+}
+void FixedUpdate()
+{
+    if (!isProximityUpdateComplete)
+    {
+        ProximityBatchUpdate();
+    }
+
+    // ... per-cell movement omitted
+}</code></pre>
           </figure>
 
           <figure class="code reveal">
             <figcaption>
               <span class="code-file">Assets/Scripts/Managers/UnicellManager/EntityManager.cs</span>
-              <span class="code-note">the batch window itself: a carried index, capped at the end of the list</span>
+              <span class="code-note">one batch: a carried index, capped at the end of the list, and the flag that ends the sweep</span>
             </figcaption>
-<pre><code>    void ProximityBatchUpdate()
+<pre><code>void ProximityBatchUpdate()
+{
+    // Determines end index for this batch
+    int endIndex = Mathf.Min(currentIndex + ProximityBatchSize, unicellList.Count);
+
+    // Updates the batch of unicells
+    for (int i = currentIndex; i &lt; endIndex; i++)
     {
-        // Determines end index for this batch
-        int endIndex = Mathf.Min(currentIndex + ProximityBatchSize, unicellList.Count);</code></pre>
+        Unicell unicell = unicellList[i];
+
+        // ... growth omitted
+
+        if (unicell.CurrentState == UnicellState.Hungry)
+        {
+            Food NewNearestFood = FindNearestFood(unicell, unicell.ProximityRadius);
+            // ... keep it if it is new
+        }
+
+        Unicell NewNearestUnicell = FindNearestUnicell(unicell, unicellList[i].ProximityRadius);
+        // ... keep it if it is new
+
+        DecideUnicellState(unicell);
+    }
+
+    // Updates current index
+    currentIndex = endIndex;
+
+    // Resets current index if it reaches the end of the list
+    if (currentIndex &gt;= unicellList.Count)
+    {
+        currentIndex = 0;
+        isProximityUpdateComplete = true;
+    }
+}</code></pre>
           </figure>
+          <p>
+            The two <code>FindNearest</code> calls do not loop over every
+            other cell. Each asks <code>Physics2D.OverlapCircleAll</code> for
+            the colliders inside that cell's own radius, so the physics
+            engine's broadphase does the spatial work, and the batch decides
+            how many of those queries a frame pays for.
+          </p>
         </div>
-        <div class="media-pair">
-          <figure class="media-figure reveal">
+        <figure class="media-figure reveal">
             <video controls preload="none" poster="media/unicellular/1000-entities-poster.webp"
                    width="1280" height="720"
                    aria-label="Unicellular stress test video with one thousand entities">
               <source src="media/unicellular/1000-entities.webm" type="video/webm">
             </video>
-            <figcaption>Benchmark one: 1,000 entities.</figcaption>
+            <figcaption>The smaller benchmark: 1,000 entities. The ten thousand run is the clip at the top of this page.</figcaption>
           </figure>
-          <figure class="media-figure reveal">
-            <video controls preload="none" poster="media/unicellular/10k-entities-poster.webp"
-                   width="1280" height="720"
-                   aria-label="Unicellular stress test video with ten thousand entities">
-              <source src="media/unicellular/10k-entities.webm" type="video/webm">
-            </video>
-            <figcaption>Benchmark two: 10,000 entities, ~90 FPS on screen.</figcaption>
-          </figure>
-        </div>
       </div>
     </section>
 
@@ -381,10 +414,10 @@
     </section>
 
     <!-- ============ NEXT ============ -->
-    <nav class="next-nav container" aria-label="More case studies">
-      <a class="prev" href="wanted.html">
+    <nav class="next-nav container" aria-label="More breakdowns">
+      <a class="prev" href="minimalists.html">
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-        Previous: Wanted
+        Previous: Minimalists
       </a>
       <a href="tile-turfer.html">
         Next: Tile Turfer

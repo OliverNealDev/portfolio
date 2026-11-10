@@ -148,10 +148,10 @@
       <div class="container">
         <a class="crumb" href="index.html#work">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          All projects
+          All work
         </a>
 
-        <p class="kicker">Case study · Solo project · Game jam</p>
+        <p class="kicker">Breakdown · Solo project · Game jam</p>
         <h1>Wanted</h1>
         <p class="cs-meta">May 2025 · Unity 6 · URP 2D · C#</p>
         <p class="cs-lead">
@@ -179,10 +179,10 @@
         </div>
 
         <ul class="facts">
-          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
-          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · URP 2D</span></li>
           <li><span class="fact-k">Built in</span><span class="fact-v">One week</span></li>
-          <li><span class="fact-k">Nav</span><span class="fact-v">2D NavMesh · NavMeshPlus</span></li>
+          <li><span class="fact-k">Force</span><span class="fact-v">6 cars · 24 officers</span></li>
+          <li><span class="fact-k">Forest</span><span class="fact-v">250 trees · 30 bushes</span></li>
+          <li><span class="fact-k">Under cover</span><span class="fact-v">Detection 4x slower</span></li>
         </ul>
       </div>
     </section>
@@ -270,8 +270,7 @@
             climbing.
           </p>
           <p>
-            The rate is where the stealth actually lives. In the open the meter
-            fills at <strong>1.0 per second</strong>. Standing under foliage it
+            The rate is where the stealth actually lives. In the open the meter fills at <strong>1.0 per second</strong> for each officer who can see you. Standing under foliage it
             fills at <strong>0.25 per second</strong>, so cover does not make you
             invisible, it buys you four times as long to be wrong. The player
             sprite drops to 40% opacity while under a tree, so the state you are in
@@ -467,33 +466,36 @@ else
       </div>
     </section>
 
-    <!-- ============ NUMBERS ============ -->
+    <!-- ============ HINDSIGHT ============ -->
     <section class="cs-section">
       <div class="container">
         <div class="prose reveal">
-          <p class="kicker">Under the hood</p>
-          <h2>By the numbers</h2>
-          <ul>
-            <li><strong>Built in one week</strong> for the Tyne to Game jam, solo, in Unity 6 on URP 2D with dynamic lights and shadows.</li>
-            <li><strong>250 trees and 30 bushes</strong> per run, rejection sampled at a 2.5 unit minimum spacing, one placement attempt per frame.</li>
-            <li><strong>Six patrol cars, twenty-four officers</strong> at full strength, plus helicopter passes from 30 seconds and radars from 60.</li>
-            <li><strong>Detection fills 4x slower under cover</strong>, 1.0/s in the open against 0.25/s in foliage, with a 3 second grace before it decays at 0.1/s.</li>
-            <li><strong>The closest 10% of officers</strong> are redirected on a confirmed sighting, so the response scales with the size of the force.</li>
-            <li><strong>Shadow casters cull beyond 15 units</strong>, which is what keeps 250 trees against two dozen dynamic lights affordable.</li>
-            <li><strong>Open source under the MIT licence</strong>, on GitHub.</li>
-          </ul>
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd change</h2>
+          <p>
+            Two things, both visible in the detection excerpt. The fill rates
+            are bare numbers in the officer's script, <code>1</code> and
+            <code>0.25f</code>, when they are the two most important tuning
+            values in the game. They belong on the manager, with names.
+          </p>
+          <p>
+            And because every officer adds to the meter on their own, two
+            officers who can both see you fill it twice as fast. The code
+            should say whether that is the rule or an accident, and at the
+            moment it says neither.
+          </p>
         </div>
       </div>
     </section>
 
     <!-- ============ NEXT ============ -->
-    <nav class="next-nav container" aria-label="More case studies">
-      <a class="prev" href="minimalists.html">
+    <nav class="next-nav container" aria-label="More breakdowns">
+      <a class="prev" href="cyber-station.html">
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-        Previous: Minimalists
+        Previous: Cyber Station
       </a>
-      <a href="unicellular.html">
-        Next: Unicellular
+      <a href="minimalists.html">
+        Next: Minimalists
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
       </a>
     </nav>

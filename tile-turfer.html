@@ -147,10 +147,10 @@
       <div class="container">
         <a class="crumb" href="index.html#work">
           <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          All projects
+          All work
         </a>
 
-        <p class="kicker">Case study · Solo project</p>
+        <p class="kicker">Breakdown · Solo project</p>
         <h1>Tile Turfer</h1>
         <p class="cs-meta">Jan 2026 · Unity 6 · URP 2D · C#</p>
         <p class="cs-lead">
@@ -182,10 +182,10 @@
         </div>
 
         <ul class="facts">
-          <li><span class="fact-k">Role</span><span class="fact-v">Solo developer</span></li>
-          <li><span class="fact-k">Engine</span><span class="fact-v">Unity 6 · URP 2D</span></li>
-          <li><span class="fact-k">Genre</span><span class="fact-v">Turf-war shooter</span></li>
-          <li><span class="fact-k">Nav</span><span class="fact-v">Runtime 2D NavMesh</span></li>
+          <li><span class="fact-k">Arena</span><span class="fact-v">60 x 60 tiles</span></li>
+          <li><span class="fact-k">Enemy cap</span><span class="fact-v">3 to 40</span></li>
+          <li><span class="fact-k">Spawn interval</span><span class="fact-v">4 s to 0.5 s</span></li>
+          <li><span class="fact-k">Unlocks at</span><span class="fact-v">25 / 50 / 75%</span></li>
         </ul>
       </div>
     </section>
@@ -208,12 +208,11 @@
             Instead of a difficulty slider or a wave timer, <strong>one
             turf-percentage value feeds the entire game at once</strong>: it sets
             how fast you fire, which attack patterns you have unlocked, how many
-            enemies spawn, and how hard those enemies push. Winning territory
-            literally raises the stakes.
+            enemies spawn, and how hard those enemies push. 
           </p>
           <p>
             The value itself is one line, and everything else reads it rather than
-            keeping its own copy. That is the part worth stealing: because the
+            keeping its own copy. Because the
             player's fire rate and the enemy's fire pattern are both derived from
             the same number, they can never disagree about how far into the match
             you are.
@@ -343,8 +342,7 @@
           <p>
             The result is a self-balancing curve expressed through a single number:
             the better you do, the harder the game pushes back, with no
-            hand-authored difficulty stages. It is the kind of system where one
-            value doing a lot of work keeps the whole game coherent.
+            hand-authored difficulty stages.
           </p>
         </div>
         <figure class="media-figure reveal">
@@ -356,31 +354,14 @@
       </div>
     </section>
 
-    <!-- ============ NUMBERS ============ -->
-    <section class="cs-section">
-      <div class="container">
-        <div class="prose reveal">
-          <p class="kicker">Under the hood</p>
-          <h2>By the numbers</h2>
-          <ul>
-            <li><strong>Unity 6, URP 2D</strong>, with a 2D NavMesh integration for pathfinding on generated maps.</li>
-            <li><strong>60 x 60 tile arenas</strong>, generated with cellular automata plus flood-fill region cleanup.</li>
-            <li><strong>Enemy cap scales 3 to 40</strong>, and the spawn interval tightens from 4s to 0.5s as territory shifts.</li>
-            <li><strong>Attack patterns unlock at 25, 50 and 75%</strong> territory, for the player and the AI alike.</li>
-            <li><strong>Documented in a full technical report</strong> covering the generation and AI systems.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ NEXT ============ -->
-    <nav class="next-nav container" aria-label="More case studies">
+    <nav class="next-nav container" aria-label="More breakdowns">
       <a class="prev" href="unicellular.html">
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
         Previous: Unicellular
       </a>
-      <a href="pinnable.html">
-        Next: Pinnable
+      <a href="space-bar.html">
+        Next: Space Bar Simulator
         <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
       </a>
     </nav>
