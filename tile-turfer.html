@@ -100,7 +100,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10c">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10d">
 </head>
 <body>
 
@@ -210,24 +210,8 @@
             enemies spawn, and how hard those enemies push. 
           </p>
           <p>
-            The value itself is one line, and everything else reads it rather than
-            keeping its own copy. Because the
-            player's fire rate and the enemy's fire pattern are both derived from
-            the same number, they can never disagree about how far into the match
-            you are.
+            The value is one division in <code>TurfManager.GetTurfPercentage()</code>, owned tiles over total, and everything else reads it. As you gain ground your fire rate speeds up and wider attack patterns unlock at 25%, 50% and 75%. The enemies get the same patterns at the same marks, while the spawn cap climbs from 3 to 40 and the spawn interval tightens from four seconds to half a second.
           </p>
-
-          <figure class="code reveal">
-            <figcaption>
-              <a class="code-file" href="https://github.com/OliverNealDev/TileTurfer/blob/HEAD/Assets/Scripts/TurfManager.cs" target="_blank" rel="noopener">Assets/Scripts/TurfManager.cs</a>
-              <span class="code-note">the single source of truth</span>
-            </figcaption>
-<pre><code>public float GetTurfPercentage()
-{
-    if (totalTiles == 0) return 0f;
-    return (float)ownedTiles / (float)totalTiles;
-}</code></pre>
-          </figure>
 
           <figure class="code reveal">
             <figcaption>
@@ -285,6 +269,48 @@
             guaranteed to be a single reachable area. A safe zone is cleared at the
             centre for the spawn.
           </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <a class="code-file" href="https://github.com/OliverNealDev/TileTurfer/blob/HEAD/Assets/Scripts/MapGenerator.cs" target="_blank" rel="noopener">Assets/Scripts/MapGenerator.cs</a>
+              <span class="code-note">a breadth-first fill over the four neighbours; ProcessMap() keeps the largest region it returns and walls up the rest</span>
+            </figcaption>
+<pre><code>List&lt;Vector2Int&gt; GetRegionTiles(int startX, int startY)
+{
+    List&lt;Vector2Int&gt; tiles = new List&lt;Vector2Int&gt;();
+    int[,] mapFlags = new int[width, height];
+    int tileType = map[startX, startY];
+
+    Queue&lt;Vector2Int&gt; queue = new Queue&lt;Vector2Int&gt;();
+    queue.Enqueue(new Vector2Int(startX, startY));
+    mapFlags[startX, startY] = 1;
+
+    while (queue.Count &gt; 0)
+    {
+        Vector2Int tile = queue.Dequeue();
+        tiles.Add(tile);
+
+        for (int x = tile.x - 1; x &lt;= tile.x + 1; x++)
+        {
+            for (int y = tile.y - 1; y &lt;= tile.y + 1; y++)
+            {
+                if (x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; height)
+                {
+                    if (y == tile.y || x == tile.x)
+                    {
+                        if (mapFlags[x, y] == 0 &amp;&amp; map[x, y] == tileType)
+                        {
+                            mapFlags[x, y] = 1;
+                            queue.Enqueue(new Vector2Int(x, y));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return tiles;
+}</code></pre>
+          </figure>
           <p>
             The demanding part is that enemies still need to path through this
             freshly invented geometry. Once the map is drawn, the game
@@ -308,7 +334,7 @@
       <div class="container">
         <div class="prose reveal">
           <p class="kicker">Enemy AI</p>
-          <h2>Enemies that see, remember and hunt your turf</h2>
+          <h2>Line of sight, memory, and going after your ground</h2>
           <p>
             The enemy AI runs a finite state machine, moving between spawning,
             roaming, chasing a remembered position and chasing a visible target,
@@ -319,29 +345,50 @@
           </p>
           <p>
             When roaming, enemies do not wander at random. They <strong>score
-            nearby tiles</strong> and prefer to move toward ground you own, actively
-            seeking out and overwriting your territory rather than drifting. That
-            turns the paint mechanic into a two-way fight instead of a passive
-            objective.
+            nearby tiles</strong> and prefer to move toward ground you own, and a tile of yours is worth ten times a neutral one. The noise added
+            to each score is up to half of that, so they wander a little without
+            losing the preference.
           </p>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ DIFFICULTY LOOP ============ -->
-    <section class="cs-section">
-      <div class="container">
-        <div class="prose reveal">
-          <p class="kicker">Difficulty</p>
-          <h2>One metric, wired into everything</h2>
-          <p>
-            Everything scales off the turf percentage. As you gain
-            ground, your fire rate speeds up and you unlock wider attack patterns at
-            25%, 50% and 75%. So do the enemies, and the spawn cap climbs from 3 to 40 while the spawn interval tightens from four seconds to half a second.
-          </p>
-          <p>
-            The better you do, the harder the game pushes back, with no hand-authored difficulty stages.
-          </p>
+          <figure class="code reveal">
+            <figcaption>
+              <a class="code-file" href="https://github.com/OliverNealDev/TileTurfer/blob/HEAD/Assets/Scripts/EnemyController.cs" target="_blank" rel="noopener">Assets/Scripts/EnemyController.cs</a>
+              <span class="code-note">from FindBestTileDestination(): blueTileWeight is 100, whiteTileWeight is 10 and randomScoreNoise is 50</span>
+            </figcaption>
+<pre><code>for (int x = -tileScanRadius; x &lt;= tileScanRadius; x++)
+{
+    for (int y = -tileScanRadius; y &lt;= tileScanRadius; y++)
+    {
+        Vector3Int checkPos = currentCell + new Vector3Int(x, y, 0);
+        if (!turfTilemap.HasTile(checkPos)) continue;
+
+        Vector3 worldPos = turfTilemap.GetCellCenterWorld(checkPos);
+        float distance = Vector3.Distance(transform.position, worldPos);
+
+        if (distance &lt; minMoveDistance) continue;
+
+        Color tileColor = turfTilemap.GetColor(checkPos);
+        bool isEnemyColor = turfManager.IsColorSimilar(tileColor, turfManager.enemyColor);
+        if (isEnemyColor) continue;
+
+        bool isPlayerColor = turfManager.IsColorSimilar(tileColor, turfManager.playerColor);
+
+        float score = 0f;
+
+        if (isPlayerColor) score = blueTileWeight;
+        else score = whiteTileWeight;
+
+        score += UnityEngine.Random.Range(0f, randomScoreNoise);
+
+        if (score &gt; bestScore)
+        {
+            bestScore = score;
+            bestCell = checkPos;
+            foundAny = true;
+        }
+    }
+}</code></pre>
+          </figure>
         </div>
         <figure class="media-figure reveal">
           <img src="media/tile-turfer/tile-4.webp"
@@ -415,6 +462,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10c"></script>
+  <script src="main.js?v=2026-11-10d"></script>
 </body>
 </html>

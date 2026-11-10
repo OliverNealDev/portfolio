@@ -1409,7 +1409,7 @@ html.js .show-more-wrap {
 }
 
 /* --------------------------------------------------------------------------
-   10. CASE-STUDY PAGES (cyber-station / minimalists / unicellular)
+   10. CASE-STUDY PAGES (the eight breakdowns)
    -------------------------------------------------------------------------- */
 .cs-hero { padding-block: clamp(3.5rem, 8vh, 5.5rem) 0; }
 
@@ -2372,7 +2372,6 @@ html.postview-open body { overflow: hidden; }
   .postview-zoom-img { max-height: 70vh; }
   .postview-head { padding: 1rem 1rem 0.8rem; }
   .postview-text { padding: 0 1rem 1rem; }
-  .postview-media figcaption { padding-inline: 1rem; }
   .postview-foot { padding: 0.9rem 1rem 1.05rem; }
 }
 
@@ -2497,7 +2496,7 @@ html.postview-open body { overflow: hidden; }
   font-size: var(--fs-sm);
 }
 .cv-contact li { white-space: nowrap; }
-.cv-contact .cv-contact-break { flex-basis: 100%; height: 0; }
+.cv-sheet .nb { white-space: nowrap; }
 
 .cv-sheet section { margin-top: 1.4rem; }
 .cv-sheet h2 {

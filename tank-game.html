@@ -98,7 +98,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10c">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10d">
 </head>
 <body>
 
@@ -195,7 +195,7 @@
             other while the server arbitrates what actually happens.
           </p>
           <p>
-            Around the netcode sits the full online-services flow: a login and
+            Around the netcode sits sign-in: a login and
             registration screen backed by Unity Authentication, and a display name
             persisted through Cloud Save so a profile follows the player between
             sessions. The network ticks at 30 Hz, and a ten-state menu state
@@ -290,8 +290,8 @@ void ShootRaysServerRpc()
     <section class="cs-section">
       <div class="container">
         <div class="prose reveal">
-          <p class="kicker">Aiming</p>
-          <h2>A turret that traverses rather than snaps</h2>
+          <p class="kicker">Aiming and effects</p>
+          <h2>A turret that turns at a fixed rate</h2>
           <p>
             The turret does not jump straight to the cursor. Mouse input rotates an
             invisible <strong>"desired" transform</strong>, and the real turret
@@ -299,26 +299,46 @@ void ShootRaysServerRpc()
             product against its own right vector to decide which way to rotate.
           </p>
           <p>
-            The effect is a mechanical, rate-limited swing that reads like a real
-            gun barrel coming around, rather than an instant lock-on.
+            The barrel swings round at one speed however fast the mouse moves.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <a class="code-file" href="https://github.com/OliverNealDev/NetcodeTankGame/blob/HEAD/Assets/Scripts/Controllers/TankTurretController.cs" target="_blank" rel="noopener">Assets/Scripts/Controllers/TankTurretController.cs</a>
+              <span class="code-note">the sign of one dot product picks the direction; the speed never changes</span>
+            </figcaption>
+<pre><code>void RotateTurretToMatchDesire()
+{
+    // Don't rotate turret if the "far positions" are very close to each other
+    if (Vector3.Distance(turretTransformFarPos.position, desireTurretFarPos.position) &lt; 0.05f) return;
+
+    // Find the direction to the target
+    Vector3 directionToTarget = (desireTurretFarPos.position - turretTransformFarPos.position).normalized;
+
+    // Use the turret's right vector to calculate the dot product
+    Vector3 rightVector = turretTransformFarPos.right;
+    float dotProduct = Vector3.Dot(directionToTarget, rightVector);
+
+    // Rotate turret based on the direction of the target
+    if (dotProduct &gt; 0)
+    {
+        turret.transform.Rotate(0, 0, turretRotationSpeed * Time.deltaTime); // Rotate clockwise
+    }
+    else if (dotProduct &lt; 0)
+    {
+        turret.transform.Rotate(0, 0, -turretRotationSpeed * Time.deltaTime); // Rotate counterclockwise
+    }
+}</code></pre>
+          </figure>
+
+          <p>
+            Effects follow the same server-first rule as the shots. Muzzle
+            flashes, smoke and explosions are spawned as networked objects on
+            the server so every client sees them. Each one fades its material
+            out, and when the fade completes its owner asks the server to
+            despawn it.
           </p>
         </div>
-      </div>
-    </section>
-
-    <!-- ============ VFX LIFECYCLE ============ -->
-    <section class="cs-section">
-      <div class="container">
-        <div class="prose reveal">
-          <p class="kicker">VFX</p>
-          <h2>Networked effects with a clean lifecycle</h2>
-          <p>
-            Muzzle flashes, smoke and explosions are spawned as networked objects
-            on the server so every client sees them, then tidy themselves up with a
-            proper handshake: the effect fades its material out, drifts, and when
-            the fade completes the owner asks the server to despawn it.
-          </p>
-          </div>
       </div>
     </section>
 
@@ -391,6 +411,6 @@ void ShootRaysServerRpc()
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10c"></script>
+  <script src="main.js?v=2026-11-10d"></script>
 </body>
 </html>

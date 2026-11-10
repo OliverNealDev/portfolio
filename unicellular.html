@@ -34,7 +34,7 @@
         "@id": "https://oliverneal.dev/unicellular.html#article",
         "url": "https://oliverneal.dev/unicellular.html",
         "headline": "Unicellular · Project Breakdown",
-        "description": "How Unicellular keeps thousands of FSM driven organisms simulating smoothly in Unity: a decoupled multi-rate tick, time-sliced proximity AI and careful performance work, with stress tests at 1,000 and 10,000 entities.",
+        "description": "How Unicellular keeps thousands of FSM driven organisms simulating smoothly in Unity: a decoupled multi-rate tick and time-sliced proximity AI, with stress tests at 1,000 and 10,000 entities.",
         "image": "https://oliverneal.dev/og/unicellular.jpg",
         "datePublished": "2025-02-08",
         "dateModified": "2026-11-09",
@@ -100,7 +100,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10c">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10d">
 </head>
 <body>
 
@@ -155,7 +155,7 @@
         <p class="cs-lead">
           An idle simulation built around sheer entity count: thousands of
           single celled organisms wandering, interacting and multiplying,
-          kept smooth by finite state machines and careful performance work.
+          kept smooth by a 20&nbsp;Hz behaviour tick, a 0.5&nbsp;Hz bookkeeping tick and proximity checks swept about 150 cells at a time.
         </p>
 
         <div class="cs-actions">
@@ -494,6 +494,6 @@ void FixedUpdate()
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10c"></script>
+  <script src="main.js?v=2026-11-10d"></script>
 </body>
 </html>
