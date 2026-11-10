@@ -2,13 +2,12 @@
    oliverneal.dev — design system
    Plain CSS, no build step. Two themes driven by CSS custom properties:
      html[data-theme="dark"]  — near-black surfaces, warm orange accent
-     html[data-theme="light"] — off-white surfaces, blue accent
+     html[data-theme="light"] — off-white surfaces, burnt orange accent
    Structure:
-     1. Tokens        5. Header / nav       9. Cards (projects/team)
+     1. Tokens        5. Header / nav       9. Work, about, log, contact
      2. Base          6. Hero              10. Case-study pages
-     3. Utilities     7. Sections         10b. Timeline page
-     4. Buttons       8. Out of Water      11. Footer / 11b. CV page
-                                            12. Motion & responsive
+     3. Utilities     7. Sections          11. Footer / 11b. CV page
+     4. Buttons       8. Studio            12. Motion & accessibility
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -24,6 +23,38 @@
    where legibility was the requirement rather than a personality. Deliberately
    not Inter or Geist either — those are on every other dev portfolio and are
    what a generated site looks like. */
+/* The three faces are served from this site rather than a font CDN: one
+   fewer third party for a visitor's browser to talk to, and no extra
+   connection before the first line of text can be drawn. Latin subset. */
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/public-sans-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("fonts/space-grotesk-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-500.woff2") format("woff2");
+}
+
 :root {
   --font-sans: "Public Sans", "Segoe UI", Helvetica, Arial, sans-serif;
   --font-display: "Space Grotesk", "Public Sans", "Segoe UI", sans-serif;
@@ -66,14 +97,6 @@
   --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --header-bg: rgba(14, 14, 17, 0.82);
 
-  /* Timeline page only: the veil that sits between the blurred backdrop
-     photograph and the rail, and how much of that photograph is let through.
-     A dark theme can carry more of it before the small type in front stops
-     being readable. */
-  --scene-strength: 0.55;
-  --scene-veil: rgba(14, 14, 17, 0.48);
-  --scene-veil-edge: rgba(14, 14, 17, 0.93);
-  --scene-glow: rgba(255, 123, 28, 0.42);
 }
 
 :root[data-theme="light"] {
@@ -109,11 +132,6 @@
   --code-num: #1750eb;
   --shadow: 0 12px 28px rgba(20, 20, 40, 0.10);
   --header-bg: rgba(250, 250, 250, 0.85);
-
-  --scene-strength: 0.34;
-  --scene-veil: rgba(250, 250, 250, 0.62);
-  --scene-veil-edge: rgba(250, 250, 250, 0.96);
-  --scene-glow: rgba(180, 65, 15, 0.3);
 }
 
 /* --------------------------------------------------------------------------
@@ -236,7 +254,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
    -------------------------------------------------------------------------- */
 .container {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1120px;
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 2rem);
 }
@@ -450,38 +468,44 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 /* --------------------------------------------------------------------------
    6. HERO
+   Name, role, two sentences and where to go next. The credentials are one
+   quiet line of text, not a row of badges: they are facts to check, and the
+   work further down is what does the persuading.
    -------------------------------------------------------------------------- */
-.hero { padding-block: clamp(2.25rem, 6vh, 4rem) clamp(2.25rem, 5vh, 3.25rem); }
+.hero { padding-block: clamp(3rem, 9vh, 6rem) clamp(3rem, 8vh, 5.5rem); }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-  gap: clamp(1.75rem, 5vw, 3.25rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
 }
 
-.hero h1 { margin-bottom: 0.3rem; }
+.hero h1 { margin-bottom: 0.35rem; }
 
 .hero-role {
-  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  font-weight: 500;
   color: var(--accent);
-  margin-bottom: 0.85rem;
+  margin-bottom: 1.4rem;
 }
 
 .hero-pitch {
-  max-width: 34em;
+  max-width: 33em;
   color: var(--text-2);
-  font-size: 1.05rem;
-  margin-bottom: 1.5rem;
+  font-size: clamp(1.05rem, 1.5vw, 1.16rem);
+  line-height: 1.6;
+  margin-bottom: 1.6rem;
 }
+.hero-pitch strong { color: var(--text); font-weight: 600; }
 
 /* Current role — a live status line, no chip around it */
 .now-line {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.5rem;
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-2);
@@ -506,137 +530,594 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   background: var(--ok);
 }
 
-/* Availability, dates and right to work — the three things a recruiter is
-   scanning for, so of everything in the hero this is the last text that should
-   need squinting at. It was mono at 0.78rem in the faintest grey, which is a
-   caption's styling, not the most load-bearing line on the page. Loose text
-   split by middots then read as a stray third paragraph competing with the
-   pitch above it, so the facts are chips: one row that is obviously metadata,
-   in the body face and at full contrast. */
-.hero-availability {
+.hero-creds {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem;
-  list-style: none;
-  margin: 0 0 1.5rem;
+  gap: 0.3rem 0;
+  margin: 0 0 2rem;
   padding: 0;
-  font-size: 0.86rem;
-  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-3);
 }
-.hero-availability li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.32rem 0.72rem;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--surface);
+/* The divider trails each item, so when the line wraps on a phone no row
+   starts with a stray slash. */
+.hero-creds li:not(:last-child)::after {
+  content: "/";
+  margin-inline: 0.8rem;
+  color: var(--border-strong);
 }
-.hero-availability strong { color: var(--text); font-weight: 600; }
+.hero-creds strong { color: var(--text-2); font-weight: 500; }
 
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
-/* The PDF, one click from the hero. Quiet on purpose: it is the alternative
-   to the CV page beside it, not a fourth competing button. */
-.hero-cv-note {
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-  color: var(--text-2);
-}
-/* Inline rather than a flex row: as a flex container each text node became
-   its own line, which broke the sentence into three. */
-.hero-cv-note .icon {
-  width: 1em;
-  height: 1em;
-  margin-right: 0.35rem;
-  vertical-align: -0.15em;
-  color: var(--text-3);
-}
-
-.social-row { display: flex; gap: 0.4rem; }
+.social-row { display: flex; gap: 0.25rem; margin-left: -0.6rem; }
 .social-row .icon-btn { border-color: transparent; }
 .social-row .icon-btn:hover { border-color: var(--border); }
 
-/* Portrait.
-   It was a 270px circle floating in the middle of its column, which read as a
-   profile avatar dropped next to the text rather than as part of the layout:
-   the circle was the only one on a site built entirely from 4-6px rectangles,
-   and at that size it left a lot of air beside a tall block of copy. Now it is
-   a portrait-format panel in the same idiom as the cards, big enough to hold
-   its own half of the grid.
-
-   The source is square and the frame is taller than it is wide, so cover
-   scales to the height and the crop comes off the sides: the full head and
-   shoulders survive, and only the backdrop is lost. */
-.hero-portrait {
-  justify-self: center;
-  width: min(340px, 100%);
-}
-.hero-portrait img {
+.portrait { justify-self: end; width: 100%; }
+.portrait img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  border: 1px solid var(--border);
 }
 
 @media (max-width: 760px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-portrait {
+  .portrait {
     grid-row: 1;
     justify-self: start;
-    width: min(220px, 55vw);
-    margin-bottom: 0.75rem;
+    width: min(168px, 44vw);
   }
 }
 
 /* --------------------------------------------------------------------------
-   7. SECTIONS — about, skills, education, contact
+   7. SECTIONS
    -------------------------------------------------------------------------- */
 .section + .section { border-top: 1px solid var(--border); }
 
-/* About */
-.about-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
-  gap: clamp(2rem, 5vw, 3.5rem);
-  align-items: start;
-}
-.about-copy p { color: var(--text-2); }
-.about-copy p strong { color: var(--text); font-weight: 600; }
+/* Old links to the sections this page used to have still land somewhere */
+.anchor-alias { display: block; height: 0; }
 
-.fact-list {
+/* --------------------------------------------------------------------------
+   8. STUDIO — Out of Water and how the technical side is run
+   -------------------------------------------------------------------------- */
+/* Hero shot. The pair sit in the middle of the frame, so a crop a little
+   above centre holds them and leaves the dock under the title. */
+.oow-hero { position: relative; }
+.oow-hero img {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 44vw, 520px);
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+.oow-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(6, 8, 12, 0.88) 0%, rgba(6, 8, 12, 0.45) 30%, rgba(6, 8, 12, 0) 58%),
+    linear-gradient(to right, rgba(6, 8, 12, 0.35), rgba(6, 8, 12, 0) 45%);
+  pointer-events: none;
+}
+.oow-hero-text {
+  position: absolute;
+  z-index: 1;
+  left: clamp(1.25rem, 4vw, 2.5rem);
+  right: clamp(1.25rem, 4vw, 2.5rem);
+  bottom: clamp(1.1rem, 3.5vw, 2.25rem);
+  max-width: 40rem;
+  color: #fff;
+  pointer-events: none;
+}
+.oow-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+.oow-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+.oow-pitch {
+  margin: 0;
+  max-width: 34rem;
+  font-size: clamp(0.98rem, 1.6vw, 1.12rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+.oow-hero {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+/* Studio on the left, the step up on the right */
+.oow-role {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.oow-studio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--text);
+}
+.oow-studio strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+.oow-studio:hover strong { color: var(--accent); }
+.oow-studio-sub {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-3);
+}
+.oow-studio-logo {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+}
+/* Black-background logo on dark theme, light-blue-background logo on light */
+[data-theme="dark"]  .oow-studio-logo.light { display: none; }
+[data-theme="light"] .oow-studio-logo.dark  { display: none; }
+
+/* Role path: the title now with the live dot, the internship it grew out of
+   beside it, joined by a rail so the step up reads at a glance. Laid out
+   left to right, newest first. */
+.role-path {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2.25rem;
+  position: relative;
+}
+.role-path li {
+  position: relative;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.1rem;
+  padding-left: 1.3rem;
 }
-.fact-list li {
-  border: 1px solid var(--border);
+.role-path li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.38rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   background: var(--surface);
-  border-radius: 4px;
-  padding: 0.85rem 1.1rem;
+  border: 2px solid var(--border-strong);
 }
-.fact-list .fact-num {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
+.role-path li.is-current::before {
+  background: var(--ok);
+  border-color: var(--ok);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent);
+}
+/* The rail between the two dots */
+.role-path li + li::after {
+  content: "";
+  position: absolute;
+  top: 0.68rem;
+  right: calc(100% + 0.35rem);
+  width: 1.55rem;
+  height: 2px;
+  background: linear-gradient(to left, var(--border-strong), var(--ok));
+  opacity: 0.8;
+}
+.role-path-title {
+  font-family: var(--font-display);
   font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--text-2);
+}
+.role-path li.is-current .role-path-title { color: var(--text); }
+.role-path-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Three lines on the job, one column each */
+.duties {
+  list-style: none;
+  margin: 0;
+  padding: clamp(1.75rem, 4vw, 2.5rem) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem clamp(1.5rem, 4vw, 3rem);
+  color: var(--text-2);
+  font-size: 0.97rem;
+  line-height: 1.6;
+}
+.duties b {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* The decisions. Each one is a row: what was decided on the left, and the
+   reasoning, the cost and the evidence on the right. A cost is listed for
+   every one because a decision with no downside was not a decision. */
+.decisions-head {
+  max-width: 640px;
+  margin: clamp(3.5rem, 8vw, 5.5rem) 0 0;
+}
+.decisions-head h3 {
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+  margin-bottom: 0.4em;
+}
+.decisions-head p:last-child { color: var(--text-2); margin: 0; }
+
+.decisions {
+  list-style: none;
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+  padding: 0;
+  counter-reset: decision;
+  border-bottom: 1px solid var(--border);
+}
+.decision {
+  counter-increment: decision;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 0.75rem clamp(1.25rem, 3.5vw, 3rem);
+  padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+  border-top: 1px solid var(--border);
+}
+.decision::before {
+  content: counter(decision, decimal-leading-zero);
+  padding-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
   color: var(--accent);
 }
-.fact-list .fact-label { font-size: 0.86rem; color: var(--text-2); }
+.decision-topic {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.decision h4 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.15rem, 2vw, 1.32rem);
+  line-height: 1.25;
+}
+.decision-what {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.97rem;
+}
+.decision dl {
+  margin: 0;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+.decision dl div {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: 1rem;
+}
+.decision dt {
+  padding-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.decision dd {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.decision dd strong { color: var(--text); font-weight: 600; }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+  .decision { grid-template-columns: 2.5rem minmax(0, 1fr); }
+  .decision dl { grid-column: 2; margin-top: 0.6rem; }
+}
+@media (max-width: 520px) {
+  .decision { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+  .decision::before { padding-top: 0; }
+  .decision dl { grid-column: 1; margin-top: 0.9rem; }
+  .decision dl div { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
+  .decision dt { padding-top: 0; }
+}
+
+.studio-foot {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--text-2);
+  font-size: 0.95rem;
+}
+.studio-foot p { margin: 0; max-width: 52ch; }
+.studio-foot b { color: var(--text); font-weight: 600; }
+
+@media (max-width: 820px) {
+  .duties { grid-template-columns: 1fr; }
+  .studio-foot { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  /* The two roles stack here, so the rail between them would point at nothing */
+  .role-path { flex-direction: column; }
+  .role-path li + li::after { display: none; }
+  .oow-hero img { height: 340px; object-position: 50% 35%; }
+}
+
+/* --------------------------------------------------------------------------
+   9. WORK — four projects shown large, the rest as a list
+   -------------------------------------------------------------------------- */
+.features { display: grid; }
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4.5vw, 3.5rem);
+  align-items: center;
+  padding-block: clamp(2.25rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--border);
+}
+.feature:first-child { border-top: 0; padding-top: 0; }
+/* Alternate sides down the page so the column of screenshots does not read
+   as a sidebar. Source order stays media first for a screen reader. */
+.feature:nth-child(even) .feature-media { order: 2; }
+
+.feature-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  transition: border-color 0.25s ease;
+}
+.feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.feature:hover .feature-media { border-color: var(--border-strong); }
+
+/* Video preview: injected by main.js for [data-video] media */
+.card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.playing .card-video { opacity: 1; }
+
+.feature-meta {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+.feature h3 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.5rem, 3vw, 1.95rem);
+  letter-spacing: -0.02em;
+}
+.feature h3 a { color: var(--text); }
+.feature h3 a:hover { color: var(--accent); }
+.feature-body > p { color: var(--text-2); margin: 0 0 1rem; max-width: 46ch; }
+
+/* The one thing about the project worth remembering */
+.feature-point {
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+  color: var(--text) !important;
+  font-size: 0.97rem;
+}
+
+.feature-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.4rem;
+  margin-top: 1.5rem;
+}
+.feature-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.feature-links a:hover { color: var(--accent); }
+.feature-links .feature-cta { color: var(--accent); }
+.feature-links .feature-cta .icon { transition: transform 0.2s ease; }
+.feature-links .feature-cta:hover .icon { transform: translateX(3px); }
+
+/* The award, credited once beside the project that won it */
+.award {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 1.25rem 0 0;
+}
+.award img {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.award figcaption {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.award figcaption b { display: block; color: var(--text); font-weight: 600; }
+
+@media (max-width: 820px) {
+  .feature { grid-template-columns: 1fr; gap: 1.4rem; }
+  .feature:nth-child(even) .feature-media { order: 0; }
+}
+
+.more-head {
+  margin: clamp(2.5rem, 6vw, 4rem) 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.work-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.work-list a {
+  display: grid;
+  grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr) auto 1.2rem;
+  align-items: baseline;
+  gap: 0.3rem clamp(1rem, 3vw, 2rem);
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.work-list h4 {
+  margin: 0;
+  font-size: 1.04rem;
+  transition: color 0.2s ease;
+}
+.work-list p { margin: 0; color: var(--text-2); font-size: 0.93rem; }
+.work-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.work-list .icon {
+  align-self: center;
+  color: var(--text-3);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.work-list a:hover h4 { color: var(--accent); }
+.work-list a:hover .icon { color: var(--accent); transform: translateX(3px); }
+
+@media (max-width: 820px) {
+  .work-list a { grid-template-columns: minmax(0, 1fr) 1.2rem; }
+  .work-list h4, .work-list p, .work-meta { grid-column: 1; }
+  .work-list .icon { grid-column: 2; grid-row: 1 / span 3; }
+  .work-meta { white-space: normal; }
+}
+
+/* --------------------------------------------------------------------------
+   9b. ABOUT, LOG, CONTACT
+   -------------------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2rem, 6vw, 4.5rem);
+  align-items: start;
+}
+.about-copy p { color: var(--text-2); max-width: 36em; }
+.about-copy p strong { color: var(--text); font-weight: 600; }
+.about-copy p:last-child { margin-bottom: 0; }
+
+/* Qualifications and the award: label, the thing itself, where and when */
+.paper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.paper li {
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.paper-k {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.paper-v {
+  display: block;
+  margin: 0.2rem 0 0.1rem;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+}
+.paper-n { font-size: 0.88rem; color: var(--text-2); }
+
+@media (max-width: 820px) {
   .about-grid { grid-template-columns: 1fr; }
-  .fact-list { grid-template-columns: 1fr 1fr; }
+}
+
+.subhead {
+  margin: clamp(2.5rem, 6vw, 4rem) 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
 }
 
 /* Skills — labelled rows rather than tag chips */
@@ -665,71 +1146,6 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 @media (max-width: 640px) {
   .skills-row { grid-template-columns: 1fr; gap: 0.2rem; }
-}
-
-/* Education timeline */
-.timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 1rem;
-}
-.timeline li {
-  position: relative;
-  display: flex;
-  gap: 1.1rem;
-  align-items: flex-start;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 4px;
-  padding: 1.2rem 1.4rem 1.2rem 1.7rem;
-  overflow: hidden;
-}
-
-/* Institution logos fill their tile edge to edge; each links out to the
-   institution's website. */
-.edu-logo-link {
-  flex: none;
-  display: block;
-  border-radius: 4px;
-}
-.edu-logo {
-  flex: none;
-  width: 96px;
-  height: 96px;
-  object-fit: cover;
-  border-radius: 4px;
-  border: 1px solid var(--border);
-  transition: border-color 0.2s ease;
-}
-.edu-logo-link:hover .edu-logo { border-color: var(--accent-border); }
-
-@media (max-width: 640px) {
-  .edu-logo { width: 72px; height: 72px; }
-}
-.timeline li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--accent);
-  opacity: 0.75;
-}
-.timeline h3 { margin-bottom: 0.15rem; font-size: 1.05rem; }
-.timeline .edu-org { color: var(--text-2); font-size: 0.95rem; }
-.timeline .edu-meta {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-3);
-  margin-top: 0.5rem;
-}
-.timeline .edu-meta strong { color: var(--accent); font-weight: 600; }
-.timeline .edu-note {
-  color: var(--text-2);
-  font-size: 0.88rem;
-  margin: 0.5rem 0 0;
-  max-width: 46em;
 }
 
 /* LinkedIn log — native representations of the posts, styled like the
@@ -777,7 +1193,9 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
-.post-media.single img { aspect-ratio: 16 / 9; }
+/* 2:1 is the height of the two squares beside it, so every card's text
+   starts on the same line whichever kind of media it has. */
+.post-media.single img { aspect-ratio: 2 / 1; }
 
 /* Corner note on media, e.g. "1-minute demo" where the post holds a video */
 .post-flag {
@@ -973,545 +1391,16 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .form-status.error { color: var(--accent); }
 .contact-form.sending button[type="submit"] { opacity: 0.6; pointer-events: none; }
 
-/* --------------------------------------------------------------------------
-   8. OUT OF WATER — the Shiverbug section on the home page
-   Game first (one big shot with the title over it), then the studio and the
-   step up, three lines on the job, and four short cards, quick enough to
-   read in passing.
-   -------------------------------------------------------------------------- */
-.oow {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 6px;
-  overflow: hidden;
-}
 
-/* Hero shot. The pair sit in the middle of the frame, so a crop a little
-   above centre holds them and leaves the dock under the title. */
-.oow-hero { position: relative; }
-.oow-hero img {
-  display: block;
-  width: 100%;
-  height: clamp(300px, 44vw, 520px);
-  object-fit: cover;
-  object-position: 50% 40%;
-}
-.oow-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to top, rgba(6, 8, 12, 0.88) 0%, rgba(6, 8, 12, 0.45) 30%, rgba(6, 8, 12, 0) 58%),
-    linear-gradient(to right, rgba(6, 8, 12, 0.35), rgba(6, 8, 12, 0) 45%);
-  pointer-events: none;
-}
-.oow-hero-text {
-  position: absolute;
-  z-index: 1;
-  left: clamp(1.25rem, 4vw, 2.5rem);
-  right: clamp(1.25rem, 4vw, 2.5rem);
-  bottom: clamp(1.1rem, 3.5vw, 2.25rem);
-  max-width: 40rem;
-  color: #fff;
-  pointer-events: none;
-}
-.oow-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0 0 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
-}
-.oow-title {
-  margin: 0 0 0.4rem;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5.5vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: #fff;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
-}
-.oow-pitch {
-  margin: 0;
-  max-width: 34rem;
-  font-size: clamp(0.98rem, 1.6vw, 1.12rem);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* Studio on the left, the step up on the right */
-.oow-role {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem 2.5rem;
-  padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem);
-  border-bottom: 1px solid var(--border);
-}
-.oow-studio {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.85rem;
-  color: var(--text);
-}
-.oow-studio strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  transition: color 0.2s ease;
-}
-.oow-studio:hover strong { color: var(--accent); }
-.oow-studio-sub {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-3);
-}
-.oow-studio-logo {
-  width: 52px;
-  height: 52px;
-  flex: none;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  object-fit: cover;
-}
-/* Black-background logo on dark theme, light-blue-background logo on light */
-[data-theme="dark"]  .oow-studio-logo.light { display: none; }
-[data-theme="light"] .oow-studio-logo.dark  { display: none; }
-
-/* Role path: the title now with the live dot, the internship it grew out of
-   beside it, joined by a rail so the step up reads at a glance. Laid out
-   left to right, newest first. */
-.role-path {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 2.25rem;
-  position: relative;
-}
-.role-path li {
-  position: relative;
-  display: grid;
-  gap: 0.1rem;
-  padding-left: 1.3rem;
-}
-.role-path li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.38rem;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--border-strong);
-}
-.role-path li.is-current::before {
-  background: var(--ok);
-  border-color: var(--ok);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent);
-}
-/* The rail between the two dots */
-.role-path li + li::after {
-  content: "";
-  position: absolute;
-  top: 0.68rem;
-  right: calc(100% + 0.35rem);
-  width: 1.55rem;
-  height: 2px;
-  background: linear-gradient(to left, var(--border-strong), var(--ok));
-  opacity: 0.8;
-}
-.role-path-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.98rem;
-  line-height: 1.3;
-  color: var(--text-2);
-}
-.role-path li.is-current .role-path-title { color: var(--text); }
-.role-path-meta {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-
-/* Three lines on the job, one column each */
-.oow-do {
-  list-style: none;
-  margin: 0;
-  padding: clamp(1.4rem, 3vw, 1.9rem) clamp(1.25rem, 4vw, 2.5rem);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem 2.25rem;
-  color: var(--text-2);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-.oow-do li { padding-top: 0.85rem; border-top: 2px solid var(--accent); }
-.oow-do-k {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-family: var(--font-display);
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-/* Six cards, two to a row. Text only until more stills are cleared by the
-   studio; .oow-card-media is ready for one above a card's body. */
-.oow-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
-}
-.oow-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  background: var(--bg-soft);
-  overflow: hidden;
-  transition: border-color 0.2s ease;
-}
-.oow-card:hover { border-color: var(--border-strong); }
-.oow-card-media { overflow: hidden; }
-.oow-card-media img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 8;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.oow-card:hover .oow-card-media img { transform: scale(1.03); }
-.oow-card-body { padding: 1.1rem 1.25rem 1.3rem; }
-.oow-card-k {
-  margin: 0 0 0.35rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.oow-card h4 {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  line-height: 1.3;
-  color: var(--text);
-}
-.oow-card-body p:last-child {
-  margin: 0;
-  color: var(--text-2);
-  font-size: 0.93rem;
-  line-height: 1.55;
-}
-
-/* The one number worth a headline */
-.oow-stat {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0.1rem 0 0.55rem;
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--text);
-}
-.oow-stat span:first-child { color: var(--text-3); text-decoration: line-through; text-decoration-thickness: 2px; }
-.oow-stat .icon { width: 1.1rem; height: 1.1rem; color: var(--accent); }
-/* What the number counts, set small beside it so it cannot be misread */
-.oow-stat { flex-wrap: wrap; align-items: baseline; }
-.oow-stat small {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--text-3);
-}
-
-/* The pipeline card's answer to that number: the route a change takes,
-   as stops on a short rail, the playtest build at the end lit in the
-   accent. Wraps rather than squeezes on a phone. */
-.oow-flow {
-  list-style: none;
-  margin: 0.15rem 0 0.7rem;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1.3rem;
-}
-.oow-flow li {
-  position: relative;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 4px;
-  background: var(--surface);
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: 0.03em;
-  color: var(--text);
-}
-/* Rail from this stop to the next */
-.oow-flow li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: calc(50% - 1px);
-  left: calc(100% + 1px);
-  width: 1.3rem;
-  height: 2px;
-  background: linear-gradient(to right, var(--border-strong), var(--accent-border));
-}
-.oow-flow li.is-build {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--accent-contrast);
-}
-/* The row needs about 24rem. Narrower than that (phones, and the two-up
-   grid just above the breakpoint) it folds into two by two, and the rail
-   off the end of the first line goes, so no rail points at nothing. */
-.oow-card-body { container-type: inline-size; }
-@container (max-width: 24.5rem) {
-  .oow-flow {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: start;
-  }
-  .oow-flow li { text-align: center; }
-  .oow-flow li:nth-child(2)::after { display: none; }
-}
-
-.oow-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-  padding: clamp(1.4rem, 3vw, 1.9rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.5rem, 3.5vw, 2.1rem);
-}
-.oow-team {
-  margin: 0;
-  max-width: 56ch;
-  color: var(--text-2);
-  font-size: 0.95rem;
-}
-
-@media (max-width: 820px) {
-  .oow-do { grid-template-columns: 1fr; }
-  .oow-cards { grid-template-columns: 1fr; }
-}
-@media (max-width: 560px) {
-  /* The two roles stack here, so the rail between them would point at nothing */
-  .role-path { flex-direction: column; }
-  .role-path li + li::after { display: none; }
-  .oow-hero img { height: 340px; object-position: 50% 35%; }
-}
-
-/* --------------------------------------------------------------------------
-   9. CARDS — solo & team project grids, case-study links
-   -------------------------------------------------------------------------- */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
-  gap: 1.25rem;
-}
-
-/* Featured project — full-width card above the grid. The screenshot spans the
-   whole card as the hero, and the row underneath splits into the write-up and
-   a compact award column. Both are content sized, so neither leaves the tall
-   empty panel a full-height award rail used to.
-   Needs .card.project-featured: plain .project-featured loses to .card's
-   display:flex further down the file. */
-.card.project-featured {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(220px, 26vw, 320px);
-  grid-template-rows: auto auto;
-  margin-bottom: 1.25rem;
-}
-.project-featured .card-media {
-  grid-column: 1 / -1;
-  grid-row: 1; /* 16:9 comes from .card-media; only the placement differs here */
-}
-.project-featured .card-body {
-  grid-column: 1;
-  grid-row: 2;
-  padding: clamp(1.25rem, 3vw, 1.9rem);
-}
-.project-featured .card-top h3 { font-size: 1.35rem; }
-.project-featured .card-body > p { flex: initial; max-width: 68ch; }
-/* The award column beside this one is taller than the write-up, so the links
-   would otherwise stop mid-card and leave a gap under them. Pin them to the
-   bottom and any spare height collects above the rule instead. */
-.project-featured .card-links { margin-top: auto; }
-
-/* The four systems the game is built around, as a labelled list rather than
-   another paragraph — they are the thing worth scanning on this card. */
-.project-systems {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.4rem;
-  max-width: 68ch;
-  font-size: 0.9rem;
-  color: var(--text-2);
-}
-.project-systems li {
-  position: relative;
-  padding-left: 0.9rem;
-  line-height: 1.5;
-}
-.project-systems li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.62em;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-.project-systems b {
-  color: var(--text);
-  font-weight: 600;
-}
-.project-systems b::after {
-  content: " · "; /* the separator used across the rest of the site */
-  color: var(--text-3);
-  font-weight: 400;
-}
-
-.project-support { font-size: 0.9rem; }
-
-/* Compact spec strip: mono labels over values */
-.project-specs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 2rem;
-  margin: 0.2rem 0 0;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--border);
-}
-.project-specs dt {
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.project-specs dd {
-  margin: 0.15rem 0 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.award-shot {
-  grid-column: 2;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* sit at the top; never float in spare height */
-  gap: 0.75rem;
-  margin: 0;
-  padding: clamp(1.25rem, 3vw, 1.9rem);
-  border-left: 1px solid var(--border);
-  background: var(--bg-soft);
-}
-.award-shot img {
-  width: 100%;
-  border-radius: 3px;
-  border: 1px solid var(--border);
-}
-.award-shot figcaption {
-  /* The write-up column sets the row height, and it will rarely match this
-     column exactly. Anchoring the credit to the base means the leftover shows
-     up as spacing between photo and credit rather than a dead block under
-     both — and it self corrects at any width instead of needing tuned heights. */
-  margin-top: auto;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  line-height: 1.55;
-  color: var(--text-3);
-}
-.award-shot-head {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 0.35rem;
-  color: var(--accent);
-  font-size: 0.76rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-.award-shot-head .icon { width: 1.05em; height: 1.05em; }
-
-@media (max-width: 900px) {
-  /* Stack: screenshot, write-up, then the award as a photo-and-caption row */
-  .card.project-featured { grid-template-columns: 1fr; }
-  .project-featured .card-media,
-  .project-featured .card-body,
-  .award-shot { grid-column: 1; grid-row: auto; }
-  .award-shot {
-    flex-direction: row;
-    align-items: center;
-    gap: 1.2rem;
-    border-left: 0;
-    border-top: 1px solid var(--border);
-    padding: 1.2rem clamp(1.25rem, 3vw, 1.9rem);
-  }
-  .award-shot img { width: 150px; flex: none; }
-  .award-shot figcaption { margin-top: 0; } /* row layout: no base to anchor to */
-}
-
-/* Under a filter the featured card is just one result among others, so it
-   drops the hero layout and sits in the grid like everything else. main.js
-   moves it into the grid and adds this class. */
-.card.project-featured.is-collapsed {
-  display: flex;
-  flex-direction: column;
-  grid-template-columns: none;
-  grid-template-rows: none;
-  margin-bottom: 0;
-}
-.project-featured.is-collapsed .award-shot { display: none; }
-.project-featured.is-collapsed .card-body {
-  padding: 1.15rem 1.25rem 1.25rem;
-}
-.project-featured.is-collapsed .card-top h3 { font-size: 1.08rem; }
-/* The extra detail earns its place on the hero card, not in a grid tile */
-.project-featured.is-collapsed .project-systems,
-.project-featured.is-collapsed .project-support,
-.project-featured.is-collapsed .project-specs { display: none; }
-
-/* "Show all projects" toggle — the grid starts collapsed (extra cards hidden)
-   only when JS is available to expand it again */
+/* "Show older posts" toggle: hidden without JS, when every post is visible */
 .show-more-wrap { display: none; }
 html.js .show-more-wrap {
   display: flex;
   justify-content: center;
   margin-top: 1.75rem;
 }
-html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 
-/* Award line on the featured card / case-study hero — a credit, not a badge */
+/* Award line on a case-study hero — a credit, not a badge */
 .award-badge {
   display: flex;
   align-items: baseline;
@@ -1532,214 +1421,6 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
   height: 1.15em;
   color: var(--accent);
   transform: translateY(0.15em);
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 4px;
-  overflow: hidden;
-  transition: border-color 0.2s ease;
-}
-/* Hover reads as "this one is selected", not "this one is floating" — no lift,
-   no drop shadow, no image zoom. The border and the title carry it. */
-.card:hover { border-color: var(--accent-border); }
-.card:hover .card-top h3 { color: var(--accent); }
-
-.card-media {
-  position: relative;
-  display: block;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: var(--bg-soft);
-}
-.card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Video preview: injected by main.js on hover for [data-video] media */
-.card-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.card-media.playing .card-video { opacity: 1; }
-
-.media-badge {
-  position: absolute;
-  right: 0.6rem;
-  bottom: 0.6rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.22rem 0.55rem;
-  border-radius: 3px;
-  background: rgba(10, 10, 12, 0.72);
-  color: #f0f0f3;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  pointer-events: none;
-}
-.media-badge .icon { width: 0.85em; height: 0.85em; }
-
-/* On touch there is nothing to hover, so the prompt would be a lie. main.js
-   plays those previews on scroll instead and sets .previews-in-view, which
-   drops the badge because the moving card is its own affordance. The media
-   query is the no-JS fallback for the same devices. */
-@media (hover: none) {
-  .media-badge { display: none; }
-}
-.previews-in-view .media-badge { display: none; }
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 0.7rem;
-  padding: 1.15rem 1.25rem 1.25rem;
-}
-
-.card-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-.card-top h3 { margin: 0; font-size: 1.08rem; }
-
-.card-date {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: var(--text-3);
-  white-space: nowrap;
-}
-
-.card-body > p {
-  margin: 0;
-  color: var(--text-2);
-  font-size: 0.93rem;
-  flex: 1;
-}
-
-.card-role {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-2);
-}
-.card-role strong { color: var(--text); font-weight: 600; }
-
-.card-body > .team-badge { align-self: flex-start; }
-
-/* Team cards: don't stretch paragraphs apart to fill the card — let content
-   flow from the top and collect any spare height just above the links row,
-   so a short card doesn't get odd gaps in the middle. */
-#team .card-body > p { flex: initial; }
-#team .card-links { margin-top: auto; }
-
-.team-badge {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-  background: var(--accent-soft);
-  border-radius: 3px;
-  padding: 0.18rem 0.6rem;
-}
-
-.card-links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1.1rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--border);
-}
-.card-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: var(--text-2);
-  padding-block: 0.35rem;
-}
-.card-links a:hover { color: var(--accent); }
-
-/* Breakdown CTA — the one filled button on each card, so the case study
-   is unmissable next to the quieter external links. */
-.card-links .card-cta {
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  background: var(--accent);
-  color: var(--accent-contrast);
-  transition: background-color 0.2s ease;
-}
-.card-links .card-cta:hover {
-  background: var(--accent-hover);
-  color: var(--accent-contrast);
-}
-.card-links .card-cta .icon { transition: transform 0.2s ease; }
-.card-links .card-cta:hover .icon { transform: translateX(3px); }
-
-/* Case-study links (index, section 07) — deliberately a text list, not a
-   second gallery. Every one of these projects already has a card above with
-   its own screenshot; repeating the thumbnails made the page scroll twice
-   through the same eight games. This is the index to them, so it reads like
-   one: three across, no images, no lazy-loaded requests. */
-.bd-list {
-  display: grid;
-  gap: 0.65rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-}
-
-.bd-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.75rem;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 4px;
-  padding: 0.8rem 0.85rem;
-  color: var(--text);
-  transition: border-color 0.2s ease;
-}
-.bd-card:hover {
-  border-color: var(--accent-border);
-  color: var(--text);
-}
-.bd-card h3 { margin-bottom: 0.2rem; font-size: 1rem; }
-.bd-card p {
-  margin: 0;
-  color: var(--text-2);
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-.bd-arrow {
-  width: 1.4rem;
-  height: 1.4rem;
-  color: var(--text-3);
-  transition: transform 0.25s ease, color 0.25s ease;
-  margin-right: 0.25rem;
-}
-.bd-card:hover .bd-arrow { transform: translateX(4px); color: var(--accent); }
-
-@media (max-width: 640px) {
-  .bd-arrow { display: none; }
-  .bd-card { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1815,37 +1496,6 @@ html.js #solo-grid:not(.expanded) .project-extra { display: none; }
 }
 .facts .fact-v { font-weight: 600; font-size: 0.95rem; }
 
-/* Project filter bar */
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.9rem;
-}
-.filter-btn {
-  padding: 0.4rem 0.85rem;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--surface);
-  color: var(--text-2);
-  font: inherit;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-}
-.filter-btn:hover { color: var(--text); border-color: var(--border-strong); }
-.filter-btn.current {
-  color: var(--accent);
-  border-color: var(--accent-border);
-  background: var(--accent-soft);
-}
-.filter-status {
-  margin: 0 0 1.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-3);
-}
 
 /* Architecture layer list — count, layer name, what it owns */
 .arch-list {
@@ -2689,1011 +2339,6 @@ html.postview-open body { overflow: hidden; }
 }
 
 /* --------------------------------------------------------------------------
-   10b. TIMELINE PAGE (timeline.html)
-
-   One set of markup, two layouts.
-
-   The DEFAULT is a plain vertical list: a rule down the left, a dot and a date
-   per milestone, a card beside it. That is what renders with no JavaScript, on
-   a phone, on a short window, and under prefers-reduced-motion.
-
-   The horizontal layout only applies once main.js has measured the rail and
-   set data-mode="pinned" on .tl. Then .tl becomes a tall scroll driver, the
-   stage inside it sticks under the header, and the rail is translated left as
-   the page scrolls, one pixel of travel per pixel of scroll. The page scroll
-   is never intercepted, so the scrollbar stays truthful and trackpad, wheel,
-   touch and keyboard all behave normally.
-   -------------------------------------------------------------------------- */
-.tl-intro { padding-block: clamp(3rem, 7vh, 4.5rem) clamp(1.75rem, 4vh, 2.5rem); }
-
-.tl-lead {
-  max-width: 46em;
-  font-size: 1.12rem;
-  color: var(--text-2);
-  margin-bottom: 1.6rem;
-}
-
-/* Legend — the same four marker treatments used on the rail itself */
-.tl-legend {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 1.6rem;
-  padding: 0;
-  margin: 0 0 1.3rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.tl-legend li { display: inline-flex; align-items: center; gap: 0.55rem; }
-
-.tl-howto {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0;
-  font-size: 0.88rem;
-  color: var(--text-3);
-}
-.tl-howto .icon { flex: none; color: var(--accent); transform: rotate(90deg); }
-
-/* Markers. One vocabulary, shared by the legend keys and the rail dots:
-   hollow ring for education, small solid dot for a project, filled accent for
-   an award, filled accent with a halo for work, larger accent ring for the
-   two endpoints. */
-.tl-dot,
-.tl-key {
-  flex: none;
-  position: relative;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid var(--border-strong);
-  background: var(--bg);
-}
-.tl-item[data-kind="project"] .tl-dot,
-.tl-key[data-kind="project"] {
-  width: 9px;
-  height: 9px;
-  border-color: var(--text-3);
-  background: var(--text-3);
-}
-.tl-item[data-kind="award"] .tl-dot,
-.tl-key[data-kind="award"] {
-  border-color: var(--accent);
-  background: var(--accent);
-}
-.tl-item[data-kind="work"] .tl-dot,
-.tl-key[data-kind="work"] {
-  border-color: var(--accent);
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
-}
-.tl-item[data-kind="origin"] .tl-dot,
-.tl-item[data-kind="next"] .tl-dot {
-  width: 14px;
-  height: 14px;
-  border-color: var(--accent);
-}
-
-/* ---- Default layout: a vertical list ------------------------------------ */
-/* As a list the rail is the page's one column, so it carries the same width
-   and gutters as .container does everywhere else. */
-.tl-rail {
-  list-style: none;
-  width: 100%;
-  max-width: 1080px;
-  margin-inline: auto;
-  padding: 0 clamp(1.25rem, 5vw, 2rem) clamp(3rem, 7vh, 4.5rem);
-  display: grid;
-  gap: 1.1rem;
-}
-
-.tl-item,
-.tl-gap {
-  position: relative;
-  padding-left: 1.9rem;
-}
-/* The rule the dots sit on. It runs through the gap to the next milestone,
-   and stops at the last dot rather than trailing into nothing. */
-.tl-item::before,
-.tl-gap::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 0;
-  bottom: -1.1rem;
-  width: 1px;
-  background: var(--border);
-}
-.tl-item:last-child::before { bottom: auto; height: 0.9rem; }
-
-/* The one stretch where drawing the real spacing would be four screens of
-   nothing. It is compressed rather than dropped, and says so, so the jump in
-   the scale is disclosed instead of quietly hidden. Dashes rather than a solid
-   rule, because the time inside it is not being drawn to scale. */
-.tl-gap::before {
-  background: repeating-linear-gradient(
-    to bottom, var(--border) 0 4px, transparent 4px 10px
-  );
-}
-.tl-gap-text {
-  display: grid;
-  gap: 0.2rem;
-  margin: 0;
-  padding-block: 0.15rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.tl-gap-text b { font-weight: 500; color: var(--text-2); }
-
-.tl-axis {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin: 0 0 0.55rem -1.9rem; /* pull the dot back onto the rule */
-}
-.tl-date {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  color: var(--text-3);
-}
-.tl-item[data-kind="award"] .tl-date,
-.tl-item[data-kind="work"] .tl-date,
-.tl-item[data-kind="next"] .tl-date,
-.tl-item[data-kind="origin"] .tl-date { color: var(--accent); }
-
-/* The card is a two column box wherever there is room: the shot on the left,
-   the write-up beside it. Pinned mode restacks it into a column, because there
-   a card is only 300px wide. */
-.tl-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.95rem;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 4px;
-  padding: 1.1rem 1.25rem 1.2rem;
-}
-.tl-now .tl-card { border-color: var(--accent-border); }
-
-.tl-text { min-width: 0; }
-.tl-text > *:last-child { margin-bottom: 0; }
-
-/* Pictures. A card can only ever show a crop of one, so every picture is also
-   the control that opens the uncropped frame in the viewer, and on a game it
-   plays its own preview under the pointer. Landscape sources share one shape so
-   the cards line up; a portrait source gets a portrait shape of its own rather
-   than being squeezed into a landscape one, which is the only way both people
-   in a photograph of two people survive the crop. */
-.tl-shot {
-  flex: none;
-  margin: 0;
-  min-width: 0;
-}
-
-.tl-media {
-  position: relative;
-  display: block;
-  width: 100%;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--bg-soft);
-  color: inherit;
-  cursor: zoom-in;
-  transition: border-color 0.22s ease;
-}
-.tl-media img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-              filter 0.35s ease;
-}
-.tl-media:hover,
-.tl-media:focus-visible { border-color: var(--accent-border); }
-.tl-media:hover img,
-.tl-media:focus-visible img { transform: scale(1.04); }
-
-/* The preview <video> main.js injects. Same element and same .playing switch
-   the project cards on the home page use, so there is one mechanism, not two. */
-.tl-media.playing .card-video { opacity: 1; }
-
-/* What the picture offers, stated on the picture. Quiet until the pointer is
-   on it, because nineteen bright badges along a rail is noise. A picture only
-   claims to open when main.js has confirmed the viewer will work, so the cue
-   is off until .has-lightbox says otherwise; a picture that plays says so
-   either way. */
-.tl-media { cursor: default; }
-.has-lightbox .tl-media { cursor: zoom-in; }
-.tl-media-cue { display: none; }
-.tl-media[data-video] .tl-media-cue,
-.has-lightbox .tl-media-cue { display: grid; }
-
-.tl-media-cue {
-  position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 3px;
-  background: rgba(10, 10, 12, 0.66);
-  color: #f0f0f3;
-  opacity: 0.62;
-  transform: translateY(3px);
-  transition: opacity 0.22s ease, transform 0.22s ease;
-}
-.tl-media-cue .icon { width: 0.95rem; height: 0.95rem; }
-.tl-media:hover .tl-media-cue,
-.tl-media:focus-visible .tl-media-cue { opacity: 1; transform: none; }
-/* Once it is moving, the picture is its own affordance */
-.tl-media.playing .tl-media-cue { opacity: 0; }
-
-/* The award photograph is a portrait of two people standing side by side. In a
-   landscape slot the centre of the frame is the projector screen above their
-   heads, so it gets a portrait slot instead and is read from low in the frame,
-   which is where the faces and the award itself are. */
-.tl-shot-portrait .tl-media img {
-  aspect-ratio: 4 / 5;
-  object-position: 50% 60%;
-}
-
-@media (min-width: 640px) {
-  .tl-card { flex-direction: row; gap: 1.25rem; }
-  .tl-shot { width: 250px; }
-  .tl-shot-portrait { width: 216px; }
-}
-
-/* Institution logos, for the milestones that are a course rather than a build.
-   In the list they are a small crest in the corner of the card. In the pinned
-   rail they become a plate the size of a screenshot, so a course card and a
-   project card have the same shape and the rail keeps its rhythm. */
-.tl-crest {
-  position: absolute;
-  top: 1rem;
-  right: 1.15rem;
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-  opacity: 0.85;
-}
-.tl-card:has(.tl-crest) .tl-kind,
-.tl-card:has(.tl-crest) h2 { padding-right: 3.2rem; }
-
-.tl-kind {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin: 0 0 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.tl-kind .icon { width: 1em; height: 1em; }
-.tl-item[data-kind="award"] .tl-kind,
-.tl-item[data-kind="work"] .tl-kind,
-.tl-item[data-kind="next"] .tl-kind,
-.tl-item[data-kind="origin"] .tl-kind { color: var(--accent); }
-
-.tl-card h2 {
-  font-size: 1.08rem;
-  line-height: 1.25;
-  margin-bottom: 0.2rem;
-}
-.tl-org { color: var(--text-2); font-size: 0.92rem; margin: 0 0 0.6rem; }
-.tl-body { color: var(--text-2); font-size: 0.93rem; margin: 0 0 0.85rem; }
-.tl-card .tags { margin-bottom: 0.85rem; }
-
-.tl-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-.tl-link .icon { transition: transform 0.2s ease; }
-.tl-link:hover .icon { transform: translateX(2px); }
-
-.tl-end-ctas { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-
-/* The progress bar only means anything while the rail is being travelled */
-.tl-bar { display: none; }
-
-.tl-outro { border-top: 1px solid var(--border); }
-
-/* ---- Pinned layout: the rail runs left to right -------------------------- */
-.tl[data-mode="pinned"] { position: relative; }
-
-.tl[data-mode="pinned"] .tl-stage {
-  position: sticky;
-  top: 4rem; /* the sticky header's height; main.js reads this back */
-  height: calc(100vh - 4rem);
-  display: flex;
-  flex-direction: column;
-  /* clip rather than hidden, in both places it is used here. An overflow:hidden
-     box is still a scroll container, so focusing a card off to the right lets
-     the browser scroll the box itself to reveal it, which slides the rail out
-     of step with the page position and strands the reader. A clip box is not
-     scrollable at all, so that cannot happen. hidden stays as the fallback for
-     anything that does not know clip. */
-  overflow: hidden;
-  overflow: clip;
-}
-
-/* ---- The scene behind the rail ------------------------------------------
-   The one thing that turns travelling the rail from reading a list into being
-   somewhere: the milestone you are on lights the room behind it. Two layers
-   hold the picture, main.js cross-fades between them so the change is a
-   dissolve rather than a swap, and the veil in front guarantees that the small
-   type on the axis stays readable over whatever the photograph happens to be.
-
-   All of it is decorative and all of it is main.js's: with no JavaScript the
-   box stays empty and invisible, and pinned mode never engages under
-   prefers-reduced-motion, so there is no motion here to opt out of. */
-.tl-scene { display: none; }
-.tl[data-mode="pinned"] .tl-scene {
-  display: block;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  overflow: clip;
-  /* The light that is always on, under the photographs. Two of the nineteen
-     milestones have no picture to light the room with, and one of them is the
-     first thing anybody sees; without this the rail would open on a flat black
-     rectangle and only warm up once it reached a screenshot. */
-  background:
-    radial-gradient(58% 66% at 26% 92%, var(--scene-glow), transparent 70%),
-    radial-gradient(52% 60% at 82% 8%, var(--scene-glow), transparent 70%);
-}
-.tl-scene-layer {
-  position: absolute;
-  inset: -10%;
-  background-position: center;
-  background-size: cover;
-  opacity: 0;
-  transform: scale(1.08);
-  filter: blur(44px) saturate(1.3);
-  transition: opacity 1s ease, transform 6s cubic-bezier(0.16, 0.6, 0.3, 1);
-  will-change: opacity, transform;
-}
-/* The incoming layer arrives already drifting, so the backdrop is never a
-   still image sitting behind a moving rail. */
-.tl-scene-layer.is-on {
-  opacity: var(--scene-strength);
-  transform: scale(1.15);
-}
-.tl-scene-wash {
-  position: absolute;
-  inset: 0;
-  /* Two jobs. The vertical band is darkest across the top, where the axis, the
-     dates and the month marks are drawn straight onto the scene and need the
-     contrast; it opens up lower down, where there is nothing but cards. The
-     vignette closes the edges so the picture reads as light in a room rather
-     than as a photograph someone put behind the page. */
-  background:
-    radial-gradient(135% 96% at 50% 52%, transparent 42%, var(--scene-veil-edge) 100%),
-    linear-gradient(to bottom,
-      var(--scene-veil-edge) 0%,
-      var(--scene-veil-edge) 11%,
-      var(--scene-veil) 32%,
-      var(--scene-veil) 74%,
-      var(--scene-veil-edge) 100%);
-}
-
-/* The year, as scenery. Outlined rather than filled so it reads as part of the
-   room and never competes with a card sitting in front of it. */
-.tl-scene-year {
-  position: absolute;
-  right: clamp(1rem, 5vw, 4rem);
-  bottom: -0.16em;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(9rem, 27vh, 22rem);
-  line-height: 0.8;
-  letter-spacing: -0.045em;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--border-strong);
-  opacity: 0.45;
-}
-.tl-scene-year.is-turning { animation: tl-year-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
-@keyframes tl-year-in {
-  from { opacity: 0; transform: translateY(0.1em) scale(0.97); }
-  to { opacity: 0.45; transform: none; }
-}
-
-/* The bar and the rail both sit in front of the scene. The bar is glass rather
-   than a solid strip, for the same reason the site header is: it belongs to the
-   scene it is sitting on rather than covering it up. */
-.tl[data-mode="pinned"] .tl-bar {
-  display: block;
-  position: relative;
-  z-index: 2;
-  flex: none;
-  padding-block: 0.75rem 0.85rem;
-  background: var(--header-bg);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-}
-.tl[data-mode="pinned"] .tl-viewport { z-index: 1; }
-.tl-bar-inner { display: grid; gap: 0.5rem; }
-
-.tl-bar-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  min-width: 0;
-}
-
-.tl-readout {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  margin: 0;
-  min-width: 0;
-}
-.tl-readout-year {
-  flex: none;
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--accent);
-}
-.tl-readout-label {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* Re-run on every change of milestone, so the readout reads as one value being
-   replaced rather than text quietly mutating under the reader. */
-.tl-readout.is-turning .tl-readout-year { animation: tl-turn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.tl-readout.is-turning .tl-readout-label { animation: tl-turn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) 0.04s both; }
-@keyframes tl-turn {
-  from { opacity: 0; transform: translateY(0.42em); }
-  to { opacity: 1; transform: none; }
-}
-
-/* Step controls and the position counter */
-.tl-steps { flex: none; display: flex; align-items: center; gap: 0.4rem; }
-.tl-count {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: var(--text-3);
-  margin-right: 0.35rem;
-  font-variant-numeric: tabular-nums;
-}
-.tl-count-sep { margin-inline: 0.3rem; opacity: 0.55; }
-
-.tl-step {
-  display: inline-grid;
-  place-items: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--surface);
-  color: var(--text-2);
-  cursor: pointer;
-  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
-}
-.tl-step .icon { width: 1rem; height: 1rem; }
-.tl-step-prev .icon { transform: rotate(180deg); }
-.tl-step:hover {
-  color: var(--accent);
-  border-color: var(--accent-border);
-  background: var(--accent-soft);
-}
-.tl-step:active { transform: scale(0.92); }
-.tl-step[disabled] { opacity: 0.35; cursor: default; transform: none; }
-.tl-step[disabled]:hover {
-  color: var(--text-2);
-  border-color: var(--border);
-  background: var(--surface);
-}
-
-.tl-progress { position: relative; padding-bottom: 1.45rem; }
-.tl-progress-track {
-  position: relative;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--border);
-  overflow: hidden;
-}
-.tl-progress-fill {
-  display: block;
-  width: 0;
-  height: 100%;
-  border-radius: 2px;
-  background: var(--accent);
-}
-
-/* The quarter scale. Because the rail spaces cards by elapsed time, these are
-   a real ruler: evenly spaced marks mean time passing evenly, and marks packed
-   together mean a lot of milestones landed inside one quarter. Built and
-   positioned in main.js from the dates on the cards. */
-.tl-scale { position: absolute; inset: 0; pointer-events: none; }
-.tl-mark {
-  position: absolute;
-  top: 6px;
-  width: 1px;
-  height: 4px;
-  background: var(--border-strong);
-}
-.tl-mark-year { height: 7px; background: var(--text-3); }
-
-/* Year markers, positioned by main.js at the travel offset of the first
-   milestone in that year. Clicking one jumps the page there. */
-.tl-ticks { position: absolute; inset: 0; pointer-events: none; }
-.tl-tick {
-  position: absolute;
-  top: 15px;
-  transform: translateX(-50%);
-  pointer-events: auto;
-  padding: 0 0.3rem;
-  border: 0;
-  background: transparent;
-  font: inherit;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  color: var(--text-3);
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-.tl-tick:hover { color: var(--text); }
-.tl-tick.current { color: var(--accent); }
-
-.tl[data-mode="pinned"] .tl-viewport {
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  overflow: clip;
-}
-/* Cards run off the right edge rather than being sliced by it, so the strip
-   reads as continuing past the window instead of stopping at it. */
-.tl[data-mode="pinned"] .tl-viewport::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: clamp(2rem, 5vw, 4.5rem);
-  pointer-events: none;
-  background: linear-gradient(to right, transparent, var(--bg));
-}
-
-.tl[data-mode="pinned"] .tl-rail {
-  position: relative;
-  flex: none;               /* take max-content width, do not shrink to fit */
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  height: min(100%, 820px);
-  max-width: none;
-  margin-inline: 0;
-  padding: 0 0 0 clamp(1.25rem, 5vw, 2rem);
-  will-change: transform;
-}
-/* The axis, spanning the whole rail rather than one screen of it */
-.tl[data-mode="pinned"] .tl-rail::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 2.4rem;
-  height: 1px;
-  background: var(--border);
-}
-
-/* Month marks along the axis, drawn by main.js only into the stretches where
-   nothing shipped for a while. Out of flow, so they add nothing to the rail's
-   width, which is what the travel distance is measured from. */
-.tl-months { display: none; }
-.tl[data-mode="pinned"] .tl-months {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 2.4rem;
-  height: 0;
-  pointer-events: none;
-}
-.tl-mmark {
-  position: absolute;
-  top: -3px;
-  width: 1px;
-  height: 7px;
-  background: var(--border-strong);
-}
-.tl-mmark-year {
-  top: -6px;
-  height: 13px;
-  background: var(--text-3);
-}
-.tl-mmark-year::after {
-  content: attr(data-label);
-  position: absolute;
-  left: 50%;
-  top: -1.45rem;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--text-3);
-}
-
-/* Cards are a fixed width; what varies is the space before each one, which
-   main.js sets from the months between this milestone and the one before it.
-   That is the whole point of the rail: distance means elapsed time. */
-.tl[data-mode="pinned"] .tl-item {
-  flex: none;
-  width: 366px;
-  padding: 0 1.5rem 0 0;
-  display: grid;
-  grid-template-rows: 4.4rem minmax(0, 1fr);
-}
-/* Trailing gutter. It lives on the last item rather than as padding on the
-   rail because a flex container's trailing padding is not reliably counted in
-   scrollWidth, and scrollWidth is what sets the travel distance. */
-.tl[data-mode="pinned"] .tl-item:last-child { padding-right: clamp(2.5rem, 7vw, 4rem); }
-
-/* The stem from the dot down to its card */
-.tl[data-mode="pinned"] .tl-item::before {
-  left: 6px;
-  top: 2.4rem;
-  bottom: auto;
-  height: 2.4rem;
-}
-
-.tl[data-mode="pinned"] .tl-axis {
-  grid-row: 1;
-  align-self: center;
-  margin: 0;
-}
-.tl[data-mode="pinned"] .tl-card {
-  grid-row: 2;
-  align-self: start;
-  flex-direction: column;
-  gap: 0.7rem;
-  padding: 1rem 1.15rem 1.05rem;
-  max-height: 100%;
-  overflow: hidden;
-}
-.tl[data-mode="pinned"] .tl-shot,
-.tl[data-mode="pinned"] .tl-shot-portrait { width: auto; }
-
-/* A card here has to fit its picture and its whole write-up inside one row of
-   the stage, and the row is whatever the window has left after the header and
-   the bar. Rather than guessing that at a handful of viewport breakpoints,
-   main.js measures the write-ups with the pictures collapsed and hands back the
-   room actually left over, as --tl-shot-h. The fallbacks below are what renders
-   for the frame or two before it has, and they are deliberately the small end.
-
-   The picture is given a height rather than a ratio, so what varies with the
-   window is how much of the frame is shown, never how tall the card is. */
-.tl[data-mode="pinned"] .tl-media img {
-  height: var(--tl-shot-h, 150px);
-  max-height: none;
-  aspect-ratio: auto;
-  /* Everything on the rail is dimmed a little; the milestone being read is
-     the one in full colour. Depth of field, in effect. */
-  filter: saturate(0.78) brightness(0.88);
-}
-.tl[data-mode="pinned"] .tl-shot-portrait .tl-media img {
-  height: var(--tl-shot-h-portrait, 210px);
-  /* Read low in the frame: both faces and the award, not the screen above
-     their heads. Verified against the crop this actually produces. */
-  object-position: 50% 85%;
-}
-.tl[data-mode="pinned"] .tl-item.is-current .tl-media img,
-.tl[data-mode="pinned"] .tl-media:hover img,
-.tl[data-mode="pinned"] .tl-media:focus-visible img { filter: none; }
-
-/* A course is a milestone like any other, so its crest gets the same plate a
-   screenshot gets instead of being a stamp in the corner of a mostly empty
-   card. Sized off the same measured budget, at the smaller share a logo needs. */
-.tl[data-mode="pinned"] .tl-crest {
-  position: static;
-  width: 100%;
-  height: calc(var(--tl-shot-h, 150px) * 0.66);
-  padding: 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--bg-soft);
-  opacity: 0.92;
-}
-.tl[data-mode="pinned"] .tl-card:has(.tl-crest) .tl-kind,
-.tl[data-mode="pinned"] .tl-card:has(.tl-crest) h2 { padding-right: 0; }
-
-.tl[data-mode="pinned"] .tl-card h2 { font-size: 1.06rem; }
-/* The one thing on a card long enough to overrun the row. Bounding it here is
-   what stops .tl-card's overflow:hidden from silently eating the tags and the
-   breakdown link underneath it, and every card that gets trimmed has a
-   breakdown page carrying the full version. */
-.tl[data-mode="pinned"] .tl-body {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
-  overflow: hidden;
-}
-@media (max-height: 860px) {
-  .tl[data-mode="pinned"] .tl-body { -webkit-line-clamp: 4; }
-}
-/* Just above the height main.js will pin at all, so this is the tightest the
-   layout ever has to be */
-@media (max-height: 760px) {
-  .tl[data-mode="pinned"] .tl-body { -webkit-line-clamp: 3; }
-}
-
-/* The compressed stretch, turned on its side */
-.tl[data-mode="pinned"] .tl-gap {
-  flex: none;
-  width: 226px;
-  padding: 0 1.5rem 0 0;
-  display: grid;
-  /* The same two rows the milestones use, so the dashed rule lands on the axis
-     rather than near it. */
-  grid-template-rows: 4.4rem minmax(0, 1fr);
-}
-.tl[data-mode="pinned"] .tl-gap::before {
-  left: 0;
-  right: 1.5rem;
-  top: 2.4rem;
-  bottom: auto;
-  width: auto;
-  height: 1px;
-  background: repeating-linear-gradient(
-    to right, var(--border-strong) 0 5px, transparent 5px 12px
-  );
-}
-/* Under the rule, where the cards are, rather than crammed into the strip
-   above it: three lines of it do not fit between the bar and the axis, and
-   what that produced was a clipped first line. */
-.tl[data-mode="pinned"] .tl-gap-text {
-  grid-row: 2;
-  align-self: start;
-  padding: 0.15rem 1.5rem 0 0;
-  gap: 0.3rem;
-}
-
-/* ---- Travel animation ---------------------------------------------------- */
-/* main.js writes --tl-e per card: 0 while it is still off the right edge, 1
-   once it has settled into place, and back towards 0 as it leaves on the left.
-   Everything below is a function of that one number, so the whole rail
-   animates off the scroll position with no timers and nothing to fall out of
-   sync. Pinned mode never engages under prefers-reduced-motion, so there is no
-   motion here to opt out of. */
-.tl[data-mode="pinned"] .tl-item { --tl-e: 1; }
-.tl[data-mode="pinned"] .tl-card {
-  opacity: calc(0.2 + 0.8 * var(--tl-e));
-  transform: translate3d(0, calc((1 - var(--tl-e)) * 24px), 0)
-             scale(calc(0.968 + 0.032 * var(--tl-e)));
-  transform-origin: 50% 0;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.tl[data-mode="pinned"] .tl-axis { opacity: calc(0.25 + 0.75 * var(--tl-e)); }
-
-/* The milestone the readout is currently describing. It is lit rather than
-   moved: an accent hairline along the top edge, a deeper shadow lifting it off
-   the scene, and its picture in full colour while the rest stay held back. */
-.tl[data-mode="pinned"] .tl-item.is-current .tl-card {
-  border-color: var(--accent-border);
-  box-shadow: 0 22px 50px -26px rgb(0 0 0 / 0.7);
-}
-.tl[data-mode="pinned"] .tl-card::after {
-  content: "";
-  position: absolute;
-  left: -1px;
-  right: -1px;
-  top: -1px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.tl[data-mode="pinned"] .tl-item.is-current .tl-card::after { opacity: 1; }
-.tl[data-mode="pinned"] .tl-item.is-current .tl-date { color: var(--accent); }
-.tl[data-mode="pinned"] .tl-item.is-current .tl-dot::after {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  animation: tl-ping 0.75s ease-out;
-}
-@keyframes tl-ping {
-  from { box-shadow: 0 0 0 0 var(--accent); opacity: 0.5; }
-  to { box-shadow: 0 0 0 13px var(--accent); opacity: 0; }
-}
-
-/* ---- Print: never pinned, always the list ------------------------------- */
-@media print {
-  .tl[data-mode="pinned"] { height: auto !important; }
-  .tl[data-mode="pinned"] .tl-stage {
-    position: static;
-    height: auto;
-    overflow: visible;
-  }
-  .tl[data-mode="pinned"] .tl-bar,
-  .tl[data-mode="pinned"] .tl-months { display: none; }
-  .tl[data-mode="pinned"] .tl-viewport { display: block; overflow: visible; }
-  .tl[data-mode="pinned"] .tl-viewport::after { display: none; }
-  .tl[data-mode="pinned"] .tl-rail {
-    display: grid;
-    gap: 1.1rem;
-    height: auto;
-    max-width: none;
-    padding: 0;
-    transform: none !important;
-  }
-  .tl[data-mode="pinned"] .tl-rail::before { display: none; }
-  .tl[data-mode="pinned"] .tl-item,
-  .tl[data-mode="pinned"] .tl-gap {
-    display: block;
-    width: auto;
-    margin-left: 0 !important;
-    padding: 0 0 0 1.9rem;
-    break-inside: avoid;
-  }
-  .tl[data-mode="pinned"] .tl-item::before,
-  .tl[data-mode="pinned"] .tl-gap::before { display: none; }
-  .tl[data-mode="pinned"] .tl-axis { margin: 0 0 0.55rem -1.9rem; opacity: 1; }
-  .tl[data-mode="pinned"] .tl-gap-text { padding: 0; }
-  .tl[data-mode="pinned"] .tl-card {
-    max-height: none;
-    overflow: visible;
-    opacity: 1;
-    transform: none;
-    box-shadow: none;
-  }
-  .tl[data-mode="pinned"] .tl-media img { height: auto; aspect-ratio: 16 / 9; filter: none; }
-  .tl[data-mode="pinned"] .tl-crest { height: auto; }
-  .tl-scene, .tl-media-cue, .lb { display: none !important; }
-}
-
-/* --------------------------------------------------------------------------
-   10c. FULL SIZE VIEWER (timeline.html)
-
-   Every picture on the rail is shown inside a card that has to crop it to fit.
-   This is where one can actually be looked at: the whole frame, at whatever
-   size the window allows, with the rest of the rail's pictures an arrow key
-   away.
-
-   A native <dialog> opened with showModal, so the focus trap, Escape, and
-   making the page behind it inert are the browser's, not a hand-rolled
-   approximation of each. The backdrop is dark in both themes, because a
-   photograph is easier to look at against black, so the chrome in front of it
-   is fixed light rather than themed.
-   -------------------------------------------------------------------------- */
-.lb {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  max-height: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  overflow: hidden;
-}
-.lb::backdrop {
-  background: rgba(7, 7, 9, 0.88);
-  backdrop-filter: blur(8px);
-}
-
-.lb-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  padding: clamp(3.5rem, 8vh, 5rem) clamp(3.5rem, 9vw, 7rem);
-}
-
-.lb-figure {
-  margin: 0;
-  display: grid;
-  gap: 1rem;
-  justify-items: center;
-  min-width: 0;
-  max-width: 100%;
-}
-.lb-figure img {
-  display: block;
-  max-width: 100%;
-  max-height: calc(100vh - 12rem);
-  width: auto;
-  height: auto;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.9);
-}
-.lb-figure figcaption {
-  max-width: 46em;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  line-height: 1.6;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: #d2d2da;
-}
-
-.lb-btn {
-  position: absolute;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  background: rgba(18, 18, 22, 0.62);
-  color: #f0f0f3;
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-}
-.lb-btn:hover {
-  background: rgba(38, 38, 44, 0.82);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-.lb-btn:active { transform: scale(0.93); }
-.lb-btn .icon { width: 1.15rem; height: 1.15rem; }
-
-.lb-prev, .lb-next { top: 50%; margin-top: -1.375rem; }
-.lb-prev { left: clamp(0.5rem, 2vw, 1.5rem); }
-.lb-next { right: clamp(0.5rem, 2vw, 1.5rem); }
-.lb-prev .icon { transform: rotate(180deg); }
-.lb-close {
-  top: clamp(0.75rem, 2vh, 1.5rem);
-  right: clamp(0.75rem, 2vw, 1.5rem);
-}
-
-/* The viewer opens as a move towards the picture, not as a box appearing */
-.lb[open] .lb-figure { animation: lb-in 0.34s cubic-bezier(0.2, 0.8, 0.2, 1); }
-@keyframes lb-in {
-  from { opacity: 0; transform: scale(0.965); }
-  to { opacity: 1; transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lb[open] .lb-figure { animation: none; }
-}
-
-/* On a narrow screen the arrows would sit on top of the picture, so they move
-   under it and the picture gets the width back. */
-@media (max-width: 700px) {
-  .lb-inner { padding: 3.5rem 1rem 1rem; align-content: center; }
-  .lb-prev, .lb-next { top: auto; bottom: 1rem; margin-top: 0; }
-  .lb-figure img { max-height: calc(100vh - 14rem); }
-}
-
-/* --------------------------------------------------------------------------
    11. FOOTER
    -------------------------------------------------------------------------- */
 .site-footer {
@@ -3907,4 +2552,10 @@ html.js .reveal.in { animation: reveal-in 0.4s ease both; }
     transition-duration: 0.01ms !important;
   }
   html.js .reveal { opacity: 1; }
+}
+
+/* Moving between the home page and a breakdown cross-fades instead of
+   flashing white. Browsers without it just navigate. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
 }

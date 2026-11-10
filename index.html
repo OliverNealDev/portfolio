@@ -21,14 +21,14 @@
   <meta property="og:image" content="https://oliverneal.dev/og/home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Cyber Station late game: cyan trains stretched along the platforms of a large neon station">
+  <meta property="og:image:alt" content="Oliver Neal, Technical Director at Shiverbug Studios, beside a screenshot of Cyber Station">
   <meta property="og:site_name" content="oliverneal.dev">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Oliver Neal · Technical Director, Shiverbug Studios · Unity (C#)">
   <meta name="twitter:description" content="Technical Director at Shiverbug Studios, leading the technical side of Out of Water. Unity systems, state-machine enemy AI and performance work across nine projects. First Class Games Development graduate.">
   <meta name="twitter:image" content="https://oliverneal.dev/og/home.jpg">
-  <meta name="twitter:image:alt" content="Cyber Station late game: cyan trains stretched along the platforms of a large neon station">
+  <meta name="twitter:image:alt" content="Oliver Neal, Technical Director at Shiverbug Studios, beside a screenshot of Cyber Station">
 
   <!--
     One @graph for the whole site, with stable @ids. Every other page
@@ -197,10 +197,9 @@
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-11-09">
+  <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=2026-11-10">
 </head>
 <body>
 
@@ -231,11 +230,9 @@
       <a class="brand" href="#top">oliverneal<span>.dev</span></a>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="#shiverbug">Shiverbug</a>
+        <a class="nav-link" href="#studio">Studio</a>
+        <a class="nav-link" href="#work">Work</a>
         <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#skills">Skills</a>
-        <a class="nav-link" href="#projects">Projects</a>
-        <a class="nav-link" href="#education">Education</a>
         <a class="nav-link" href="#log">Log</a>
         <a class="nav-link" href="#contact">Contact</a>
         <a class="nav-link nav-cv" href="cv.html">CV</a>
@@ -259,7 +256,7 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <a class="now-line" href="#shiverbug">
+          <a class="now-line" href="#studio">
             <span class="now-dot" aria-hidden="true"></span>
             <span>Building <strong>Out of Water</strong> at Shiverbug Studios</span>
             <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
@@ -268,40 +265,34 @@
           <h1>Oliver Neal</h1>
           <p class="hero-role">Technical Director · Shiverbug Studios</p>
           <p class="hero-pitch">
-            I lead the technical side of Out of Water, a two-player co-op 3D
-            platformer made by a brilliant small team in Middlesbrough. My own
-            work is the systems layer in Unity: state machine driven characters
-            and enemy AI, the co-op plumbing around them, the tools the team
-            builds with, and the profiling that keeps it fast.
+            I lead the tech on <strong>Out of Water</strong>, a co-op 3D
+            platformer for two, made by a team of twelve in Middlesbrough. My
+            own work is the systems layer in Unity: the characters, the co-op
+            underneath them, the tools the team builds with, and the profiling
+            that keeps it fast.
           </p>
 
-          <!-- The credentials someone triaging the page in a minute is looking
-               for, as one row that reads as metadata rather than a third
-               paragraph competing with the pitch. -->
-          <ul class="hero-availability">
+          <!-- Facts to check, set as one quiet line rather than badges. -->
+          <ul class="hero-creds">
             <li><strong>First Class</strong> BSc Games Development</li>
-            <li>ExpoTees 2026 <strong>award winner</strong></li>
+            <li>ExpoTees 2026 <strong>Best Artefact</strong></li>
             <li>Unity 6 · C#</li>
           </ul>
 
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="#projects">
-              View work
+            <a class="btn btn-primary" href="#work">
+              See the work
               <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
             </a>
             <a class="btn btn-outline" href="cv.html">
               <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
-              View CV
+              Read the CV
             </a>
-            <a class="btn btn-ghost" href="#contact">Contact</a>
+            <a class="btn btn-ghost" href="Oliver_Neal_CV.pdf" download>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
+              PDF
+            </a>
           </div>
-
-          <!-- The PDF lived only behind the CV page; a reviewer who wants the
-               document rather than the web version now gets it in one click. -->
-          <p class="hero-cv-note">
-            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-download"/></svg>
-            Or take the <a href="Oliver_Neal_CV.pdf" download>CV as a PDF</a>.
-          </p>
 
           <div class="social-row">
             <a class="icon-btn" href="https://github.com/OliverNealDev" target="_blank" rel="noopener" aria-label="GitHub: OliverNealDev">
@@ -325,194 +316,492 @@
           </div>
         </div>
 
-        <div class="hero-portrait">
+        <div class="portrait">
           <img src="media/oliver-neal.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high"
                data-full="media/oliver-neal-full.webp" data-caption="Oliver Neal · ExpoTees 2026">
         </div>
       </div>
     </section>
 
-    <!-- ===================== 2 · SHIVERBUG / OUT OF WATER ===================== -->
-    <section class="section" id="shiverbug">
+    <!-- ===================== 2 · STUDIO ===================== -->
+    <section class="section" id="studio">
+      <a class="anchor-alias" id="shiverbug"></a>
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">Now</p>
           <h2>Technical Director at Shiverbug Studios</h2>
           <p class="section-lead">
-            I lead the technical side of
-            <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug Studios</a>,
-            an indie studio of twelve in Middlesbrough, and sit on its board. I
-            joined in July as a gameplay programming intern and stepped up in
-            October, alongside my MA.
+            <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug</a>
+            is an indie studio of twelve in Middlesbrough. I joined in July
+            2026 as a gameplay programming intern, and in October I joined the
+            board to lead the technical side, alongside my MA.
           </p>
         </header>
 
-        <article class="oow reveal">
-          <!-- The game first: one big shot with the title over it, so the
-               section reads as "this is what I'm making" before it reads as
-               a list of what I did. Studio screenshots need the studio's OK,
-               and only this one has it so far, so the cards below are text.
-               A cleared still can go in a card as
-               <div class="oow-card-media"><img ...></div> above its body. -->
-          <div class="oow-hero">
-            <img src="media/out-of-water/dock-duo.webp"
-                 alt="Out of Water in game screenshot: the seagull perched on the turtle's shell on a wooden dock, with a sandy beach, palm trees, ruins and turquoise water behind them"
-                 data-caption="Out of Water · the pair on the dock"
-                 width="1600" height="900">
-            <div class="oow-hero-text">
-              <p class="oow-status">
-                <span class="now-dot" aria-hidden="true"></span>
-                In development · Unity 6
-              </p>
-              <h3 class="oow-title">Out of Water</h3>
-              <p class="oow-pitch">
-                A two-player co-op 3D platformer about a turtle and a seagull,
-                played side by side in splitscreen or online.
-              </p>
-            </div>
-          </div>
-
-          <!-- Studio and the step up, as one strip under the shot -->
-          <div class="oow-role">
-            <a class="oow-studio" href="https://shiverbugstudios.com" target="_blank" rel="noopener">
-              <img class="oow-studio-logo dark" src="media/logos/shiverbug-dark.webp" alt="" width="264" height="262" loading="lazy">
-              <img class="oow-studio-logo light" src="media/logos/shiverbug-light.webp" alt="" width="264" height="262" loading="lazy">
-              <span>
-                <strong>Shiverbug Studios</strong>
-                <span class="oow-studio-sub">Middlesbrough, UK</span>
-              </span>
-            </a>
-            <ol class="role-path" aria-label="My roles at Shiverbug Studios, newest first">
-              <li class="is-current">
-                <span class="role-path-title">Technical Director</span>
-                <span class="role-path-meta">Oct 2026 to now · board</span>
-              </li>
-              <li>
-                <span class="role-path-title">Gameplay Programmer Intern</span>
-                <span class="role-path-meta">Jul to Sep 2026 · 10 weeks</span>
-              </li>
-            </ol>
-          </div>
-
-          <ul class="oow-do">
-            <li>
-              <span class="oow-do-k">Lead the tech</span>
-              Engineering on the game, and the technical plan for the vertical
-              slice we're building now.
-            </li>
-            <li>
-              <span class="oow-do-k">Run the pipeline</span>
-              The git workflow, pull request review, and a tagged playtest build
-              every fortnight.
-            </li>
-            <li>
-              <span class="oow-do-k">Unblock the team</span>
-              Artists and designers working confidently in Unity and git, so an
-              art-only change never has to wait for me.
-            </li>
-          </ul>
-
-          <div class="oow-cards">
-            <article class="oow-card">
-              <div class="oow-card-body">
-                <p class="oow-card-k">Characters &amp; enemies</p>
-                <h4>One framework under every creature</h4>
-                <p>
-                  Both heroes and every enemy run on component driven state
-                  machines, rebuilt from single file controllers. The co-op
-                  moves the pair share sit on top.
-                </p>
-              </div>
-            </article>
-
-            <article class="oow-card">
-              <div class="oow-card-body">
-                <p class="oow-card-k">Online co-op</p>
-                <h4>The same pair, on two machines</h4>
-                <p>
-                  Online play built on the same characters as splitscreen. Each
-                  player's machine owns their own character and the host owns
-                  the world, and it is tested with two instances under
-                  simulated lag before it reaches a playtest.
-                </p>
-              </div>
-            </article>
-
-            <article class="oow-card">
-              <div class="oow-card-body">
-                <p class="oow-card-k">Tools for the team</p>
-                <h4>Level tools that know the jump maths</h4>
-                <p>
-                  Blockout interactables, spline walkways, a prop palette, and a
-                  prober that runs the characters' own jump maths to show the
-                  designers what they can reach.
-                </p>
-              </div>
-            </article>
-
-            <article class="oow-card">
-              <div class="oow-card-body">
-                <p class="oow-card-k">Architecture</p>
-                <h4>Layers that only point one way</h4>
-                <p>
-                  The code is split into core, game, online and UI layers, with
-                  the logic that needs no engine at the bottom where it can be
-                  unit tested. Automated tests hold the feel of the moveset and
-                  the combat to recorded baselines.
-                </p>
-              </div>
-            </article>
-
-            <article class="oow-card">
-              <div class="oow-card-body">
-                <p class="oow-card-k">Performance</p>
-                <h4>Measured branch to branch</h4>
-                <!-- A frame cost, so the number under "Performance" is a
-                     performance number. The repo size clean up, which used to
-                     sit here, is in the pipeline card where it belongs. -->
-                <p class="oow-stat">15 to 18% <small>fewer draw calls in split screen</small></p>
-                <p>
-                  GPU driven rendering, quality tiers, LOD and culling, checked
-                  with a profiling tool I built. That number is the latest
-                  pass, measured on the lowest quality tier.
-                </p>
-              </div>
-            </article>
-
-            <article class="oow-card">
-              <div class="oow-card-body">
-                <p class="oow-card-k">The pipeline</p>
-                <h4>A build the whole team can trust</h4>
-                <!-- Drawn where the performance card has its number -->
-                <ol class="oow-flow" aria-label="How a change reaches a playtest build">
-                  <li>Branch</li>
-                  <li>Review</li>
-                  <li>Merge</li>
-                  <li class="is-build">Playtest build</li>
-                </ol>
-                <p>
-                  I set up the git workflow everyone follows. Changes are
-                  reviewed before they land, and a tagged playtest build goes
-                  out every fortnight. A clean up with two teammates took the
-                  repository from 10.1 GB to 3.5 GB.
-                </p>
-              </div>
-            </article>
-          </div>
-
-          <div class="oow-foot">
-            <p class="oow-team">
-              Out of Water is made by a brilliant small team of artists and
-              designers. The shot above is their art; my side is the tech
-              underneath it.
+        <!-- The game first. Studio screenshots need the studio's OK, and this
+             is the cleared one, so everything under it is text. -->
+        <div class="oow-hero reveal">
+          <img src="media/out-of-water/dock-duo.webp"
+               alt="Out of Water in game screenshot: the seagull perched on the turtle's shell on a wooden dock, with a sandy beach, palm trees, ruins and turquoise water behind them"
+               data-caption="Out of Water · the pair on the dock"
+               width="1600" height="900" loading="lazy">
+          <div class="oow-hero-text">
+            <p class="oow-status">
+              <span class="now-dot" aria-hidden="true"></span>
+              In development · Unity 6
+            </p>
+            <h3 class="oow-title">Out of Water</h3>
+            <p class="oow-pitch">
+              A co-op 3D platformer about a turtle and a seagull, for two
+              players in splitscreen or online.
             </p>
           </div>
-        </article>
+        </div>
+
+        <div class="oow-role">
+          <a class="oow-studio" href="https://shiverbugstudios.com" target="_blank" rel="noopener">
+            <img class="oow-studio-logo dark" src="media/logos/shiverbug-dark.webp" alt="" width="264" height="262" loading="lazy">
+            <img class="oow-studio-logo light" src="media/logos/shiverbug-light.webp" alt="" width="264" height="262" loading="lazy">
+            <span>
+              <strong>Shiverbug Studios</strong>
+              <span class="oow-studio-sub">Middlesbrough, UK</span>
+            </span>
+          </a>
+          <ol class="role-path" aria-label="My roles at Shiverbug Studios, newest first">
+            <li class="is-current">
+              <span class="role-path-title">Technical Director</span>
+              <span class="role-path-meta">Oct 2026 to now · board</span>
+            </li>
+            <li>
+              <span class="role-path-title">Gameplay Programmer Intern</span>
+              <span class="role-path-meta">Jul to Sep 2026 · 10 weeks</span>
+            </li>
+          </ol>
+        </div>
+
+        <ul class="duties reveal">
+          <li>
+            <b>Lead the tech</b>
+            Engineering on the game, and the technical plan for the vertical
+            slice we're building now.
+          </li>
+          <li>
+            <b>Run the pipeline</b>
+            The git workflow, pull request review, and a tagged playtest build
+            every fortnight.
+          </li>
+          <li>
+            <b>Unblock the team</b>
+            Artists and designers working confidently in Unity and git, so an
+            art-only change never has to wait for me.
+          </li>
+        </ul>
+
+        <header class="decisions-head reveal">
+          <p class="kicker">How I run it</p>
+          <h3>Four decisions, and what each one costs</h3>
+          <p>
+            Most of the job is choosing, and every choice here gave something
+            up. These are the four that shape the project most.
+          </p>
+        </header>
+
+        <ol class="decisions">
+          <li class="decision reveal">
+            <div>
+              <p class="decision-topic">Online co-op</p>
+              <h4>Each player's machine owns their own character</h4>
+              <p class="decision-what">
+                Online play is client-host. Your machine runs your character
+                exactly as it does in splitscreen, your partner's character is
+                a puppet on your screen, and the host owns the world: enemies,
+                puzzles, pickups and the save.
+              </p>
+            </div>
+            <dl>
+              <div>
+                <dt>Why</dt>
+                <dd>
+                  A platformer lives on input latency, and this way your own
+                  character never waits on the network. The state machines
+                  that already drive both heroes run untouched. Rollback was
+                  the alternative, and it needs a deterministic simulation,
+                  which this game does not have.
+                </dd>
+              </div>
+              <div>
+                <dt>Cost</dt>
+                <dd>
+                  The two players can disagree for one round trip. That only
+                  matters where the characters touch each other, so those
+                  moves need the most care.
+                </dd>
+              </div>
+              <div>
+                <dt>Tested</dt>
+                <dd>
+                  With two instances at a simulated 150 ms of lag, before it
+                  reaches a playtest. <strong>How it feels on a real
+                  connection is still to be proven.</strong>
+                </dd>
+              </div>
+            </dl>
+          </li>
+
+          <li class="decision reveal">
+            <div>
+              <p class="decision-topic">The pipeline</p>
+              <h4>Nothing lands without a second pair of eyes</h4>
+              <p class="decision-what">
+                Everyone works on their own branch and opens a pull request
+                into a shared integration branch. Each one goes through me or
+                another reviewer. A small change is reviewed as a diff; a
+                bigger one is opened in Unity and played before it merges.
+              </p>
+            </div>
+            <dl>
+              <div>
+                <dt>Why</dt>
+                <dd>
+                  A Unity merge can come back with no conflicts and still be
+                  wrong. Scenes, prefabs and materials do not merge as text,
+                  so no conflicts means the text lined up, not that the
+                  project still works.
+                </dd>
+              </div>
+              <div>
+                <dt>Cost</dt>
+                <dd>
+                  Finished work waits on a reviewer. A couple of minutes in
+                  the editor is cheaper than a broken shared branch costing
+                  everyone an afternoon.
+                </dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>
+                  <strong>A tagged playtest build every fortnight.</strong>
+                  Anyone who would rather not open a pull request pushes
+                  their branch and tells me, and I open it for them.
+                </dd>
+              </div>
+            </dl>
+          </li>
+
+          <li class="decision reveal">
+            <div>
+              <p class="decision-topic">Architecture</p>
+              <h4>Layers that only point one way</h4>
+              <p class="decision-what">
+                The code is split into core, game, online and UI layers. Each
+                is its own assembly, so the compiler refuses a reference that
+                points the wrong way. Logic that needs no engine sits at the
+                bottom, where it can be unit tested.
+              </p>
+            </div>
+            <dl>
+              <div>
+                <dt>Why</dt>
+                <dd>
+                  Gameplay code named the online session in 1,022 places, so a
+                  feature and its netcode could only ever change together.
+                </dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>
+                  <strong>That count is now zero.</strong> Automated tests
+                  hold the feel of the moveset and the combat to recorded
+                  baselines.
+                </dd>
+              </div>
+              <div>
+                <dt>Cost</dt>
+                <dd>
+                  It is not finished. Inside the game layer the player, the
+                  enemies and the level tools still reference each other, and
+                  that is the next cut.
+                </dd>
+              </div>
+            </dl>
+          </li>
+
+          <li class="decision reveal">
+            <div>
+              <p class="decision-topic">Performance</p>
+              <h4>Nothing is faster until it is measured</h4>
+              <p class="decision-what">
+                Performance work is compared branch against branch, on the
+                same scene at the same quality tier, with a profiling tool I
+                made for the team.
+              </p>
+            </div>
+            <dl>
+              <div>
+                <dt>Why</dt>
+                <dd>
+                  Split screen draws the world twice, so a change that looks
+                  free on one camera can cost double. A number settles the
+                  argument.
+                </dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>
+                  The latest pass took <strong>15 to 18% of the draw calls</strong>
+                  out of split screen on the lowest quality tier.
+                </dd>
+              </div>
+              <div>
+                <dt>Open</dt>
+                <dd>
+                  What I do not have yet is a frame time for the whole game on
+                  the hardware we are aiming at. That benchmark is still to
+                  run.
+                </dd>
+              </div>
+            </dl>
+          </li>
+        </ol>
+
+        <div class="studio-foot reveal">
+          <p>
+            <b>Also in the build.</b> The level tools the designers block out
+            with: a prop palette, spline walkways, and a prober that runs the
+            characters' own jump maths to show what they can reach. The UI
+            Toolkit front end, the FMOD audio layer and the water shaders.
+          </p>
+          <p>
+            <b>The team.</b> Out of Water is made by a team of twelve artists,
+            designers and programmers. The shot above is their art; my side is
+            the tech underneath it.
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- ===================== 3 · ABOUT ===================== -->
+    <!-- ===================== 3 · WORK ===================== -->
+    <section class="section" id="work">
+      <a class="anchor-alias" id="projects"></a>
+      <a class="anchor-alias" id="breakdowns"></a>
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Work</p>
+          <h2>Selected work</h2>
+          <p class="section-lead">
+            Four solo projects, each playable in the browser with the source
+            on GitHub. Every one has a breakdown that explains the decisions
+            as well as the systems.
+          </p>
+        </header>
+
+        <!--
+          To add a featured project: copy one <article class="feature">.
+          The picture links to the breakdown. data-video is optional: main.js
+          plays it on hover, or when the card scrolls into view on touch.
+        -->
+        <div class="features">
+
+          <article class="feature reveal">
+            <a class="feature-media" href="cyber-station.html"
+               data-video="media/hover/cyber-station.webm"
+               aria-label="Cyber Station breakdown">
+              <img src="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
+                   alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
+                   width="1400" height="784" loading="lazy">
+            </a>
+            <div class="feature-body">
+              <p class="feature-meta">Apr 2026 · Unity 3D · Solo</p>
+              <h3><a href="cyber-station.html">Cyber Station</a></h3>
+              <p>
+                A neon station management game about building a transport hub
+                that can take the pressure. 86 scripts and around 17,000
+                lines, on my own.
+              </p>
+              <p class="feature-point">
+                Hundreds of passengers run off one fixed 10 Hz tick, and each
+                picks a facility by lowest estimated total delay: queue wait
+                plus real NavMesh walk time, both in seconds.
+              </p>
+              <figure class="award">
+                <img src="media/expotees/award.webp"
+                     alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026"
+                     data-full="media/expotees/award-full.webp"
+                     data-caption="Best Artefact, Games Programming &amp; Development · ExpoTees 2026"
+                     width="480" height="600" loading="lazy">
+                <figcaption>
+                  <b>Best Games Programming and Development Artefact</b>
+                  ExpoTees 2026, Teesside University. Scored 90 out of 100.
+                </figcaption>
+              </figure>
+              <div class="feature-links">
+                <a class="feature-cta" href="cyber-station.html">
+                  Read the breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
+                  Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/CyberStation" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <a class="feature-media" href="minimalists.html"
+               data-video="media/hover/minimalists.webm"
+               aria-label="Minimalists breakdown">
+              <img src="media/minimalists/1v1-poster.webp"
+                   alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
+                   width="1040" height="582" loading="lazy">
+            </a>
+            <div class="feature-body">
+              <p class="feature-meta">Aug 2025 · Unity 3D · Solo</p>
+              <h3><a href="minimalists.html">Minimalists</a></h3>
+              <p>
+                A node conquest RTS pared back to its essentials: capture
+                structures, commit forces by percentage, and win anything from
+                a duel to a four way free for all.
+              </p>
+              <p class="feature-point">
+                The enemy AI gets no cheats and no extra information. It
+                commits through the same percentage interface the player uses,
+                across six AI personalities.
+              </p>
+              <div class="feature-links">
+                <a class="feature-cta" href="minimalists.html">
+                  Read the breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://olivernealdev.itch.io/minimalists" target="_blank" rel="noopener">
+                  Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <a class="feature-media" href="wanted.html"
+               data-video="media/hover/wanted.webm"
+               aria-label="Wanted breakdown">
+              <img src="media/wanted/wanted-poster.webp"
+                   alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
+                   width="1280" height="720" loading="lazy">
+            </a>
+            <div class="feature-body">
+              <p class="feature-meta">May 2025 · Unity 6 · Solo · Game jam</p>
+              <h3><a href="wanted.html">Wanted</a></h3>
+              <p>
+                A top-down stealth survival game with no win state, only a
+                clock. The police arrive car by car and never leave.
+              </p>
+              <p class="feature-point">
+                One detection meter fills four times slower under cover, and a
+                confirmed sighting redirects only the closest 10% of officers,
+                so the response scales with the force.
+              </p>
+              <div class="feature-links">
+                <a class="feature-cta" href="wanted.html">
+                  Read the breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://olivernealdev.itch.io/wanted" target="_blank" rel="noopener">
+                  Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Wanted" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <a class="feature-media" href="unicellular.html"
+               data-video="media/hover/unicellular.webm"
+               aria-label="Unicellular breakdown">
+              <img src="media/unicellular/10k-entities-poster.webp"
+                   alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
+                   width="1280" height="720" loading="lazy">
+            </a>
+            <div class="feature-body">
+              <p class="feature-meta">Feb 2025 · Unity · Solo</p>
+              <h3><a href="unicellular.html">Unicellular</a></h3>
+              <p>
+                An idle simulation that rewards the player for pushing the
+                entity count up, so every cell has to stay cheap to simulate.
+              </p>
+              <p class="feature-point">
+                Stress-tested at 10,000 cells, still reading around 90 FPS in
+                the recording, on a multi-rate tick with the proximity checks
+                time-sliced across frames.
+              </p>
+              <div class="feature-links">
+                <a class="feature-cta" href="unicellular.html">
+                  Read the breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://olivernealdev.itch.io/unicellular" target="_blank" rel="noopener">
+                  Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Unicellular" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <a class="anchor-alias" id="team"></a>
+        <h3 class="more-head">More work</h3>
+        <ul class="work-list reveal">
+          <li>
+            <a href="tile-turfer.html">
+              <h4>Tile Turfer</h4>
+              <p>A turf-war shooter where one territory percentage drives difficulty, fire rate and enemy AI at once, across procedurally generated caves.</p>
+              <span class="work-meta">Jan 2026 · Unity 2D · Solo</span>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="space-bar.html">
+              <h4>Space Bar Simulator</h4>
+              <p>A first-person bar sim built by a team of ten. I owned the player controller, the interaction system and the camera-blended stations.</p>
+              <span class="work-meta">Jan 2026 · Unreal Engine 5 · Team of 10</span>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="tank-game.html">
+              <h4>3D Netcode Tank Game</h4>
+              <p>Server-authoritative multiplayer on Netcode for GameObjects: Relay sessions, and a 64-ray hitscan resolved on the server.</p>
+              <span class="work-meta">Jan 2025 · Unity 3D · Solo</span>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="pinnable.html">
+              <h4>Pinnable</h4>
+              <p>An arcade catch game with a spawn director that scales each hazard's weight with your score.</p>
+              <span class="work-meta">Mar 2024 · Unity 2D · Solo</span>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
+              <h4>Candy Corporate</h4>
+              <p>A top-down extraction game made with a small team. I did the level design, tile creation and pixel art integration.</p>
+              <span class="work-meta">Apr 2024 · Unity 2D · Team · itch.io</span>
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== 4 · ABOUT ===================== -->
     <section class="section" id="about">
+      <a class="anchor-alias" id="education"></a>
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">About</p>
@@ -522,47 +811,52 @@
         <div class="about-grid">
           <div class="about-copy reveal">
             <p>
-              I'm Oliver, a games developer working in <strong>Unity and C#</strong>,
-              and Technical Director at <a href="#shiverbug">Shiverbug Studios</a>.
-              I've been making games in Unity since 2018, and building them
-              consistently since 2023, so when I graduated from Teesside
-              University in July 2026 with <strong>First Class Honours</strong>
-              in BSc (Hons) Games Development, the degree sat on top of years
-              of self-driven projects.
+              I'm Oliver, a games developer working in <strong>Unity and
+              C#</strong>. I've been making games in Unity since 2018 and
+              building them consistently since 2023, so the First I graduated
+              with from Teesside in July 2026 sat on top of years of
+              self-driven projects.
             </p>
             <p>
               The part of games I enjoy most is the systems layer:
               <strong>state machines driving characters and enemy AI</strong>,
               and the <strong>profiling and optimisation</strong> that lets a
               scene keep its frame budget once everything is running at once.
-              My final-year project artefact,
-              <a href="cyber-station.html">Cyber Station</a>, scored 90 out of 100.
+              At Shiverbug that grew into looking after the build and the
+              workflow as well.
             </p>
             <p>
-              Most of what's below is playable in the browser on itch.io, and
-              nearly all of it has source on GitHub. If you'd rather read about
-              the engineering, the <a href="#breakdowns">project breakdowns</a>
-              go deeper on eight of the nine.
+              What I have not done yet is ship a commercial game. Out of Water
+              is how I intend to fix that.
             </p>
           </div>
 
-          <ul class="fact-list reveal">
-            <li><span class="fact-num">1st</span><span class="fact-label">BSc (Hons) Games Development</span></li>
-            <li><span class="fact-num">80%</span><span class="fact-label">overall degree average</span></li>
-            <li><span class="fact-num">90</span><span class="fact-label">final year artefact grade</span></li>
+          <ul class="paper reveal">
+            <li>
+              <span class="paper-k">Studying</span>
+              <span class="paper-v">MA Games Design (with Advanced Practice)</span>
+              <span class="paper-n">Teesside University · 2026 to 2028, alongside the studio</span>
+            </li>
+            <li>
+              <span class="paper-k">Degree</span>
+              <span class="paper-v">BSc (Hons) Games Development, First Class</span>
+              <span class="paper-n">Teesside University · July 2026 · 80% overall</span>
+            </li>
+            <li>
+              <span class="paper-k">Award</span>
+              <span class="paper-v">Best Games Programming and Development Artefact</span>
+              <span class="paper-n">ExpoTees 2026 · for <a href="cyber-station.html">Cyber Station</a></span>
+            </li>
+            <li>
+              <span class="paper-k">Before that</span>
+              <span class="paper-v">FdSc Games Technologies, 2:1</span>
+              <span class="paper-n">Newcastle College University Centre · July 2025 · the full list is on the <a href="cv.html">CV</a></span>
+            </li>
           </ul>
         </div>
-      </div>
-    </section>
 
-    <!-- ===================== 4 · SKILLS ===================== -->
-    <section class="section" id="skills">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">Skills</p>
-          <h2>What I work with</h2>
-        </header>
-
+        <a class="anchor-alias" id="skills"></a>
+        <h3 class="subhead">What I work with</h3>
         <dl class="skills-list reveal">
           <div class="skills-row">
             <dt>Languages &amp; engines</dt>
@@ -577,12 +871,12 @@
             <dd><strong>Profiling and frame analysis</strong>, <strong>time-sliced &amp; multi-rate simulation</strong>, GPU driven rendering, LOD and culling, quality tiers, runtime NavMesh baking</dd>
           </div>
           <div class="skills-row">
-            <dt>Audio, UI &amp; presentation</dt>
-            <dd><strong>FMOD</strong>, <strong>UI Toolkit</strong>, Unity UI, Cinemachine, particle VFX</dd>
-          </div>
-          <div class="skills-row">
             <dt>Multiplayer &amp; services</dt>
             <dd><strong>Netcode for GameObjects</strong>, Unity Authentication, Relay, Cloud Save</dd>
+          </div>
+          <div class="skills-row">
+            <dt>Audio, UI &amp; presentation</dt>
+            <dd><strong>FMOD</strong>, <strong>UI Toolkit</strong>, Unity UI, Cinemachine, particle VFX</dd>
           </div>
           <div class="skills-row">
             <dt>Tools &amp; workflow</dt>
@@ -592,574 +886,14 @@
       </div>
     </section>
 
-    <!-- ===================== 5 · SOLO PROJECTS ===================== -->
-    <section class="section" id="projects">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">Projects</p>
-          <h2>Solo projects</h2>
-          <p class="section-lead">Newest first. Click a thumbnail for the technical breakdown; hover to see it in motion.</p>
-        </header>
-
-        <!--
-          To add a project: copy one <article class="card project reveal"> block.
-          - Thumbnail: put an <img> inside .card-media (poster .webp preferred).
-            The thumbnail links to the project's breakdown page. Only when a
-            project has no breakdown does it fall back to where the game can
-            be played, and then it needs target="_blank" rel="noopener".
-          - Optional hover video: add data-video="path.webm" to .card-media
-            and keep the .media-badge; main.js does the rest.
-        -->
-
-        <!-- Cyber Station: featured (final year project, ExpoTees 2026 winner) -->
-        <article class="card project project-featured reveal">
-          <a class="card-media" href="cyber-station.html"
-             data-video="media/hover/cyber-station.webm"
-             aria-label="Cyber Station breakdown">
-            <img src="media/cyber-station/late-game-zoomed-out-gameplay-screenshot.webp"
-                 alt="Cyber Station late game: cyan trains stretched along the platforms of a large neon station while crowds of passengers move through the concourse"
-                 width="1400" height="784" loading="lazy">
-            <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-          </a>
-          <div class="card-body">
-            <div class="card-top">
-              <h3>Cyber Station</h3>
-              <span class="card-date">Apr 2026</span>
-            </div>
-            <p>
-              My final year project: a neon station management game about building a
-              transport hub that can take the pressure. Four systems pull against each
-              other, so every layout decision changes how passengers path through the
-              space, which moves the ratings, which gates what you can build next.
-            </p>
-            <ul class="project-systems">
-              <li><b>Placement</b> a full build catalogue, each item costed and carrying a stat effect</li>
-              <li><b>Passenger flow</b> crowds navigating the concourse you laid out</li>
-              <li><b>Ratings</b> a star score read off how well the station actually copes</li>
-              <li><b>Progression</b> tiers that unlock against that rating</li>
-            </ul>
-            <p class="project-support">
-              Train scheduling, self dispatching staff AI, an economy and save/load
-              sit around that core.
-            </p>
-            <dl class="project-specs">
-              <div><dt>Role</dt><dd>Solo developer</dd></div>
-              <div><dt>Engine</dt><dd>Unity 3D · C#</dd></div>
-              <div><dt>Grade</dt><dd>90 / 100</dd></div>
-            </dl>
-            <ul class="tags">
-              <li>Unity 3D</li><li>C#</li><li>AI Navigation</li><li>Simulation</li>
-            </ul>
-            <div class="card-links">
-              <a class="card-cta" href="cyber-station.html">
-                Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-              </a>
-              <a href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
-                itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-              </a>
-              <a href="https://github.com/OliverNealDev/CyberStation" target="_blank" rel="noopener">
-                <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-              </a>
-            </div>
-          </div>
-
-          <!-- The award itself, in its own column beside the write-up. The
-               trophy credit lives here rather than in .card-body so the award
-               is stated once, not twice. -->
-          <figure class="award-shot">
-            <img src="media/expotees/award.webp"
-                 alt="Oliver Neal collecting the Best Artefact award for Games Programming and Development at ExpoTees 2026, in front of a screen reading Best Artefact, Games Programming &amp; Development"
-                 width="480" height="600" loading="lazy">
-            <figcaption>
-              <b class="award-shot-head">
-                <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-trophy"/></svg>
-                Best Artefact
-              </b>
-              Games Programming &amp; Development<br>
-              ExpoTees 2026, Teesside University
-            </figcaption>
-          </figure>
-        </article>
-
-        <div class="project-grid" id="solo-grid">
-
-          <!-- Tile Turfer (behind "show all") -->
-          <article class="card project project-extra reveal">
-            <a class="card-media" href="tile-turfer.html" aria-label="Tile Turfer breakdown">
-              <img src="media/tile-turfer/tile-1.webp"
-                   alt="Tile Turfer: blue and red teams battling to claim tiles across a pixel map, with a minimap and a fire rate power up"
-                   width="1200" height="674" loading="lazy">
-            </a>
-            <div class="card-body">
-              <div class="card-top">
-                <h3>Tile Turfer</h3>
-                <span class="card-date">Jan 2026</span>
-              </div>
-              <p>
-                A turf-war arena shooter where one territory percentage drives the
-                difficulty, your fire rate and your attacks at once, across
-                procedurally generated caves with runtime 2D navigation.
-              </p>
-              <ul class="tags">
-                <li>Unity 2D</li><li>C#</li><li>Procedural</li><li>Enemy AI</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="tile-turfer.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://olivernealdev.itch.io/tile-turfer" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-                <a href="https://github.com/OliverNealDev/TileTurfer" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-                </a>
-                <a href="TileTurferReport.pdf" target="_blank" rel="noopener">
-                  <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg> Report
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Minimalists -->
-          <article class="card project reveal">
-            <a class="card-media" href="minimalists.html"
-               data-video="media/hover/minimalists.webm"
-               aria-label="Minimalists breakdown">
-              <img src="media/minimalists/1v1-poster.webp"
-                   alt="Minimalists: a stripped back 3D RTS map with blue and magenta bases, turrets and unit counts over each structure"
-                   width="1040" height="582" loading="lazy">
-              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-            </a>
-            <div class="card-body">
-              <div class="card-top">
-                <h3>Minimalists</h3>
-                <span class="card-date">Aug 2025</span>
-              </div>
-              <p>
-                Minimalist 3D RTS with advanced enemy AI. Capture structures,
-                commit forces by percentage and outthink opponents in anything
-                from a duel to a four way free for all.
-              </p>
-              <ul class="tags">
-                <li>Unity 3D</li><li>C#</li><li>Enemy AI</li><li>RTS</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="minimalists.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://olivernealdev.itch.io/minimalists" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-                <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Wanted (behind "show all") -->
-          <article class="card project project-extra reveal">
-            <a class="card-media" href="wanted.html"
-               data-video="media/hover/wanted.webm"
-               aria-label="Wanted breakdown">
-              <img src="media/wanted/wanted-poster.webp"
-                   alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
-                   width="1280" height="720" loading="lazy">
-              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-            </a>
-            <div class="card-body">
-              <div class="card-top">
-                <h3>Wanted</h3>
-                <span class="card-date">May 2025</span>
-              </div>
-              <p>
-                A top-down stealth survival game built in a week for the Tyne to
-                Game jam. Evade an escalating police presence, patrolling officers,
-                cars and a helicopter, across procedurally generated cover while
-                managing stamina and a rising detection meter.
-              </p>
-              <ul class="tags">
-                <li>Unity 6</li><li>C#</li><li>Procedural</li><li>Stealth AI</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="wanted.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://olivernealdev.itch.io/wanted" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-                <a href="https://github.com/OliverNealDev/Wanted" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Unicellular -->
-          <article class="card project reveal">
-            <a class="card-media" href="unicellular.html"
-               data-video="media/hover/unicellular.webm"
-               aria-label="Unicellular breakdown">
-              <img src="media/unicellular/10k-entities-poster.webp"
-                   alt="Unicellular: thousands of glowing single celled organisms drifting across a dark field, running at 92 FPS"
-                   width="1280" height="720" loading="lazy">
-              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-            </a>
-            <div class="card-body">
-              <div class="card-top">
-                <h3>Unicellular</h3>
-                <span class="card-date">Feb 2025</span>
-              </div>
-              <p>
-                Idle simulation stress-tested to 10,000 entities at once, kept
-                smooth by finite state machines, a multi-rate tick and time-sliced
-                proximity AI inside Unity's GameObject workflow.
-              </p>
-              <ul class="tags">
-                <li>Unity</li><li>C#</li><li>Simulation</li><li>FSM</li><li>Optimisation</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="unicellular.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://olivernealdev.itch.io/unicellular" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-                <!-- The repo was once called UnicellularRebuiltECS: the rebuild
-                     borrowed the idea of one manager driving every unicell
-                     from ECS, but it is GameObjects, and it is the code this
-                     card describes. -->
-                <a href="https://github.com/OliverNealDev/Unicellular" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- 3D Netcode Tank Game (behind "show all") -->
-          <article class="card project project-extra reveal">
-            <a class="card-media" href="tank-game.html"
-               data-video="media/hover/tank-game.webm"
-               aria-label="3D Netcode Tank Game breakdown">
-              <img src="media/tank-game/multiplayer-demo-poster.webp"
-                   alt="3D Netcode Tank Game: two Unity clients side by side, each showing the host and join lobby menu"
-                   width="1280" height="720" loading="lazy">
-              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-            </a>
-            <div class="card-body">
-              <div class="card-top">
-                <h3>3D Netcode Tank Game</h3>
-                <span class="card-date">Jan 2025</span>
-              </div>
-              <p>
-                Server-authoritative multiplayer tank shooter on Unity Netcode for
-                GameObjects: Relay-hosted sessions, cloud authentication and a
-                64-ray hitscan resolved on the server.
-              </p>
-              <ul class="tags">
-                <li>Unity 3D</li><li>C#</li><li>Netcode</li><li>Multiplayer</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="tank-game.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://github.com/OliverNealDev/NetcodeTankGame" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Pinnable -->
-          <article class="card project reveal">
-            <a class="card-media" href="pinnable.html"
-               data-video="media/hover/pinnable.webm"
-               aria-label="Pinnable breakdown">
-              <img src="media/pinnable/gameplay-poster.webp"
-                   alt="Pinnable: a metal bucket catching marbles fired from a cannon while dodging falling pins in a 2D arcade game"
-                   width="1280" height="720" loading="lazy">
-              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-            </a>
-            <div class="card-body">
-              <div class="card-top">
-                <h3>Pinnable</h3>
-                <span class="card-date">Mar 2024</span>
-              </div>
-              <p>
-                A 2D arcade score-attack game: catch marbles from a moving cannon,
-                dodge the pins, and survive a spawn director that ramps up the
-                harder you play.
-              </p>
-              <ul class="tags">
-                <li>Unity 2D</li><li>C#</li><li>Arcade</li><li>Physics</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="pinnable.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://olivernealdev.itch.io/pinnable" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-                <a href="https://github.com/OliverNealDev/Pinnable" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="show-more-wrap">
-          <button class="btn btn-outline" type="button"
-                  data-show-more="solo-grid" aria-controls="solo-grid" aria-expanded="false"
-                  data-more="Show all 7 solo projects" data-less="Show fewer">
-            Show all 7 solo projects
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== 6 · TEAM PROJECTS ===================== -->
-    <section class="section" id="team">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">Projects</p>
-          <h2>Team projects</h2>
-          <p class="section-lead">Group builds, with my individual contribution called out on each.</p>
-        </header>
-
-        <div class="project-grid">
-
-          <!-- Space Bar Simulator -->
-          <article class="card project reveal">
-            <a class="card-media" href="space-bar.html" aria-label="Space Bar Simulator breakdown">
-              <img src="media/space-bar/space-5.webp"
-                   alt="Space Bar Simulator gameplay: carrying a tray in first person while collecting Space Beer bottles from a fridge, with table orders and the day timer on the HUD"
-                   width="1200" height="618" loading="lazy">
-            </a>
-            <div class="card-body">
-              <span class="team-badge">Team project · 10 people</span>
-              <div class="card-top">
-                <h3>Space Bar Simulator</h3>
-                <span class="card-date">Jan 2026</span>
-              </div>
-              <p>
-                A retro futurist bar simulator set on its own asteroid, a
-                1950s diner drifting through space. Built in Unreal Engine 5
-                for Beta Arcade, Teesside's studio simulation module.
-              </p>
-              <p class="card-role">
-                <strong>My role:</strong> player controller, interaction
-                architecture and the camera-blended station systems.
-              </p>
-              <ul class="tags">
-                <li>Unreal Engine 5</li><li>Blueprints</li><li>Interaction</li><li>UI</li>
-              </ul>
-              <div class="card-links">
-                <a class="card-cta" href="space-bar.html">
-                  Breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Candy Corporate -->
-          <article class="card project reveal">
-            <a class="card-media" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener"
-               data-video="media/hover/candy-corporate.webm"
-               aria-label="Candy Corporate on itch.io (opens in a new tab)">
-              <img src="media/candy-corporate/front-of-map-poster.webp"
-                   alt="Candy Corporate: pixel art top down view of the candy company storefront"
-                   width="1280" height="720" loading="lazy">
-              <span class="media-badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> hover</span>
-            </a>
-            <div class="card-body">
-              <span class="team-badge">Team project</span>
-              <div class="card-top">
-                <h3>Candy Corporate</h3>
-                <span class="card-date">Apr 2024</span>
-              </div>
-              <p>
-                A 2D top-down extraction game inspired by Lethal Company: delve
-                into the candy company, fill your pockets, and choose whether to
-                eat your haul for abilities and health or sell whatever you
-                carry back out alive.
-              </p>
-              <p class="card-role">
-                <strong>My role:</strong> level design, tile creation and pixel art integration.
-              </p>
-              <ul class="tags">
-                <li>Pixel art</li><li>Level design</li><li>Tilesets</li><li>Extraction</li>
-              </ul>
-              <div class="card-links">
-                <!-- No breakdown page for this one, so the play link is the card's primary action. -->
-                <a class="card-cta" href="https://jurgenwithwings.itch.io/candycorporate" target="_blank" rel="noopener">
-                  itch.io <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== 7 · PROJECT BREAKDOWNS ===================== -->
-    <section class="section" id="breakdowns">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">Case studies</p>
-          <h2>Project breakdowns</h2>
-          <p class="section-lead">
-            The same eight games as above, indexed by the problem each write-up
-            is actually about.
-          </p>
-        </header>
-
-        <!--
-          A text index, not a second gallery. Every project here already has a
-          card further up the page with its own screenshot, so repeating the
-          thumbnails meant scrolling twice through the same eight games and
-          paying for the images again.
-        -->
-        <div class="bd-list">
-          <a class="bd-card reveal" href="cyber-station.html">
-            <div>
-              <h3>Cyber Station</h3>
-              <p>Placement, passenger flow and a six factor station rating system, running as one simulation.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="minimalists.html">
-            <div>
-              <h3>Minimalists</h3>
-              <p>A node conquest RTS pared back to essentials, and the enemy AI that plays it.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="wanted.html">
-            <div>
-              <h3>Wanted</h3>
-              <p>One detection meter that fills four times slower under cover, and a police force that only ever grows.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="unicellular.html">
-            <div>
-              <h3>Unicellular</h3>
-              <p>Keeping thousands of FSM driven organisms simulating smoothly in a single scene.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="tile-turfer.html">
-            <div>
-              <h3>Tile Turfer</h3>
-              <p>One territory percentage driving difficulty, fire rate and AI, over procedurally generated caves.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="pinnable.html">
-            <div>
-              <h3>Pinnable</h3>
-              <p>A 2D arcade catch game and the weighted spawn director, pin AI and physics loop underneath it.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="tank-game.html">
-            <div>
-              <h3>3D Netcode Tank Game</h3>
-              <p>Server-authoritative multiplayer on Unity Netcode for GameObjects, with a 64-ray hitscan and Relay sessions.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
-          <a class="bd-card reveal" href="space-bar.html">
-            <div>
-              <h3>Space Bar Simulator</h3>
-              <p>A ten-person UE5 build: my player controller, interaction system and camera-blended stations.</p>
-            </div>
-            <svg class="icon icon-stroke bd-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== 8 · EDUCATION ===================== -->
-    <section class="section" id="education">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">Education</p>
-          <h2>Where I studied</h2>
-        </header>
-
-        <ol class="timeline">
-          <li class="reveal">
-            <a class="edu-logo-link" href="https://www.tees.ac.uk/" target="_blank" rel="noopener" aria-label="Teesside University website">
-              <img class="edu-logo" src="media/logos/teesside.webp" alt="Teesside University logo" width="192" height="192" loading="lazy">
-            </a>
-            <div>
-              <h3>MA Games Design (with Advanced Practice)</h3>
-              <p class="edu-org">Teesside University</p>
-              <p class="edu-meta">September 2026 to 2028 · <strong>In progress</strong></p>
-              <p class="edu-note">
-                Two years, studied alongside the Technical Director role at
-                Shiverbug Studios.
-              </p>
-            </div>
-          </li>
-          <li class="reveal">
-            <a class="edu-logo-link" href="https://www.tees.ac.uk/" target="_blank" rel="noopener" aria-label="Teesside University website">
-              <img class="edu-logo" src="media/logos/teesside.webp" alt="Teesside University logo" width="192" height="192" loading="lazy">
-            </a>
-            <div>
-              <h3>BSc (Hons) Games Development</h3>
-              <p class="edu-org">Teesside University</p>
-              <p class="edu-meta">Graduated July 2026 · <strong>First Class Honours</strong> · 80% overall</p>
-              <p class="edu-note">
-                My final-year project scored 84%; its artefact, Cyber Station,
-                scored 90 and won Best Games Programming and Development Artefact
-                at ExpoTees 2026.
-              </p>
-            </div>
-          </li>
-          <li class="reveal">
-            <a class="edu-logo-link" href="https://ncuc.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College University Centre website">
-              <img class="edu-logo" src="media/logos/ncuc.webp" alt="Newcastle College University Centre logo" width="192" height="192" loading="lazy">
-            </a>
-            <div>
-              <h3>FdSc Games Technologies</h3>
-              <p class="edu-org">Newcastle College University Centre</p>
-              <p class="edu-meta">Graduated July 2025 · <strong>2:1</strong> (Year 1 Distinction, Year 2 Merit)</p>
-            </div>
-          </li>
-          <li class="reveal">
-            <a class="edu-logo-link" href="https://www.ncl-coll.ac.uk/" target="_blank" rel="noopener" aria-label="Newcastle College website">
-              <img class="edu-logo" src="media/logos/newcastle-college.webp" alt="Newcastle College logo" width="192" height="192" loading="lazy">
-            </a>
-            <div>
-              <h3>BTEC Level 3 National Foundation Diploma in Creative Digital Media Production</h3>
-              <p class="edu-org">Newcastle College</p>
-              <p class="edu-meta"><strong>Distinction</strong></p>
-            </div>
-          </li>
-        </ol>
-
-      </div>
-    </section>
-
-    <!-- ===================== 9 · LINKEDIN LOG ===================== -->
+    <!-- ===================== 5 · LOG ===================== -->
     <section class="section" id="log">
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">Log</p>
           <h2>Latest from LinkedIn</h2>
           <p class="section-lead">
-            A running log of what I'm building and shipping, posted as it
-            happens. Newest first.
+            What I'm building and shipping, as I post it. Newest first.
           </p>
         </header>
 
@@ -1398,7 +1132,7 @@ This has been a huge step forward for me as a games developer. It pushed me to b
       </div>
     </section>
 
-    <!-- ===================== 10 · CONTACT ===================== -->
+    <!-- ===================== 6 · CONTACT ===================== -->
     <section class="section contact" id="contact">
       <div class="container">
         <header class="section-head reveal">
@@ -1484,25 +1218,23 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </section>
   </main>
 
-  <!-- ===================== 11 · FOOTER ===================== -->
+  <!-- ===================== FOOTER ===================== -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div>
           <a class="brand" href="#top">oliverneal<span>.dev</span></a>
           <p class="footer-blurb">
-            Games developer specialising in Unity and C#. Technical Director
-            at Shiverbug Studios and a First Class Games Development
-            graduate.
+            Technical Director at Shiverbug Studios. Games developer working
+            in Unity and C#.
           </p>
         </div>
         <div>
           <h4>Site</h4>
           <ul>
-            <li><a href="#shiverbug">Shiverbug</a></li>
+            <li><a href="#studio">Studio</a></li>
+            <li><a href="#work">Work</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#breakdowns">Breakdowns</a></li>
             <li><a href="#log">Log</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="cv.html">CV</a></li>
@@ -1530,6 +1262,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-09"></script>
+  <script src="main.js?v=2026-11-10"></script>
 </body>
 </html>

@@ -10,9 +10,8 @@ Contact: oliverjn04@gmail.com
 
 ## Portfolio
 
-- [Home](https://oliverneal.dev/): current role, about, skills, all nine projects, education, a log of LinkedIn posts and contact
+- [Home](https://oliverneal.dev/): the current role and the decisions behind how the studio's tech is run, four featured projects and five more, about, skills, a log of LinkedIn posts and contact
 - [CV](https://oliverneal.dev/cv.html): full CV in HTML, with a PDF download at https://oliverneal.dev/Oliver_Neal_CV.pdf
-- [Timeline](https://oliverneal.dev/timeline.html): the career and education history as one ordered list of twenty-one milestones, 2018 to October 2026
 
 ## Current role
 
