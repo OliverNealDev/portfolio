@@ -1,7 +1,5 @@
-# oliverneal.dev — the portfolio of Oliver Neal, games developer.
-# Nothing here is private. Search engines and AI assistants are both
-# welcome: the point of the site is being found by people hiring gameplay
-# programmers, and increasingly that search starts in a chatbot.
+# oliverneal.dev, the portfolio of Oliver Neal, games developer.
+# Nothing here is private, and everything is meant to be found.
 
 User-agent: *
 Allow: /

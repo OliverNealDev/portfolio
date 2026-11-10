@@ -155,31 +155,34 @@
           </div>
         </div>
 
-        <!-- The CV document itself, mirroring Oliver_Neal_CV.pdf -->
+        <!-- The CV itself. Oliver_Neal_CV.pdf is this page printed:
+             msedge --headless=new --no-pdf-header-footer --print-to-pdf=Oliver_Neal_CV.pdf <this page>
+             Keep it to two A4 pages, with every URL written out in the text. -->
         <article class="cv-sheet">
-          <header class="cv-sheet-head">
-            <h1>Oliver Neal</h1>
-            <p class="cv-sheet-role">Technical Director, Shiverbug Studios · Unity (C#)</p>
-            <p class="cv-sheet-contact">
-              <a href="https://oliverneal.dev/">oliverneal.dev</a> ·
-              <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a> ·
-              <a href="https://github.com/OliverNealDev" target="_blank" rel="noopener">github.com/OliverNealDev</a> ·
-              <a href="https://www.linkedin.com/in/oliverjackneal/" target="_blank" rel="noopener">LinkedIn</a> ·
-              <a href="https://olivernealdev.itch.io" target="_blank" rel="noopener">olivernealdev.itch.io</a>
-            </p>
-            <p class="cv-sheet-contact">
-              Middlesbrough, UK · Right to work in the UK
+          <header>
+            <div class="cv-head">
+              <h1>Oliver Neal</h1>
+              <p class="cv-role">Technical Director, Shiverbug Studios · Unity (C#)</p>
+            </div>
+            <p class="cv-contact">
+              <a href="https://oliverneal.dev/">oliverneal.dev</a><span class="sep">·</span>
+              <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a><span class="sep">·</span>
+              <a href="https://github.com/OliverNealDev">github.com/OliverNealDev</a><span class="sep">·</span>
+              <a href="https://www.linkedin.com/in/oliverjackneal/">linkedin.com/in/oliverjackneal</a><span class="sep">·</span>
+              <a href="https://olivernealdev.itch.io">olivernealdev.itch.io</a><br>
+              Middlesbrough, UK<span class="sep">·</span>Right to work in the UK
             </p>
           </header>
 
           <section>
             <h2>Profile</h2>
             <p>
-              Technical Director at Shiverbug Studios, leading the technical side
-              of <em>Out of Water</em>, a two-player co-op 3D platformer in Unity 6.
-              A systems programmer at heart: state-machine-driven characters and
-              enemy AI, local co-op and multiplayer plumbing, tools for the team,
-              and the profiling that keeps a scene inside its frame budget.
+              Technical Director at Shiverbug Studios, leading the technical
+              side of <em>Out of Water</em>, a two-player co-op 3D platformer in
+              Unity 6. A systems programmer at heart: state-machine-driven
+              characters and enemy AI, local co-op and multiplayer plumbing,
+              tools for the team, and performance work that is measured before
+              it is claimed.
             </p>
             <p>
               First Class Honours in BSc (Hons) Games Development from Teesside
@@ -188,128 +191,144 @@
               Teesside alongside the studio role.
             </p>
             <p>
-              Making games in Unity since 2018, building them consistently since
-              2023. Nine shipped projects, most playable in the browser, with
-              source on GitHub and breakdowns at
+              Making games in Unity since 2018, building them consistently
+              since 2023. Nine projects, most playable in the browser, with
+              source on GitHub and technical breakdowns at
               <a href="https://oliverneal.dev/">oliverneal.dev</a>.
             </p>
           </section>
 
           <section>
             <h2>Experience</h2>
-            <ul>
-              <li>
-                <strong>Technical Director</strong> · Shiverbug Studios <em>(Oct 2026 to present)</em>
-                <ul>
-                  <li>Lead the technical side of the studio and sit on its board, alongside the MA.</li>
-                  <li>Engineering on <em>Out of Water</em>: the character and enemy framework, online co-op alongside splitscreen, the tools the level designers build with, UI and performance, on a layered codebase with automated tests.</li>
-                  <li>Own the build: the git workflow, pull request review and a tagged playtest build every fortnight; the technical plan for the vertical slice; and the studio's repositories and access.</li>
-                  <li>Get artists and designers working confidently in Unity and git, so an art-only change never has to wait for a programmer.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Gameplay Programmer (Internship)</strong> · Shiverbug Studios <em>(Jul to Sep 2026)</em>
-                <ul>
-                  <li>Hired for the character and enemy gameplay code on <em>Out of Water</em>, an original-IP two-player co-op 3D platformer collectathon; by the end of the ten weeks I was also the studio's buildmaster.</li>
-                  <li>Rebuilt both playable characters and the enemies from single-file controllers onto component-driven finite and hierarchical state machines, and built the co-op moveset on top.</li>
-                  <li>Ran the performance pass: GPU-driven rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I built for the team.</li>
-                  <li>Built the splitscreen plumbing (per-player device routing, cameras, character swapping) and a UI Toolkit front end on a shared token system: HUD, character select, pause, save slots and a controls tutorial.</li>
-                  <li>Handled presentation and tooling: water, caustics and bubble shaders in Shader Graph and custom URP HLSL, a decoupled FMOD layer the audio team plugs into directly, and the blockout interactables and editor tooling the level designers build puzzles from.</li>
-                  <li>Designed and shipped the studio's public website, <a href="https://shiverbugstudios.com/" target="_blank" rel="noopener">shiverbugstudios.com</a>, alongside gameplay work.</li>
-                  <li><em>Unity 6 · C# · FSM/HSM · Performance · UI Toolkit · FMOD · Cinemachine · Shader Graph · HLSL</em></li>
-                </ul>
-              </li>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Technical Director <span class="cv-tech">· Shiverbug Studios</span></h3>
+                <span class="cv-date">Oct 2026 to present</span>
+              </div>
+              <ul>
+                <li>Lead the technical side of the studio and sit on its board, alongside the MA. Engineering on <em>Out of Water</em>: the character and enemy framework, online co-op alongside splitscreen, level design tools, UI and performance, on a layered codebase with automated tests.</li>
+                <li>Own the build (git workflow, pull request review, a tagged playtest build every fortnight), the technical plan for the vertical slice, and the studio's repositories and access.</li>
+                <li>Get artists and designers working confidently in Unity and git, so an art-only change never has to wait for a programmer.</li>
+              </ul>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Gameplay Programmer (Internship) <span class="cv-tech">· Shiverbug Studios</span></h3>
+                <span class="cv-date">Jul to Sep 2026</span>
+              </div>
+              <ul>
+                <li>Hired for the character and enemy gameplay code on <em>Out of Water</em>, an original-IP two-player co-op 3D platformer; by the end of the ten weeks I was also the studio's buildmaster.</li>
+                <li>Rebuilt both playable characters and the enemies from single-file controllers onto component-driven finite and hierarchical state machines, and built the co-op moveset on top.</li>
+                <li>Ran the performance pass: GPU-driven rendering, quality tiers, LOD and culling, measured branch to branch with a profiling tool I made for the team.</li>
+                <li>Built the splitscreen plumbing (per-player device routing, cameras, character swapping) and a UI Toolkit front end: HUD, character select, pause, save slots and a controls tutorial.</li>
+              </ul>
+              <p class="cv-links">Also: water shaders in Shader Graph and URP HLSL, a decoupled FMOD audio layer, level design tooling, and the studio's website, <a href="https://shiverbugstudios.com/">shiverbugstudios.com</a>.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Technical skills</h2>
+            <ul class="cv-skills">
+              <li><strong>Languages &amp; engines:</strong> C#, Unity 6 (2D/3D), Shader Graph, HLSL, Unreal Engine 5, Python</li>
+              <li><strong>Gameplay &amp; AI:</strong> gameplay programming, systems design, finite &amp; hierarchical state machines, AI navigation (NavMesh), local co-op &amp; splitscreen, Unity Input System</li>
+              <li><strong>Performance:</strong> profiling and frame analysis, time-sliced &amp; multi-rate simulation, GPU-driven rendering, LOD and culling, quality tiers, runtime NavMesh baking</li>
+              <li><strong>Multiplayer &amp; services:</strong> Netcode for GameObjects, Unity Authentication, Relay, Cloud Save</li>
+              <li><strong>Audio, UI &amp; presentation:</strong> FMOD, UI Toolkit, Unity UI, Cinemachine, particle VFX</li>
+              <li><strong>Tools &amp; workflow:</strong> Git and Git LFS, branch workflow and pull request review on a shared team repo, automated testing (Unity Test Framework), Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</li>
             </ul>
           </section>
 
           <section>
-            <h2>Technical Skills</h2>
-            <ul>
-              <li><strong>Languages &amp; Engines:</strong> C#, Unity 6 (2D/3D), Shader Graph, HLSL, Unreal Engine 5, Python</li>
-              <li><strong>Gameplay &amp; AI:</strong> Gameplay programming, systems design, finite &amp; hierarchical state machines, AI navigation (NavMesh), local co-op &amp; splitscreen, Unity Input System</li>
-              <li><strong>Performance:</strong> Profiling and frame analysis, time-sliced &amp; multi-rate simulation, GPU-driven rendering, LOD and culling, quality tiers, runtime NavMesh baking</li>
-              <li><strong>Audio, UI &amp; Presentation:</strong> FMOD, UI Toolkit, Unity UI, Cinemachine, particle VFX</li>
-              <li><strong>Multiplayer &amp; Services:</strong> Netcode for GameObjects, Unity Authentication, Relay, Cloud Save</li>
-              <li><strong>Tools &amp; Workflow:</strong> Git and Git LFS, branch workflow and pull request review on a shared team repo, automated testing (Unity Test Framework), Visual Studio, JetBrains Rider, Figma, Trello, technical documentation</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Highlighted Projects</h2>
-            <ul>
-              <li>
-                <strong>Cyber Station</strong> <em>(Apr 2026)</em> · Unity 3D · C# · AI Navigation · Simulation
-                <ul>
-                  <li>Neon station management game, 86 scripts and ~17k lines solo: hundreds of passengers run off one fixed 10&nbsp;Hz tick, picking facilities by lowest estimated total delay (queue wait plus real NavMesh walk time, both in seconds), with six live ratings feeding back into the spawn rate.</li>
-                  <li>Final-year project artefact: scored 90 and won Best Games Programming and Development Artefact at ExpoTees 2026.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Tile Turfer</strong> <em>(Jan 2026)</em> · Unity 2D · C# · Procedural Generation · Enemy AI
-                <ul>
-                  <li>Turf-war shooter where one territory percentage drives difficulty, fire rate and enemy AI at once, across procedurally generated caves with runtime 2D NavMesh baking.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Minimalists</strong> <em>(Aug 2025)</em> · Unity 3D · C# · Enemy AI · RTS
-                <ul>
-                  <li>Node-conquest RTS whose enemy AI gets no cheats and no extra information: it commits through the same percentage interface the player uses, sizing each attack from what the target actually holds, across several distinct AI personalities.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Wanted</strong> <em>(May 2025)</em> · Unity 6 · C# · Stealth AI · One-Week Game Jam
-                <ul>
-                  <li>Top-down stealth survival game built in one week for the Tyne to Game jam: a single detection meter drives three-state officer AI, escalating patrols and helicopter passes on a runtime-baked 2D NavMesh.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Unicellular</strong> <em>(Feb 2025)</em> · Unity · C# · FSM · Optimisation
-                <ul>
-                  <li>Idle simulation stress-tested at 1,000 and 10,000 concurrent entities, kept smooth by a decoupled multi-rate tick and time-sliced proximity AI rather than a per-entity update.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>3D Netcode Tank Game</strong> <em>(Jan 2025)</em> · Unity 3D · C# · Netcode · Multiplayer
-                <ul>
-                  <li>Server-authoritative multiplayer tank shooter: Relay-hosted sessions on a 30&nbsp;Hz tick, cloud authentication, a decoupled turret aiming rig, and a 64-ray hitscan resolved on the server.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Pinnable</strong> <em>(Mar 2024)</em> · Unity 2D · C# · Arcade · Physics
-                <ul>
-                  <li>Arcade score-attack catch game with a self-escalating spawn director: hazards unlock on a survival timer, then scale their own spawn weight with score, so difficulty tracks skill rather than a fixed curve.</li>
-                </ul>
-              </li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Team Projects</h2>
-            <ul>
-              <li>
-                <strong>Space Bar Simulator</strong> <em>(Jan 2026)</em> · Unreal Engine 5 · Blueprints · Team of 10
-                <ul>
-                  <li>Retro-futurist first-person bar simulator for Beta Arcade, Teesside's studio-simulation module: owned the player controller on Enhanced Input, a component-based interaction system behind one Blueprint interface every interactable implements, camera-blended stations and the UI computer terminal.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Candy Corporate</strong> <em>(Apr 2024)</em> · Unity 2D · Small Team · Pixel Art
-                <ul>
-                  <li>Top-down extraction game inspired by Lethal Company; led level design, tile creation and pixel-art integration.</li>
-                </ul>
-              </li>
-            </ul>
+            <h2>Selected projects</h2>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Cyber Station <span class="cv-tech">· Unity 3D · C# · AI navigation · simulation · solo</span></h3>
+                <span class="cv-date">Apr 2026</span>
+              </div>
+              <ul>
+                <li>Neon station management game, 86 scripts and around 17,000 lines: hundreds of passengers run off one fixed 10&nbsp;Hz tick, picking facilities by lowest estimated total delay (queue wait plus real NavMesh walk time, both in seconds), with six live ratings feeding back into the spawn rate.</li>
+                <li>Final-year artefact: scored 90/100 and won Best Games Programming and Development Artefact at ExpoTees 2026.</li>
+              </ul>
+              <p class="cv-links">Breakdown: <a href="https://oliverneal.dev/cyber-station.html">oliverneal.dev/cyber-station.html</a> · Play: <a href="https://olivernealdev.itch.io/cyber-station">olivernealdev.itch.io/cyber-station</a> · Source: <a href="https://github.com/OliverNealDev/CyberStation">github.com/OliverNealDev/CyberStation</a></p>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Wanted <span class="cv-tech">· Unity 6 · C# · stealth AI · one-week game jam · solo</span></h3>
+                <span class="cv-date">May 2025</span>
+              </div>
+              <ul>
+                <li>Top-down stealth survival game built in one week for the Tyne to Game jam: a single detection meter drives three-state officer AI, escalating patrols and helicopter passes on a runtime-baked 2D NavMesh.</li>
+              </ul>
+              <p class="cv-links">Breakdown: <a href="https://oliverneal.dev/wanted.html">oliverneal.dev/wanted.html</a> · Play: <a href="https://olivernealdev.itch.io/wanted">olivernealdev.itch.io/wanted</a> · Source: <a href="https://github.com/OliverNealDev/Wanted">github.com/OliverNealDev/Wanted</a></p>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Minimalists <span class="cv-tech">· Unity 3D · C# · enemy AI · RTS · solo</span></h3>
+                <span class="cv-date">Aug 2025</span>
+              </div>
+              <ul>
+                <li>Node-conquest RTS whose enemy AI gets no cheats and no extra information: it commits through the same percentage interface the player uses, sizing each attack from what the target actually holds, across six AI personalities.</li>
+              </ul>
+              <p class="cv-links">Breakdown: <a href="https://oliverneal.dev/minimalists.html">oliverneal.dev/minimalists.html</a> · Play: <a href="https://olivernealdev.itch.io/minimalists">olivernealdev.itch.io/minimalists</a> · Source: <a href="https://github.com/OliverNealDev/Minimalists">github.com/OliverNealDev/Minimalists</a></p>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Unicellular <span class="cv-tech">· Unity · C# · FSM · optimisation · solo</span></h3>
+                <span class="cv-date">Feb 2025</span>
+              </div>
+              <ul>
+                <li>Idle simulation stress-tested at 1,000 and 10,000 concurrent entities, kept smooth by a decoupled multi-rate tick and time-sliced proximity AI.</li>
+              </ul>
+              <p class="cv-links">Breakdown: <a href="https://oliverneal.dev/unicellular.html">oliverneal.dev/unicellular.html</a> · Play: <a href="https://olivernealdev.itch.io/unicellular">olivernealdev.itch.io/unicellular</a> · Source: <a href="https://github.com/OliverNealDev/Unicellular">github.com/OliverNealDev/Unicellular</a></p>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>Also</h3>
+              </div>
+              <p>
+                Tile Turfer (Unity 2D, Jan 2026), 3D Netcode Tank Game (Unity
+                3D, Jan 2025) and Pinnable (Unity 2D, Mar 2024), all solo. In
+                teams: Space Bar Simulator (Unreal Engine 5, team of 10, Jan
+                2026), where I owned the player controller, the interaction
+                system and the camera-blended stations, and Candy Corporate
+                (Unity 2D, Apr 2024), where I did level design and pixel art
+                integration. Breakdowns for all but the last are at
+                <a href="https://oliverneal.dev/">oliverneal.dev</a>.
+              </p>
+            </div>
           </section>
 
           <section>
             <h2>Education</h2>
-            <ul>
-              <li><strong>MA Games Design (with Advanced Practice)</strong> · Teesside University <em>(Sep 2026 to 2028)</em> · In progress</li>
-              <li><strong>BSc (Hons) Games Development</strong> · Teesside University <em>(Jul 2026)</em> · First Class Honours (80% overall); final-year project scored 84%, its artefact 90/100</li>
-              <li><strong>FdSc Games Technologies</strong> · Newcastle College University Centre <em>(Jul 2025)</em> · 2:1 (Year 1 Distinction, Year 2 Merit)</li>
-              <li><strong>BTEC Level 3 National Foundation Diploma, Creative Digital Media Production</strong> · Newcastle College <em>(2023)</em> · Distinction</li>
-            </ul>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>MA Games Design (with Advanced Practice) <span class="cv-tech">· Teesside University · in progress</span></h3>
+                <span class="cv-date">Sep 2026 to 2028</span>
+              </div>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>BSc (Hons) Games Development <span class="cv-tech">· Teesside University · First Class Honours, 80% overall</span></h3>
+                <span class="cv-date">Jul 2026</span>
+              </div>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>FdSc Games Technologies <span class="cv-tech">· Newcastle College University Centre · 2:1</span></h3>
+                <span class="cv-date">Jul 2025</span>
+              </div>
+            </div>
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3>BTEC Level 3 National Foundation Diploma <span class="cv-tech">· Creative Digital Media Production · Newcastle College · Distinction</span></h3>
+                <span class="cv-date">2023</span>
+              </div>
+            </div>
           </section>
+
+          <p class="cv-foot">
+            Latest version of this CV: <a href="https://oliverneal.dev/Oliver_Neal_CV.pdf">oliverneal.dev/Oliver_Neal_CV.pdf</a> · Updated November 2026
+          </p>
         </article>
       </div>
     </section>

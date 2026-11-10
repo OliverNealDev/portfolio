@@ -255,21 +255,23 @@
     <!-- ===================== 1 · HERO ===================== -->
     <section class="hero">
       <div class="container hero-grid">
-        <div>
-          <a class="now-line" href="#studio">
-            <span class="now-dot" aria-hidden="true"></span>
-            <span>Building <strong>Out of Water</strong> at Shiverbug Studios</span>
-            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-          </a>
-
+        <div class="hero-top">
           <h1>Oliver Neal</h1>
           <p class="hero-role">Technical Director · Shiverbug Studios</p>
+        </div>
+
+        <div class="portrait">
+          <img src="media/oliver-neal.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high"
+               data-full="media/oliver-neal-full.webp" data-caption="Oliver Neal · ExpoTees 2026">
+        </div>
+
+        <div class="hero-rest">
           <p class="hero-pitch">
             I lead the tech on <strong>Out of Water</strong>, a co-op 3D
             platformer for two, made by a team of twelve in Middlesbrough. My
             own work is the systems layer in Unity: the characters, the co-op
             underneath them, the tools the team builds with, and the profiling
-            that keeps it fast.
+            that shows what is slow.
           </p>
 
           <!-- Facts to check, set as one quiet line rather than badges. -->
@@ -315,11 +317,6 @@
             </a>
           </div>
         </div>
-
-        <div class="portrait">
-          <img src="media/oliver-neal.webp" alt="Portrait of Oliver Neal" width="600" height="600" fetchpriority="high"
-               data-full="media/oliver-neal-full.webp" data-caption="Oliver Neal · ExpoTees 2026">
-        </div>
       </div>
     </section>
 
@@ -331,10 +328,9 @@
           <p class="kicker">Now</p>
           <h2>Technical Director at Shiverbug Studios</h2>
           <p class="section-lead">
-            <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">Shiverbug</a>
-            is an indie studio of twelve in Middlesbrough. I joined in July
-            2026 as a gameplay programming intern, and in October I joined the
-            board to lead the technical side, alongside my MA.
+            I joined in July 2026 as a gameplay programming intern, and in
+            October I joined the board to lead the technical side, alongside
+            my MA.
           </p>
         </header>
 
@@ -369,7 +365,7 @@
           </a>
           <ol class="role-path" aria-label="My roles at Shiverbug Studios, newest first">
             <li class="is-current">
-              <span class="role-path-title">Technical Director</span>
+              <a class="role-path-title" href="https://shiverbugstudios.com/team/oliver-neal.html" target="_blank" rel="noopener">Technical Director</a>
               <span class="role-path-meta">Oct 2026 to now · board</span>
             </li>
             <li>
@@ -572,9 +568,8 @@
             Toolkit front end, the FMOD audio layer and the water shaders.
           </p>
           <p>
-            <b>The team.</b> Out of Water is made by a team of twelve artists,
-            designers and programmers. The shot above is their art; my side is
-            the tech underneath it.
+            <b>The team.</b> The shot above is the team's art. My side is the
+            tech underneath it.
           </p>
         </div>
       </div>
@@ -649,6 +644,40 @@
           </article>
 
           <article class="feature reveal">
+            <a class="feature-media" href="wanted.html"
+               data-video="media/hover/wanted.webm"
+               aria-label="Wanted breakdown">
+              <img src="media/wanted/wanted-poster.webp"
+                   alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
+                   width="1280" height="720" loading="lazy">
+            </a>
+            <div class="feature-body">
+              <p class="feature-meta">May 2025 · Unity 6 · Solo · Game jam</p>
+              <h3><a href="wanted.html">Wanted</a></h3>
+              <p>
+                A top-down stealth survival game with no win state, only a
+                clock. The police arrive car by car and never leave.
+              </p>
+              <p class="feature-point">
+                One detection meter fills four times slower under cover, and a
+                confirmed sighting redirects only the closest 10% of officers,
+                so the response scales with the force.
+              </p>
+              <div class="feature-links">
+                <a class="feature-cta" href="wanted.html">
+                  Read the breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </a>
+                <a href="https://olivernealdev.itch.io/wanted" target="_blank" rel="noopener">
+                  Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+                </a>
+                <a href="https://github.com/OliverNealDev/Wanted" target="_blank" rel="noopener">
+                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
             <a class="feature-media" href="minimalists.html"
                data-video="media/hover/minimalists.webm"
                aria-label="Minimalists breakdown">
@@ -677,40 +706,6 @@
                   Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
                 </a>
                 <a href="https://github.com/OliverNealDev/Minimalists" target="_blank" rel="noopener">
-                  <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article class="feature reveal">
-            <a class="feature-media" href="wanted.html"
-               data-video="media/hover/wanted.webm"
-               aria-label="Wanted breakdown">
-              <img src="media/wanted/wanted-poster.webp"
-                   alt="Wanted: the player glowing red under red flashlight beams as police officers close in through the trees"
-                   width="1280" height="720" loading="lazy">
-            </a>
-            <div class="feature-body">
-              <p class="feature-meta">May 2025 · Unity 6 · Solo · Game jam</p>
-              <h3><a href="wanted.html">Wanted</a></h3>
-              <p>
-                A top-down stealth survival game with no win state, only a
-                clock. The police arrive car by car and never leave.
-              </p>
-              <p class="feature-point">
-                One detection meter fills four times slower under cover, and a
-                confirmed sighting redirects only the closest 10% of officers,
-                so the response scales with the force.
-              </p>
-              <div class="feature-links">
-                <a class="feature-cta" href="wanted.html">
-                  Read the breakdown <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-arrow"/></svg>
-                </a>
-                <a href="https://olivernealdev.itch.io/wanted" target="_blank" rel="noopener">
-                  Play <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
-                </a>
-                <a href="https://github.com/OliverNealDev/Wanted" target="_blank" rel="noopener">
                   <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg> Source
                 </a>
               </div>
@@ -805,16 +800,15 @@
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">About</p>
-          <h2>A bit about me</h2>
+          <h2>Background</h2>
         </header>
 
         <div class="about-grid">
           <div class="about-copy reveal">
             <p>
-              I'm Oliver, a games developer working in <strong>Unity and
-              C#</strong>. I've been making games in Unity since 2018 and
-              building them consistently since 2023, so the First I graduated
-              with from Teesside in July 2026 sat on top of years of
+              I've been making games in <strong>Unity and C#</strong> since
+              2018 and building them consistently since 2023, so the First I
+              graduated with from Teesside in July 2026 sat on top of years of
               self-driven projects.
             </p>
             <p>
@@ -841,11 +835,6 @@
               <span class="paper-k">Degree</span>
               <span class="paper-v">BSc (Hons) Games Development, First Class</span>
               <span class="paper-n">Teesside University · July 2026 · 80% overall</span>
-            </li>
-            <li>
-              <span class="paper-k">Award</span>
-              <span class="paper-v">Best Games Programming and Development Artefact</span>
-              <span class="paper-n">ExpoTees 2026 · for <a href="cyber-station.html">Cyber Station</a></span>
             </li>
             <li>
               <span class="paper-k">Before that</span>
@@ -1195,25 +1184,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
           Rather use your own email client?
           <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a>
         </p>
-
-        <div class="contact-ctas reveal">
-          <a class="btn btn-outline" href="cv.html">
-            <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-doc"/></svg>
-            View CV
-          </a>
-          <a class="btn btn-outline" href="https://github.com/OliverNealDev" target="_blank" rel="noopener">
-            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
-            GitHub
-          </a>
-          <a class="btn btn-outline" href="https://www.linkedin.com/in/oliverjackneal/" target="_blank" rel="noopener">
-            <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
-            LinkedIn
-          </a>
-          <a class="btn btn-outline" href="https://olivernealdev.itch.io" target="_blank" rel="noopener">
-            <svg class="icon" aria-hidden="true"><use href="#i-itch"/></svg>
-            itch.io
-          </a>
-        </div>
       </div>
     </section>
   </main>

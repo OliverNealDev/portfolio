@@ -121,7 +121,7 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a class="nav-link" href="index.html#studio">Studio</a>
-        <a class="nav-link" href="index.html#work">Work</a>
+        <a class="nav-link active" href="index.html#work" aria-current="true">Work</a>
         <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
@@ -355,6 +355,31 @@
             <li><strong>Fire rate ramps</strong> from a three-second base toward a one-second floor as the run continues.</li>
             <li><strong>Three power-ups</strong>: ground value, zero-gravity and double-points, each on a ten-second timer.</li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HINDSIGHT ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd change</h2>
+          <p>
+            This is the oldest project here, and the excerpt above shows it.
+            Every hazard type repeats that block with its own numbers typed
+            in. One table of thresholds, an unlock time and a score step for
+            each type, would replace all of the copies with one loop.
+          </p>
+          <p>
+            The guaranteed introduction works by setting a weight to
+            <code>999999</code>, which is a number standing in for a rule. A
+            flag that says "this type goes next" would say what it means. And
+            every pin reaches for <code>Main.main</code> and
+            <code>PlayerController.playercontroller</code> directly, so
+            nothing in the director can be run without the whole game around
+            it.
+          </p>
         </div>
       </div>
     </section>

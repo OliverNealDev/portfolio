@@ -179,10 +179,6 @@
         p.media.addEventListener("blur", p.stop);
       });
     } else if (previews.length && "IntersectionObserver" in window) {
-      // The badge says "hover", which is not true here. Autoplay is its own
-      // affordance — the card is already moving — so retire the prompt.
-      root.classList.add("previews-in-view");
-
       // Ratios are tracked rather than a plain isIntersecting flag so that
       // when two cards are on screen at once the one the reader is actually
       // looking at wins, instead of whichever fired its callback last.
@@ -872,12 +868,6 @@
     }
 
     form.addEventListener("submit", function (e) {
-      if (form.action.indexOf("YOUR_FORM_ID") !== -1) {
-        e.preventDefault();
-        say("This form is not connected yet. Email me instead.", "error");
-        return;
-      }
-
       e.preventDefault();
       clearInvalid();
       form.classList.add("sending");
@@ -984,8 +974,8 @@
       var caption = figure.querySelector("figcaption");
       if (!caption) return;
 
-      // Stable anchor so a specific excerpt can be linked in an application
-      // email. Derived from the file name, not the DOM order alone.
+      // A stable anchor, so one excerpt can be linked to directly. Derived
+      // from the file name, not the DOM order alone.
       if (!figure.id) {
         var fileEl = caption.querySelector(".code-file");
         var base = fileEl ? slug(fileEl.textContent.split("/").pop()) : "excerpt";
@@ -1111,6 +1101,10 @@
       window.goatcounter.count({ path: name, title: title, event: true });
     };
 
+    // The eight breakdown pages, by name: a pattern loose enough to catch them
+    // all also caught the CV and the privacy page.
+    var BREAKDOWNS = /^(cyber-station|minimalists|wanted|unicellular|tile-turfer|tank-game|pinnable|space-bar)\.html/;
+
     document.addEventListener("click", function (e) {
       var link = e.target.closest ? e.target.closest("a") : null;
       if (!link) return;
@@ -1130,7 +1124,7 @@
         countEvent("play-itch", "Play on itch.io: " + label);
       } else if (/github\.com/i.test(href)) {
         countEvent("view-source", "Source on GitHub: " + href.split("/").pop());
-      } else if (/^(?!https?:)/.test(href) && /-|cv\.html/.test(href) && /\.html$/i.test(href)) {
+      } else if (BREAKDOWNS.test(href)) {
         countEvent("open-breakdown", "Breakdown opened: " + href.replace(/\.html$/, ""));
       } else if (link.protocol === "mailto:") {
         countEvent("email-click", "Email link clicked");

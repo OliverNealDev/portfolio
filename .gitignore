@@ -5,3 +5,6 @@ CyberStationLinkedIn.mp4
 # Visual Studio / tooling
 .vs/
 *.sln
+
+# Editor and tool settings
+.idea/

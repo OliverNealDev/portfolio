@@ -119,7 +119,7 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a class="nav-link" href="index.html#studio">Studio</a>
-        <a class="nav-link" href="index.html#work">Work</a>
+        <a class="nav-link active" href="index.html#work" aria-current="true">Work</a>
         <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
@@ -151,7 +151,7 @@
         <h1>3D Netcode Tank Game</h1>
         <p class="cs-meta">Jan 2025 · Unity 6 · C# · Netcode for GameObjects</p>
         <p class="cs-lead">
-          A multiplayer tank shooter built to learn networking properly: online
+          A multiplayer tank shooter built to learn networking: online
           sessions over Unity Relay, account sign-in with cloud-saved profiles,
           and a combat model in which the server has the final say on every hit.
         </p>
@@ -187,8 +187,8 @@
           <p class="kicker">Overview</p>
           <h2>A networking-first prototype</h2>
           <p>
-            This project exists to get the hard parts of online multiplayer right,
-            rather than to be a finished game. It is built on <strong>Unity Netcode
+            This project exists to learn online multiplayer, rather than to be a
+            finished game. It is built on <strong>Unity Netcode
             for GameObjects</strong> with Relay-backed sessions, so two players can
             connect over the internet, spawn into the same world, and shoot at each
             other while the server arbitrates what actually happens.
@@ -197,7 +197,8 @@
             Around the netcode sits the full online-services flow: a login and
             registration screen backed by Unity Authentication, and a display name
             persisted through Cloud Save so a profile follows the player between
-            sessions.
+            sessions. The network ticks at 30 Hz, and a ten-state menu state
+            machine doubles as the play and pause gate for the gameplay scripts.
           </p>
         </div>
         <figure class="media-figure reveal">
@@ -218,9 +219,8 @@
           <p class="kicker">Combat</p>
           <h2>Server-authoritative hitscan</h2>
           <p>
-            Firing is resolved on the server rather than the client, the
-            authoritative model that keeps online shooters cheat-resistant. When a
-            player shoots, the server fans out <strong>64 raycasts</strong> stacked
+            Firing is resolved on the server rather than the client, so a client
+            never reports its own hits. When a player shoots, the server fans out <strong>64 raycasts</strong> stacked
             vertically toward the aim point, filters them to player hits, and takes
             the one closest to the muzzle as the real result.
           </p>
@@ -264,7 +264,14 @@ void ShootRaysServerRpc()
         {
             // Check if the hit object has the "Player" tag
             if (hit.collider.CompareTag("Player"))
-            {</code></pre>
+            {
+                // ... keep this hit if it is the closest to the muzzle so far
+            }
+        }
+    }
+
+    // ... damage the closest hit and spawn the effects
+}</code></pre>
           </figure>
         </div>
         <figure class="media-figure reveal">
@@ -321,19 +328,31 @@ void ShootRaysServerRpc()
       </div>
     </section>
 
-    <!-- ============ NUMBERS ============ -->
+    <!-- ============ HINDSIGHT ============ -->
     <section class="cs-section">
       <div class="container">
         <div class="prose reveal">
-          <p class="kicker">Under the hood</p>
-          <h2>By the numbers</h2>
-          <ul>
-            <li><strong>Unity Netcode for GameObjects</strong> over Relay-backed online sessions.</li>
-            <li><strong>30 Hz network tick</strong>, with player prefabs auto-spawned on connect.</li>
-            <li><strong>64-ray server-side hitscan</strong> with closest-hit resolution.</li>
-            <li><strong>Unity Authentication and Cloud Save</strong> for accounts and persistent display names.</li>
-            <li><strong>A ten-state menu FSM</strong> that doubles as the play and pause gate for gameplay scripts.</li>
-          </ul>
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd change</h2>
+          <p>
+            The excerpt above shows the first problem. The fire call is marked
+            <code>RequireOwnership = false</code>, so the server runs it for
+            whoever sends it. The check that the sender owns the tank happens
+            on the client, before the message goes out, which is the one check
+            a modified client skips. The server decides whether a shot hit. It
+            does not yet decide whether that player was allowed to fire.
+            Requiring ownership on the call fixes it.
+          </p>
+          <p>
+            The second is the fan. Sixty-four separate raycasts get the
+            tolerance I wanted, but a single box cast along the barrel would
+            do most of the same job in one query.
+          </p>
+          <p>
+            The third is that a shot is resolved against where both tanks are
+            when the message arrives, not where the shooter saw them. There is
+            no lag compensation, and it is the first thing I would add.
+          </p>
         </div>
       </div>
     </section>

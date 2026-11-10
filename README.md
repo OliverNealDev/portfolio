@@ -11,7 +11,7 @@ Static HTML, CSS and vanilla JavaScript. No framework, no build step, no depende
 | Page | Purpose |
 |---|---|
 | `index.html` | Home: the studio role and how its tech is run, selected work, about, log, contact |
-| `cv.html` / `cv-print.html` | The CV in HTML, plus a print-optimised variant behind `Oliver_Neal_CV.pdf` |
+| `cv.html` | The CV. `Oliver_Neal_CV.pdf` is this page printed, so the two cannot drift apart |
 | `cyber-station.html` | Case study: Cyber Station, my ExpoTees 2026 award-winning final-year artefact |
 | `tile-turfer.html` | Case study: Tile Turfer |
 | `minimalists.html` | Case study: Minimalists |
@@ -41,7 +41,7 @@ Discovery files: `sitemap.xml`, `robots.txt` (which welcomes AI crawlers explici
 
 ## Running it locally
 
-Any static file server works. There is a zero-install one wired up in `.claude/launch.json`, or:
+Any static file server works:
 
 ```bash
 python -m http.server 8347

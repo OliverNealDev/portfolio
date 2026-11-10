@@ -121,7 +121,7 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a class="nav-link" href="index.html#studio">Studio</a>
-        <a class="nav-link" href="index.html#work">Work</a>
+        <a class="nav-link active" href="index.html#work" aria-current="true">Work</a>
         <a class="nav-link" href="index.html#about">About</a>
         <a class="nav-link" href="index.html#log">Log</a>
         <a class="nav-link" href="index.html#contact">Contact</a>
@@ -196,15 +196,15 @@
             Minimalists is a node conquest RTS. Each map is a handful of
             structures (houses, turrets, headquarters) and every structure holds
             a live unit count. You grow your force by holding structures, and you
-            take new ones by sending units at them. That is the entire game, and
-            the restraint is the point: with no fog of war, no build orders and no
-            resource screens, <strong>every match is decided by judgement about
-            where and how hard to commit</strong>.
+            take new ones by sending units at them. That is the entire game.
+            There is no fog of war, no build order and no resource screen, so
+            <strong>every match comes down to where you commit and how
+            hard</strong>.
           </p>
           <p>
-            The minimalist presentation is a design constraint, not a budget one:
-            colour is ownership, shape is function, and the number floating over a
-            building is its entire status readout.
+            The presentation follows the same rule. Colour is ownership, shape
+            is function, and the number floating over a building is its entire
+            status readout.
           </p>
         </div>
       </div>
@@ -256,7 +256,45 @@
             house and when to mass for a push on a headquarters.
           </p>
           <p>
-            Crucially it commits through the same percentage interface the player
+            It scores every pair of one of its own structures and a target it
+            could take, nearer and weaker first, with a bonus for neutral ground.
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <span class="code-file">Assets/Scripts/AIManager.cs</span>
+              <span class="code-note">scoring every source and target pair it can afford</span>
+            </figcaption>
+<pre><code>foreach (var sourceNode in potentialAttackers)
+{
+    foreach (var targetNode in targets)
+    {
+        int requiredUnits = targetNode.UnitCount + OFFENSIVE_ATTACK_MARGIN;
+
+        // Check if the source node has enough units for a successful attack.
+        if (sourceNode.UnitCount &gt; requiredUnits)
+        {
+            float distance = Vector3.Distance(sourceNode.transform.position, targetNode.transform.position);
+
+            // The score prioritizes closer and less defended targets. Neutral nodes get a bonus.
+            float score = 1000f / (distance * (targetNode.UnitCount + 1));
+            if (targetNode.Owner == GameManager.Instance.unclaimedFaction)
+            {
+                score *= 1.5f; // Prioritize expansion into neutral territory.
+            }
+
+            if (score &gt; bestAttackScore)
+            {
+                bestAttackScore = score;
+                bestSourceNode = sourceNode;
+                bestTargetNode = targetNode;
+            }
+        }
+    }
+}</code></pre>
+          </figure>
+          <p>
+            Then it commits through the same percentage interface the player
             uses, so it is bound by the same rules. It sizes the attack from what
             the target is actually holding plus a margin, then clamps the result,
             which is what stops it either trickling in one unit at a time or
@@ -266,7 +304,7 @@
           <figure class="code reveal">
             <figcaption>
               <span class="code-file">Assets/Scripts/AIManager.cs</span>
-              <span class="code-note">the AI sizing a commitment, after scoring every source and target pair</span>
+              <span class="code-note">sizing the commitment for the pair that scored best</span>
             </figcaption>
 <pre><code>if (bestSourceNode != null &amp;&amp; bestTargetNode != null)
 {
@@ -278,8 +316,8 @@
 }</code></pre>
           </figure>
           <p>
-            There is not just one AI, either. I wrote <strong>several distinct AI
-            personalities</strong>: a priority-list attacker, a pure scorer, one
+            That is one of six. Each opponent is its own <strong>AI
+            personality</strong>: a priority-list attacker, a pure scorer, one
             that coordinates multi-structure pushes, an economy-first generalist,
             a momentum player that shifts behaviour depending on whether it is
             winning or losing, and a warlord that sorts the map into frontline,
@@ -294,24 +332,14 @@
             looks weakest, the player included.
           </p>
         </div>
-        <div class="media-pair">
-          <figure class="media-figure reveal">
-            <video controls preload="none" poster="media/minimalists/1v1-poster.webp"
-                   width="1040" height="582"
-                   aria-label="Minimalists video: a one versus one match against the AI">
-              <source src="media/minimalists/1v1.webm" type="video/webm">
-            </video>
-            <figcaption>A straight 1v1 duel.</figcaption>
-          </figure>
-          <figure class="media-figure reveal">
-            <video controls preload="none" poster="media/minimalists/4vs-poster.webp"
-                   width="1040" height="582"
-                   aria-label="Minimalists video: a four way free for all match on the Gridlock map">
-              <source src="media/minimalists/4vs.webm" type="video/webm">
-            </video>
-            <figcaption>Four way free for all on the Gridlock map.</figcaption>
-          </figure>
-        </div>
+        <figure class="media-figure reveal">
+          <video controls preload="none" poster="media/minimalists/4vs-poster.webp"
+                 width="1040" height="582"
+                 aria-label="Minimalists video: a four way free for all match on the Gridlock map">
+            <source src="media/minimalists/4vs.webm" type="video/webm">
+          </video>
+          <figcaption>Four way free for all on the Gridlock map.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -339,7 +367,7 @@
           <p class="kicker">Design</p>
           <h2>Designed to be read at a glance</h2>
           <p>
-            Because the whole board is always visible, readability is the UI.
+            The whole board is always visible, so it has to read at a glance.
             The game sticks to strict visual rules: <strong>one colour per
             faction, one silhouette per structure type, one number per
             building</strong>. A player can parse a four faction board state
@@ -354,6 +382,30 @@
           </video>
           <figcaption>The main menu keeps the same language as the board.</figcaption>
         </figure>
+      </div>
+    </section>
+
+    <!-- ============ HINDSIGHT ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd change</h2>
+          <p>
+            The six personalities are six separate classes,
+            <code>AIManager</code> to <code>AIManager7</code>, with no shared
+            base. Each one reads the board for itself, so the code that finds
+            my structures and the targets around them is written six times.
+            I would pull that into one place and leave each personality only
+            the part that makes it different: how it scores a move.
+          </p>
+          <p>
+            The scoring itself is a handful of constants in the code, like the
+            <code>1000f</code> and the <code>1.5f</code> in the excerpt above.
+            They belong in data, where they can be tuned without a recompile
+            and compared between personalities.
+          </p>
+        </div>
       </div>
     </section>
 

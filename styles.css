@@ -20,9 +20,7 @@
    Public Sans rather than IBM Plex Sans: same brief, but a taller x-height and
    heavier stems, which is most of what "easier to read" means at the small
    sizes this site uses for metadata. It comes out of the US Web Design System,
-   where legibility was the requirement rather than a personality. Deliberately
-   not Inter or Geist either — those are on every other dev portfolio and are
-   what a generated site looks like. */
+   where legibility was the requirement rather than a personality. */
 /* The three faces are served from this site rather than a font CDN: one
    fewer third party for a visitor's browser to talk to, and no extra
    connection before the first line of text can be drawn. Latin subset. */
@@ -59,6 +57,21 @@
   --font-sans: "Public Sans", "Segoe UI", Helvetica, Arial, sans-serif;
   --font-display: "Space Grotesk", "Public Sans", "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+/* One type scale and two corner radii. Headings are fluid and set where they
+   are used; everything else on the site takes a size from here. */
+:root {
+  --fs-label: 0.72rem;   /* mono labels, never smaller */
+  --fs-xs: 0.8rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 0.95rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.08rem;
+  --fs-xl: 1.2rem;
+
+  --radius: 4px;
+  --radius-lg: 8px;
 }
 
 :root,
@@ -152,7 +165,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: var(--fs-base);
   line-height: 1.65;
   transition: background-color 0.35s ease, color 0.35s ease;
 }
@@ -175,7 +188,7 @@ h1, h2, h3, h4 {
 
 h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); letter-spacing: -0.025em; }
 h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); }
-h3 { font-size: 1.18rem; }
+h3 { font-size: var(--fs-xl); }
 
 p { margin: 0 0 1em; }
 
@@ -191,7 +204,7 @@ a:hover { color: var(--accent-hover); }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 
 /* The skip link's target is a non-interactive landmark focused only to move
@@ -232,18 +245,18 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   left: 0.7rem;
   z-index: 100;
   padding: 0.6rem 1rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   background: var(--accent);
   color: var(--accent-contrast);
   font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: var(--shadow);
+  font-size: var(--fs-md);
   transform: translateY(-170%);
   transition: transform 0.2s ease;
 }
 .skip-link:focus,
 .skip-link:focus-visible {
   transform: translateY(0);
+  box-shadow: var(--shadow);
   color: var(--accent-contrast);
   outline: 2px solid var(--accent-contrast);
   outline-offset: 2px;
@@ -259,14 +272,10 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   padding-inline: clamp(1.25rem, 5vw, 2rem);
 }
 
-.mono {
-  font-family: var(--font-mono);
-}
-
 /* Small accent label above section headings, e.g. "About" or "Case study" */
 .kicker {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -278,28 +287,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 .section-head { max-width: 640px; margin-bottom: 2.5rem; }
 .section-head h2 { margin-bottom: 0.4em; }
-.section-lead { color: var(--text-2); font-size: 1.05rem; margin: 0; }
-
-/* Tag chips — used on cards, skills and the case-study pages */
-.tags {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0;
-  margin: 0;
-}
-.tags li {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.02em;
-  color: var(--text-2);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 0.28rem 0.7rem;
-  white-space: nowrap;
-}
+.section-lead { color: var(--text-2); font-size: var(--fs-lg); margin: 0; }
 
 /* --------------------------------------------------------------------------
    4. BUTTONS
@@ -309,10 +297,10 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   align-items: center;
   gap: 0.55rem;
   padding: 0.7rem 1.3rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid transparent;
   font: inherit;
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
@@ -361,8 +349,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 .brand {
   font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.98rem;
+  font-weight: 500;
+  font-size: var(--fs-md);
   color: var(--text);
   letter-spacing: -0.01em;
 }
@@ -373,8 +361,8 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 
 .nav-link {
   padding: 0.45rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.92rem;
+  border-radius: var(--radius);
+  font-size: var(--fs-md);
   font-weight: 500;
   color: var(--text-2);
 }
@@ -387,7 +375,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   margin-left: 0.4rem;
   padding: 0.42rem 0.95rem;
   border: 1px solid var(--border-strong);
-  border-radius: 4px;
+  border-radius: var(--radius);
   color: var(--text);
 }
 .nav-link.nav-cv:hover {
@@ -409,7 +397,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   justify-content: center;
   width: 2.4rem;
   height: 2.4rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-2);
@@ -450,7 +438,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
     display: none;
   }
   .site-nav.open { display: flex; }
-  .nav-link { padding: 0.7rem 0.75rem; font-size: 1rem; }
+  .nav-link { padding: 0.7rem 0.75rem; font-size: var(--fs-base); }
 
   /* In the dropdown the pill becomes a normal row with a separator above,
      so the list stays aligned. */
@@ -477,9 +465,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
-  gap: clamp(2rem, 6vw, 5rem);
+  grid-template-areas:
+    "top  portrait"
+    "rest portrait";
+  column-gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
 }
+.hero-top  { grid-area: top; align-self: end; }
+.hero-rest { grid-area: rest; align-self: start; }
 
 .hero h1 { margin-bottom: 0.35rem; }
 
@@ -500,27 +493,6 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 .hero-pitch strong { color: var(--text); font-weight: 600; }
 
-/* Current role — a live status line, no chip around it */
-.now-line {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-2);
-  transition: color 0.2s ease;
-}
-.now-line:hover { color: var(--text); }
-.now-line:hover .icon { color: var(--accent); transform: translateX(2px); }
-.now-line strong { font-weight: 600; color: var(--text); }
-.now-line .icon {
-  width: 0.9em;
-  height: 0.9em;
-  color: var(--text-3);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
 /* Static, not a pulsing halo. The label already says what it means. */
 .now-dot {
   width: 8px;
@@ -538,7 +510,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   margin: 0 0 2rem;
   padding: 0;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   color: var(--text-3);
 }
 /* The divider trails each item, so when the line wraps on a phone no row
@@ -562,22 +534,30 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .social-row .icon-btn { border-color: transparent; }
 .social-row .icon-btn:hover { border-color: var(--border); }
 
-.portrait { justify-self: end; width: 100%; }
+.portrait { grid-area: portrait; justify-self: end; width: 100%; }
 .portrait img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
 }
 
-@media (max-width: 760px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .portrait {
-    grid-row: 1;
-    justify-self: start;
-    width: min(168px, 44vw);
+/* On a phone the name leads. The portrait shrinks to a thumbnail on the same
+   row rather than pushing the name down the screen. */
+@media (max-width: 820px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) 4.5rem;
+    grid-template-areas:
+      "top  portrait"
+      "rest rest";
+    column-gap: 1rem;
   }
+  .hero-top { align-self: center; }
+  .hero-role { margin-bottom: 0; }
+  .hero-rest { margin-top: 1.4rem; }
+  .portrait { align-self: center; }
+  .portrait img { aspect-ratio: 1 / 1; }
 }
 
 /* --------------------------------------------------------------------------
@@ -626,7 +606,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   gap: 0.55rem;
   margin: 0 0 0.6rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.85);
@@ -650,7 +630,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 .oow-hero {
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border);
 }
@@ -674,21 +654,21 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .oow-studio strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   transition: color 0.2s ease;
 }
 .oow-studio:hover strong { color: var(--accent); }
 .oow-studio-sub {
   display: block;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3);
 }
 .oow-studio-logo {
   width: 52px;
   height: 52px;
   flex: none;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   object-fit: cover;
 }
@@ -744,14 +724,15 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .role-path-title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.98rem;
+  font-size: var(--fs-md);
   line-height: 1.3;
   color: var(--text-2);
 }
 .role-path li.is-current .role-path-title { color: var(--text); }
+a.role-path-title:hover { color: var(--accent); }
 .role-path-meta {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-3);
@@ -766,14 +747,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem clamp(1.5rem, 4vw, 3rem);
   color: var(--text-2);
-  font-size: 0.97rem;
+  font-size: var(--fs-md);
   line-height: 1.6;
 }
 .duties b {
   display: block;
   margin-bottom: 0.3rem;
   font-family: var(--font-display);
-  font-size: 1.08rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--text);
 }
@@ -810,13 +791,13 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   content: counter(decision, decimal-leading-zero);
   padding-top: 0.2rem;
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: var(--fs-xs);
   color: var(--accent);
 }
 .decision-topic {
   margin: 0 0 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-3);
@@ -829,7 +810,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .decision-what {
   margin: 0;
   color: var(--text-2);
-  font-size: 0.97rem;
+  font-size: var(--fs-md);
 }
 .decision dl {
   margin: 0;
@@ -845,7 +826,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .decision dt {
   padding-top: 0.3rem;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-3);
@@ -853,7 +834,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .decision dd {
   margin: 0;
   color: var(--text-2);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   line-height: 1.6;
 }
 .decision dd strong { color: var(--text); font-weight: 600; }
@@ -862,7 +843,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   .decision { grid-template-columns: 2.5rem minmax(0, 1fr); }
   .decision dl { grid-column: 2; margin-top: 0.6rem; }
 }
-@media (max-width: 520px) {
+@media (max-width: 640px) {
   .decision { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
   .decision::before { padding-top: 0; }
   .decision dl { grid-column: 1; margin-top: 0.9rem; }
@@ -876,7 +857,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
   margin-top: clamp(1.75rem, 4vw, 2.5rem);
   color: var(--text-2);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
 }
 .studio-foot p { margin: 0; max-width: 52ch; }
 .studio-foot b { color: var(--text); font-weight: 600; }
@@ -885,7 +866,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   .duties { grid-template-columns: 1fr; }
   .studio-foot { grid-template-columns: 1fr; }
 }
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   /* The two roles stack here, so the rail between them would point at nothing */
   .role-path { flex-direction: column; }
   .role-path li + li::after { display: none; }
@@ -908,6 +889,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .feature:first-child { border-top: 0; padding-top: 0; }
 /* Alternate sides down the page so the column of screenshots does not read
    as a sidebar. Source order stays media first for a screen reader. */
+.feature:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
 .feature:nth-child(even) .feature-media { order: 2; }
 
 .feature-media {
@@ -915,7 +897,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   display: block;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: var(--bg-soft);
   transition: border-color 0.25s ease;
@@ -943,7 +925,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .feature-meta {
   margin: 0 0 0.7rem;
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.04em;
   color: var(--text-3);
 }
@@ -961,7 +943,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   padding-left: 1rem;
   border-left: 2px solid var(--accent);
   color: var(--text) !important;
-  font-size: 0.97rem;
+  font-size: var(--fs-md);
 }
 
 .feature-links {
@@ -975,7 +957,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text-2);
 }
@@ -996,25 +978,26 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   height: 56px;
   flex: none;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
 }
 .award figcaption {
-  font-size: 0.86rem;
+  font-size: var(--fs-sm);
   line-height: 1.45;
   color: var(--text-2);
 }
 .award figcaption b { display: block; color: var(--text); font-weight: 600; }
 
 @media (max-width: 820px) {
-  .feature { grid-template-columns: 1fr; gap: 1.4rem; }
+  .feature,
+  .feature:nth-child(even) { grid-template-columns: 1fr; gap: 1.4rem; }
   .feature:nth-child(even) .feature-media { order: 0; }
 }
 
 .more-head {
   margin: clamp(2.5rem, 6vw, 4rem) 0 1rem;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1029,7 +1012,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 .work-list a {
   display: grid;
-  grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr) auto 1.2rem;
+  grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr) 17rem 1.2rem;
   align-items: baseline;
   gap: 0.3rem clamp(1rem, 3vw, 2rem);
   padding: 1.05rem 0;
@@ -1038,15 +1021,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 .work-list h4 {
   margin: 0;
-  font-size: 1.04rem;
+  font-size: var(--fs-base);
   transition: color 0.2s ease;
 }
-.work-list p { margin: 0; color: var(--text-2); font-size: 0.93rem; }
+.work-list p { margin: 0; color: var(--text-2); font-size: var(--fs-md); }
 .work-meta {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--fs-label);
   color: var(--text-3);
-  white-space: nowrap;
 }
 .work-list .icon {
   align-self: center;
@@ -1060,7 +1042,6 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   .work-list a { grid-template-columns: minmax(0, 1fr) 1.2rem; }
   .work-list h4, .work-list p, .work-meta { grid-column: 1; }
   .work-list .icon { grid-column: 2; grid-row: 1 / span 3; }
-  .work-meta { white-space: normal; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1090,7 +1071,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .paper-k {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-3);
@@ -1099,12 +1080,12 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   display: block;
   margin: 0.2rem 0 0.1rem;
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-size: var(--fs-base);
   font-weight: 700;
   line-height: 1.3;
   color: var(--text);
 }
-.paper-n { font-size: 0.88rem; color: var(--text-2); }
+.paper-n { font-size: var(--fs-sm); color: var(--text-2); }
 
 @media (max-width: 820px) {
   .about-grid { grid-template-columns: 1fr; }
@@ -1113,7 +1094,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .subhead {
   margin: clamp(2.5rem, 6vw, 4rem) 0 1rem;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1129,18 +1110,18 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   display: grid;
   grid-template-columns: 230px 1fr;
   gap: 1rem 2.5rem;
-  padding: 1.05rem 0.25rem;
+  padding: 1.05rem 0;
   border-bottom: 1px solid var(--border);
 }
 .skills-row dt {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   color: var(--text);
 }
 .skills-row dd {
   margin: 0;
   color: var(--text-2);
-  font-size: 0.97rem;
+  font-size: var(--fs-md);
 }
 .skills-row dd strong { color: var(--text); font-weight: 600; }
 
@@ -1164,7 +1145,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   flex-direction: column;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 4px;
+  border-radius: var(--radius);
   overflow: hidden;
   transition: border-color 0.2s ease;
 }
@@ -1206,11 +1187,11 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   align-items: center;
   gap: 0.3rem;
   padding: 0.22rem 0.55rem;
-  border-radius: 3px;
+  border-radius: var(--radius);
   background: rgba(10, 10, 12, 0.72);
   color: #f0f0f3;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.04em;
   pointer-events: none;
 }
@@ -1230,7 +1211,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   gap: 0.45rem;
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: var(--fs-label);
   color: var(--text-3);
 }
 .post-meta .icon { width: 1.05em; height: 1.05em; color: var(--text-3); }
@@ -1240,7 +1221,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .post-text {
   margin: 0;
   color: var(--text-2);
-  font-size: 0.93rem;
+  font-size: var(--fs-md);
   white-space: pre-line;
   display: -webkit-box;
   -webkit-line-clamp: 8;
@@ -1256,7 +1237,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   align-self: stretch;
   padding-top: 0.6rem;
   border-top: 1px solid var(--border);
-  font-size: 0.86rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-2);
   transition: color 0.2s ease;
@@ -1287,7 +1268,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 /* Sits between the form and the links row, so it reads as the fallback
    route rather than a stray address. Only the address itself is mono. */
 .contact-email {
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   color: var(--text-3);
   margin: 0 0 2rem;
 }
@@ -1300,7 +1281,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
    and centring: the section is text-align:center, so a narrower box with zero
    side margins would sit flush left and read as misaligned. */
 .contact-privacy {
-  font-size: 0.82rem;
+  font-size: var(--fs-xs);
   color: var(--text-3);
   max-width: 620px;
   margin: -1.4rem auto 2rem;
@@ -1310,7 +1291,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
    is scanning for, so it sits directly under the lead. */
 .contact-availability {
   color: var(--text-2);
-  font-size: 0.97rem;
+  font-size: var(--fs-md);
   margin: 0.9rem 0 0;
 }
 
@@ -1322,19 +1303,19 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   padding: clamp(1.25rem, 4vw, 1.9rem);
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 4px;
+  border-radius: var(--radius);
   text-align: left;
   display: grid;
   gap: 1rem;
 }
 .contact-form-title {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--fs-lg);
 }
 
 .field { margin: 0; display: grid; gap: 0.4rem; }
 .field label {
-  font-size: 0.86rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-2);
 }
@@ -1342,21 +1323,21 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 .field textarea {
   width: 100%;
   padding: 0.65rem 0.85rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border-strong);
   background: var(--bg);
   color: var(--text);
   font: inherit;
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .field textarea { resize: vertical; min-height: 7rem; }
 
 /* iOS Safari zooms the whole page when you focus an input smaller than 16px,
    so hold them at 16px on the widths where that happens. */
-@media (max-width: 760px) {
+@media (max-width: 820px) {
   .field input,
-  .field textarea { font-size: 1rem; }
+  .field textarea { font-size: var(--fs-base); }
 }
 .field input:focus,
 .field textarea:focus {
@@ -1384,7 +1365,7 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 }
 .form-status {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   color: var(--text-2);
 }
 .form-status.ok { color: var(--ok); }
@@ -1412,7 +1393,7 @@ html.js .show-more-wrap {
   background: none;
   color: var(--text-2);
   font-family: var(--font-mono);
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   letter-spacing: 0.01em;
   line-height: 1.5;
 }
@@ -1432,7 +1413,7 @@ html.js .show-more-wrap {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text-2);
   margin-bottom: 2rem;
@@ -1442,7 +1423,7 @@ html.js .show-more-wrap {
 
 .cs-meta {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3);
   margin-bottom: 1rem;
 }
@@ -1451,7 +1432,7 @@ html.js .show-more-wrap {
 
 .cs-lead {
   max-width: 44em;
-  font-size: 1.12rem;
+  font-size: var(--fs-lg);
   color: var(--text-2);
   margin-bottom: 2rem;
 }
@@ -1466,7 +1447,7 @@ html.js .show-more-wrap {
 .cs-hero-media img,
 .cs-hero-media video {
   width: 100%;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
 }
 
@@ -1482,19 +1463,19 @@ html.js .show-more-wrap {
 .facts li {
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 4px;
+  border-radius: var(--radius);
   padding: 0.75rem 1rem;
 }
 .facts .fact-k {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-3);
   margin-bottom: 0.15rem;
 }
-.facts .fact-v { font-weight: 600; font-size: 0.95rem; }
+.facts .fact-v { font-weight: 600; font-size: var(--fs-md); }
 
 
 /* Architecture layer list — count, layer name, what it owns */
@@ -1514,7 +1495,7 @@ html.js .show-more-wrap {
 }
 .arch-n {
   font-family: var(--font-mono);
-  font-size: 1.2rem;
+  font-size: var(--fs-xl);
   font-weight: 500;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
@@ -1522,9 +1503,9 @@ html.js .show-more-wrap {
 .arch-k {
   font-weight: 600;
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
 }
-.arch-d { color: var(--text-2); font-size: 0.9rem; line-height: 1.55; }
+.arch-d { color: var(--text-2); font-size: var(--fs-md); line-height: 1.55; }
 
 @media (max-width: 640px) {
   .arch-list li { grid-template-columns: 3rem minmax(0, 1fr); }
@@ -1534,14 +1515,14 @@ html.js .show-more-wrap {
 /* In-page contents on the breakdowns, built by main.js from the h2s */
 .cs-toc {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1120px;
   margin-inline: auto;
   padding: 1.4rem clamp(1.25rem, 5vw, 2rem) 1.6rem;
 }
 .cs-toc-title {
   margin: 0 0 0.8rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1562,14 +1543,14 @@ html.js .show-more-wrap {
   display: block;
   padding: 0.6rem 0;
   color: var(--text-2);
-  font-size: 0.92rem;
+  font-size: var(--fs-md);
   transition: color 0.2s ease;
 }
 .cs-toc a::before {
   content: counter(toc, decimal-leading-zero);
   margin-right: 0.7rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--fs-label);
   color: var(--text-3);
 }
 .cs-toc a:hover { color: var(--accent); }
@@ -1586,10 +1567,10 @@ html.js .show-more-wrap {
 }
 .optout-status {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: var(--fs-xs);
   color: var(--text-3);
 }
-.optout-note { font-size: 0.85rem; }
+.optout-note { font-size: var(--fs-sm); }
 
 /* Case-study prose sections */
 .cs-section { padding-block: clamp(2.5rem, 6vh, 4rem); }
@@ -1613,7 +1594,7 @@ html.js .show-more-wrap {
 .code {
   margin: 1.75rem 0;
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: var(--radius);
   background: var(--bg-soft);
   overflow: hidden;
   /* The accent edge ties the block to the section's kicker without needing a
@@ -1629,7 +1610,7 @@ html.js .show-more-wrap {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
   font-family: var(--font-mono);
-  font-size: 0.71rem;
+  font-size: var(--fs-label);
   line-height: 1.5;
 }
 .code .code-file {
@@ -1645,22 +1626,22 @@ html.js .show-more-wrap {
   order: 98;
   padding: 0.1rem 0.4rem;
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: var(--radius);
   color: var(--text-3);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 0.64rem;
+  font-size: var(--fs-label);
 }
 .code .code-copy {
   order: 99;
   flex: none;
   padding: 0.25rem 0.6rem;
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: var(--radius);
   background: var(--bg-soft);
   color: var(--text-2);
   font: inherit;
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
@@ -1679,7 +1660,7 @@ html.js .show-more-wrap {
 .code code {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   line-height: 1.7;
   color: var(--code-text);
   /* Wrap rather than scroll. Dragging a code block sideways to finish a line
@@ -1735,7 +1716,7 @@ html.js .show-more-wrap {
   font-size: 0.86em;
   padding: 0.1em 0.35em;
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
 }
@@ -1750,16 +1731,19 @@ html.js .show-more-wrap {
   }
 }
 
+/* On a phone a wrapped line of indented code restarts at the left edge and
+   reads as a different statement, so there the lines keep their shape and the
+   block scrolls sideways instead. */
 @media (max-width: 640px) {
-  .code code { font-size: 0.8rem; }
+  .code code { font-size: var(--fs-xs); white-space: pre; }
   .code .cl::before { width: 2.1rem; padding-right: 0.6rem; }
-  .code .cl-code { width: calc(100% - 2.2rem); }
+  .code .cl-code { display: inline; width: auto; white-space: pre; }
 }
 
 /* A caveat inside prose — smaller and quieter than the paragraph it qualifies,
    e.g. noting that a field was renamed between the code and the UI. */
 .prose .note {
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   color: var(--text-3);
   border-left: 2px solid var(--border-strong);
   padding-left: 0.9rem;
@@ -1776,7 +1760,7 @@ html.js .show-more-wrap {
 .diagram {
   margin: 1.75rem 0;
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: var(--radius);
   background: var(--bg-soft);
   overflow: hidden;
   box-shadow: inset 3px 0 0 0 var(--accent-border);
@@ -1790,7 +1774,7 @@ html.js .show-more-wrap {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
   font-family: var(--font-mono);
-  font-size: 0.71rem;
+  font-size: var(--fs-label);
   line-height: 1.5;
 }
 .diagram .diagram-title { color: var(--accent); }
@@ -1833,7 +1817,7 @@ html.js .show-more-wrap {
 }
 
 /* Break out of the reading column the moment the container can hold it. The
-   breakpoints are the viewport widths at which the .container (max 1080px,
+   breakpoints are the viewport widths at which the .container (max 1120px,
    2rem gutters) is actually wide enough for the width being asked for, so the
    figure never overhangs the section it sits in. */
 @media (min-width: 920px) {
@@ -1850,11 +1834,11 @@ html.js .show-more-wrap {
 .media-figure img,
 .media-figure video {
   width: 100%;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
 }
 .media-figure figcaption {
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3);
   margin-top: 0.65rem;
 }
@@ -1878,10 +1862,10 @@ html.js .show-more-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
 }
-.gallery figcaption { font-size: 0.8rem; color: var(--text-3); margin-top: 0.45rem; }
+.gallery figcaption { font-size: var(--fs-xs); color: var(--text-3); margin-top: 0.45rem; }
 
 /* Prev/next navigation at the bottom of case studies — the back link is a
    quiet outline button, the onward link the filled primary action. */
@@ -1898,9 +1882,9 @@ html.js .show-more-wrap {
   align-items: center;
   gap: 0.55rem;
   padding: 0.7rem 1.3rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border-strong);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -1965,7 +1949,7 @@ html.js .show-more-wrap {
   max-height: 80vh;
   width: auto;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.65);
   background: #101014;
@@ -1976,7 +1960,7 @@ html.js .show-more-wrap {
 .lightbox-caption {
   max-width: 62em;
   color: #c7c7d1;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   text-align: center;
   line-height: 1.5;
 }
@@ -1989,11 +1973,11 @@ html.js .show-more-wrap {
   align-items: center;
   gap: 0.45rem;
   padding: 0.45rem 0.95rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(22, 22, 28, 0.72);
   color: #f0f0f3;
-  font-size: 0.88rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
@@ -2010,7 +1994,7 @@ html.js .show-more-wrap {
   transform: translateX(-50%);
   color: #8b8b97;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   letter-spacing: 0.08em;
 }
 
@@ -2076,7 +2060,7 @@ html.postview-open body { overflow: hidden; }
   overflow-y: auto;
   overscroll-behavior: contain;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   background: var(--surface);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
   transform: scale(0.975);
@@ -2109,7 +2093,7 @@ html.postview-open body { overflow: hidden; }
 .postview-name a:hover { color: var(--accent); }
 .postview-headline {
   margin: 0.1rem 0 0;
-  font-size: 0.82rem;
+  font-size: var(--fs-xs);
   color: var(--text-3);
   line-height: 1.35;
 }
@@ -2119,7 +2103,7 @@ html.postview-open body { overflow: hidden; }
   gap: 0.4rem;
   margin: 0.25rem 0 0;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--fs-label);
   color: var(--text-3);
 }
 .postview-date .icon { width: 1em; height: 1em; }
@@ -2129,7 +2113,7 @@ html.postview-open body { overflow: hidden; }
   margin: 0;
   padding: 0 1.25rem 1.1rem;
   color: var(--text-2);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   line-height: 1.6;
   white-space: pre-line;
 }
@@ -2197,11 +2181,11 @@ html.postview-open body { overflow: hidden; }
   align-items: center;
   gap: 0.3rem;
   padding: 0.22rem 0.55rem;
-  border-radius: 3px;
+  border-radius: var(--radius);
   background: rgba(10, 10, 12, 0.72);
   color: #f0f0f3;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.04em;
   pointer-events: none;
 }
@@ -2213,10 +2197,10 @@ html.postview-open body { overflow: hidden; }
   align-items: center;
   gap: 0.45rem;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--border-strong);
   color: var(--text);
-  font-size: 0.88rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
@@ -2231,7 +2215,7 @@ html.postview-open body { overflow: hidden; }
   transform: translateX(-50%);
   color: #8b8b97;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-xs);
   letter-spacing: 0.08em;
 }
 
@@ -2266,7 +2250,7 @@ html.postview-open body { overflow: hidden; }
   max-height: 78vh;
   width: auto;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.65);
   background: #101014;
@@ -2274,7 +2258,7 @@ html.postview-open body { overflow: hidden; }
 .postview-zoom-caption {
   max-width: 62em;
   color: #c7c7d1;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   text-align: center;
   line-height: 1.5;
 }
@@ -2318,7 +2302,7 @@ html.postview-open body { overflow: hidden; }
 
 /* On a phone there is no room beside the card, so the arrows move to the
    bottom corners and the count sits out of the way of the close button. */
-@media (max-width: 720px) {
+@media (max-width: 820px) {
   .postview { padding: 3.25rem 0.75rem 4.75rem; }
   .postview-count,
   .postview-zoom-count { top: auto; bottom: 1.55rem; }
@@ -2345,7 +2329,7 @@ html.postview-open body { overflow: hidden; }
   border-top: 1px solid var(--border);
   background: var(--bg-soft);
   padding-block: 2.75rem 2rem;
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
 }
 
 .footer-grid {
@@ -2355,7 +2339,9 @@ html.postview-open body { overflow: hidden; }
   margin-bottom: 2rem;
 }
 .footer-grid h4 {
-  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--fs-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-3);
@@ -2374,7 +2360,7 @@ html.postview-open body { overflow: hidden; }
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   color: var(--text-3);
-  font-size: 0.82rem;
+  font-size: var(--fs-xs);
 }
 
 @media (max-width: 640px) {
@@ -2383,10 +2369,11 @@ html.postview-open body { overflow: hidden; }
 
 /* --------------------------------------------------------------------------
    11b. CV PAGE
-   The CV renders as the document itself: a white A4-style sheet on the page,
-   fixed light "ink" colours in both themes so it always reads as paper.
-   A toolbar above it offers the PDF download and printing; the print styles
-   at the bottom output just the sheet.
+   The CV is one document with two outputs. On screen it is a paper sheet on
+   the page, in fixed ink colours so it reads as paper in either theme. The
+   print rules at the bottom set the same markup as two A4 pages, and
+   Oliver_Neal_CV.pdf is this page printed, so the page and the PDF cannot
+   drift apart.
    -------------------------------------------------------------------------- */
 .cv-page { padding-block: clamp(2.5rem, 6vh, 4rem) clamp(3.5rem, 8vh, 5.5rem); }
 
@@ -2407,80 +2394,114 @@ html.postview-open body { overflow: hidden; }
   gap: 0.6rem;
 }
 
-/* The sheet — deliberately not theme-driven: it is a document. */
 .cv-sheet {
   --paper: #ffffff;
   --ink: #1a1a1f;
   --ink-2: #40404a;
   --ink-3: #6d6d78;
   --rule: #e2e2e8;
-  --accent-ink: #c2410c;
+  --accent-ink: #b4410f;
 
   max-width: 850px;
   margin-inline: auto;
   background: var(--paper);
   color: var(--ink);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: clamp(1.75rem, 5vw, 3.25rem) clamp(1.5rem, 5vw, 3.5rem);
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: var(--fs-md);
+  line-height: 1.5;
 }
-
 .cv-sheet a { color: var(--accent-ink); }
 .cv-sheet a:hover { color: var(--accent-ink); text-decoration: underline; }
 .cv-sheet strong { color: var(--ink); font-weight: 600; }
+.cv-sheet p { color: var(--ink-2); margin: 0 0 0.4em; }
+.cv-sheet p:last-child { margin-bottom: 0; }
 
-/* Document header — name, role, links, email, exactly as the original CV */
-.cv-sheet-head { margin-bottom: 1.5rem; }
-.cv-sheet-head h1 {
-  font-size: 1.2rem;
+.cv-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.25rem 1.5rem;
+}
+.cv-head h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.1rem);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.cv-sheet .cv-role { margin: 0; font-weight: 600; color: var(--accent-ink); }
+.cv-sheet .cv-contact {
+  margin: 0.5rem 0 0;
+  padding-bottom: 0.9rem;
+  border-bottom: 2px solid var(--ink);
+  font-size: var(--fs-sm);
+}
+.cv-contact .sep { color: var(--rule); padding: 0 0.35em; }
+
+.cv-sheet section { margin-top: 1.4rem; }
+.cv-sheet h2 {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.cv-entry { margin-bottom: 0.85rem; }
+.cv-entry:last-child { margin-bottom: 0; }
+.cv-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.cv-entry-head h3 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
   font-weight: 700;
   letter-spacing: 0;
   color: var(--ink);
-  margin-bottom: 0.1rem;
 }
-.cv-sheet-role {
-  font-style: italic;
-  color: var(--ink-2);
-  margin: 0 0 0.45rem;
-}
-.cv-sheet-contact { margin: 0; font-size: 0.92rem; color: var(--ink-2); }
-.cv-sheet-contact + .cv-sheet-contact { margin-top: 0.1rem; }
+.cv-tech { font-weight: 400; font-size: var(--fs-sm); color: var(--ink-2); }
+.cv-date { font-size: var(--fs-sm); color: var(--ink-3); white-space: nowrap; }
+.cv-entry ul { margin: 0.3rem 0 0; padding-left: 1.1rem; color: var(--ink-2); }
+.cv-entry li { margin-bottom: 0.2rem; }
+.cv-entry li::marker { color: var(--accent-ink); }
+.cv-sheet .cv-links { margin: 0.2rem 0 0; font-size: var(--fs-sm); color: var(--ink-3); }
 
-.cv-sheet section + section { margin-top: 1.4rem; }
-.cv-sheet h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 0 0 0.55rem;
-}
-.cv-sheet p { color: var(--ink-2); margin: 0 0 0.45em; }
-.cv-sheet p:last-child { margin-bottom: 0; }
+.cv-skills { list-style: none; margin: 0; padding: 0; color: var(--ink-2); }
+.cv-skills li { margin-bottom: 0.3rem; }
 
-.cv-sheet ul {
-  margin: 0;
-  padding-left: 1.5rem;
-  color: var(--ink-2);
+.cv-sheet .cv-foot {
+  margin-top: 1.3rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
 }
-.cv-sheet ul li { margin-bottom: 0.4rem; }
-.cv-sheet ul li:last-child { margin-bottom: 0; }
-.cv-sheet ul ul {
-  list-style: circle;
-  margin-top: 0.35rem;
-}
-.cv-sheet ul ul li { margin-bottom: 0.25rem; }
 
-/* ---- Print: just the sheet, as a plain paper document -------------------- */
+@media (max-width: 640px) {
+  .cv-entry-head { flex-direction: column; gap: 0; }
+}
+
+/* ---- Print --------------------------------------------------------------- */
+@page { size: A4; margin: 11mm 13mm 12mm; }
+
 @media print {
-  /* The page is forced white below, but every other page on the site draws
-     its text from --text. In the dark theme that is near white, so printing
-     a breakdown while in dark mode produced an all but blank sheet. Pin the
-     whole palette to ink on paper for print and everything follows. */
+  /* Every page draws its text from --text, which is near white in the dark
+     theme. Pin the palette to ink on paper so nothing prints blank. */
   :root,
   :root[data-theme="dark"],
   :root[data-theme="light"] {
+    color-scheme: light;   /* or the dark theme paints the page margins black */
     --bg: #ffffff;
     --bg-soft: #ffffff;
     --surface: #ffffff;
@@ -2497,16 +2518,17 @@ html.postview-open body { overflow: hidden; }
     --shadow: none;
   }
 
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .site-header, .site-footer, .skip-link, .cv-toolbar,
-  .theme-toggle, .nav-toggle { display: none !important; }
+  .theme-toggle, .nav-toggle, .next-nav { display: none !important; }
   body { background: #fff !important; }
 
-  /* A hover prompt and a "next case study" nav mean nothing on paper.
-     Images stay: a printed portfolio with no screenshots looks broken. */
-  .media-badge, .next-nav { display: none !important; }
   .cs-section, .section { break-inside: auto; }
   h2, h3 { break-after: avoid; }
   figure, .facts li { break-inside: avoid; }
+  html.js .reveal { opacity: 1 !important; transform: none !important; }
+
+  /* The CV as two A4 pages. Sizes are in points here because paper is. */
   .cv-page { padding: 0; }
   .cv-page .container { max-width: none; padding: 0; }
   .cv-sheet {
@@ -2515,11 +2537,25 @@ html.postview-open body { overflow: hidden; }
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    font-size: 10.5pt;
+    font-size: 9.6pt;
+    line-height: 1.42;
   }
-  .cv-sheet li { break-inside: avoid; }
-  .cv-sheet a { color: inherit; text-decoration: none; }
-  html.js .reveal { opacity: 1 !important; transform: none !important; }
+  .cv-head h1 { font-size: 21pt; }
+  .cv-sheet .cv-role { font-size: 11pt; }
+  .cv-sheet .cv-contact { margin-top: 4pt; padding-bottom: 6pt; border-bottom-width: 1.4pt; font-size: 8.7pt; }
+  .cv-sheet section { margin-top: 8pt; }
+  .cv-sheet h2 { margin-bottom: 4.5pt; padding-bottom: 1.5pt; font-size: 9.2pt; }
+  .cv-sheet p { margin-bottom: 3pt; }
+  .cv-entry { margin-bottom: 4.5pt; break-inside: avoid; }
+  .cv-entry-head { flex-direction: row; gap: 8pt; }
+  .cv-entry-head h3 { font-size: 9.8pt; }
+  .cv-tech, .cv-date { font-size: 9pt; }
+  .cv-entry ul { margin-top: 1.5pt; padding-left: 11pt; }
+  .cv-entry li { margin-bottom: 1pt; }
+  .cv-sheet .cv-links { margin-top: 1pt; font-size: 8.6pt; }
+  .cv-skills li { margin-bottom: 1.6pt; }
+  .cv-sheet .cv-foot { margin-top: 6pt; padding-top: 3pt; font-size: 8.2pt; }
+  .cv-sheet a:hover { text-decoration: none; }
 }
 
 /* --------------------------------------------------------------------------
