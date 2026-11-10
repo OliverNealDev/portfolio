@@ -175,8 +175,11 @@
       previews.forEach(function (p) {
         p.media.addEventListener("pointerenter", p.play);
         p.media.addEventListener("pointerleave", p.stop);
-        p.media.addEventListener("focus", p.play);
-        p.media.addEventListener("blur", p.stop);
+        // The picture is out of the tab order (the title beside it goes to the
+        // same page), so focus is listened for on the card around it.
+        var card = p.media.closest(".feature") || p.media;
+        card.addEventListener("focusin", p.play);
+        card.addEventListener("focusout", p.stop);
       });
     } else if (previews.length && "IntersectionObserver" in window) {
       // Ratios are tracked rather than a plain isIntersecting flag so that

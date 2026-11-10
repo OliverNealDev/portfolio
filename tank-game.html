@@ -328,7 +328,15 @@ void ShootRaysServerRpc()
           <p class="kicker">In hindsight</p>
           <h2>What I'd change</h2>
           <p>
-            The excerpt above shows the first problem. The fire call is marked
+            Start with the bug the controls clip shows. The name in the corner
+            of the screen reads
+            <code>Unity.Services.CloudSave.Internal.Http.JsonObject</code>.
+            That is the type of what Cloud Save hands back, printed in place
+            of the name inside it. The value needs reading out of that object
+            before it reaches the label.
+          </p>
+          <p>
+            The excerpt above shows the next problem. The fire call is marked
             <code>RequireOwnership = false</code>, so the server runs it for
             whoever sends it. The check that the sender owns the tank happens
             on the client, before the message goes out, which is the one check
@@ -337,18 +345,28 @@ void ShootRaysServerRpc()
             Requiring ownership on the call fixes it.
           </p>
           <p>
-            The second is the fan. Sixty-four separate raycasts get the
+            Then the fan. Sixty-four separate raycasts get the
             tolerance I wanted, but a single box cast along the barrel would
             do most of the same job in one query.
           </p>
           <p>
-            The third is that a shot is resolved against where both tanks are
+            Last, a shot is resolved against where both tanks are
             when the message arrives, not where the shooter saw them. There is
             no lag compensation, and it is the first thing I would add.
           </p>
         </div>
       </div>
     </section>
+
+    <!-- ============ PROOF ============ -->
+    <div class="container">
+      <div class="cs-actions cs-actions-end">
+            <a class="btn btn-primary" href="https://github.com/OliverNealDev/NetcodeTankGame" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+              Source on GitHub
+            </a>
+          </div>
+    </div>
 
     <!-- ============ NEXT ============ -->
     <nav class="next-nav container" aria-label="More breakdowns">

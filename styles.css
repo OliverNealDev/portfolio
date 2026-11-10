@@ -1468,6 +1468,12 @@ html.js .show-more-wrap {
   gap: 0.75rem;
   margin-bottom: 3rem;
 }
+/* The same links again at the foot of the page, for a reader who got there */
+.cs-actions-end {
+  margin: 0;
+  padding-top: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid var(--border);
+}
 
 .cs-hero-media img,
 .cs-hero-media video {
@@ -2583,6 +2589,9 @@ html.postview-open body { overflow: hidden; }
   .cv-sheet h2 { margin-bottom: 4.5pt; padding-bottom: 1.5pt; font-size: 9.2pt; }
   .cv-sheet p { margin-bottom: 3pt; }
   .cv-entry { margin-bottom: 4.5pt; break-inside: avoid; }
+  /* An education row is only a heading. Left at "avoid", each one chained to
+     the next and dragged the whole block onto page two. */
+  .cv-entry-head h3 { break-after: auto; }
   .cv-entry-head { flex-direction: row; gap: 8pt; }
   .cv-entry-head h3 { font-size: 9.8pt; }
   .cv-tech, .cv-date { font-size: 9pt; }

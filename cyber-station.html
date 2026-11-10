@@ -629,7 +629,7 @@ void CalculateTargetsAndApply()
       <div class="container">
         <div class="prose reveal">
           <p class="kicker">Staff AI</p>
-          <h2>Staff that dispatch themselves</h2>
+          <h2>Staff are handed work by a coordinator</h2>
           <p>
             Janitors and security drones do not each hunt for work independently,
             which would leave two janitors racing to the same piece of litter.
@@ -671,7 +671,7 @@ void CalculateTargetsAndApply()
             <li>
               <span class="arch-n">3</span>
               <span class="arch-k">Coordinators</span>
-              <span class="arch-d">Hand out work. The janitor and security coordinators decide who does what, so no worker has to know about any other.</span>
+              <span class="arch-d">Hand out work. The janitor and security coordinators decide who does what, so no worker has to know about any other. The third coordinates the prompts that float over the world.</span>
             </li>
             <li>
               <span class="arch-n">39</span>
@@ -703,11 +703,11 @@ void CalculateTargetsAndApply()
           <figure class="diagram reveal">
             <figcaption>
               <span class="diagram-title">Dependency direction</span>
-              <span class="diagram-note">control runs downward, data upward, nothing sideways</span>
+              <span class="diagram-note">control runs downward, data upward; the managers are the exception, below</span>
             </figcaption>
             <svg viewBox="0 0 880 500" role="img" aria-labelledby="arch-t arch-d">
               <title id="arch-t">Cyber Station architecture, as layers</title>
-              <desc id="arch-d">Managers sit at the top and own global state and the simulation tick. They drive two layers below them: three Coordinators, which hand out work, and thirty-nine Controllers, one per placeable thing. Coordinators hand jobs down to the five Character types, each of which runs its own state machine. Eight ScriptableObjects feed the Controllers as authored data. Eleven small Components bolt onto anything above. Every dependency points downward: no Character ever queries another Character.</desc>
+              <desc id="arch-d">Managers sit at the top and own global state and the simulation tick. They drive two layers below them: three Coordinators, which hand out work, and thirty-nine Controllers, one per placeable thing. Coordinators hand jobs down to the five Character types, each of which runs its own state machine. Eight ScriptableObjects feed the Controllers as authored data. Eleven small Components bolt onto anything above. Control runs downward and data upward, apart from the managers, which reference each other.: no Character ever queries another Character.</desc>
 
               <defs>
                 <marker id="arch-arrow" viewBox="0 0 10 10" refX="9" refY="5"
@@ -819,13 +819,27 @@ void CalculateTargetsAndApply()
             <strong>There are no tests.</strong> Not a single test assembly in the
             project. With 86 scripts and one developer that is an easy corner to
             cut, and it is the one I would uncut first: the fixed-tick systems are
-            deterministic by construction, which makes them the cheapest things in
+            run on a fixed step and are repeatable, which makes them the cheapest things in
             the codebase to test and the place balance bugs hid longest. Ratings,
             queueing and the economy, in that order.
           </p>
         </div>
       </div>
     </section>
+
+    <!-- ============ PROOF ============ -->
+    <div class="container">
+      <div class="cs-actions cs-actions-end">
+            <a class="btn btn-primary" href="https://olivernealdev.itch.io/cyber-station" target="_blank" rel="noopener">
+              Play on itch.io
+              <svg class="icon icon-stroke" aria-hidden="true"><use href="#i-ext"/></svg>
+            </a>
+            <a class="btn btn-outline" href="https://github.com/OliverNealDev/CyberStation" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+              Source on GitHub
+            </a>
+          </div>
+    </div>
 
     <!-- ============ NEXT ============ -->
     <nav class="next-nav container" aria-label="More breakdowns">
