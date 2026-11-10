@@ -160,15 +160,14 @@
         "@id": "https://oliverneal.dev/#projects",
         "name": "Project breakdowns by Oliver Neal",
         "description": "Technical write-ups of how each game works.",
-        "itemListOrder": "https://schema.org/ItemListOrderDescending",
         "numberOfItems": 8,
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "url": "https://oliverneal.dev/cyber-station.html", "name": "Cyber Station" },
-          { "@type": "ListItem", "position": 2, "url": "https://oliverneal.dev/space-bar.html", "name": "Space Bar Simulator" },
-          { "@type": "ListItem", "position": 3, "url": "https://oliverneal.dev/tile-turfer.html", "name": "Tile Turfer" },
-          { "@type": "ListItem", "position": 4, "url": "https://oliverneal.dev/minimalists.html", "name": "Minimalists" },
-          { "@type": "ListItem", "position": 5, "url": "https://oliverneal.dev/wanted.html", "name": "Wanted" },
-          { "@type": "ListItem", "position": 6, "url": "https://oliverneal.dev/unicellular.html", "name": "Unicellular" },
+          { "@type": "ListItem", "position": 2, "url": "https://oliverneal.dev/minimalists.html", "name": "Minimalists" },
+          { "@type": "ListItem", "position": 3, "url": "https://oliverneal.dev/wanted.html", "name": "Wanted" },
+          { "@type": "ListItem", "position": 4, "url": "https://oliverneal.dev/unicellular.html", "name": "Unicellular" },
+          { "@type": "ListItem", "position": 5, "url": "https://oliverneal.dev/tile-turfer.html", "name": "Tile Turfer" },
+          { "@type": "ListItem", "position": 6, "url": "https://oliverneal.dev/space-bar.html", "name": "Space Bar Simulator" },
           { "@type": "ListItem", "position": 7, "url": "https://oliverneal.dev/tank-game.html", "name": "3D Netcode Tank Game" },
           { "@type": "ListItem", "position": 8, "url": "https://oliverneal.dev/pinnable.html", "name": "Pinnable" }
         ]
@@ -199,7 +198,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10b">
 </head>
 <body>
 
@@ -275,10 +274,10 @@
             that shows what is slow.
           </p>
 
-          <!-- Facts to check, set as one quiet line rather than badges. -->
+          <!-- Facts to check, set as three quiet lines rather than badges. -->
           <ul class="hero-creds">
             <li><strong>First Class</strong> BSc Games Development</li>
-            <li>ExpoTees 2026 <strong>Best Artefact</strong></li>
+            <li><strong>Best Games Programming and Development Artefact</strong>, ExpoTees 2026</li>
             <li>Unity 6 · C#</li>
           </ul>
 
@@ -329,7 +328,7 @@
           <p class="kicker">Now</p>
           <h2>Leading the tech on Out of Water</h2>
           <p class="section-lead">
-            The studio is building a vertical slice of Out of Water, and the technical side of that is mine.
+            The studio is building a vertical slice of the game. I plan the technical side of it, run the build, and since joining in July 2026 I have written most of the code. One of the founders programs as well; the rest of the team are artists, designers and animators.
           </p>
         </header>
 
@@ -374,29 +373,13 @@
           </ol>
         </div>
 
-        <ul class="duties reveal">
-          <li>
-            <b>Lead the tech</b>
-            Engineering on the game, and the technical plan for the vertical slice we're building now. Most of the code in the game is mine, and has been since I joined in July 2026. One of the founders programs as well; the rest of the team are artists, designers and animators.
-          </li>
-          <li>
-            <b>Run the pipeline</b>
-            I'm the studio's buildmaster: the git workflow, the repositories and the playtest builds. The second decision below is how it works.
-          </li>
-          <li>
-            <b>Unblock the team</b>
-            Artists and designers working confidently in Unity and git, so an
-            art-only change never has to wait for me.
-          </li>
-        </ul>
-
         <div class="built reveal">
           <h3>What I built first</h3>
           <p>Ten weeks as the intern, hired for the character and enemy code.</p>
           <ul>
             <li><b>Characters and enemies.</b> Both heroes and every enemy, rebuilt from single-file controllers onto component-driven state machines, with the co-op moves on top.</li>
             <li><b>Splitscreen and front end.</b> Per-player devices, cameras and character swapping, then the HUD, character select, pause, save slots and a controls tutorial in UI Toolkit.</li>
-            <li><b>Performance.</b> A pass over rendering, quality tiers, LOD and culling, measured branch to branch.</li>
+            <li><b>Performance.</b> Quality tiers, LOD and culling across the levels.</li>
             <li><b>Audio and water.</b> A decoupled FMOD layer the audio team plugs into, and the water shaders.</li>
             <li><b>Level tools.</b> A prop palette, spline walkways, and a prober that runs the characters' own jump maths to show the designers what they can reach.</li>
             <li><b>The studio's website.</b> <a href="https://shiverbugstudios.com" target="_blank" rel="noopener">shiverbugstudios.com</a>, alongside the gameplay work.</li>
@@ -527,7 +510,7 @@
               <div>
                 <dt>Result</dt>
                 <dd>
-                  The latest pass took <strong>15 to 18% of the draw calls</strong> out of split screen on the lowest quality tier. What I do not have yet is a frame time for the whole game on the hardware we are aiming at. <strong>That benchmark is still to run.</strong>
+                  The latest pass took <strong>15 to 18% of the draw calls</strong> out of split screen on the lowest quality tier. What I do not have yet is a frame time for the whole game on the hardware we are aiming at. <strong>That benchmark is still to run.</strong> The same measuring took Unity's GPU Resident Drawer back out three days after it went in, because in a build it cost more than it saved.
                 </dd>
               </div>
             </dl>
@@ -621,7 +604,7 @@
                 a duel to a four way free for all.
               </p>
               <p class="feature-point">
-                The enemy AI has no extra information. It scores every source and target pair by distance and garrison, then commits through the same send call the player's slider drives. There are six of them.
+                The enemy AI has no extra information. It scores every source and target pair by distance and garrison, then commits through the same send call the player's slider drives. Six AI personalities play by that rule.
               </p>
               <div class="feature-links">
                 <a class="feature-cta" href="minimalists.html">
@@ -1084,9 +1067,7 @@ This has been a huge step forward for me as a games developer. It pushed me to b
           <p class="kicker">Contact</p>
           <h2>Get in touch</h2>
           <p class="section-lead">
-            Right now my focus is Out of Water and my MA, but I'm always happy
-            to talk games. Whether it's about my work, the studio or a project
-            of your own, I'd be glad to hear from you.
+            Whether it's about my work, the studio or a project of your own, I'd be glad to hear from you. Out of Water and my MA are where my time goes right now, and I'm always happy to talk games.
           </p>
           <p class="contact-availability">
             Based in Middlesbrough in the UK.
@@ -1188,6 +1169,6 @@ This has been a huge step forward for me as a games developer. It pushed me to b
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10"></script>
+  <script src="main.js?v=2026-11-10b"></script>
 </body>
 </html>

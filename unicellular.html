@@ -100,7 +100,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10b">
 </head>
 <body>
 
@@ -204,8 +204,7 @@
             loop kills its framerate.
           </p>
           <p>
-            That constraint shaped everything. Behaviour is driven by lightweight
-            finite state machines, but the real trick is <em>when</em> work runs:
+            Behaviour is driven by lightweight finite state machines, and the saving comes from <em>when</em> work runs:
             instead of every cell thinking every frame, the simulation is split
             across several tick rates and the expensive proximity checks are spread
             out a batch at a time, all inside Unity's standard GameObject workflow.
@@ -246,8 +245,50 @@
             roughly constant however big the colony gets.
           </p>
           <p>
-            With thousands of these running side by side, the dish reads as
-            alive without any one cell doing anything complicated.
+            With thousands of these running side by side, the dish looks busy
+            without any one cell doing anything complicated. The decision
+            itself is a few lines:
+          </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <a class="code-file" href="https://github.com/OliverNealDev/Unicellular/blob/HEAD/Assets/Scripts/Managers/UnicellManager/EntityManager.cs" target="_blank" rel="noopener">Assets/Scripts/Managers/UnicellManager/EntityManager.cs</a>
+              <span class="code-note">a neighbour in range means fight; otherwise heal if hurt, and look for food if not</span>
+            </figcaption>
+<pre><code>void DecideUnicellState(Unicell unicell)
+{
+    // Fight, Idle, Flee, Hungry, Reproduce
+
+    if (unicell.NearestUnicell != null)
+    {
+        if (/*unicell.CurrentHealth &lt; unicell.MaxHealth / 5f*/ false)
+        {
+            ChangeState(unicell, UnicellState.Fleeing); // Shows a fear of death from Unicells, even if inevitable it would still make them feel more sentient and convincing
+        }
+        else
+        {
+            ChangeState(unicell, UnicellState.Fighting); 
+        }
+    }
+    else
+    {
+        if (unicell.CurrentHealth &lt; unicell.MaxHealth)
+        {
+            ChangeState(unicell, UnicellState.Idle); // Idle regenerates health
+        }
+        else
+        {
+            ChangeState(unicell, UnicellState.Hungry); // Default behaviour
+        }
+    }
+}</code></pre>
+          </figure>
+
+          <p>
+            The excerpt also shows something the list of states hides.
+            <code>Fleeing</code> still has its own state code, but the health
+            check that chooses it is switched off, so a cell with a neighbour
+            in range always fights.
           </p>
         </div>
         <figure class="media-figure reveal">
@@ -453,6 +494,6 @@ void FixedUpdate()
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10"></script>
+  <script src="main.js?v=2026-11-10b"></script>
 </body>
 </html>

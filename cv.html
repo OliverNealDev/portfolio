@@ -98,7 +98,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10b">
 </head>
 <body>
 
@@ -164,14 +164,16 @@
               <h1>Oliver Neal</h1>
               <p class="cv-role">Technical Director, Shiverbug Studios · Unity (C#)</p>
             </div>
-            <p class="cv-contact">
-              <a href="https://oliverneal.dev/">oliverneal.dev</a><span class="sep">·</span>
-              <a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a><span class="sep">·</span>
-              <a href="https://github.com/OliverNealDev">github.com/OliverNealDev</a><span class="sep">·</span>
-              <a href="https://www.linkedin.com/in/oliverjackneal/">linkedin.com/in/oliverjackneal</a><span class="sep">·</span>
-              <a href="https://olivernealdev.itch.io">olivernealdev.itch.io</a><br>
-              Middlesbrough, UK<span class="sep">·</span>Right to work in the UK
-            </p>
+            <ul class="cv-contact">
+              <li><a href="https://oliverneal.dev/">oliverneal.dev</a></li>
+              <li><a href="mailto:oliverjn04@gmail.com">oliverjn04@gmail.com</a></li>
+              <li><a href="https://github.com/OliverNealDev">github.com/OliverNealDev</a></li>
+              <li><a href="https://www.linkedin.com/in/oliverjackneal/">linkedin.com/in/oliverjackneal</a></li>
+              <li><a href="https://olivernealdev.itch.io">olivernealdev.itch.io</a></li>
+              <li class="cv-contact-break" aria-hidden="true"></li>
+              <li>Middlesbrough, UK</li>
+              <li>Right to work in the UK</li>
+            </ul>
           </header>
 
           <section>
@@ -203,9 +205,8 @@
               </div>
               <ul>
                 <li>Lead the technical side of the studio and sit on its board, alongside the MA. I write most of the studio's code, on a team of over a dozen.</li>
-                <li>Since October: online co-op alongside splitscreen, the move to a layered codebase, and automated tests.</li>
+                <li>Since October: online co-op added alongside splitscreen and tested at a simulated 150&nbsp;ms of lag; the code split into core, game, online and UI assemblies, which took gameplay's references to the online session from 1,022 to none; automated tests on the moveset and combat; and 15 to 18% of the draw calls taken out of split screen on the lowest quality tier.</li>
                 <li>Own the build (git workflow, pull request review, a tagged playtest build every fortnight), the technical plan for the vertical slice, and the studio's repositories and access.</li>
-                <li>So far: gameplay's references to the online session cut from 1,022 to none, 15 to 18% of the draw calls taken out of split screen on the lowest quality tier, and online play tested at a simulated 150&nbsp;ms.</li>
                 <li>Get artists and designers working confidently in Unity and git, so an art-only change never has to wait for a programmer.</li>
               </ul>
             </div>
@@ -341,6 +342,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10"></script>
+  <script src="main.js?v=2026-11-10b"></script>
 </body>
 </html>

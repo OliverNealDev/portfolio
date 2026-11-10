@@ -106,7 +106,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10b">
 </head>
 <body>
 
@@ -253,7 +253,7 @@
             growing queues.
           </p>
           <p>
-            Rather than every passenger running its own per-frame update, the whole
+            No passenger runs its own per-frame update. The whole
             crowd is driven from a single manager on a <strong>fixed 10&nbsp;Hz
             logic tick</strong>. Each passenger runs a two-level state machine:
             a master state for where it is in its journey
@@ -337,8 +337,7 @@ private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
 
           <p>
             Two details in there are deliberate. <code>facilityRoutePath</code> is a
-            single <code>NavMeshPath</code> reused for every query rather than a new
-            one per candidate, because this runs for every passenger that wants
+            single <code>NavMeshPath</code> reused for every query, because this runs for every passenger that wants
             something and allocating per candidate would hand the garbage collector
             a steady drip of work. And when no complete path exists the estimate
             falls back to flat distance rather than infinity, so an unreachable
@@ -429,8 +428,7 @@ private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
           </figure>
 
           <p>
-            Each helper records the <em>previous</em> enabled state rather than
-            blanket-enabling everything afterwards, so anything that was already
+            Each helper records the <em>previous</em> enabled state and restores only that, so anything that was already
             disabled for its own reasons, a passenger mid-despawn, litter queued for
             cleanup, stays disabled. Restoring to <code>true</code> would have been
             one line shorter and would have quietly resurrected objects the rest of
@@ -536,11 +534,10 @@ private float EstimateRouteDistance(Vector3 startPosition, Vector3 destination)
           </figure>
 
           <p>
-            The whole thing runs on a one second tick rather than per frame, and
-            every rating is eased toward its target with a <code>Mathf.Lerp</code>
-            rather than snapped. That smoothing is deliberate: raw targets jump
+            The whole thing runs on a one second tick, and
+            every rating is eased toward its target with a <code>Mathf.Lerp</code>. That smoothing is deliberate: raw targets jump
             around as passengers move, and a star rating that flickers reads as a
-            bug rather than as feedback. Because the tick is fixed at 1&nbsp;Hz,
+            bug. Because the tick is fixed at 1&nbsp;Hz,
             <code>Mathf.Lerp(current, target, 0.2f)</code> is
             <strong>exponential smoothing on a fixed step</strong>, not the
             frame-rate dependent per-frame Lerp it resembles: the same station
@@ -659,7 +656,7 @@ void CalculateTargetsAndApply()
             of C#</strong>, all written by one person over one academic year, and
             it still had to be something I could open in week thirty and change
             without breaking. That only worked because the code is sorted into
-            layers with different jobs, rather than a folder of scripts.
+            layers with different jobs.
           </p>
 
           <ul class="arch-list">
@@ -707,7 +704,7 @@ void CalculateTargetsAndApply()
             </figcaption>
             <svg viewBox="0 0 880 500" role="img" aria-labelledby="arch-t arch-d">
               <title id="arch-t">Cyber Station architecture, as layers</title>
-              <desc id="arch-d">Managers sit at the top and own global state and the simulation tick. They drive two layers below them: three Coordinators, which hand out work, and thirty-nine Controllers, one per placeable thing. Coordinators hand jobs down to the five Character types, each of which runs its own state machine. Eight ScriptableObjects feed the Controllers as authored data. Eleven small Components bolt onto anything above. Control runs downward and data upward, apart from the managers, which reference each other.: no Character ever queries another Character.</desc>
+              <desc id="arch-d">Managers sit at the top and own global state and the simulation tick. They drive two layers below them: three Coordinators, which hand out work, and thirty-nine Controllers, one per placeable thing. Coordinators hand jobs down to the five Character types, each of which runs its own state machine. Eight ScriptableObjects feed the Controllers as authored data. Eleven small Components bolt onto anything above. Control runs downward and data upward, apart from the managers, which reference each other: no Character ever queries another Character.</desc>
 
               <defs>
                 <marker id="arch-arrow" viewBox="0 0 10 10" refX="9" refY="5"
@@ -786,8 +783,7 @@ void CalculateTargetsAndApply()
           <p class="kicker">In hindsight</p>
           <h2>What I'd change</h2>
           <p>
-            The repository is public, so rather than describe the flaws in general
-            terms, here are three you can go and confirm.
+            The repository is public, so here are three flaws you can go and confirm.
           </p>
           <p>
             <strong>Eleven managers is too many, and the graph proves it.</strong>
@@ -813,13 +809,12 @@ void CalculateTargetsAndApply()
             cannot be loaded by the build from week thirty. On a solo project where
             I was the only person with saves, that was survivable. On anything
             shipped it is not, and a version number plus a migration path is a day
-            of work I should have spent early rather than not at all.
+            of work I should have spent early.
           </p>
           <p>
             <strong>There are no tests.</strong> Not a single test assembly in the
             project. With 86 scripts and one developer that is an easy corner to
-            cut, and it is the one I would uncut first: the fixed-tick systems are
-            run on a fixed step and are repeatable, which makes them the cheapest things in
+            cut, and it is the one I would uncut first: the fixed-tick systems are repeatable, which makes them the cheapest things in
             the codebase to test and the place balance bugs hid longest. Ratings,
             queueing and the economy, in that order.
           </p>
@@ -863,6 +858,6 @@ void CalculateTargetsAndApply()
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10"></script>
+  <script src="main.js?v=2026-11-10b"></script>
 </body>
 </html>

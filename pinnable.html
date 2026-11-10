@@ -100,7 +100,7 @@
 
   <link rel="preload" href="fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=2026-11-10">
+  <link rel="stylesheet" href="styles.css?v=2026-11-10b">
 </head>
 <body>
 
@@ -225,12 +225,11 @@
           <p class="kicker">Difficulty</p>
           <h2>A weighted, self-escalating spawn director</h2>
           <p>
-            Difficulty is not a single global multiplier. It is decided per pin.
+            Difficulty is decided per pin.
             Each pin rolls its own type from a <strong>weighted random pool</strong>,
             and those weights are gated two ways: hazardous types stay locked until
             you pass a survival-time threshold, after which their weight
-            <strong>scales with your score</strong>. Play well, and the board
-            quietly stacks itself against you.
+            <strong>scales with your score</strong>. The better you play, the more hazards the pool deals.
           </p>
           <p>
             The first time
@@ -281,7 +280,7 @@
           <p class="kicker">Hazards</p>
           <h2>Pins with behaviour of their own</h2>
           <p>
-            The hazards are not static. Once bumped, <strong>homing pins</strong>
+            Some hazards move. Once bumped, <strong>homing pins</strong>
             turn continuously to face the player and accelerate as they close, so
             ignoring one becomes a slowly tightening trap. <strong>Drill pins</strong>
             watch the player's position, charge up when you line up beneath them,
@@ -293,6 +292,38 @@
             animation state: small enough to reason about, distinct enough that the
             player can learn to read and counter every type.
           </p>
+
+          <figure class="code reveal">
+            <figcaption>
+              <a class="code-file" href="https://github.com/OliverNealDev/Pinnable/blob/HEAD/Assets/Scripts/Pin/PinScript.cs" target="_blank" rel="noopener">Assets/Scripts/Pin/PinScript.cs</a>
+              <span class="code-note">the homing pin, from <code>Update()</code>: it shakes through a short wind-up, then turns to face the player every frame while its speed compounds</span>
+            </figcaption>
+<pre><code>if (HomingActivated == true)
+{
+    // ... sound effect omitted
+
+    if (transform.position.y &gt; -1)
+    {
+        anim.SetBool("isActiveHomingRedPin", true);
+        transform.right = PlayerController.playercontroller.PlayerPosition - transform.position;
+    }
+    else
+    {
+        anim.SetBool("isEndingActiveHomingRedPin", true);
+    }
+
+    if (HomingWindup &gt; 0)
+    {
+        HomingWindup -= Time.deltaTime;
+        AppliedJitter = (Vector3)(UnityEngine.Random.insideUnitCircle * 0.06f);
+    }
+    else
+    {
+        transform.Translate((HomingAcceleration * HomingSpeed) * Time.deltaTime, 0, 0);
+        HomingAcceleration *= 1 + Time.deltaTime;
+    }
+}</code></pre>
+          </figure>
         </div>
       </div>
     </section>
@@ -402,6 +433,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=2026-11-10"></script>
+  <script src="main.js?v=2026-11-10b"></script>
 </body>
 </html>
