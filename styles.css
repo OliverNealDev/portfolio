@@ -677,17 +677,14 @@ main[tabindex="-1"]:focus-visible { outline: none; }
 [data-theme="dark"]  .oow-studio-logo.light { display: none; }
 [data-theme="light"] .oow-studio-logo.dark  { display: none; }
 
-/* Role path: the title now with the live dot, the internship it grew out of
-   beside it, joined by a rail so the step up reads at a glance. Laid out
-   left to right, newest first. */
+/* Role path: the title now with the live dot, and under it the internship
+   it grew out of. Newest first. */
 .role-path {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 2.25rem;
-  position: relative;
+  display: grid;
+  gap: 0.65rem;
 }
 .role-path li {
   position: relative;
@@ -710,17 +707,6 @@ main[tabindex="-1"]:focus-visible { outline: none; }
   background: var(--ok);
   border-color: var(--ok);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent);
-}
-/* The rail between the two dots */
-.role-path li + li::after {
-  content: "";
-  position: absolute;
-  top: 0.68rem;
-  right: calc(100% + 0.35rem);
-  width: 1.55rem;
-  height: 2px;
-  background: linear-gradient(to left, var(--border-strong), var(--ok));
-  opacity: 0.8;
 }
 .role-path-title {
   font-family: var(--font-display);
@@ -761,6 +747,32 @@ a.role-path-title:hover .icon { color: var(--accent); }
   font-weight: 700;
   color: var(--text);
 }
+
+/* What was built by hand, as rows between hairlines: the programmer's
+   evidence, placed before the director's. */
+.built { margin-top: clamp(3rem, 7vw, 4.5rem); }
+.built h3 {
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+  margin-bottom: 0.4em;
+}
+.built > p { max-width: 640px; margin: 0 0 1.5rem; color: var(--text-2); }
+.built ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+}
+.built li {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+}
+.built li b { color: var(--text); font-weight: 600; }
 
 /* The decisions. Each one is a row: what was decided on the left, and the
    reasoning, the cost and the evidence on the right. A cost is listed for
@@ -855,24 +867,17 @@ a.role-path-title:hover .icon { color: var(--accent); }
 }
 
 .studio-foot {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
   margin-top: clamp(1.75rem, 4vw, 2.5rem);
   color: var(--text-2);
   font-size: var(--fs-md);
 }
-.studio-foot p { margin: 0; max-width: 52ch; }
-.studio-foot b { color: var(--text); font-weight: 600; }
+.studio-foot p { margin: 0; }
 
 @media (max-width: 820px) {
   .duties { grid-template-columns: 1fr; }
-  .studio-foot { grid-template-columns: 1fr; }
+  .built ul { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  /* The two roles stack here, so the rail between them would point at nothing */
-  .role-path { flex-direction: column; }
-  .role-path li + li::after { display: none; }
   .oow-hero img { height: 340px; object-position: 50% 35%; }
 }
 
@@ -1750,6 +1755,13 @@ html.js .show-more-wrap {
     width: calc(100% + 170px);
     max-width: none;
   }
+}
+/* From here the container is at its full 1120px, so the excerpt can run to
+   its right edge and line up with the figures instead of stopping between
+   the two widths. 376px is the container's 1056px of content less the 680px
+   reading column. */
+@media (min-width: 1200px) {
+  .cs-section .prose .code { width: calc(100% + 376px); }
 }
 
 /* On a phone a wrapped line of indented code restarts at the left edge and

@@ -12,14 +12,14 @@ Static HTML, CSS and vanilla JavaScript. No framework, no build step, no depende
 |---|---|
 | `index.html` | Home: the studio role and how its tech is run, selected work, about, log, contact |
 | `cv.html` | The CV. `Oliver_Neal_CV.pdf` is this page printed, so the two cannot drift apart |
-| `cyber-station.html` | Case study: Cyber Station, my ExpoTees 2026 award-winning final-year artefact |
-| `tile-turfer.html` | Case study: Tile Turfer |
-| `minimalists.html` | Case study: Minimalists |
-| `wanted.html` | Case study: Wanted |
-| `unicellular.html` | Case study: Unicellular |
-| `tank-game.html` | Case study: 3D Netcode Tank Game |
-| `pinnable.html` | Case study: Pinnable |
-| `space-bar.html` | Case study: Space Bar Simulator |
+| `cyber-station.html` | Breakdown: Cyber Station, my ExpoTees 2026 award-winning final-year artefact |
+| `tile-turfer.html` | Breakdown: Tile Turfer |
+| `minimalists.html` | Breakdown: Minimalists |
+| `wanted.html` | Breakdown: Wanted |
+| `unicellular.html` | Breakdown: Unicellular |
+| `tank-game.html` | Breakdown: 3D Netcode Tank Game |
+| `pinnable.html` | Breakdown: Pinnable |
+| `space-bar.html` | Breakdown: Space Bar Simulator |
 | `privacy.html` | Privacy notice for the contact form and analytics |
 | `404.html` | Not-found page |
 

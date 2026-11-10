@@ -342,22 +342,6 @@
       </div>
     </section>
 
-    <!-- ============ PROCEDURAL VISUALS ============ -->
-    <section class="cs-section">
-      <div class="container">
-        <div class="prose reveal">
-          <p class="kicker">Feedback</p>
-          <h2>Showing the move, not just making it</h2>
-          <p>
-            When you send units, the move itself is the feedback. The particles
-            that represent them are mapped onto the actual <strong>navigation
-            path</strong>, repositioned and turned to follow each corner and the
-            slope of the ground, so a send reads as a living column of force
-            moving across the map rather than a straight line.
-          </p>
-        </div>
-      </div>
-    </section>
 
     <!-- ============ PRESENTATION ============ -->
     <section class="cs-section">
@@ -370,6 +354,13 @@
             The game sticks to strict visual rules: <strong>one colour per
             faction, one silhouette per structure type, one number per
             building</strong>. The menus and the match flow follow the same rules.
+          </p>
+          <p>
+            When you send units, the move itself is the feedback. The particles
+            that represent them are mapped onto the actual <strong>navigation
+            path</strong>, repositioned and turned to follow each corner and the
+            slope of the ground, so a send reads as a living column of force
+            moving across the map rather than a straight line.
           </p>
         </div>
         <figure class="media-figure reveal">
@@ -390,9 +381,7 @@
           <p class="kicker">In hindsight</p>
           <h2>What I'd change</h2>
           <p>
-            The six personalities are six separate classes,
-            <code>AIManager</code> to <code>AIManager7</code>, with no shared
-            base. Each one reads the board for itself, so the code that finds
+            The six personalities are six separate classes with no shared base. Each one reads the board for itself, so the code that finds
             my structures and the targets around them is written six times.
             I would pull that into one place and leave each personality only
             the part that makes it different: how it scores a move.

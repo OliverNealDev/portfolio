@@ -251,7 +251,9 @@
     {
         ShootBullet(0f, 0.2f);
         ShootBullet(0f, -0.2f);
-    }</code></pre>
+    }
+
+    // ...</code></pre>
           </figure>
 
           <p>
@@ -340,9 +342,7 @@
             handful toward the low dozens while the spawn interval tightens.
           </p>
           <p>
-            The result is a self-balancing curve expressed through a single number:
-            the better you do, the harder the game pushes back, with no
-            hand-authored difficulty stages.
+            The better you do, the harder the game pushes back, with no hand-authored difficulty stages.
           </p>
         </div>
         <figure class="media-figure reveal">
@@ -351,6 +351,29 @@
                width="1200" height="674" loading="lazy">
           <figcaption>Dominate the map and the game answers with more enemies and heavier fire.</figcaption>
         </figure>
+      </div>
+    </section>
+
+    <!-- ============ HINDSIGHT ============ -->
+    <section class="cs-section">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">In hindsight</p>
+          <h2>What I'd change</h2>
+          <p>
+            Tying fire rate to territory fixed camping, which is what it was
+            for. It also made a lead feed itself. The more of the map you
+            hold, the faster you fire, and in play the winning side became too
+            strong too quickly.
+          </p>
+          <p>
+            The enemies scale off the same number, so the game does push
+            back, but not by enough. It needs a catch-up rule, the job the
+            Blue Shell does in Mario Kart. I said as much in the
+            <a href="TileTurferReport.pdf" target="_blank" rel="noopener">report</a>
+            at the time.
+          </p>
+        </div>
       </div>
     </section>
 

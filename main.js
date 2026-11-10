@@ -803,12 +803,11 @@
 
     var sectionObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        sectionLinks.forEach(function (a) { a.classList.remove("active"); });
+        // The hero is observed too, and has no link: over it nothing is lit.
         var link = byId[entry.target.id];
-        if (!link) return;
-        if (entry.isIntersecting) {
-          sectionLinks.forEach(function (a) { a.classList.remove("active"); });
-          link.classList.add("active");
-        }
+        if (link) link.classList.add("active");
       });
     }, { rootMargin: "-40% 0px -55% 0px" });
 
@@ -816,6 +815,8 @@
       var section = document.getElementById(id);
       if (section) sectionObserver.observe(section);
     });
+    var hero = document.querySelector(".hero");
+    if (hero) sectionObserver.observe(hero);
   }
 
   /* 6. FOOTER YEAR ----------------------------------------------------------

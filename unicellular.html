@@ -238,17 +238,16 @@
           <p class="kicker">Behaviour</p>
           <h2>One FSM per cell</h2>
           <p>
-            Every unicell runs a small <strong>finite state machine</strong> that
-            decides what it's doing from moment to moment: drifting, seeking,
-            interacting with neighbours. Keeping each state tiny and the
-            transitions explicit does two jobs at once. Behaviour stays easy to
-            reason about and extend, and the cost of "thinking" each frame stays
-            roughly constant no matter how big the colony gets.
+            Every unicell runs a small <strong>finite state machine</strong>,
+            moving between states such as <code>Idle</code>,
+            <code>Hungry</code>, <code>Fighting</code>, <code>Fleeing</code>
+            and <code>Reproducing</code>. Each state is tiny and each
+            transition is explicit, so the cost of a cell "thinking" stays
+            roughly constant however big the colony gets.
           </p>
           <p>
-            Emergence does the rest. With thousands of simple machines running
-            side by side, the dish reads as alive without any cell doing anything
-            complicated.
+            With thousands of these running side by side, the dish reads as
+            alive without any one cell doing anything complicated.
           </p>
         </div>
         <figure class="media-figure reveal">
@@ -391,7 +390,7 @@ void FixedUpdate()
       <div class="container">
         <div class="prose reveal">
           <p class="kicker">In hindsight</p>
-          <h2>What I'd rebuild</h2>
+          <h2>What I'd change</h2>
           <p>
             Everything above keeps a GameObject workflow fast by working around
             its costs: batching the ticks, slicing the proximity queries,
